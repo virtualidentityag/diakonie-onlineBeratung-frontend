@@ -1,7 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import './ConsultingTypesOverlay.styles.scss';
-import { Overlay, OVERLAY_FUNCTIONS } from '../../../components/overlay/Overlay';
+import {
+	Overlay,
+	OVERLAY_FUNCTIONS
+} from '../../../components/overlay/Overlay';
 import { ServiceExplanation } from '../../../components/serviceExplanation/ServiceExplanation';
 import { BUTTON_TYPES } from '../../../components/button/Button';
 

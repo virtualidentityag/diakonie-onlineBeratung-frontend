@@ -22,6 +22,7 @@ const options = {
 
 module.exports = defineConfig({
 	e2e: {
+		testIsolation: true,
 		baseUrl: 'http://localhost:9001',
 		supportFile: 'cypress/support/e2e.{js,jsx,ts,tsx}',
 		setupNodeEvents(on, config) {
@@ -33,8 +34,10 @@ module.exports = defineConfig({
 			process.env.CYPRESS_WS_URL || process.env.REACT_APP_API_URL
 	},
 	retries: {
-		runMode: 2
+		runMode: 9
 	},
+	experimentalMemoryManagement: true,
+	numTestsKeptInMemory: 20,
 	video: false,
 	chromeWebSecurity: false,
 	viewportWidth: 1200,

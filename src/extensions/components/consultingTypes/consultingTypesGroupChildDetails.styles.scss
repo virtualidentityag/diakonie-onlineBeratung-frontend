@@ -3,6 +3,7 @@
 		display: flex;
 		justify-content: center;
 		padding: $grid-base-three;
+
 		// Reserve some extra space to avoid the layout shifting too much
 		min-height: 280px;
 	}

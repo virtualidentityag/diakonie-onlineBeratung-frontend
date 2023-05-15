@@ -9,19 +9,17 @@ import { ConsultingTypesOverlay } from './ConsultingTypesOverlay';
 import './ConsultingTypes.styles.scss';
 import useIsFirstVisit from '../../../utils/useIsFirstVisit';
 import { Headline } from '../../../components/headline/Headline';
-import {InfoIcon} from '../../../resources/img/icons';
-import {LoadingIndicator} from '../../../components/loadingIndicator/LoadingIndicator';
+import { InfoIcon } from '../../../resources/img/icons';
+import { LoadingIndicator } from '../../../components/loadingIndicator/LoadingIndicator';
 import { SelectDropdown } from '../../../components/select/SelectDropdown';
-import {StageLayout} from '../../../components/stageLayout/StageLayout';
+import { StageLayout } from '../../../components/stageLayout/StageLayout';
 import { Text } from '../../../components/text/Text';
 
 export const ConsultingTypes = () => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 
-	const [
-		loadedConsultingTypeGroups,
-		setLoadedConsultingTypeGroups
-	] = useState<ConsultingTypeGroupInterface[]>([]);
+	const [loadedConsultingTypeGroups, setLoadedConsultingTypeGroups] =
+		useState<ConsultingTypeGroupInterface[]>([]);
 
 	const [consultingTypeGroups, setConsultingTypeGroups] = useState<
 		(ConsultingTypeGroupInterface & {
@@ -31,12 +29,10 @@ export const ConsultingTypes = () => {
 
 	const [loading, setLoading] = useState(true);
 	const [selectedGroupId, setSelectedGroupId] = useState<string>(null);
-	const [expandedConsultingTypeId, setExpandedConsultingTypeId] = useState(
-		null
-	);
-	const [isExplanationOverlayOpen, setIsExplanationOverlayOpen] = useState(
-		false
-	);
+	const [expandedConsultingTypeId, setExpandedConsultingTypeId] =
+		useState(null);
+	const [isExplanationOverlayOpen, setIsExplanationOverlayOpen] =
+		useState(false);
 	const [selectedGroup, setSelectedGroup] = useState(null);
 
 	useEffect(() => {
@@ -72,22 +68,26 @@ export const ConsultingTypes = () => {
 		(groups: ConsultingTypeGroupInterface[]) =>
 			groups
 				// Translate titles before sorting
-				.map((group): ConsultingTypeGroupInterface & {
-					id: string;
-				} => ({
-					...group,
-					id: group.consultingTypes
-						.map((consultingType) => consultingType.id)
-						.sort()
-						.join('-'),
-					title: translate(
-						[
-							`consultingTypeGroup.${group.title}.title`,
-							group.title
-						],
-						{ ns: 'consultingTypes' }
-					)
-				}))
+				.map(
+					(
+						group
+					): ConsultingTypeGroupInterface & {
+						id: string;
+					} => ({
+						...group,
+						id: group.consultingTypes
+							.map((consultingType) => consultingType.id)
+							.sort()
+							.join('-'),
+						title: translate(
+							[
+								`consultingTypeGroup.${group.title}.title`,
+								group.title
+							],
+							{ ns: 'consultingTypes' }
+						)
+					})
+				)
 				.sort((a, b) => (a.title < b.title ? -1 : 1))
 				.map((group) => ({
 					...group,

@@ -10,10 +10,11 @@ import { InputField } from '../../../components/inputField/InputField';
 import { PinIcon } from '../../../resources/img/icons';
 import { Button, BUTTON_TYPES } from '../../../components/button/Button';
 import { Notice } from '../../../components/notice/Notice';
-import { AgencyDataInterface, ConsultingTypeInterface } from '../../../globalState';
 import {
-	AskerRegistrationExternalAgencyOverlay
-} from '../../../components/profile/AskerRegistrationExternalAgencyOverlay';
+	AgencyDataInterface,
+	ConsultingTypeInterface
+} from '../../../globalState';
+import { AskerRegistrationExternalAgencyOverlay } from '../../../components/profile/AskerRegistrationExternalAgencyOverlay';
 import { Text } from '../../../components/text/Text';
 
 interface ConsultingTypesAgencySelectionProps {
@@ -27,10 +28,8 @@ const ConsultingTypesAgencySelection = ({
 	const [postcode, setPostcode] = useState('');
 	const [agency, setAgency] = useState<AgencyDataInterface>();
 	const [postcodeFallbackLink, setPostcodeFallbackLink] = useState<string>();
-	const [
-		externalAgencyOverlayActive,
-		setExternalAgencyOverlayActive
-	] = useState<boolean>(null);
+	const [externalAgencyOverlayActive, setExternalAgencyOverlayActive] =
+		useState<boolean>(null);
 	const { t: translate } = useTranslation();
 
 	const handlePostcodeInput = (e) => {
@@ -79,9 +78,8 @@ const ConsultingTypesAgencySelection = ({
 				if (error.message === FETCH_ERRORS.EMPTY) {
 					setPostcodeFallbackLink(
 						parsePlaceholderString(settings.postcodeFallbackUrl, {
-							url:
-								consultingType.urls
-									.registrationPostcodeFallbackUrl,
+							url: consultingType.urls
+								.registrationPostcodeFallbackUrl,
 							postcode: postcode
 						})
 					);

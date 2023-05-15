@@ -1,7 +1,4 @@
-import {
-	fetchData,
-	FETCH_METHODS
-} from '../../api';
+import { fetchData, FETCH_METHODS } from '../../api';
 import { endpoints } from '../../resources/scripts/endpoints';
 import { ConsultingTypeGroupInterface } from '../globalState/interfaces/ConsultingTypeGroupInterface';
 

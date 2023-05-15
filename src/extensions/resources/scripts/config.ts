@@ -26,11 +26,12 @@ export const config: AppConfigInterface = {
 	enableWalkthrough: false, // Feature flag to enable walkthrough (false by default here & true in the theme repo)
 	disableVideoAppointments: false, // Feature flag to enable Video-Termine page
 	multitenancyWithSingleDomainEnabled: false, // Feature flag to enable the multi tenancy with a single domain ex: lands
-	useApiClusterSettings: false, // Feature flag to enable the cluster use the cluster settings instead of the config file
+	useApiClusterSettings: true, // Feature flag to enable the cluster use the cluster settings instead of the config file
 	mainTenantSubdomainForSingleDomainMultitenancy: 'app',
 	attachmentEncryption: true, // Feature flag for attachment end to end encryption - e2e must also be enabled in rocket.chat
 
 	urls: {
+		chatScheduleUrl: uiUrl + '/themen',
 		consultantVideoConference:
 			'/consultant/videoberatung/:type/:appointmentId',
 		error401: uiUrl + '/error.401.html',
@@ -90,8 +91,8 @@ export const config: AppConfigInterface = {
 		priority: [OVERLAY_RELEASE_NOTE, OVERLAY_TWO_FACTOR_NAG]
 	},
 	twofactor: {
-		startObligatoryHint: new Date('2022-07-31'),
-		dateTwoFactorObligatory: new Date('2023-02-01'),
+		startObligatoryHint: new Date('2098-07-31'),
+		dateTwoFactorObligatory: new Date('2099-02-01'),
 		messages: [
 			{
 				title: 'twoFactorAuth.nag.obligatory.moment.title',

@@ -3,8 +3,7 @@
 		"onlineMeeting": {
 			"overlay": {
 				"start": {
-					"copy":
-					"Sie starten jetzt den Video-Call. Eingeladene Teilnehmerinnen oder Teilnehmer können ab sofort mit dem Einladungslink beitreten."
+					"copy": "Sie starten jetzt den Video-Call. Eingeladene Teilnehmerinnen oder Teilnehmer können ab sofort mit dem Einladungslink beitreten."
 				}
 			}
 		}
@@ -12,8 +11,7 @@
 	"anonymous": {
 		"overlay": {
 			"chatWasFinished": {
-				"headline":
-				"Ihre Beraterin oder Ihr Berater hat den Chat beendet.",
+				"headline": "Ihre Beraterin oder Ihr Berater hat den Chat beendet.",
 				"button": "Zu Diakonie.de"
 			},
 			"finishChat": {
@@ -24,35 +22,31 @@
 		},
 		"waitingroom": {
 			"dataProtection": {
-				"description":
-				"Danach dürfen unsere Beraterinnen oder Berater einen Chat mit Ihnen starten."
+				"description": "Danach dürfen unsere Beraterinnen oder Berater einen Chat mit Ihnen starten."
 			},
-			"subline":
-			"Derzeit sind alle Beraterinnen oder Berater im Gespräch. Wir sind schnellstmöglich für Sie da.",
+			"subline": "Derzeit sind alle Beraterinnen oder Berater im Gespräch. Wir sind schnellstmöglich für Sie da.",
 			"overlay": {
 				"acceptance": {
-					"copy":
-					"Sie werden von Ihrer Beraterin oder Ihrem Berater im Chat erwartet. Sind Sie bereit?"
+					"copy": "Sie werden von Ihrer Beraterin oder Ihrem Berater im Chat erwartet. Sind Sie bereit?"
 				},
 				"rejection": {
-					"copy":
-					"Leider konnten wir innerhalb der Chat-Zeit nicht auf Ihr Anliegen eingehen. Registrieren Sie sich und hinterlassen Sie uns Ihre Nachricht. Wir melden uns innerhalb von 2 Arbeitstagen bei Ihnen."
+					"copy": "Leider konnten wir innerhalb der Chat-Zeit nicht auf Ihr Anliegen eingehen. Registrieren Sie sich und hinterlassen Sie uns Ihre Nachricht. Wir melden uns innerhalb von 2 Arbeitstagen bei Ihnen."
 				}
 			},
 			"redirect": {
-				"subline":
-				"Registrieren Sie sich und hinterlassen Sie uns Ihre Nachricht. Wir melden uns innerhalb von 2 Arbeitstagen bei Ihnen."
+				"subline": "Registrieren Sie sich und hinterlassen Sie uns Ihre Nachricht. Wir melden uns innerhalb von 2 Arbeitstagen bei Ihnen."
 			}
 		}
 	},
 	"app": {
 		"title": "Beratung",
-		"stage.title": "Beratung\n& Hilfe"
+		"stage": {
+			"title": "Beratung\n& Hilfe"
+		}
 	},
 	"banner": {
 		"ie": {
-			"text":
-			"Diese Anwendung ist nicht für die Nutzung mit dem <strong>Internet Explorer</strong> optimiert. Für ein optimales Nutzungserlebnis verwenden Sie bitte einen modernen Browser."
+			"text": "Diese Anwendung ist nicht für die Nutzung mit dem <strong>Internet Explorer</strong> optimiert. Für ein optimales Nutzungserlebnis verwenden Sie bitte einen modernen Browser."
 		}
 	},
 	"consultant": {
@@ -62,15 +56,12 @@
 		"title": "Willkommen bei den Online-Beratungsangeboten der Diakonie",
 		"intro": "Ich suche Beratung für folgendes Thema:",
 		"selectGroup": "Bitte Thema auswählen",
-		"learnMore":
-		"Mehr über den Ablauf bei der Beratung der Diakonie erfahren",
+		"learnMore": "Mehr über den Ablauf bei der Beratung der Diakonie erfahren",
 		"info": "Info",
 		"details": {
 			"explanation": {
-				"title":
-				"Um Sie bestmöglich beraten zu können benötigen wir Ihre Postleitzahl",
-				"description":
-				"Warum? Weil dann unsere Fachleute:\n•  die Hilfen rund um Ihren Wohnort kennen\n•  die Gesetze Ihres Bundeslandes kennen"
+				"title": "Um Sie bestmöglich beraten zu können benötigen wir Ihre Postleitzahl",
+				"description": "Warum? Weil dann unsere Fachleute:\n•  die Hilfen rund um Ihren Wohnort kennen\n•  die Gesetze Ihres Bundeslandes kennen"
 			}
 		},
 		"overlay": {
@@ -101,8 +92,7 @@
 		"title8": "Verwendung, Rechtsgrundlage und Zweck",
 		"subtitle8": "Technisch notwendige Cookies",
 		"text8": "Die Verwendung technisch notweniger Cookies dient dazu, die Nutzung der Webseiten für die Webseitenbesucher zu vereinfachen. \nEinige Funktionen unserer Webseite erfordern den Einsatz von technisch notwendigen Cookies. \nDer Browser des Nutzers muss dafür auch nach einem Seitenwechsel wiedererkannt werden. \nWir erheben Daten über jeden Zugriff auf den Server, auf dem sich dieses Angebot befindet (so genannte Serverlogfiles).<br><br>\nDie Rechtsgrundlage für die Verarbeitung personenbezogener Daten unter Verwendung technisch notweniger Cookies ist § 6 Nr.4 DSG-EKD.<br><br>\nZu den Zugriffsdaten gehören Name der abgerufenen Webseite, Datei, Datum und Uhrzeit des Abrufs, übertragene Datenmenge, Meldung über erfolgreichen Abruf, Browsertyp nebst Version, das Betriebssystem des Nutzers, Referrer URL (die zuvor besuchte Seite), IP-Adresse und der anfragende Provider. Diese Daten werden nicht gespeichert, sind jedoch zur Laufzeit verfügbar.<br><br>\nWir verwenden die Protokolldaten ohne Zuordnung zur Person des Nutzers oder sonstiger Profilerstellung entsprechend den gesetzlichen Bestimmungen nur für statistische Auswertungen zum Zweck des Betriebs, der Sicherheit und der Optimierung des Angebotes. \nWir behalten uns jedoch vor, die Protokolldaten nachträglich zu überprüfen, wenn aufgrund konkreter Anhaltspunkte der berechtigte Verdacht einer rechtswidrigen Nutzung besteht. \nDie durch technisch notwendige Cookies erhobenen Nutzerdaten werden nicht zur Erstellung von Nutzerprofilen verwendet.",
-		"title9":
-		"Dauer der Speicherung, Widerspruchs- und Beseitigungsmöglichkeit",
+		"title9": "Dauer der Speicherung, Widerspruchs- und Beseitigungsmöglichkeit",
 		"text9": "Cookies werden auf dem Rechner des Nutzers gespeichert und von diesem an unserer Seite übermittelt. \nDaher haben Sie als Nutzer auch die volle Kontrolle über die Verwendung von Cookies. \nDurch eine Änderung der Einstellungen in Ihrem Internetbrowser können Sie die Übertragung von Cookies deaktivieren oder einschränken. \nBereits gespeicherte Cookies können jederzeit gelöscht werden. \nDies kann auch automatisiert erfolgen. Werden Cookies für unsere Website deaktiviert, können möglicherweise nicht mehr alle Funktionen der Website vollumfänglich genutzt werden.",
 		"title10": "Verwendete Cookies",
 		"text10": "\n<table>\n<tr>\n<th>Name</th>\n<th>Speicherdauer</th>\n<th>Zugriff Dritter</th>\n</tr>\n<tr>\n<td>CSRF-TOKEN</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>keycloak</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>KEYCLOAK_LOCALE</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>rc_token</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>rc_uid</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>refreshToken</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>useInformal</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>userRoles</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>registeredUsername</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>hideInfoBanner</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>public_key</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>private_key</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>visited</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>anonymousSessionId</td>\n<td>Session</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>auth.access_token_valid_until</td>\n<td>Dauerhaft</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>auth.refresh_token_valid_until</td>\n<td>Dauerhaft</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>mk_*</td>\n<td>Dauerhaft</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>locale</td>\n<td>Dauerhaft</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>releaseNote</td>\n<td>Dauerhaft</td>\n<td>nein</td>\n</tr>\n<tr>\n<td>pseudoPassword_*</td>\n<td>Dauerhaft</td>\n<td>nein</td>\n</tr>\n</table>\n",
@@ -118,8 +108,7 @@
 	},
 	"deleteAccount": {
 		"successOverlay": {
-			"headline":
-			"Sie haben Ihren Account bei der Diakonie Beratung erfolgreich gelöscht."
+			"headline": "Sie haben Ihren Account bei der Diakonie Beratung erfolgreich gelöscht."
 		}
 	},
 	"enquiry": {
@@ -133,33 +122,33 @@
 				}
 			},
 			"overlay": {
-				"copy":
-				"Innerhalb von 2 Arbeitstagen erhalten Sie eine Antwort von uns."
+				"copy": "Innerhalb von 2 Arbeitstagen erhalten Sie eine Antwort von uns."
 			}
 		}
 	},
 	"furtherSteps": {
-		"step2.info":
-		"Jetzt finden wir eine Beraterin oder einen Berater für Sie.",
-		"step3.info":
-		"Ihre Beraterin oder Ihr Berater antwortet innerhalb von 2 Arbeitstagen.",
+		"step2": {
+			"info": "Jetzt finden wir eine Beraterin oder einen Berater für Sie."
+		},
+		"step3": {
+			"info": "Ihre Beraterin oder Ihr Berater antwortet innerhalb von 2 Arbeitstagen."
+		},
 		"emailNotification": {
-			"infoText":
-			"Wenn Sie Ihre E-Mail-Adresse angeben (freiwillig)<br><ul><li>erhalten Sie eine E-Mail-Benachrichtigung, wenn Ihre Beraterin oder Ihr Berater Ihnen geschrieben hat</li><li>können Sie Ihr Passwort zurücksetzen, falls Sie es vergessen haben.</li></ul>Ihre E-Mail-Adresse kann von den Beraterinnen und Beratern nicht eingesehen werden."
+			"infoText": "Wenn Sie Ihre E-Mail-Adresse angeben (freiwillig)<br><ul><li>erhalten Sie eine E-Mail-Benachrichtigung, wenn Ihre Beraterin oder Ihr Berater Ihnen geschrieben hat</li><li>können Sie Ihr Passwort zurücksetzen, falls Sie es vergessen haben.</li></ul>Ihre E-Mail-Adresse kann von den Beraterinnen und Beratern nicht eingesehen werden."
 		}
 	},
 	"groupChat": {
 		"join": {
-			"warning.message":
-			"Ihre Beraterin/Moderatorin oder ihr Berater/Moderator hat den Chat noch nicht gestartet. Sobald Ihre Beraterin/Moderatorin oder Ihr Berater/Moderator den Chat gestartet hat können Sie mit uns chatten. Bitte haben Sie noch etwas Geduld."
+			"warning": {
+				"message": "Ihre Beraterin/Moderatorin oder ihr Berater/Moderator hat den Chat noch nicht gestartet. Sobald Ihre Beraterin/Moderatorin oder Ihr Berater/Moderator den Chat gestartet hat können Sie mit uns chatten. Bitte haben Sie noch etwas Geduld."
+			}
 		}
 	},
 	"imprint": {
 		"title": "Impressum",
 		"title1": "Anbieterkennzeichnung gemäß den gesetzlichen Bestimmungen",
 		"text1": "Diakonie Deutschland<br>\nEvangelisches Werk für Diakonie und Entwicklung e.V.<br>\nCaroline-Michaelis-Str. 1<br>\n10115 Berlin<br><br>\nTelefon: 030 65211-0<br>\nTelefax: 030 65211-3333<br> \nE-Mail: <a href=\"mailto:diakonie@diakonie.de\" target=\"_blank\" rel=\"noreferrer\">diakonie@diakonie.de</a>",
-		"title2":
-		"Das Werk wird durch den Vorstand vertreten. Er besteht aus folgenden Mitgliedern",
+		"title2": "Das Werk wird durch den Vorstand vertreten. Er besteht aus folgenden Mitgliedern",
 		"text2": "Vorsitzende: Präsidentin Pfarrerin Dr. Dagmar Pruin<br>\nstellvertretender Vorsitzender: Präsident Pfarrer Ulrich Lilie<br><br>\nDr. Jörg Kruttschnitt<br>\nMaria Loheide<br><br>\nJeweils zwei Mitglieder des Vorstandes vertreten das Evangelische Werk für Diakonie und Entwicklung e.V. im Rechtsverkehr gemeinsam.",
 		"title3": "Registergericht",
 		"text3": "Amtsgericht Berlin-Charlottenburg, Vereinsregister 31924 B<br><br>\nUSt-IdNr.: DE 147801862<br><br>\nDas Evangelische Werk für Diakonie und Entwicklung verfolgt ausschließlich und unmittelbar gemeinnützige, mildtätige und kirchliche Zwecke im Sinne des Abschnitts \"steuerbegünstigte Zwecke\" der Abgabenordnung.",
@@ -186,14 +175,19 @@
 		"data": {
 			"register": {
 				"consultingModeInfo": {
-					"groupChats":
-					"In der Selbsthilfe tauschen sich Betroffene über ein Thema oder ein Anliegen miteinander aus. Die Betroffenen sprechen über ihre Probleme, Gefühle und Hoffnungen und erfahren so, wie andere Probleme bewältigt haben. Die Gruppen werden von Moderatorinnen oder Moderatoren geleitet."
+					"groupChats": "In der Selbsthilfe tauschen sich Betroffene über ein Thema oder ein Anliegen miteinander aus. Die Betroffenen sprechen über ihre Probleme, Gefühle und Hoffnungen und erfahren so, wie andere Probleme bewältigt haben. Die Gruppen werden von Moderatorinnen oder Moderatoren geleitet."
 				}
-			}
+			},
+			"emailInfo": "Die Angabe Ihrer E-Mail ist freiwillig und wird ausschließlich verwendet, um Sie über neue Antworten Ihrer Beraterin oder Ihres Beraters zu informieren. Ihre E-Mail-Adresse ist für Beraterinnen und Berater nicht sichtbar."
 		},
 		"notifications": {
-			"follow.up.email.label":
-			"eine Nachricht von einem oder einer angenommenen Ratsuchenden erhalten haben."
+			"follow": {
+				"up": {
+					"email": {
+						"label": "eine Nachricht von einem oder einer angenommenen Ratsuchenden erhalten haben."
+					}
+				}
+			}
 		}
 	},
 	"registration": {
@@ -206,13 +200,11 @@
 		},
 		"overlay": {
 			"success": {
-				"headline":
-				"Herzlich willkommen<br>bei der Beratung der Diakonie."
+				"headline": "Herzlich willkommen<br>bei der Beratung der Diakonie."
 			}
 		},
 		"user": {
-			"infoText":
-			"Um Ihre Anonymität zu schützen, raten wir Ihnen, nicht Ihren tatsächlichen Namen oder Initialien zu verwenden.<br>Wählen Sie bitte einen geeigneten Benutzernamen mit min. 5 Zeichen."
+			"infoText": "Um Ihre Anonymität zu schützen, raten wir Ihnen, nicht Ihren tatsächlichen Namen oder Initialien zu verwenden.<br>Wählen Sie bitte einen geeigneten Benutzernamen mit min. 5 Zeichen."
 		},
 		"welcomeScreen": {
 			"subline": "Wie läuft die Beratung der Diakonie ab?",
@@ -225,30 +217,36 @@
 		},
 		"consultingTypeAgencySelection": {
 			"consultingType": {
-				"infoText":
-				"Ihre Beraterin oder Ihr Berater ist in mehreren Themenfeldern tätig. Bitte wählen Sie Ihr gewünschtes Themenfeld."
+				"infoText": "Ihre Beraterin oder Ihr Berater ist in mehreren Themenfeldern tätig. Bitte wählen Sie Ihr gewünschtes Themenfeld."
 			},
 			"agency": {
-				"infoText":
-				"Ihre Beraterin oder Ihr Berater ist in mehreren Beratungsstellen tätig. Bitte wählen Sie Ihre gewünschte Beratungsstelle."
+				"infoText": "Ihre Beraterin oder Ihr Berater ist in mehreren Beratungsstellen tätig. Bitte wählen Sie Ihre gewünschte Beratungsstelle."
 			}
 		}
 	},
 	"session": {
-		"consultant.prefix": "Beraterin oder Berater - ",
-		"groupChat.consultant.prefix": "Moderatorin oder Moderator - ",
+		"consultant": {
+			"prefix": "Beraterin oder Berater - "
+		},
+		"groupChat": {
+			"consultant": {
+				"prefix": "Moderatorin oder Moderator - "
+			}
+		},
 		"acceptance": {
-			"overlay.headline":
-			"Sie haben die Erstanfrage erfolgreich angenommen und finden diese nun unter „Meine Beratungen“."
+			"overlay": {
+				"headline": "Sie haben die Erstanfrage erfolgreich angenommen und finden diese nun unter „Meine Beratungen“."
+			}
 		},
 		"assignOther": {
 			"overlay": {
-				"subtitle.noTeam":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Sie haben keinen Zugiff mehr auf die Nachrichten.",
-				"subtitle.team.self":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf in Ihren Nachrichten und nicht mehr unter Teamberatung.",
-				"subtitle.team.other":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf unter Teamberatung und nicht mehr in Ihren Nachrichten."
+				"subtitle": {
+					"noTeam": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Sie haben keinen Zugiff mehr auf die Nachrichten.",
+					"team": {
+						"self": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf in Ihren Nachrichten und nicht mehr unter Teamberatung.",
+						"other": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf unter Teamberatung und nicht mehr in Ihren Nachrichten."
+					}
+				}
 			}
 		}
 	},
@@ -271,35 +269,31 @@
 		}
 	},
 	"typingIndicator": {
-		"multipleUsers.typing": "Teilnehmerinnen oder Teilnehmer schreiben"
+		"multipleUsers": {
+			"typing": "Teilnehmerinnen oder Teilnehmer schreiben"
+		}
 	},
 	"userProfile": {
 		"data": {
 			"resort": "Beratungsfeld"
 		},
 		"reassign": {
-			"description":
-			"Sie können die Unterhaltung einem anderen Teammitglied zuweisen. Diese Person ist dann für die Ratsuchende oder den Ratsuchenden verantwortlich."
+			"description": "Sie können die Unterhaltung einem anderen Teammitglied zuweisen. Diese Person ist dann für die Ratsuchende oder den Ratsuchenden verantwortlich."
 		}
 	},
 	"videoConference": {
 		"waitingroom": {
 			"dataProtection": {
-				"description":
-				"Danach dürfen unsere Beraterinnen oder Berater einen Video-Call mit Ihnen starten."
+				"description": "Danach dürfen unsere Beraterinnen oder Berater einen Video-Call mit Ihnen starten."
 			},
-			"subline":
-			"Der Video-Call hat noch nicht begonnen. Sie werden weitergeleitet sobald Ihre Beraterin oder Ihr Berater den Video-Call startet.",
+			"subline": "Der Video-Call hat noch nicht begonnen. Sie werden weitergeleitet sobald Ihre Beraterin oder Ihr Berater den Video-Call startet.",
 			"paused": {
-				"subline":
-				"Der Video-Call wurde beendet. Sollten Ihre Beraterin oder Ihr Berater nur abwesend sein werden Sie in den Video-Call weitergeleitet sobald Ihre Beraterin oder Ihr Berater den Video-Call fortsetzt."
+				"subline": "Der Video-Call wurde beendet. Sollten Ihre Beraterin oder Ihr Berater nur abwesend sein werden Sie in den Video-Call weitergeleitet sobald Ihre Beraterin oder Ihr Berater den Video-Call fortsetzt."
 			},
 			"errorPage": {
-				"description":
-				"Zu Ihrem Link können wir keinen Video-Call finden da der Video-Call entweder gelöscht oder bereits beendet wurde. Sollten Sie weiterhin Probleme haben fragen Sie bitte Ihre Beraterin oder Ihren Berater.",
+				"description": "Zu Ihrem Link können wir keinen Video-Call finden da der Video-Call entweder gelöscht oder bereits beendet wurde. Sollten Sie weiterhin Probleme haben fragen Sie bitte Ihre Beraterin oder Ihren Berater.",
 				"rejected": {
-					"description":
-					"Leider können Sie an diesem Video-Call nicht teilnehmen, da Ihre Beraterin oder Ihr Berater Sie abgelehnt hat."
+					"description": "Leider können Sie an diesem Video-Call nicht teilnehmen, da Ihre Beraterin oder Ihr Berater Sie abgelehnt hat."
 				}
 			}
 		}

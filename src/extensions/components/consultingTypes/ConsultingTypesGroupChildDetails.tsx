@@ -17,9 +17,8 @@ export const ConsultingTypesGroupChildDetails = ({
 	className,
 	consultingTypeId
 }: ConsultingTypesGroupChildDetailsProps) => {
-	const [consultingType, setConsultingType] = useState<
-		ConsultingTypeInterface
-	>();
+	const [consultingType, setConsultingType] =
+		useState<ConsultingTypeInterface>();
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 
 	useEffect(() => {

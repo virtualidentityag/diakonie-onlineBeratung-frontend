@@ -6,6 +6,8 @@ $animation-duration-title: $animation-duration / 7;
 $animation-easing-width: cubic-bezier(0, 0, 0.1, 1);
 $animation-easing-title: cubic-bezier(0, 0, 0.5, 1);
 
+@import './StageLayout.styles.scss';
+
 .stage {
 	width: 100vw;
 	background-color: $primary-2;
@@ -167,5 +169,3 @@ $animation-easing-title: cubic-bezier(0, 0, 0.5, 1);
 		}
 	}
 }
-
-@import './StageLayout.styles.scss';

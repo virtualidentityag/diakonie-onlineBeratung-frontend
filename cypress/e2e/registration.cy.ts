@@ -6,7 +6,6 @@ import {
 } from '../support/websocket';
 
 const checkForGenericRegistrationElements = () => {
-	cy.get('#loginLogoWrapper').should('exist');
 	cy.get('[data-consultingtype]').should('exist');
 	cy.get('.registrationForm__overline').should('exist');
 	cy.get('.registrationForm__headline').should('exist');
@@ -101,7 +100,7 @@ describe('registration', () => {
 			cy.wait('@agencies');
 			cy.title().should(
 				'be.equal',
-				'Registrierung Beratung für suizidgefährdete junge Menschen [U25]'
+				'Registrierung Adoptions- und Pflegekindberatung'
 			);
 			cy.get('[data-cy=close-welcome-screen]').click();
 			checkForGenericRegistrationElements();

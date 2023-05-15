@@ -24,9 +24,18 @@ describe('Login', () => {
 		cy.get('#appRoot').should('exist');
 	});
 
-	it('displays the login at the root', () => {
+	it.skip('displays the login at the root', () => {
 		cy.visit('/');
 		cy.contains('Login');
+		cy.contains('Impressum');
+		cy.contains('Datenschutzerklärung');
+	});
+
+	it('displays the consultingtype page at the root', () => {
+		cy.visit('/');
+		cy.contains(
+			'Willkommen bei den Online-Beratungsangeboten der Diakonie'
+		);
 		cy.contains('Impressum');
 		cy.contains('Datenschutzerklärung');
 	});
