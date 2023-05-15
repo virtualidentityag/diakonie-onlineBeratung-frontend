@@ -147,9 +147,10 @@
 				"registrationDropdown":
 				"Consulting for people who have committed crimes and their relatives"
 			},
-			"anonymous.title": "Anonymous and free of charge",
-			"anonymous.text":
-			"You remain anonymous and receive free advice and help"
+			"anonymous": {
+				"title": "Anonymous and free of charge",
+				"text": "You remain anonymous and receive free advice and help"
+			}
 		},
 		"8": {
 			"description":

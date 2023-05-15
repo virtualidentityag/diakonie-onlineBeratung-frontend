@@ -4,17 +4,24 @@
 			"headline": "Welcome back!",
 			"copy":
 			"Your absence message is currently activated. <br> Do you want to deactivate it?",
-			"button1.label": "Yes",
-			"button2.label": "No",
+			"button1": {
+				"label": "Yes"
+			},
+			"button2": {
+				"label": "No"
+			},
 			"changeSuccess": {
 				"headline":
 				"The status of your absence message has been successfully updated.",
 				"buttonLabel": "Close"
 			}
 		},
-		"checkbox.label": "Inform advice seekers about my absence",
-		"input.infoText":
-		"Advice seekers will see absence message, but will still be able to write to you."
+		"checkbox": {
+			"label": "Inform advice seekers about my absence"
+		},
+		"input": {
+			"infoText": "Advice seekers will see absence message, but will still be able to write to you."
+		}
 	},
 	"aliases": {
 		"lastMessage": {
@@ -37,10 +44,12 @@
 		"overlay": {
 			"finishChat": {
 				"headline": "Do you want to end this chat?",
-				"consultant.copy":
-				"The advice seeker will be informed about this and will not be able to access the chat history afterwards.",
-				"asker.copy":
-				"When you exit this chat, you will no longer have access to your chat history.",
+				"consultant": {
+					"copy": "The advice seeker will be informed about this and will not be able to access the chat history afterwards."
+				},
+				"asker": {
+					"copy": "When you exit this chat, you will no longer have access to your chat history."
+				},
 				"button1": "End chat",
 				"button2": "Cancel",
 				"success": {
@@ -56,12 +65,17 @@
 		},
 		"session": {
 			"finishChat": "End chat",
-			"systemMessage.chatFinished": "The chat has been closed.",
-			"infoMessage.chatFinished":
-			"The messages are deleted 48h after the chat ends."
+			"systemMessage": {
+				"chatFinished": "The chat has been closed."
+			},
+			"infoMessage": {
+				"chatFinished": "The messages are deleted 48h after the chat ends."
+			}
 		},
 		"waitingroom": {
-			"title.start": "Waiting room",
+			"title": {
+				"start": "Waiting room"
+			},
 			"dataProtection": {
 				"headline": "Welcome!",
 				"subline": "Please confirm our privacy policy.",
@@ -75,6 +89,12 @@
 				"We are sorry something must have gone wrong.<br>Try again.",
 				"button": "Reload"
 			},
+			"closed": {
+				"headline": "Our live chat is currently unavailable",
+				"description":
+				"On our <a target=\"_blank\" href=\"{{websiteUrl}}\">Website</a> you can find the opening hours of the chat in the respective subject area.",
+				"illustrationTitle": "chat closed"
+			},
 			"headline": "Please be patient",
 			"subline":
 			"Currently, all consultants are in discussion. We will be there for you as soon as possible.",
@@ -82,8 +102,9 @@
 				"text": "Your username is:",
 				"loading": "Will be loaded..."
 			},
-			"info.accountDeletion":
-			"We delete your messages after 48 hours at the latest. Your anonymity is important to us.",
+			"info": {
+				"accountDeletion": "We delete your messages after 48 hours at the latest. Your anonymity is important to us."
+			},
 			"redirect": {
 				"title":
 				"You dont want to wait for a free chat? And do not need an answer immediately?",
@@ -1429,10 +1450,13 @@
 				"With the display name you will appear to those seeking advice."
 			},
 			"edit": {
-				"button.cancel": "Cancel",
-				"button.save": "Save"
+				"button": {
+					"cancel": "Cancel",
+					"save": "Save"
+				}
 			},
-
+			"emailInfo":
+			"Adding your Email address is optional, and only used to notify you when your counsellor answers in the chat. Your Email address is not visible to counsellors.",
 			"userName": "User name",
 			"displayName": "Display name",
 			"firstName": "First name",

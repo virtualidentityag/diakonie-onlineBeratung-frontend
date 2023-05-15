@@ -24,10 +24,12 @@
 		}
 	},
 	"furtherSteps": {
-		"step2.info":
-		"Jetzt finden wir eine Beraterin oder einen Berater für Dich.",
-		"step3.info":
-		"Deine Beraterin oder Dein Berater antwortet innerhalb von 2 Arbeitstagen.",
+		"step2": {
+			"info": "Jetzt finden wir eine Beraterin oder einen Berater für Dich."
+		},
+		"step3": {
+			"info": "Deine Beraterin oder Dein Berater antwortet innerhalb von 2 Arbeitstagen."
+		},
 		"emailNotification": {
 			"infoText":
 			"Wenn Du Deine E-Mail-Adresse angibst (freiwillig)<br><ul><li>erhälst Du eine E-Mail-Benachrichtigung, wenn Deine Beraterin oder Dein Berater Dir geschrieben hat</li><li>kannst Du Dein Passwort zurücksetzen, falls Du es vergessen hast.</li></ul>Deine E-Mail-Adresse kann von den Beraterinnen und Beratern nicht eingesehen werden."
@@ -35,14 +37,23 @@
 	},
 	"groupChat": {
 		"join": {
-			"warning.message":
-			"Deine Beraterin/Moderatorin oder Dein Berater/Moderator hat den Chat noch nicht gestartet. Sobald Deine Beraterin/Moderatorin oder Dein Berater/Moderator den Chat gestartet hat kannst du mit uns chatten. Bitte habe noch etwas Geduld."
+			"warning": {
+				"message": "Deine Beraterin/Moderatorin oder Dein Berater/Moderator hat den Chat noch nicht gestartet. Sobald Deine Beraterin/Moderatorin oder Dein Berater/Moderator den Chat gestartet hat kannst du mit uns chatten. Bitte habe noch etwas Geduld."
+			}
 		}
 	},
 	"profile": {
 		"notifications": {
-			"follow.up.email.label":
-			"eine Nachricht von einem oder einer angenommenen Ratsuchenden erhalten hast."
+			"follow": {
+				"up": {
+					"email": {
+						"label": "eine Nachricht von einem oder einer angenommenen Ratsuchenden erhalten hast."
+					}
+				}
+			}
+		},
+		"data": {
+			"emailInfo": "Die Angabe deiner E-Mail ist freiwillig und wird ausschließlich verwendet, um dich über neue Antworten deiner Beraterin oder deines Beraters zu informieren. Deine E-mail-Adresse ist für Beraterinnen und Berater nicht sichtbar."
 		}
 	},
 	"registration": {
@@ -77,12 +88,13 @@
 		},
 		"assignOther": {
 			"overlay": {
-				"subtitle.noTeam":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Du hast keinen Zugiff mehr auf die Nachrichten.",
-				"subtitle.team.self":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf in Deinen Nachrichten und nicht mehr unter Teamberatung.",
-				"subtitle.team.other":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf unter Teamberatung und nicht mehr in Deinen Nachrichten."
+				"subtitle": {
+					"noTeam": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Du hast keinen Zugiff mehr auf die Nachrichten.",
+					"team": {
+						"self": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf in Deinen Nachrichten und nicht mehr unter Teamberatung.",
+						"other": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf unter Teamberatung und nicht mehr in Deinen Nachrichten."
+					}
+				}
 			}
 		}
 	},

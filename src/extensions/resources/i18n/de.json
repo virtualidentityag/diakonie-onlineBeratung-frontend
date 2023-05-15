@@ -47,7 +47,9 @@
 	},
 	"app": {
 		"title": "Beratung",
-		"stage.title": "Beratung\n& Hilfe"
+		"stage": {
+			"title": "Beratung\n& Hilfe"
+		}
 	},
 	"banner": {
 		"ie": {
@@ -139,10 +141,12 @@
 		}
 	},
 	"furtherSteps": {
-		"step2.info":
-		"Jetzt finden wir eine Beraterin oder einen Berater für Sie.",
-		"step3.info":
-		"Ihre Beraterin oder Ihr Berater antwortet innerhalb von 2 Arbeitstagen.",
+		"step2": {
+			"info": "Jetzt finden wir eine Beraterin oder einen Berater für Sie."
+		},
+		"step3": {
+			"info": "Ihre Beraterin oder Ihr Berater antwortet innerhalb von 2 Arbeitstagen."
+		},
 		"emailNotification": {
 			"infoText":
 			"Wenn Sie Ihre E-Mail-Adresse angeben (freiwillig)<br><ul><li>erhalten Sie eine E-Mail-Benachrichtigung, wenn Ihre Beraterin oder Ihr Berater Ihnen geschrieben hat</li><li>können Sie Ihr Passwort zurücksetzen, falls Sie es vergessen haben.</li></ul>Ihre E-Mail-Adresse kann von den Beraterinnen und Beratern nicht eingesehen werden."
@@ -150,8 +154,9 @@
 	},
 	"groupChat": {
 		"join": {
-			"warning.message":
-			"Ihre Beraterin/Moderatorin oder ihr Berater/Moderator hat den Chat noch nicht gestartet. Sobald Ihre Beraterin/Moderatorin oder Ihr Berater/Moderator den Chat gestartet hat können Sie mit uns chatten. Bitte haben Sie noch etwas Geduld."
+			"warning": {
+				"message": "Ihre Beraterin/Moderatorin oder ihr Berater/Moderator hat den Chat noch nicht gestartet. Sobald Ihre Beraterin/Moderatorin oder Ihr Berater/Moderator den Chat gestartet hat können Sie mit uns chatten. Bitte haben Sie noch etwas Geduld."
+			}
 		}
 	},
 	"imprint": {
@@ -189,11 +194,18 @@
 					"groupChats":
 					"In der Selbsthilfe tauschen sich Betroffene über ein Thema oder ein Anliegen miteinander aus. Die Betroffenen sprechen über ihre Probleme, Gefühle und Hoffnungen und erfahren so, wie andere Probleme bewältigt haben. Die Gruppen werden von Moderatorinnen oder Moderatoren geleitet."
 				}
-			}
+			},
+			"emailInfo":
+			"Die Angabe Ihrer E-Mail ist freiwillig und wird ausschließlich verwendet, um Sie über neue Antworten Ihrer Beraterin oder Ihres Beraters zu informieren. Ihre E-Mail-Adresse ist für Beraterinnen und Berater nicht sichtbar."
 		},
 		"notifications": {
-			"follow.up.email.label":
-			"eine Nachricht von einem oder einer angenommenen Ratsuchenden erhalten haben."
+			"follow": {
+				"up": {
+					"email": {
+						"label": "eine Nachricht von einem oder einer angenommenen Ratsuchenden erhalten haben."
+					}
+				}
+			}
 		}
 	},
 	"registration": {
@@ -235,20 +247,31 @@
 		}
 	},
 	"session": {
-		"consultant.prefix": "Beraterin oder Berater - ",
-		"groupChat.consultant.prefix": "Moderatorin oder Moderator - ",
+		"consultant": {
+			"prefix": "Beraterin oder Berater - "
+		},
+		"groupChat": {
+			"consultant": {
+				"prefix": "Moderatorin oder Moderator - "
+			}
+		},
 		"acceptance": {
-			"overlay.headline":
-			"Sie haben die Erstanfrage erfolgreich angenommen und finden diese nun unter „Meine Beratungen“."
+			"overlay": {
+				"headline": "Sie haben die Erstanfrage erfolgreich angenommen und finden diese nun unter „Meine Beratungen“."
+			}
 		},
 		"assignOther": {
 			"overlay": {
-				"subtitle.noTeam":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Sie haben keinen Zugiff mehr auf die Nachrichten.",
-				"subtitle.team.self":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf in Ihren Nachrichten und nicht mehr unter Teamberatung.",
-				"subtitle.team.other":
-				"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf unter Teamberatung und nicht mehr in Ihren Nachrichten."
+				"subtitle": {
+					"noTeam":
+					"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Sie haben keinen Zugiff mehr auf die Nachrichten.",
+					"team": {
+						"self":
+						"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf in Ihren Nachrichten und nicht mehr unter Teamberatung.",
+						"other":
+						"{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, finden Sie den Chatverlauf unter Teamberatung und nicht mehr in Ihren Nachrichten."
+					}
+				}
 			}
 		}
 	},
@@ -271,7 +294,9 @@
 		}
 	},
 	"typingIndicator": {
-		"multipleUsers.typing": "Teilnehmerinnen oder Teilnehmer schreiben"
+		"multipleUsers": {
+			"typing": "Teilnehmerinnen oder Teilnehmer schreiben"
+		}
 	},
 	"userProfile": {
 		"data": {
