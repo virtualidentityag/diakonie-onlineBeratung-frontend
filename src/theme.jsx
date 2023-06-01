@@ -6,6 +6,15 @@ const getCssVarValue = (name) =>
 
 // A custom theme for this app
 const theme = createTheme({
+	breakpoints: {
+		values: {
+			xs: 0,
+			sm: 520,
+			md: 600,
+			lg: 1200,
+			xl: 1600
+		}
+	},
 	palette: {
 		primary: {
 			main: getCssVarValue('--primary')
@@ -75,12 +84,24 @@ const theme = createTheme({
 			color: 'black',
 			fontSize: getCssVarValue('--font-size-tertiary'),
 			lineHeight: '20px'
+		},
+		subtitle1: {
+			fontFamily: getCssVarValue('--font-family-sans-serif'),
+			color: 'black',
+			fontSize: '20px',
+			lineHeight: '28px'
 		}
 	},
 	components: {
 		MuiButton: {
 			styleOverrides: {
+				root: {
+					fontSize: getCssVarValue('--font-size-primary'),
+					lineHeight: '20px'
+				},
 				contained: {
+					'paddingTop': '14px',
+					'paddingBottom': '14px',
 					'borderRadius': '4px',
 					'backgroundColor': 'primary.main',
 					'textTransform': 'none',
@@ -91,6 +112,16 @@ const theme = createTheme({
 					'boxShadow': 'none',
 					'&:hover': {
 						boxShadow: 'none',
+						color: getCssVarValue('--white')
+					}
+				},
+				outlined: {
+					'paddingTop': '14px',
+					'paddingBottom': '14px',
+					'textTransform': 'none',
+					'&:hover': {
+						backgroundColor: getCssVarValue('--hover-primary'),
+						borderColor: getCssVarValue('--hover-primary'),
 						color: getCssVarValue('--white')
 					}
 				}

@@ -1558,6 +1558,9 @@ export const de = {
 		'iconTitle': 'QR-Code'
 	},
 	registration: {
+		'next': 'Weiter',
+		'back': 'Zurück',
+		'register': 'Registrieren',
 		'accordion': {
 			item: {
 				continueButton: {
@@ -1785,7 +1788,11 @@ export const de = {
 			},
 			register: {
 				buttonLabel: 'Registrieren',
-				helperText: 'Noch nicht registriert?'
+				helperText: 'Neu bei der Online-Beratung?'
+			},
+			login: {
+				buttonLabel: 'Einloggen',
+				helperText: 'Bereits registriert?'
 			},
 			subline: 'Wie läuft die Beratung & Hilfe der Caritas ab?'
 		}

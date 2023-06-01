@@ -21,7 +21,7 @@ export const ZipcodeInput = () => {
 			<Input
 				inputType="number"
 				isValueValid={(val: string) => val.length === 5}
-				startAdornement={
+				startAdornment={
 					<InputAdornment position="start">
 						<FmdGoodIcon color="info" />
 					</InputAdornment>

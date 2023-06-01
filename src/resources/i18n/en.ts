@@ -1750,8 +1750,12 @@ export const en = {
 				text: 'You remain anonymous and receive free advice and assistance'
 			},
 			register: {
-				helperText: 'Not registered yet?',
+				helperText: 'New with online consulting?',
 				buttonLabel: 'Register'
+			},
+			login: {
+				buttonLabel: 'Login',
+				helperText: 'Already registered?'
 			}
 		},
 		'teaser.consultant':

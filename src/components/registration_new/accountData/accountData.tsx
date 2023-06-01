@@ -38,7 +38,7 @@ export const AccountData = () => {
 				{translate('registration.account.subline')}
 			</Typography>
 			<Input
-				startAdornement={
+				startAdornment={
 					<InputAdornment position="start">
 						<PersonIcon color="info" />
 					</InputAdornment>
@@ -57,12 +57,12 @@ export const AccountData = () => {
 			></Input>
 			<Input
 				inputType={isPasswordVisible ? 'text' : 'password'}
-				startAdornement={
+				startAdornment={
 					<InputAdornment position="start">
 						<LockIcon color="info" />
 					</InputAdornment>
 				}
-				endAdornement={
+				endAdornment={
 					<InputAdornment
 						position="start"
 						aria-label={translate('login.password.show')}
@@ -110,12 +110,12 @@ export const AccountData = () => {
 			></Input>
 			<Input
 				inputType={isRepeatPasswordVisible ? 'text' : 'password'}
-				startAdornement={
+				startAdornment={
 					<InputAdornment position="start">
 						<LockIcon color="info" />
 					</InputAdornment>
 				}
-				endAdornement={
+				endAdornment={
 					<InputAdornment
 						position="start"
 						aria-label={translate('login.password.show')}
