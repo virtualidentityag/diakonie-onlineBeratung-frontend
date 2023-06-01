@@ -10,6 +10,7 @@ import {
 	Link
 } from '@mui/material';
 import * as React from 'react';
+import { useContext, useEffect } from 'react';
 import InfoIcon from '@mui/icons-material/Info';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import NoResultsIllustration from '../../../resources/img/illustrations/no-results.svg';
@@ -17,7 +18,7 @@ import ConsultantIllustration from '../../../resources/img/illustrations/consult
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Loading } from '../../app/Loading';
 import { useTranslation } from 'react-i18next';
-import { AgencyDataInterface } from '../../../globalState';
+import { AgencyDataInterface, RegistrationContext } from '../../../globalState';
 import { AgencyLanguages } from './agencyLanguages';
 import { parsePlaceholderString } from '../../../utils/parsePlaceholderString';
 import { useAppConfig } from '../../../hooks/useAppConfig';
@@ -35,6 +36,22 @@ export const AgencySelectionResults = ({
 }: AgencySelectionResultsProps) => {
 	const { t: translate } = useTranslation();
 	const settings = useAppConfig();
+	const { setDisabledNextButton, setDataForSessionStorage } =
+		useContext(RegistrationContext);
+
+	useEffect(() => {
+		if (
+			results?.length === 1 &&
+			!results?.every((agency) => {
+				return agency.external;
+			})
+		) {
+			setDisabledNextButton(false);
+			setDataForSessionStorage({ agencyId: results[0].id });
+		} else {
+			setDisabledNextButton(true);
+		}
+	}, [results, setDataForSessionStorage, setDisabledNextButton]);
 
 	return (
 		<>
@@ -162,75 +179,80 @@ export const AgencySelectionResults = ({
 				</>
 			)}
 			{/* one Result */}
-			{results?.length === 1 && (
-				<>
-					<FormControl sx={{ width: '100%' }}>
-						<RadioGroup
-							aria-label="agency-selection-radio-group"
-							name="agency-selection-radio-group"
-							defaultValue={results?.[0].name || ''}
-						>
-							<Box
-								sx={{
-									display: 'flex',
-									justifyContent: 'space-between',
-									width: '100%',
-									mt: '16px'
-								}}
+			{results?.length === 1 &&
+				!results?.every((agency) => {
+					return agency.external;
+				}) && (
+					<>
+						<FormControl sx={{ width: '100%' }}>
+							<RadioGroup
+								aria-label="agency-selection-radio-group"
+								name="agency-selection-radio-group"
+								defaultValue={results?.[0].name || ''}
 							>
-								<FormControlLabel
-									sx={{ alignItems: 'flex-start' }}
-									value={results?.[0].name || ''}
-									control={
-										<Radio
-											color="default"
-											checkedIcon={
-												<TaskAltIcon color="info" />
-											}
-											icon={<TaskAltIcon />}
-										/>
-									}
-									label={
-										<Box sx={{ mt: '10px', ml: '10px' }}>
-											<Typography variant="body1">
-												{results?.[0].name || ''}
-											</Typography>
-											<Typography
-												variant="body2"
-												sx={{
-													color: 'info.light',
-													mt: '8px'
-												}}
+								<Box
+									sx={{
+										display: 'flex',
+										justifyContent: 'space-between',
+										width: '100%',
+										mt: '16px'
+									}}
+								>
+									<FormControlLabel
+										sx={{ alignItems: 'flex-start' }}
+										value={results?.[0].name || ''}
+										control={
+											<Radio
+												color="default"
+												checkedIcon={
+													<TaskAltIcon color="info" />
+												}
+												icon={<TaskAltIcon />}
+											/>
+										}
+										label={
+											<Box
+												sx={{ mt: '10px', ml: '10px' }}
 											>
-												{translate(
-													'registration.agency.result.languages'
-												)}
-											</Typography>
-											<AgencyLanguages
-												agencyId={results?.[0].id}
-											></AgencyLanguages>
-										</Box>
-									}
-								/>
-								{results?.[0].description && (
-									<Tooltip
-										title={results[0].description}
-										arrow
-									>
-										<InfoIcon
-											sx={{
-												p: '9px',
-												width: '38px',
-												height: '38px'
-											}}
-										></InfoIcon>
-									</Tooltip>
-								)}
-							</Box>
-						</RadioGroup>
-					</FormControl>
-				</>
-			)}
+												<Typography variant="body1">
+													{results?.[0].name || ''}
+												</Typography>
+												<Typography
+													variant="body2"
+													sx={{
+														color: 'info.light',
+														mt: '8px'
+													}}
+												>
+													{translate(
+														'registration.agency.result.languages'
+													)}
+												</Typography>
+												<AgencyLanguages
+													agencyId={results?.[0].id}
+												></AgencyLanguages>
+											</Box>
+										}
+									/>
+									{results?.[0].description && (
+										<Tooltip
+											title={results[0].description}
+											arrow
+										>
+											<InfoIcon
+												sx={{
+													p: '9px',
+													width: '38px',
+													height: '38px'
+												}}
+											></InfoIcon>
+										</Tooltip>
+									)}
+								</Box>
+							</RadioGroup>
+						</FormControl>
+					</>
+				)}
 			{/* more Results */}
 			{results?.length > 1 &&
 				!results?.every((agency) => {
@@ -256,6 +278,11 @@ export const AgencySelectionResults = ({
 											}}
 										>
 											<FormControlLabel
+												onClick={() => {
+													setDisabledNextButton(
+														false
+													);
+												}}
 												sx={{
 													alignItems: 'flex-start'
 												}}

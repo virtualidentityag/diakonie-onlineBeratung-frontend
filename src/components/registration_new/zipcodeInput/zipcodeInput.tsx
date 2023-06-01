@@ -1,12 +1,15 @@
 import { InputAdornment, Typography } from '@mui/material';
 import * as React from 'react';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from '../../input/input';
+import { RegistrationContext } from '../../../globalState';
 
 export const ZipcodeInput = () => {
 	const { t: translate } = useTranslation();
+	const { setDisabledNextButton, setDataForSessionStorage } =
+		useContext(RegistrationContext);
 	const [value, setValue] = useState<string>('');
 	return (
 		<>
@@ -29,6 +32,12 @@ export const ZipcodeInput = () => {
 				onInputChange={(val: string) => {
 					if (val.length < 6) {
 						setValue(val);
+					}
+					if (val.length === 5) {
+						setDisabledNextButton(false);
+						setDataForSessionStorage({ zipcode: value });
+					} else {
+						setDisabledNextButton(true);
 					}
 				}}
 				value={value}

@@ -1597,7 +1597,7 @@ export const de = {
 				label: 'Benutzername',
 				error: 'Ihr Benutzername ist zu kurz.',
 				info: '5 oder mehr Zeichen',
-				successMessage: 'Ihr Benutzername ist geeignet.'
+				success: 'Ihr Benutzername ist geeignet.'
 			},
 			password: {
 				label: 'Passwort',

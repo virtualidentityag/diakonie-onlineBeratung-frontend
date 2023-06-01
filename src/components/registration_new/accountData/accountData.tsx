@@ -7,7 +7,7 @@ import {
 	FormControlLabel
 } from '@mui/material';
 import * as React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
@@ -19,6 +19,7 @@ import {
 	hasSpecialChar
 } from '../../../utils/validateInputValue';
 import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvider';
+import { RegistrationContext } from '../../../globalState';
 
 export const AccountData = () => {
 	const legalLinks = useContext(LegalLinksContext);
@@ -26,9 +27,50 @@ export const AccountData = () => {
 	const [password, setPassword] = useState<string>('');
 	const [repeatPassword, setRepeatPassword] = useState<string>('');
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>();
+	const [dataProtectionChecked, setDataProtectionChecked] =
+		useState<boolean>();
 	const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] =
 		useState<boolean>();
 	const [username, setUsername] = useState<string>('');
+	const {
+		setDisabledNextButton,
+		setDataForSessionStorage,
+		isUsernameAvailable,
+		setIsUsernameAvailable
+	} = useContext(RegistrationContext);
+	const passwordCriteria = [
+		{
+			info: translate('registration.account.password.criteria1'),
+			validation: (val) => val.length > 9
+		},
+		{
+			info: translate('registration.account.password.criteria2'),
+			validation: (val) => hasNumber(val)
+		},
+		{
+			info: translate('registration.account.password.criteria3'),
+			validation: (val) => hasMixedLetters(val)
+		},
+		{
+			info: translate('registration.account.password.criteria4'),
+			validation: (val) => hasSpecialChar(val)
+		}
+	];
+
+	useEffect(() => {
+		if (
+			username.length >= 5 &&
+			password === repeatPassword &&
+			dataProtectionChecked &&
+			passwordCriteria.every((criteria) => criteria.validation(password))
+		) {
+			setDisabledNextButton(false);
+			setDataForSessionStorage({ username, password });
+		} else {
+			setDisabledNextButton(true);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [username, password, repeatPassword, dataProtectionChecked]);
 	return (
 		<>
 			<Typography variant="h3">
@@ -44,6 +86,7 @@ export const AccountData = () => {
 					</InputAdornment>
 				}
 				onInputChange={(val: string) => {
+					setIsUsernameAvailable(true);
 					setUsername(val);
 				}}
 				value={username}
@@ -53,7 +96,9 @@ export const AccountData = () => {
 				successMesssage={translate(
 					'registration.account.username.success'
 				)}
-				isValueValid={(val: string) => val.length >= 5}
+				isValueValid={(val: string) =>
+					isUsernameAvailable ? val.length >= 5 : false
+				}
 			></Input>
 			<Input
 				inputType={isPasswordVisible ? 'text' : 'password'}
@@ -81,32 +126,7 @@ export const AccountData = () => {
 				}}
 				value={password}
 				label={translate('registration.account.password.label')}
-				multipleCriteria={[
-					{
-						info: translate(
-							'registration.account.password.criteria1'
-						),
-						validation: (val) => val.length > 9
-					},
-					{
-						info: translate(
-							'registration.account.password.criteria2'
-						),
-						validation: (val) => hasNumber(val)
-					},
-					{
-						info: translate(
-							'registration.account.password.criteria3'
-						),
-						validation: (val) => hasMixedLetters(val)
-					},
-					{
-						info: translate(
-							'registration.account.password.criteria4'
-						),
-						validation: (val) => hasSpecialChar(val)
-					}
-				]}
+				multipleCriteria={passwordCriteria}
 			></Input>
 			<Input
 				inputType={isRepeatPasswordVisible ? 'text' : 'password'}
@@ -146,8 +166,16 @@ export const AccountData = () => {
 			></Input>
 			<FormGroup sx={{ mt: '40px' }}>
 				<FormControlLabel
+					onClick={() => {
+						setDataProtectionChecked(!dataProtectionChecked);
+					}}
 					sx={{ alignItems: 'flex-start' }}
-					control={<Checkbox sx={{ pt: 0 }} />}
+					control={
+						<Checkbox
+							checked={dataProtectionChecked}
+							sx={{ pt: 0 }}
+						/>
+					}
 					label={
 						<Typography>
 							{translate(

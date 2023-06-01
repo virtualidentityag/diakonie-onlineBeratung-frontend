@@ -11,12 +11,16 @@ import {
 	FormControl
 } from '@mui/material';
 import * as React from 'react';
+import { useContext } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InfoIcon from '@mui/icons-material/Info';
 import { getTopic, topicGroups } from './mockData';
 import { useTranslation } from 'react-i18next';
+import { RegistrationContext } from '../../../globalState';
 
 export const TopicSelection = () => {
+	const { setDisabledNextButton, setDataForSessionStorage } =
+		useContext(RegistrationContext);
 	const { t: translate } = useTranslation();
 	const sortedTopicGroups = topicGroups.sort((a, b) => {
 		if (a.name < b.name) {
@@ -111,6 +115,17 @@ export const TopicSelection = () => {
 													}}
 												>
 													<FormControlLabel
+														onClick={(e) => {
+															setDisabledNextButton(
+																false
+															);
+															setDataForSessionStorage(
+																{
+																	topicId:
+																		topic.id
+																}
+															);
+														}}
 														sx={{
 															alignItems:
 																'flex-start'

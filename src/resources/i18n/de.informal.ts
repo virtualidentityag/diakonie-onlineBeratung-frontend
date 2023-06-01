@@ -478,7 +478,7 @@ export const deInformal = {
 				'Um Deine Anonymität zu schützen, raten wir Dir, nicht Deinen tatsächlichen Namen oder Initialen zu verwenden.',
 			username: {
 				error: 'Dein Benutzername ist zu kurz.',
-				successMessage: 'Dein Benutzername ist geeignet.'
+				success: 'Dein Benutzername ist geeignet.'
 			},
 			repeatPassword: {
 				success: 'Dein Passwort ist identisch',

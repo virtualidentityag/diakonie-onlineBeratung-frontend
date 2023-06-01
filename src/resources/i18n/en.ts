@@ -1562,7 +1562,7 @@ export const en = {
 				label: 'Username',
 				error: 'Your username is too short.',
 				info: '5 or more characters',
-				successMessage: 'Your username is suitable.'
+				success: 'Your username is suitable.'
 			},
 			password: {
 				label: 'Password',
