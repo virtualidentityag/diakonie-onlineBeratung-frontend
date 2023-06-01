@@ -473,6 +473,18 @@ export const deInformal = {
 			bullet2: '• die Gesetze Deines Bundeslandes kennen',
 			label: 'Deine Postleitzahl'
 		},
+		'account': {
+			subline:
+				'Um Deine Anonymität zu schützen, raten wir Dir, nicht Deinen tatsächlichen Namen oder Initialen zu verwenden.',
+			username: {
+				error: 'Dein Benutzername ist zu kurz.',
+				successMessage: 'Dein Benutzername ist geeignet.'
+			},
+			repeatPassword: {
+				success: 'Dein Passwort ist identisch',
+				error: 'Dein Passwort ist nicht identisch'
+			}
+		},
 		'topic': {
 			headline: 'Zu welchem Thema suchst Du Beratung?',
 			subline: 'Wähle ein Thema aus unserem Beratungsangebot aus.'

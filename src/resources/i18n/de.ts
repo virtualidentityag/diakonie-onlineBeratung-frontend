@@ -1586,6 +1586,29 @@ export const de = {
 			bullet2: '• die Gesetze Ihres Bundeslandes kennen',
 			label: 'Ihre Postleitzahl'
 		},
+		'account': {
+			headline: 'Anmeldedaten erfassen',
+			subline:
+				'Um Ihre Anonymität zu schützen, raten wir Ihnen, nicht Ihren tatsächlichen Namen oder Initialen zu verwenden.',
+			username: {
+				label: 'Benutzername',
+				error: 'Ihr Benutzername ist zu kurz.',
+				info: '5 oder mehr Zeichen',
+				successMessage: 'Ihr Benutzername ist geeignet.'
+			},
+			password: {
+				label: 'Passwort',
+				criteria1: 'mindestens 9 Zeichen',
+				criteria2: 'mindestens eine Zahl',
+				criteria3: 'Groß-/Kleinschreibung',
+				criteria4: 'mindestens ein Sonderzeichen'
+			},
+			repeatPassword: {
+				label: 'Passwort wiederholen',
+				success: 'Ihr Passwort ist identisch.',
+				error: 'Ihr Passwort ist nicht identisch.'
+			}
+		},
 		'agency': {
 			'preselected.prefix': 'Ihre vorausgewählte Beratungsstelle: ',
 			'preselected.isTeam': 'Sie werden von einem Team beraten.',
@@ -1665,7 +1688,7 @@ export const de = {
 			label: {
 				prefix: 'Ich habe die ',
 				and: ' und ',
-				suffix: ' zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies.'
+				suffix: ' zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies.*'
 			}
 		},
 		'form.title': 'Registrierung abschließen',

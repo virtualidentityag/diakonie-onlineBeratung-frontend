@@ -5,6 +5,8 @@ import type { Preview } from '@storybook/react';
 import React from 'react';
 import theme from '../src/theme';
 import i18n from './i18next';
+import { config } from '../src/resources/scripts/config';
+import { LegalLinksProvider } from '../src/globalState/provider/LegalLinksProvider';
 
 export const parameters = {
 	i18n,
@@ -18,7 +20,9 @@ export const parameters = {
 
 export const withMuiTheme = (Story) => (
 	<ThemeProvider theme={theme}>
-		<Story />
+		<LegalLinksProvider legalLinks={config.legalLinks}>
+			<Story />
+		</LegalLinksProvider>
 	</ThemeProvider>
 );
 

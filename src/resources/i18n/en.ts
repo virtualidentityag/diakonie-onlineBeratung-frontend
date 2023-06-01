@@ -1554,6 +1554,29 @@ export const en = {
 			bullet2: '• know the laws of your state',
 			label: 'Your zipcode'
 		},
+		'account': {
+			headline: 'Enter login data',
+			subline:
+				'To protect your anonymity, we advise you not to use your real name or initials.',
+			username: {
+				label: 'Username',
+				error: 'Your username is too short.',
+				info: '5 or more characters',
+				successMessage: 'Your username is suitable.'
+			},
+			password: {
+				label: 'Password',
+				criteria1: 'at least 9 characters',
+				criteria2: 'at least one number',
+				criteria3: 'upper/lower case',
+				criteria4: 'at least one special character'
+			},
+			repeatPassword: {
+				label: 'Repeat password',
+				success: 'Your password is identical.',
+				error: 'Your password is not identical.'
+			}
+		},
 		'agency': {
 			'preselected.prefix': 'Your pre-selected counseling center: ',
 			'preselected.isTeam': 'You will be advised by a team.',
@@ -1689,7 +1712,7 @@ export const en = {
 			label: {
 				prefix: 'I have the ',
 				and: ' and ',
-				suffix: ' noted. For authentication and navigation, this website uses cookies. I agree with this.'
+				suffix: ' noted. For authentication and navigation, this website uses cookies. I agree with this.*'
 			}
 		},
 		'submitButton.label': 'Register',

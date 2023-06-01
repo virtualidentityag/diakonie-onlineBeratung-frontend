@@ -13,6 +13,12 @@ const theme = createTheme({
 		info: {
 			main: getCssVarValue('--black'),
 			light: getCssVarValue('--tertiary')
+		},
+		error: {
+			main: getCssVarValue('--form-error')
+		},
+		success: {
+			main: getCssVarValue('--form-success')
 		}
 	},
 
