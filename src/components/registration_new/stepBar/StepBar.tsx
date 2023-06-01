@@ -49,7 +49,7 @@ export const StepBar = ({ currentStep, maxNumberOfSteps }: StepBarProps) => {
 						: (currentStep / maxNumberOfSteps) * 100
 				}
 				color="primary"
-				sx={{ mt: '20px', backgroundColor: '#0000001A' }}
+				sx={{ mt: '20px', mb: '48px', backgroundColor: '#0000001A' }}
 			/>
 		</>
 	);

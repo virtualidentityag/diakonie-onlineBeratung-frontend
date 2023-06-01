@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TextField, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -7,9 +7,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 export interface InputProps {
 	label: string;
 	value: string;
+	shrinkLabel?: boolean;
 	onInputChange?: Function;
-	startAdornement?: React.JSX.Element;
-	endAdornement?: React.JSX.Element;
+	startAdornment?: React.JSX.Element;
+	endAdornment?: React.JSX.Element;
 	isValueValid?(value: string): boolean;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
@@ -25,16 +26,17 @@ export const Input = ({
 	value,
 	label,
 	onInputChange,
-	startAdornement,
-	endAdornement,
+	startAdornment,
+	endAdornment,
 	isValueValid,
 	inputType,
 	info,
+	shrinkLabel = false,
 	errorMessage,
 	successMesssage,
 	multipleCriteria
 }: InputProps) => {
-	const [shrink, setShrink] = useState<boolean>(false);
+	const [shrink, setShrink] = useState<boolean>(shrinkLabel || false);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
 	const [showSuccessMessage, setShowSuccessMessage] =
 		useState<boolean>(false);
@@ -83,6 +85,11 @@ export const Input = ({
 			: blurredColor;
 		return { icon, color };
 	};
+
+	useEffect(() => {
+		console.log(shrinkLabel);
+		setShrink(shrinkLabel);
+	}, [shrinkLabel]);
 
 	return (
 		<>
@@ -137,8 +144,8 @@ export const Input = ({
 				}}
 				color="info"
 				InputProps={{
-					startAdornment: startAdornement,
-					endAdornment: endAdornement
+					startAdornment: startAdornment,
+					endAdornment: endAdornment
 				}}
 				value={value}
 				error={inputError}
