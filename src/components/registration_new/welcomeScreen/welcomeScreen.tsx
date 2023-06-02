@@ -83,7 +83,7 @@ export const WelcomeScreen = ({ nextStepUrl }: WelcomeScreenProps) => {
 					justifyContent: 'space-between',
 					alignItems: 'center',
 					p: '32px',
-					mt: '16px',
+					mt: '48px',
 					borderRadius: '4px',
 					border: '1px solid #c6c5c4'
 				}}
