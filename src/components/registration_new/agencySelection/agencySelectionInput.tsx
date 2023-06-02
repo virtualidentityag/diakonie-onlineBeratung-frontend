@@ -1,6 +1,5 @@
 import { InputAdornment, Typography } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +15,6 @@ export const AgencySelectionInput = ({
 	onInputChange
 }: AgencySelectionInputProps) => {
 	const { t: translate } = useTranslation();
-	const [shrinkInputLabel, setShrinkInputLabel] = useState<boolean>(false);
 
 	return (
 		<>
@@ -24,10 +22,8 @@ export const AgencySelectionInput = ({
 				{translate('registration.agency.headline')}
 			</Typography>
 			<Input
-				shrinkLabel={shrinkInputLabel}
 				onInputChange={(val) => {
 					if (val.length < 6) {
-						setShrinkInputLabel(true);
 						onInputChange(val);
 					}
 				}}
@@ -46,7 +42,6 @@ export const AgencySelectionInput = ({
 							color="info"
 							onClick={() => {
 								onInputChange('');
-								setShrinkInputLabel(false);
 							}}
 						/>
 					</InputAdornment>

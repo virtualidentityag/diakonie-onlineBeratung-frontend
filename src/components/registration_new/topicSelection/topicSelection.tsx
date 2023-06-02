@@ -11,7 +11,7 @@ import {
 	FormControl
 } from '@mui/material';
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InfoIcon from '@mui/icons-material/Info';
 import { getTopic, topicGroups } from './mockData';
@@ -19,9 +19,15 @@ import { useTranslation } from 'react-i18next';
 import { RegistrationContext } from '../../../globalState';
 
 export const TopicSelection = () => {
-	const { setDisabledNextButton, setDataForSessionStorage } =
-		useContext(RegistrationContext);
+	const {
+		setDisabledNextButton,
+		setDataForSessionStorage,
+		sessionStorageRegistrationData
+	} = useContext(RegistrationContext);
 	const { t: translate } = useTranslation();
+	const [value, setValue] = useState<number>(
+		sessionStorageRegistrationData.topicId || undefined
+	);
 	const sortedTopicGroups = topicGroups.sort((a, b) => {
 		if (a.name < b.name) {
 			return -1;
@@ -31,6 +37,13 @@ export const TopicSelection = () => {
 		}
 		return 0;
 	});
+
+	useEffect(() => {
+		if (value) {
+			setDisabledNextButton(false);
+		}
+	}, [value]);
+
 	return (
 		<>
 			<Typography variant="h3">
@@ -44,6 +57,9 @@ export const TopicSelection = () => {
 					{sortedTopicGroups.map((topicGroup) => {
 						return (
 							<Accordion
+								defaultExpanded={topicGroup.topicIds.includes(
+									value
+								)}
 								sx={{
 									'boxShadow': 'none',
 									'borderBottom': '1px solid #dddddd',
@@ -115,23 +131,30 @@ export const TopicSelection = () => {
 													}}
 												>
 													<FormControlLabel
-														onClick={(e) => {
-															setDisabledNextButton(
-																false
-															);
-															setDataForSessionStorage(
-																{
-																	topicId:
-																		topic.id
-																}
-															);
-														}}
 														sx={{
 															alignItems:
 																'flex-start'
 														}}
 														value={topic.id}
-														control={<Radio />}
+														control={
+															<Radio
+																onClick={() => {
+																	setValue(
+																		topic.id
+																	);
+																	setDataForSessionStorage(
+																		{
+																			topicId:
+																				topic.id
+																		}
+																	);
+																}}
+																checked={
+																	value ===
+																	topic.id
+																}
+															/>
+														}
 														label={
 															<Box
 																sx={{

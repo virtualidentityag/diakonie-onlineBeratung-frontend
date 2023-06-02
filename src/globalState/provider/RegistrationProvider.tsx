@@ -2,7 +2,6 @@ import { createContext, Dispatch, SetStateAction, useState } from 'react';
 import * as React from 'react';
 
 // TODO: Extend with topic registration information so it's available in all steps
-// TODO2: make data from sessionStorage available for steps, so when user goes back the fields are still filled
 type RegistrationContextInterface = {
 	disabledNextButton?: boolean;
 	setDisabledNextButton?: Dispatch<SetStateAction<boolean>>;
@@ -10,6 +9,8 @@ type RegistrationContextInterface = {
 	setDataForSessionStorage?: Dispatch<SetStateAction<any>>;
 	isUsernameAvailable?: boolean;
 	setIsUsernameAvailable?: Dispatch<SetStateAction<boolean>>;
+	sessionStorageRegistrationData?: any;
+	setSessionStorageRegistrationData?: Dispatch<SetStateAction<boolean>>;
 };
 
 export const RegistrationContext = createContext<RegistrationContextInterface>(
@@ -21,6 +22,8 @@ export function RegistrationProvider(props) {
 	const [isUsernameAvailable, setIsUsernameAvailable] =
 		useState<boolean>(true);
 	const [dataForSessionStorage, setDataForSessionStorage] = useState<any>({});
+	const [sessionStorageRegistrationData, setSessionStorageRegistrationData] =
+		useState<any>({});
 
 	return (
 		<RegistrationContext.Provider
@@ -30,7 +33,9 @@ export function RegistrationProvider(props) {
 				dataForSessionStorage,
 				setDataForSessionStorage,
 				isUsernameAvailable,
-				setIsUsernameAvailable
+				setIsUsernameAvailable,
+				sessionStorageRegistrationData,
+				setSessionStorageRegistrationData
 			}}
 		>
 			{props.children}

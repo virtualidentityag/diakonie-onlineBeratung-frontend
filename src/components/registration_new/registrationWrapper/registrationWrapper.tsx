@@ -17,8 +17,12 @@ import { RegistrationContext } from '../../../globalState';
 
 export const RegistrationWrapper = () => {
 	const isFirstVisit = useIsFirstVisit();
-	const { disabledNextButton, setDisabledNextButton, dataForSessionStorage } =
-		useContext(RegistrationContext);
+	const {
+		disabledNextButton,
+		setDisabledNextButton,
+		dataForSessionStorage,
+		setSessionStorageRegistrationData
+	} = useContext(RegistrationContext);
 	const [isReady, setIsReady] = useState(false);
 	const [currentStep, setCurrentStep] = useState<number>(1);
 	const location = useLocation();
@@ -77,6 +81,12 @@ export const RegistrationWrapper = () => {
 	useEffect(() => {
 		setDisabledNextButton(true);
 		getCurrentStep();
+		const availableRegistrationData = JSON.parse(
+			sessionStorage.getItem('registrationData')
+		);
+		if (availableRegistrationData) {
+			setSessionStorageRegistrationData(availableRegistrationData);
+		}
 	}, [location]);
 
 	useEffect(() => {
@@ -101,8 +111,14 @@ export const RegistrationWrapper = () => {
 				stage={<Stage hasAnimation={isFirstVisit} isReady={isReady} />}
 			>
 				<Box sx={{ pb: '96px' }}>
-					{stepDefinition[currentStep].component !== 'welcome' && (
-						<>
+					{stepDefinition[currentStep].component === 'welcome' ? (
+						<WelcomeScreen
+							nextStepUrl={`/registration${
+								stepDefinition[currentStep + 1].urlSuffix
+							}`}
+						></WelcomeScreen>
+					) : (
+						<form>
 							<Typography
 								sx={{ mb: '24px' }}
 								component="h1"
@@ -114,121 +130,122 @@ export const RegistrationWrapper = () => {
 								maxNumberOfSteps={4}
 								currentStep={currentStep}
 							></StepBar>
-						</>
-					)}
-					{stepDefinition[currentStep].component === 'welcome' && (
-						<WelcomeScreen
-							nextStepUrl={`/registration${
-								stepDefinition[currentStep + 1].urlSuffix
-							}`}
-						></WelcomeScreen>
-					)}
-					{stepDefinition[currentStep].component ===
-						'topicSelection' && <TopicSelection></TopicSelection>}
-					{stepDefinition[currentStep].component === 'zipcode' && (
-						<ZipcodeInput></ZipcodeInput>
-					)}
-					{stepDefinition[currentStep].component ===
-						'agencySelection' && (
-						<AgencySelection></AgencySelection>
-					)}
-					{stepDefinition[currentStep].component ===
-						'accountData' && <AccountData></AccountData>}
 
-					{stepDefinition[currentStep].component !== 'welcome' && (
-						<Box
-							sx={{
-								height: '96px',
-								position: 'fixed',
-								bottom: '0',
-								right: '0',
-								px: {
-									xs: '16px',
-									md: 'calc((100vw - 550px) / 2)',
-									lg: '0'
-								},
-								width: { xs: '100vw', lg: '60vw' },
-								backgroundColor: 'white',
-								borderTop: '1px solid #c6c5c4',
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center'
-							}}
-						>
-							<Box
-								sx={{
-									maxWidth: { xs: '600px', lg: '700px' },
-									display: 'flex',
-									justifyContent: 'space-between',
-									alignItems: 'center',
-									width: {
-										xs: '100%',
-										lg: 'calc(60vw - 300px)'
-									}
-								}}
-							>
-								{currentStep > 0 && (
-									<Link
+							{stepDefinition[currentStep].component ===
+								'topicSelection' && (
+								<TopicSelection></TopicSelection>
+							)}
+							{stepDefinition[currentStep].component ===
+								'zipcode' && <ZipcodeInput></ZipcodeInput>}
+							{stepDefinition[currentStep].component ===
+								'agencySelection' && (
+								<AgencySelection></AgencySelection>
+							)}
+							{stepDefinition[currentStep].component ===
+								'accountData' && <AccountData></AccountData>}
+
+							{stepDefinition[currentStep].component !==
+								'welcome' && (
+								<Box
+									sx={{
+										height: '96px',
+										position: 'fixed',
+										bottom: '0',
+										right: '0',
+										px: {
+											xs: '16px',
+											md: 'calc((100vw - 550px) / 2)',
+											lg: '0'
+										},
+										width: { xs: '100vw', lg: '60vw' },
+										backgroundColor: 'white',
+										borderTop: '1px solid #c6c5c4',
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center'
+									}}
+								>
+									<Box
 										sx={{
-											textDecoration: 'none',
-											color: 'info.light'
-										}}
-										component={RouterLink}
-										to={`/registration${
-											stepDefinition[currentStep - 1]
-												.urlSuffix
-										}`}
-									>
-										{translate('registration.back')}
-									</Link>
-								)}
-								{currentStep ===
-								Object.keys(stepDefinition).length - 1 ? (
-									<Button
-										disabled={disabledNextButton}
-										variant="contained"
-										onClick={() => {
-											// TODO: Check if username is available, use data from sessionStorage & last step to trigger registration
+											maxWidth: {
+												xs: '600px',
+												lg: '700px'
+											},
+											display: 'flex',
+											justifyContent: 'space-between',
+											alignItems: 'center',
+											width: {
+												xs: '100%',
+												lg: 'calc(60vw - 300px)'
+											}
 										}}
 									>
-										{translate('registration.register')}
-									</Button>
-								) : (
-									<Button
-										disabled={disabledNextButton}
-										sx={{ width: 'unset' }}
-										variant="contained"
-										component={RouterLink}
-										to={`/registration${
-											stepDefinition[currentStep + 1]
-												.urlSuffix
-										}`}
-										onClick={() => {
-											const existingRegistrationData =
-												sessionStorage.getItem(
-													'registrationData'
-												);
-											console.log(
-												existingRegistrationData
-											);
-											sessionStorage.setItem(
-												'registrationData',
-												JSON.stringify({
-													...(existingRegistrationData
-														? JSON.parse(
-																existingRegistrationData
-														  )
-														: null),
-													...dataForSessionStorage
-												})
-											);
-										}}
-									>
-										{translate('registration.next')}
-									</Button>
-								)}
-							</Box>
-						</Box>
+										{currentStep > 0 && (
+											<Link
+												sx={{
+													textDecoration: 'none',
+													color: 'info.light'
+												}}
+												component={RouterLink}
+												to={`/registration${
+													stepDefinition[
+														currentStep - 1
+													].urlSuffix
+												}`}
+											>
+												{translate('registration.back')}
+											</Link>
+										)}
+										{currentStep ===
+										Object.keys(stepDefinition).length -
+											1 ? (
+											<Button
+												disabled={disabledNextButton}
+												variant="contained"
+												onClick={() => {
+													// TODO: Check if username is available, use data from sessionStorage & last step to trigger registration
+												}}
+											>
+												{translate(
+													'registration.register'
+												)}
+											</Button>
+										) : (
+											<Button
+												disabled={disabledNextButton}
+												sx={{ width: 'unset' }}
+												variant="contained"
+												component={RouterLink}
+												to={`/registration${
+													stepDefinition[
+														currentStep + 1
+													].urlSuffix
+												}`}
+												onClick={() => {
+													const existingRegistrationData =
+														sessionStorage.getItem(
+															'registrationData'
+														);
+													sessionStorage.setItem(
+														'registrationData',
+														JSON.stringify({
+															...(existingRegistrationData
+																? JSON.parse(
+																		existingRegistrationData
+																  )
+																: null),
+															...dataForSessionStorage
+														})
+													);
+												}}
+											>
+												{translate('registration.next')}
+											</Button>
+										)}
+									</Box>
+								</Box>
+							)}
+						</form>
 					)}
 				</Box>
 			</StageLayout>
