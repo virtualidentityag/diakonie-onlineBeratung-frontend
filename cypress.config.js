@@ -33,9 +33,6 @@ module.exports = defineConfig({
 		CYPRESS_WS_URL:
 			process.env.CYPRESS_WS_URL || process.env.REACT_APP_API_URL
 	},
-	retries: {
-		runMode: 9
-	},
 	experimentalMemoryManagement: true,
 	numTestsKeptInMemory: 20,
 	video: false,

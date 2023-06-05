@@ -3,13 +3,15 @@ import {
 	OVERLAY_RELEASE_NOTE,
 	OVERLAY_TWO_FACTOR_NAG
 } from '../../../globalState/interfaces/AppConfig/OverlaysConfigInterface';
-import de from '../i18n/de.json';
-import deAgency from '../i18n/de.agency.json';
-import deConsultingTypes from '../i18n/de.consultingTypes.json';
-import en from '../i18n/en.json';
-import enAgency from '../i18n/en.agency.json';
-import enConsultingTypes from '../i18n/en.consultingTypes.json';
-import enLanguages from '../i18n/en.languages.json';
+import deAgency from '../i18n/overwrites/de.agency.json';
+import deConsultingTypes from '../i18n/overwrites/de.consultingTypes.json';
+import deInformal from '../i18n/overwrites/de.informal.json';
+import de from '../i18n/overwrites/de.json';
+import deLanguages from '../i18n/overwrites/de.languages.json';
+import enAgency from '../i18n/overwrites/en.agency.json';
+import enConsultingTypes from '../i18n/overwrites/en.consultingTypes.json';
+import en from '../i18n/overwrites/en.json';
+import enLanguages from '../i18n/overwrites/en.languages.json';
 
 export const uiUrl = window.location.origin ?? '';
 
@@ -301,7 +303,7 @@ export const config: AppConfigInterface = {
 		resources: {
 			de: {
 				languages: {
-					en: '(EN) Englisch'
+					...deLanguages
 				},
 				common: {
 					...de
@@ -311,6 +313,11 @@ export const config: AppConfigInterface = {
 				},
 				agencies: {
 					...deAgency
+				}
+			},
+			de_informal: {
+				common: {
+					...deInformal
 				}
 			},
 			en: {
