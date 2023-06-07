@@ -1,11 +1,6 @@
 module.exports = {
 	plugins: ['stylelint-scss', 'stylelint-no-unsupported-browser-features'],
-	extends: [
-		// The config from quality-gate isn't compatible with stylelint@^14,
-		// therefore merge it with working alternatives.
-		'stylelint-config-standard-scss',
-		'stylelint-config-standard'
-	],
+	extends: ['stylelint-config-standard', 'stylelint-config-standard-scss'],
 	rules: {
 		'selector-max-id': 0,
 		'string-quotes': 'single',
