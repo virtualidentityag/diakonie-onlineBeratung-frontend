@@ -18,11 +18,10 @@
 		"jsx": "react",
 		"noImplicitAny": false,
 		"sourceMap": true,
-		"suppressImplicitAnyIndexErrors": true,
 		"downlevelIteration": true,
 		"typeRoots": ["node_modules/@types"]
 	},
-	"include": ["src"],
+	"include": ["src", "cypress/support", ".storybook"],
 	"ts-node": {
 		"compilerOptions": {
 			"module": "commonjs"

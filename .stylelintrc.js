@@ -1,18 +1,16 @@
-const defaultConfig = require('@biotope/quality-gate/config/.stylelintrc');
-
 module.exports = {
-	...defaultConfig,
+	plugins: ['stylelint-scss', 'stylelint-no-unsupported-browser-features'],
 	extends: [
-		// TODO: From the admin app. Probably a good idea to enable.
-		// 'stylelint-config-idiomatic-order',
-
 		// The config from quality-gate isn't compatible with stylelint@^14,
 		// therefore merge it with working alternatives.
 		'stylelint-config-standard-scss',
-		'stylelint-config-prettier'
+		'stylelint-config-standard'
 	],
 	rules: {
-		...defaultConfig.rules,
+		'selector-max-id': 0,
+		'string-quotes': 'single',
+		'scss/dollar-variable-colon-space-after': 'always',
+		'scss/dollar-variable-colon-space-before': 'never',
 		'plugin/no-unsupported-browser-features': [
 			true,
 			{

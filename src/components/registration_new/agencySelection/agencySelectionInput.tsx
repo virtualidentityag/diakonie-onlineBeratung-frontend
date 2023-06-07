@@ -1,6 +1,6 @@
 import { InputAdornment, Typography } from '@mui/material';
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, VFC } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
@@ -11,17 +11,17 @@ interface AgencySelectionInputProps {
 	onInputChange(val: string): void;
 }
 
-export const AgencySelectionInput = ({
+export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 	value,
 	onInputChange
-}: AgencySelectionInputProps) => {
-	const { t: translate } = useTranslation();
+}) => {
+	const { t } = useTranslation();
 	const [shrinkInputLabel, setShrinkInputLabel] = useState<boolean>(false);
 
 	return (
 		<>
 			<Typography variant="h3">
-				{translate('registration.agency.headline')}
+				{t('registration.agency.headline')}
 			</Typography>
 			<Input
 				shrinkLabel={shrinkInputLabel}
@@ -32,7 +32,7 @@ export const AgencySelectionInput = ({
 					}
 				}}
 				value={value}
-				label={translate('registration.agency.search')}
+				label={t('registration.agency.search')}
 				inputType="number"
 				startAdornment={
 					<InputAdornment position="start">
@@ -51,7 +51,7 @@ export const AgencySelectionInput = ({
 						/>
 					</InputAdornment>
 				}
-			></Input>
+			/>
 		</>
 	);
 };

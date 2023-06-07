@@ -10,11 +10,11 @@ $arrow-icon-size: 14px;
 		.react-datepicker {
 			&-popper {
 				width: $calendar-width !important;
-				left: $chat-input-width/2 - $calendar-width/2 !important;
+				left: $chat-input-width * 0.5 - $calendar-width * 0.5 !important;
 			}
 
 			&__triangle {
-				left: $calendar-width / 2 !important;
+				left: $calendar-width * 0.5 !important;
 			}
 
 			&__input-container::after {

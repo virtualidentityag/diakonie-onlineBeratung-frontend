@@ -9,8 +9,8 @@ export interface InputProps {
 	value: string;
 	shrinkLabel?: boolean;
 	onInputChange?: Function;
-	startAdornment?: React.JSX.Element;
-	endAdornment?: React.JSX.Element;
+	startAdornment?: JSX.Element;
+	endAdornment?: JSX.Element;
 	isValueValid?(value: string): boolean;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
@@ -87,7 +87,6 @@ export const Input = ({
 	};
 
 	useEffect(() => {
-		console.log(shrinkLabel);
 		setShrink(shrinkLabel);
 	}, [shrinkLabel]);
 

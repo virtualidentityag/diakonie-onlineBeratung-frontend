@@ -1,14 +1,18 @@
 import { LinearProgress, Typography, Box } from '@mui/material';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
+import { VFC } from 'react';
 
 interface StepBarProps {
 	currentStep: number;
 	maxNumberOfSteps: number;
 }
 
-export const StepBar = ({ currentStep, maxNumberOfSteps }: StepBarProps) => {
-	const { t: translate } = useTranslation();
+export const StepBar: VFC<StepBarProps> = ({
+	currentStep,
+	maxNumberOfSteps
+}) => {
+	const { t } = useTranslation();
 	return (
 		<>
 			<Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -34,11 +38,11 @@ export const StepBar = ({ currentStep, maxNumberOfSteps }: StepBarProps) => {
 					</Typography>
 				</Box>
 				<Typography variant="h5" sx={{ fontWeight: '600' }}>
-					{translate('registration.stepbar.step')}{' '}
+					{t('registration.stepbar.step')}{' '}
 					{currentStep > maxNumberOfSteps
 						? maxNumberOfSteps
 						: currentStep}{' '}
-					{translate('registration.stepbar.of')} {maxNumberOfSteps}
+					{t('registration.stepbar.of')} {maxNumberOfSteps}
 				</Typography>
 			</Box>
 			<LinearProgress

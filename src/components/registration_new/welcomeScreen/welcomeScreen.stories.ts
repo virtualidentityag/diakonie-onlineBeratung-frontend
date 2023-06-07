@@ -1,10 +1,9 @@
-import React from 'react';
 import { Meta } from '@storybook/react';
 
 import { WelcomeScreen } from './welcomeScreen';
 
 export default {
-	title: 'Registration/StepBar',
+	title: 'Registration/WelcomeScreen',
 	component: WelcomeScreen
 } as Meta<typeof WelcomeScreen>;
 

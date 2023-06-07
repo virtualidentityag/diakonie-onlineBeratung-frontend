@@ -23,7 +23,7 @@ export const updateConsultantSession = (
 	}
 };
 
-Cypress.Commands.add(
+Cypress.Commands.add<any>(
 	'consultantSession',
 	(props: { [key: string]: any } = {}, index?: number) =>
 		new Promise((resolve) => {

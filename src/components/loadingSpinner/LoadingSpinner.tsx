@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoadingSpinner.styles.scss';
+import './LoadingSpinner.styles';
 import { useTranslation } from 'react-i18next';
 
 interface LoadingSpinnerProps {}

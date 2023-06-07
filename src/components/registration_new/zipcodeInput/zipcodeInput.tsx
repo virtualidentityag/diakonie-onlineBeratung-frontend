@@ -1,23 +1,23 @@
 import { InputAdornment, Typography } from '@mui/material';
 import * as React from 'react';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
-import { useState } from 'react';
+import { useState, VFC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from '../../input/input';
 
-export const ZipcodeInput = () => {
-	const { t: translate } = useTranslation();
+export const ZipcodeInput: VFC = () => {
+	const { t } = useTranslation();
 	const [value, setValue] = useState<string>('');
 	return (
 		<>
 			<Typography variant="h3">
-				{translate('registration.zipcode.headline')}
+				{t('registration.zipcode.headline')}
 			</Typography>
 			<Typography sx={{ mt: '16px' }}>
-				{translate('registration.zipcode.subline')}
+				{t('registration.zipcode.subline')}
 			</Typography>
-			<Typography>{translate('registration.zipcode.bullet1')}</Typography>
-			<Typography>{translate('registration.zipcode.bullet2')}</Typography>
+			<Typography>{t('registration.zipcode.bullet1')}</Typography>
+			<Typography>{t('registration.zipcode.bullet2')}</Typography>
 			<Input
 				inputType="number"
 				isValueValid={(val: string) => val.length === 5}
@@ -32,8 +32,8 @@ export const ZipcodeInput = () => {
 					}
 				}}
 				value={value}
-				label={translate('registration.zipcode.label')}
-			></Input>
+				label={t('registration.zipcode.label')}
+			/>
 		</>
 	);
 };

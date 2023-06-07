@@ -10,36 +10,33 @@ interface AgencyLanguagesProps {
 }
 
 export const AgencyLanguages = ({ agencyId }: AgencyLanguagesProps) => {
-	const { t: translate } = useTranslation();
+	const { t } = useTranslation();
 	const [languages, setLanguages] = useState<string[]>(['de']);
 	const { fixed: fixedLanguages } = React.useContext(LanguagesContext);
 
-	const getLanguages = async (agencyId: number) => {
-		await apiAgencyLanguages(agencyId, false).then((res) => {
-			const allLanguages = [...fixedLanguages, ...res.languages];
-			setLanguages(
-				allLanguages
-					.filter((element, index) => {
-						return allLanguages.indexOf(element) === index;
-					})
-					.sort()
-			);
-		});
-	};
-
 	useEffect(() => {
 		if (agencyId !== undefined) {
-			getLanguages(agencyId);
+			apiAgencyLanguages(agencyId, false).then((res) => {
+				const allLanguages = [...fixedLanguages, ...res.languages];
+				setLanguages(
+					allLanguages
+						.filter((element, index) => {
+							return allLanguages.indexOf(element) === index;
+						})
+						.sort()
+				);
+			});
 		}
-	}, [agencyId]);
+	}, [agencyId, fixedLanguages]);
 
 	return (
 		<Typography variant="body2" sx={{ color: 'info.light' }}>
-			{languages.map((lang, index) => {
-				return `${index !== 0 ? ' |' : ''} ${translate(
-					`languages.${lang}`
-				)} (${lang.toUpperCase()})`;
-			})}
+			{languages.map(
+				(lang, index) =>
+					`${index !== 0 ? ' |' : ''} ${t(
+						`languages.${lang}`
+					)} (${lang.toUpperCase()})`
+			)}
 		</Typography>
 	);
 };

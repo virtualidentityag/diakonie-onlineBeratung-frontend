@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress');
+const webpackConfig = require('./config/webpack.config')('development');
 
 // @ts-ignore
 const wp = require('@cypress/webpack-preprocessor');
@@ -31,8 +32,9 @@ module.exports = defineConfig({
 	},
 	component: {
 		devServer: {
-			framework: 'create-react-app',
-			bundler: 'webpack'
+			framework: 'react',
+			bundler: 'webpack',
+			webpackConfig
 		}
 	},
 	env: {

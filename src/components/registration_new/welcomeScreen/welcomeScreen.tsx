@@ -6,65 +6,68 @@ import ChatIcon from '@mui/icons-material/Chat';
 import MailIcon from '@mui/icons-material/Mail';
 import LockIcon from '@mui/icons-material/Lock';
 import { Link as RouterLink } from 'react-router-dom';
+import { useMemo, VFC } from 'react';
 
 interface WelcomeScreenProps {
 	nextStepUrl: string;
 }
 
-export const WelcomeScreen = ({ nextStepUrl }: WelcomeScreenProps) => {
-	const { t: translate } = useTranslation();
+export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
+	const { t } = useTranslation();
 
-	const infoDefinitions = [
-		{
-			icon: (
-				<CreateIcon
-					aria-hidden="true"
-					focusable="false"
-					sx={{ width: '30px', height: '30px' }}
-					color="primary"
-				></CreateIcon>
-			),
-			headline: translate('registration.welcomeScreen.info1.title'),
-			subline: translate('registration.welcomeScreen.info1.text')
-		},
-		{
-			icon: (
-				<ChatIcon
-					sx={{ width: '30px', height: '30px' }}
-					color="primary"
-				></ChatIcon>
-			),
-			headline: translate('registration.welcomeScreen.info2.title'),
-			subline: translate('registration.welcomeScreen.info2.text')
-		},
-		{
-			icon: (
-				<MailIcon
-					sx={{ width: '30px', height: '30px' }}
-					color="primary"
-				></MailIcon>
-			),
-			headline: translate('registration.welcomeScreen.info3.title'),
-			subline: translate('registration.welcomeScreen.info3.text')
-		},
-		{
-			icon: (
-				<LockIcon
-					sx={{ width: '30px', height: '30px' }}
-					color="primary"
-				></LockIcon>
-			),
-			headline: translate('registration.welcomeScreen.info4.title'),
-			subline: translate('registration.welcomeScreen.info4.text')
-		}
-	];
+	const infoDefinitions = useMemo(
+		() => [
+			{
+				icon: (
+					<CreateIcon
+						aria-hidden="true"
+						focusable="false"
+						sx={{ width: '30px', height: '30px' }}
+						color="primary"
+					/>
+				),
+				headline: t('registration.welcomeScreen.info1.title'),
+				subline: t('registration.welcomeScreen.info1.text')
+			},
+			{
+				icon: (
+					<ChatIcon
+						sx={{ width: '30px', height: '30px' }}
+						color="primary"
+					/>
+				),
+				headline: t('registration.welcomeScreen.info2.title'),
+				subline: t('registration.welcomeScreen.info2.text')
+			},
+			{
+				icon: (
+					<MailIcon
+						sx={{ width: '30px', height: '30px' }}
+						color="primary"
+					/>
+				),
+				headline: t('registration.welcomeScreen.info3.title'),
+				subline: t('registration.welcomeScreen.info3.text')
+			},
+			{
+				icon: (
+					<LockIcon
+						sx={{ width: '30px', height: '30px' }}
+						color="primary"
+					/>
+				),
+				headline: t('registration.welcomeScreen.info4.title'),
+				subline: t('registration.welcomeScreen.info4.text')
+			}
+		],
+		[t]
+	);
+
 	return (
 		<>
-			<Typography variant="h2">
-				{translate('registration.overline')}
-			</Typography>
+			<Typography variant="h2">{t('registration.overline')}</Typography>
 			<Typography variant="subtitle1" sx={{ mt: '12px', mb: '48px' }}>
-				{translate('registration.welcomeScreen.subline')}
+				{t('registration.welcomeScreen.subline')}
 			</Typography>
 			{infoDefinitions.map((info) => (
 				<Box sx={{ display: 'flex', alignItems: 'center', mb: '32px' }}>
@@ -93,9 +96,7 @@ export const WelcomeScreen = ({ nextStepUrl }: WelcomeScreenProps) => {
 						variant="body2"
 						sx={{ textAlign: 'center', fontWeight: '600' }}
 					>
-						{translate(
-							'registration.welcomeScreen.register.helperText'
-						)}
+						{t('registration.welcomeScreen.register.helperText')}
 					</Typography>
 					<Button
 						fullWidth
@@ -104,9 +105,7 @@ export const WelcomeScreen = ({ nextStepUrl }: WelcomeScreenProps) => {
 						component={RouterLink}
 						to={nextStepUrl}
 					>
-						{translate(
-							'registration.welcomeScreen.register.buttonLabel'
-						)}
+						{t('registration.welcomeScreen.register.buttonLabel')}
 					</Button>
 				</Box>
 				<Box sx={{ width: '50%' }}>
@@ -114,9 +113,7 @@ export const WelcomeScreen = ({ nextStepUrl }: WelcomeScreenProps) => {
 						variant="body2"
 						sx={{ textAlign: 'center', fontWeight: '600' }}
 					>
-						{translate(
-							'registration.welcomeScreen.login.helperText'
-						)}
+						{t('registration.welcomeScreen.login.helperText')}
 					</Typography>
 					<Button
 						fullWidth
@@ -125,9 +122,7 @@ export const WelcomeScreen = ({ nextStepUrl }: WelcomeScreenProps) => {
 						component={RouterLink}
 						to={`/login`}
 					>
-						{translate(
-							'registration.welcomeScreen.login.buttonLabel'
-						)}
+						{t('registration.welcomeScreen.login.buttonLabel')}
 					</Button>
 				</Box>
 			</Box>

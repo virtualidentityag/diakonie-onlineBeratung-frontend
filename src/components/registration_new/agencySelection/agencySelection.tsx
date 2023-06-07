@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, VFC } from 'react';
 import { AgencySelectionInput } from './agencySelectionInput';
 import { AgencySelectionResults } from './agencySelectionResults';
 import { apiAgencySelection } from '../../../api';
 import { AgencyDataInterface } from '../../../globalState';
 
-export const AgencySelection = () => {
+export const AgencySelection: VFC = () => {
 	const [value, setValue] = useState<string>('');
 	const [headlineZipcode, setHeadlineZipcode] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,6 +34,7 @@ export const AgencySelection = () => {
 			})();
 		}
 	}, [value]);
+
 	return (
 		<>
 			<AgencySelectionInput
@@ -41,12 +42,12 @@ export const AgencySelection = () => {
 				onInputChange={(val: string) => {
 					setValue(val);
 				}}
-			></AgencySelectionInput>
+			/>
 			<AgencySelectionResults
 				zipcode={headlineZipcode}
 				isLoading={isLoading}
 				results={results}
-			></AgencySelectionResults>
+			/>
 		</>
 	);
 };

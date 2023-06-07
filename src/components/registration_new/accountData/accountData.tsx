@@ -22,7 +22,7 @@ import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvi
 
 export const AccountData = () => {
 	const legalLinks = useContext(LegalLinksContext);
-	const { t: translate } = useTranslation();
+	const { t } = useTranslation();
 	const [password, setPassword] = useState<string>('');
 	const [repeatPassword, setRepeatPassword] = useState<string>('');
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>();
@@ -32,10 +32,10 @@ export const AccountData = () => {
 	return (
 		<>
 			<Typography variant="h3">
-				{translate('registration.account.headline')}
+				{t('registration.account.headline')}
 			</Typography>
 			<Typography sx={{ mt: '16px' }}>
-				{translate('registration.account.subline')}
+				{t('registration.account.subline')}
 			</Typography>
 			<Input
 				startAdornment={
@@ -47,14 +47,12 @@ export const AccountData = () => {
 					setUsername(val);
 				}}
 				value={username}
-				label={translate('registration.account.username.label')}
-				info={translate('registration.account.username.info')}
-				errorMessage={translate('registration.account.username.error')}
-				successMesssage={translate(
-					'registration.account.username.success'
-				)}
+				label={t('registration.account.username.label')}
+				info={t('registration.account.username.info')}
+				errorMessage={t('registration.account.username.error')}
+				successMesssage={t('registration.account.username.success')}
 				isValueValid={(val: string) => val.length >= 5}
-			></Input>
+			/>
 			<Input
 				inputType={isPasswordVisible ? 'text' : 'password'}
 				startAdornment={
@@ -65,8 +63,8 @@ export const AccountData = () => {
 				endAdornment={
 					<InputAdornment
 						position="start"
-						aria-label={translate('login.password.show')}
-						title={translate('login.password.show')}
+						aria-label={t('login.password.show')}
+						title={t('login.password.show')}
 					>
 						<VisibilityIcon
 							sx={{ cursor: 'pointer', color: 'info.light' }}
@@ -80,34 +78,26 @@ export const AccountData = () => {
 					setPassword(val);
 				}}
 				value={password}
-				label={translate('registration.account.password.label')}
+				label={t('registration.account.password.label')}
 				multipleCriteria={[
 					{
-						info: translate(
-							'registration.account.password.criteria1'
-						),
+						info: t('registration.account.password.criteria1'),
 						validation: (val) => val.length > 9
 					},
 					{
-						info: translate(
-							'registration.account.password.criteria2'
-						),
+						info: t('registration.account.password.criteria2'),
 						validation: (val) => hasNumber(val)
 					},
 					{
-						info: translate(
-							'registration.account.password.criteria3'
-						),
+						info: t('registration.account.password.criteria3'),
 						validation: (val) => hasMixedLetters(val)
 					},
 					{
-						info: translate(
-							'registration.account.password.criteria4'
-						),
+						info: t('registration.account.password.criteria4'),
 						validation: (val) => hasSpecialChar(val)
 					}
 				]}
-			></Input>
+			/>
 			<Input
 				inputType={isRepeatPasswordVisible ? 'text' : 'password'}
 				startAdornment={
@@ -118,8 +108,8 @@ export const AccountData = () => {
 				endAdornment={
 					<InputAdornment
 						position="start"
-						aria-label={translate('login.password.show')}
-						title={translate('login.password.show')}
+						aria-label={t('login.password.show')}
+						title={t('login.password.show')}
 					>
 						<VisibilityIcon
 							sx={{ cursor: 'pointer', color: 'info.light' }}
@@ -135,24 +125,20 @@ export const AccountData = () => {
 					setRepeatPassword(val);
 				}}
 				value={repeatPassword}
-				label={translate('registration.account.repeatPassword.label')}
+				label={t('registration.account.repeatPassword.label')}
 				isValueValid={(val) => val === password && password.length > 0}
-				errorMessage={translate(
-					'registration.account.repeatPassword.error'
-				)}
-				successMesssage={translate(
+				errorMessage={t('registration.account.repeatPassword.error')}
+				successMesssage={t(
 					'registration.account.repeatPassword.success'
 				)}
-			></Input>
+			/>
 			<FormGroup sx={{ mt: '40px' }}>
 				<FormControlLabel
 					sx={{ alignItems: 'flex-start' }}
 					control={<Checkbox sx={{ pt: 0 }} />}
 					label={
 						<Typography>
-							{translate(
-								'registration.dataProtection.label.prefix'
-							)}
+							{t('registration.dataProtection.label.prefix')}
 							{legalLinks
 								.filter((legalLink) => legalLink.registration)
 								.map((legalLink, index, { length }) => {
@@ -161,7 +147,7 @@ export const AccountData = () => {
 										linkPrefix =
 											index < length - 1
 												? ', '
-												: translate(
+												: t(
 														'registration.dataProtection.label.and'
 												  );
 									}
@@ -172,14 +158,12 @@ export const AccountData = () => {
 												target="_blank"
 												href={legalLink.url}
 											>
-												{translate(legalLink.label)}
+												{t(legalLink.label)}
 											</Link>
 										</>
 									);
 								})}
-							{translate(
-								'registration.dataProtection.label.suffix'
-							)}
+							{t('registration.dataProtection.label.suffix')}
 						</Typography>
 					}
 				/>

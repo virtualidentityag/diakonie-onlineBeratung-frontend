@@ -1,22 +1,15 @@
 import '../src/resources/styles/styles.scss';
 import '../src/resources/styles/mui-variables-mapping.scss';
+import i18n from 'i18next';
 import { ThemeProvider } from '@mui/material';
 import type { Preview } from '@storybook/react';
-import React from 'react';
+import * as React from 'react';
 import theme from '../src/theme';
-import i18n from './i18next';
+//import i18n from './i18next';
 import { config } from '../src/resources/scripts/config';
 import { LegalLinksProvider } from '../src/globalState/provider/LegalLinksProvider';
-
-export const parameters = {
-	i18n,
-	locale: 'de',
-	locales: {
-		de: 'Deutsch',
-		en: 'English',
-		de_informal: 'Deutsch (informal)'
-	}
-};
+import { init, FALLBACK_LNG } from '../src/i18n';
+init(config.i18n);
 
 export const withMuiTheme = (Story) => (
 	<ThemeProvider theme={theme}>
@@ -28,8 +21,18 @@ export const withMuiTheme = (Story) => (
 
 export const decorators = [withMuiTheme];
 
+const locales = {};
+(config.i18n.supportedLngs || []).forEach((supportLng) => {
+	const lng = supportLng.split('_informal')[0];
+	locales[supportLng] = i18n.getResource(FALLBACK_LNG, 'languages', lng);
+	if (supportLng.indexOf('_informal') >= 0) {
+		locales[supportLng] += ' (informal)';
+	}
+});
+
 const preview: Preview = {
 	parameters: {
+		i18n,
 		actions: { argTypesRegex: '^on[A-Z].*' },
 		controls: {
 			matchers: {
@@ -37,6 +40,10 @@ const preview: Preview = {
 				date: /Date$/
 			}
 		}
+	},
+	globals: {
+		locale: FALLBACK_LNG,
+		locales
 	},
 	decorators: [withMuiTheme]
 };
