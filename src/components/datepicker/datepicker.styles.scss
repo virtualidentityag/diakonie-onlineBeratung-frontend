@@ -38,6 +38,7 @@ $arrow-icon-size: 14px;
 		width: 100%;
 		font-size: $font-size-tertiary;
 		border: 1px solid #c4bfc4;
+
 		@include rounded-drop-shadow;
 
 		&--time-only {

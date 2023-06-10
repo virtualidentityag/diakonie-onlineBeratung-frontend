@@ -46,7 +46,7 @@ $gridSpacing: $grid-base-four;
 		margin-bottom: $grid-base-five;
 		transform: scale(0.9);
 
-		@media (min-width: calc(#{$xsmall} + #{$grid-base-three})) {
+		@media (calc(#{$xsmall} + #{$grid-base-three}) <= width) {
 			transform: scale(1);
 			margin-bottom: $grid-base-ten;
 		}

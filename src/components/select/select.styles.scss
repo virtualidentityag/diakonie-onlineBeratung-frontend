@@ -30,6 +30,7 @@ $select-menu-before-display: block !default;
 
 		&__menu {
 			border-top: 1px solid rgba($black, 0.1);
+
 			@include rounded-drop-shadow;
 
 			&::before {
@@ -117,8 +118,9 @@ $select-menu-before-display: block !default;
 		background: $white;
 		width: 100%;
 		border: 1px solid $form-disabled;
-		@include rounded-drop-shadow;
 		transition: opacity 0.25s ease, visibility 0.25s ease;
+
+		@include rounded-drop-shadow;
 
 		.custom-select-option {
 			text-align: left;

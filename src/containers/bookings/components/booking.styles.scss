@@ -332,7 +332,7 @@ $headerHeight: 80px;
 	&__cancel,
 	&__reschedule {
 		.text {
-			@media only screen and (max-width: 1410px) and (min-width: 900px) {
+			@media only screen and (900px <= width <= 1410px) {
 				display: none;
 			}
 		}

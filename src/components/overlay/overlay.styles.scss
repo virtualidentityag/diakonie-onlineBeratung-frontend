@@ -26,8 +26,8 @@ $overlay-illustration-size-large: 160px;
 		height: 100%;
 		top: 0;
 		left: 0;
-
 		animation: fadeIn linear 0.5s;
+
 		@keyframes fadeIn {
 			from {
 				opacity: 0;
@@ -70,6 +70,7 @@ $overlay-illustration-size-large: 160px;
 		text-align: $overlay-text-align;
 		margin: auto;
 		padding: $grid-base-ten $grid-base-three $grid-base-six;
+		animation: fadeIn linear 0.8s;
 
 		@include breakpoint($fromMedium) {
 			padding: $grid-base-six $grid-base-three;
@@ -82,7 +83,6 @@ $overlay-illustration-size-large: 160px;
 			padding: $grid-base-six;
 		}
 
-		animation: fadeIn linear 0.8s;
 		@keyframes fadeIn {
 			0% {
 				opacity: 0;

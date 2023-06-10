@@ -98,9 +98,10 @@ $iconSize: 20px;
 		background: white;
 		width: 230px;
 		border: $session-menu-border;
-		@include rounded-drop-shadow;
 		overflow: hidden;
 		z-index: 1;
+
+		@include rounded-drop-shadow;
 
 		a {
 			color: $form-secondary;

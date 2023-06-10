@@ -3,7 +3,6 @@ module.exports = {
 	extends: ['stylelint-config-standard', 'stylelint-config-standard-scss'],
 	rules: {
 		'selector-max-id': 0,
-		'string-quotes': 'single',
 		'scss/dollar-variable-colon-space-after': 'always',
 		'scss/dollar-variable-colon-space-before': 'never',
 		'plugin/no-unsupported-browser-features': [
@@ -32,14 +31,6 @@ module.exports = {
 				]
 			}
 		],
-
-		// From admin app
-		'max-empty-lines': [
-			2,
-			{
-				ignore: ['comments']
-			}
-		],
 		'rule-empty-line-before': [
 			'always-multi-line',
 			{
@@ -49,7 +40,6 @@ module.exports = {
 
 		// Defaults are not good
 		'alpha-value-notation': 'number',
-		'number-leading-zero': 'always',
 		'color-function-notation': 'legacy',
 		'value-keyword-case': null, // Requires e.g. "robotoslab" instead of "RobotoSlab"
 		'scss/operator-no-unspaced': null, // Has false positives
