@@ -9,14 +9,17 @@ import theme from '../src/theme';
 import { config } from '../src/resources/scripts/config';
 import { LegalLinksProvider } from '../src/globalState/provider/LegalLinksProvider';
 import { init, FALLBACK_LNG } from '../src/i18n';
+import { BrowserRouter as Router } from 'react-router-dom';
 init(config.i18n);
 
 export const withMuiTheme = (Story) => (
-	<ThemeProvider theme={theme}>
-		<LegalLinksProvider legalLinks={config.legalLinks}>
-			<Story />
-		</LegalLinksProvider>
-	</ThemeProvider>
+	<Router>
+		<ThemeProvider theme={theme}>
+			<LegalLinksProvider legalLinks={config.legalLinks}>
+				<Story />
+			</LegalLinksProvider>
+		</ThemeProvider>
+	</Router>
 );
 
 export const decorators = [withMuiTheme];
