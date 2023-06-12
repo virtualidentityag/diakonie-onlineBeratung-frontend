@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { WelcomeScreen } from '../welcomeScreen/welcomeScreen';
 import { RegistrationContext } from '../../../globalState';
+import { Helmet } from 'react-helmet';
 
 export const RegistrationWrapper = () => {
 	const isFirstVisit = useIsFirstVisit();
@@ -118,134 +119,149 @@ export const RegistrationWrapper = () => {
 							}`}
 						></WelcomeScreen>
 					) : (
-						<form>
-							<Typography
-								sx={{ mb: '24px' }}
-								component="h1"
-								variant="h2"
-							>
-								{translate('registration.headline')}
-							</Typography>
-							<StepBar
-								maxNumberOfSteps={4}
-								currentStep={currentStep}
-							></StepBar>
-
-							{stepDefinition[currentStep].component ===
-								'topicSelection' && (
-								<TopicSelection></TopicSelection>
-							)}
-							{stepDefinition[currentStep].component ===
-								'zipcode' && <ZipcodeInput></ZipcodeInput>}
-							{stepDefinition[currentStep].component ===
-								'agencySelection' && (
-								<AgencySelection></AgencySelection>
-							)}
-							{stepDefinition[currentStep].component ===
-								'accountData' && <AccountData></AccountData>}
-
-							{stepDefinition[currentStep].component !==
-								'welcome' && (
-								<Box
-									sx={{
-										height: '96px',
-										position: 'fixed',
-										bottom: '0',
-										right: '0',
-										px: {
-											xs: '16px',
-											md: 'calc((100vw - 550px) / 2)',
-											lg: '0'
-										},
-										width: { xs: '100vw', lg: '60vw' },
-										backgroundColor: 'white',
-										borderTop: '1px solid #c6c5c4',
-										display: 'flex',
-										justifyContent: 'center',
-										alignItems: 'center'
-									}}
+						<>
+							<Helmet>
+								<meta name="robots" content="noindex"></meta>
+							</Helmet>
+							<form>
+								<Typography
+									sx={{ mb: '24px' }}
+									component="h1"
+									variant="h2"
 								>
+									{translate('registration.headline')}
+								</Typography>
+								<StepBar
+									maxNumberOfSteps={4}
+									currentStep={currentStep}
+								></StepBar>
+
+								{stepDefinition[currentStep].component ===
+									'topicSelection' && (
+									<TopicSelection></TopicSelection>
+								)}
+								{stepDefinition[currentStep].component ===
+									'zipcode' && <ZipcodeInput></ZipcodeInput>}
+								{stepDefinition[currentStep].component ===
+									'agencySelection' && (
+									<AgencySelection></AgencySelection>
+								)}
+								{stepDefinition[currentStep].component ===
+									'accountData' && (
+									<AccountData></AccountData>
+								)}
+
+								{stepDefinition[currentStep].component !==
+									'welcome' && (
 									<Box
 										sx={{
-											maxWidth: {
-												xs: '600px',
-												lg: '700px'
+											height: '96px',
+											position: 'fixed',
+											bottom: '0',
+											right: '0',
+											px: {
+												xs: '16px',
+												md: 'calc((100vw - 550px) / 2)',
+												lg: '0'
 											},
+											width: { xs: '100vw', lg: '60vw' },
+											backgroundColor: 'white',
+											borderTop: '1px solid #c6c5c4',
 											display: 'flex',
-											justifyContent: 'space-between',
-											alignItems: 'center',
-											width: {
-												xs: '100%',
-												lg: 'calc(60vw - 300px)'
-											}
+											justifyContent: 'center',
+											alignItems: 'center'
 										}}
 									>
-										{currentStep > 0 && (
-											<Link
-												sx={{
-													textDecoration: 'none',
-													color: 'info.light'
-												}}
-												component={RouterLink}
-												to={`/registration${
-													stepDefinition[
-														currentStep - 1
-													].urlSuffix
-												}`}
-											>
-												{translate('registration.back')}
-											</Link>
-										)}
-										{currentStep ===
-										Object.keys(stepDefinition).length -
-											1 ? (
-											<Button
-												disabled={disabledNextButton}
-												variant="contained"
-												onClick={() => {
-													// TODO: Check if username is available, use data from sessionStorage & last step to trigger registration
-												}}
-											>
-												{translate(
-													'registration.register'
-												)}
-											</Button>
-										) : (
-											<Button
-												disabled={disabledNextButton}
-												sx={{ width: 'unset' }}
-												variant="contained"
-												component={RouterLink}
-												to={`/registration${
-													stepDefinition[
-														currentStep + 1
-													].urlSuffix
-												}`}
-												onClick={() => {
-													const existingRegistrationData =
-														sessionStorage.getItem(
-															'registrationData'
+										<Box
+											sx={{
+												maxWidth: {
+													xs: '600px',
+													lg: '700px'
+												},
+												display: 'flex',
+												justifyContent: 'space-between',
+												alignItems: 'center',
+												width: {
+													xs: '100%',
+													lg: 'calc(60vw - 300px)'
+												}
+											}}
+										>
+											{currentStep > 0 && (
+												<Link
+													sx={{
+														textDecoration: 'none',
+														color: 'info.light'
+													}}
+													component={RouterLink}
+													to={`/registration${
+														stepDefinition[
+															currentStep - 1
+														].urlSuffix
+													}`}
+												>
+													{translate(
+														'registration.back'
+													)}
+												</Link>
+											)}
+											{currentStep ===
+											Object.keys(stepDefinition).length -
+												1 ? (
+												<Button
+													disabled={
+														disabledNextButton
+													}
+													variant="contained"
+													onClick={() => {
+														// TODO: Check if username is available, use data from sessionStorage & last step to trigger registration
+													}}
+												>
+													{translate(
+														'registration.register'
+													)}
+												</Button>
+											) : (
+												<Button
+													disabled={
+														disabledNextButton
+													}
+													sx={{ width: 'unset' }}
+													variant="contained"
+													component={RouterLink}
+													to={`/registration${
+														stepDefinition[
+															currentStep + 1
+														].urlSuffix
+													}`}
+													onClick={() => {
+														const existingRegistrationData =
+															sessionStorage.getItem(
+																'registrationData'
+															);
+														sessionStorage.setItem(
+															'registrationData',
+															JSON.stringify({
+																...(existingRegistrationData
+																	? JSON.parse(
+																			existingRegistrationData
+																	  )
+																	: null),
+																...dataForSessionStorage
+															})
 														);
-													sessionStorage.setItem(
-														'registrationData',
-														JSON.stringify({
-															...(existingRegistrationData
-																? JSON.parse(
-																		existingRegistrationData
-																  )
-																: null),
-															...dataForSessionStorage
-														})
-													);
-												}}
-											>
-												{translate('registration.next')}
-											</Button>
-										)}
+													}}
+												>
+													{translate(
+														'registration.next'
+													)}
+												</Button>
+											)}
+										</Box>
 									</Box>
-								</Box>
-							)}
-						</form>
+								)}
+							</form>
+						</>
 					)}
 				</Box>
 			</StageLayout>
