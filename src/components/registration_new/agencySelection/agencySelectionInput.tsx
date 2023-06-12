@@ -24,7 +24,7 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 			</Typography>
 			<Input
 				onInputChange={(val) => {
-					if (val.length < 6) {
+					if (val?.length < 6) {
 						onInputChange(val);
 					}
 				}}

@@ -89,45 +89,52 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 				</Typography>
 			)}
 			{/* only external results */}
-			{results?.every((agency) => agency.external) && (
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						p: '16px',
-						mt: '16px',
-						borderRadius: '4px',
-						border: '1px solid #c6c5c4'
-					}}
-				>
-					<Box sx={{ mr: '24px' }}>
-						<Typography variant="h5" sx={{ fontWeight: '600' }}>
-							{t('registration.agency.result.external.headline')}
-						</Typography>
-						<Typography sx={{ mt: '16px' }}>
-							{t('registration.agency.result.external.subline')}
-						</Typography>
-						{results?.[0].url && (
-							<Button
-								target="_blank"
-								component={Link}
-								href={results?.[0].url}
-								sx={{ mt: '16px' }}
-								variant="contained"
-								startIcon={<OpenInNewIcon />}
-							>
-								{t('registration.agency.result.external.link')}
-							</Button>
-						)}
-					</Box>
+			{results?.length > 0 &&
+				results?.every((agency) => agency.external) && (
 					<Box
-						component="img"
-						src={ConsultantIllustration}
-						sx={{ height: '156px', width: '156px' }}
-					/>
-				</Box>
-			)}
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center',
+							p: '16px',
+							mt: '16px',
+							borderRadius: '4px',
+							border: '1px solid #c6c5c4'
+						}}
+					>
+						<Box sx={{ mr: '24px' }}>
+							<Typography variant="h5" sx={{ fontWeight: '600' }}>
+								{t(
+									'registration.agency.result.external.headline'
+								)}
+							</Typography>
+							<Typography sx={{ mt: '16px' }}>
+								{t(
+									'registration.agency.result.external.subline'
+								)}
+							</Typography>
+							{results?.[0]?.url && (
+								<Button
+									target="_blank"
+									component={Link}
+									href={results?.[0]?.url}
+									sx={{ mt: '16px' }}
+									variant="contained"
+									startIcon={<OpenInNewIcon />}
+								>
+									{t(
+										'registration.agency.result.external.link'
+									)}
+								</Button>
+							)}
+						</Box>
+						<Box
+							component="img"
+							src={ConsultantIllustration}
+							sx={{ height: '156px', width: '156px' }}
+						/>
+					</Box>
+				)}
 			{/* no Results */}
 			{results?.length === 0 && (
 				<Box
@@ -156,7 +163,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 							component={Link}
 							// TODO: Add fallback URL from Tenant
 							href={parsePlaceholderString(
-								settings.postcodeFallbackUrl,
+								settings?.postcodeFallbackUrl,
 								{
 									url: 'https://fallbackURL.de',
 									postcode: zipcode

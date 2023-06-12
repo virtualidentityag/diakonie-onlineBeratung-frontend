@@ -17,7 +17,7 @@ export const AgencySelection: VFC = () => {
 	);
 
 	useEffect(() => {
-		if (value.length === 5) {
+		if (value?.length === 5) {
 			setHeadlineZipcode(value);
 			setResults(undefined);
 			(async () => {
@@ -25,7 +25,7 @@ export const AgencySelection: VFC = () => {
 				// TODO: Add topic Id when available and remove consultingType
 				await apiAgencySelection({
 					postcode: value,
-					consultingType: 0
+					consultingType: 24
 				})
 					.then((res) => {
 						setResults(res);
