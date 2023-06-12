@@ -23,6 +23,7 @@ import {
 	InformalProvider,
 	LegalLinkInterface,
 	LocaleProvider,
+	RegistrationProvider,
 	TenantProvider
 } from '../../globalState';
 import { LegalLinksProvider } from '../../globalState/provider/LegalLinksProvider';
@@ -34,17 +35,13 @@ import { GlobalComponentContext } from '../../globalState/provider/GlobalCompone
 import theme from '../../theme';
 import { ThemeProvider } from '@mui/material';
 import { UrlParamsProvider } from '../../globalState/provider/UrlParamsProvider';
+import { RegistrationWrapper } from '../registration_new/registrationWrapper/registrationWrapper';
 
 const Login = lazy(() =>
 	import('../login/Login').then((m) => ({ default: m.Login }))
 );
 const AuthenticatedApp = lazy(() =>
 	import('./AuthenticatedApp').then((m) => ({ default: m.AuthenticatedApp }))
-);
-const Registration = lazy(() =>
-	import('../registration/Registration').then((m) => ({
-		default: m.Registration
-	}))
 );
 const WaitingRoomLoader = lazy(() =>
 	import('../waitingRoom/WaitingRoomLoader').then((m) => ({
@@ -97,14 +94,18 @@ export const App = ({
 									spoken={spokenLanguages}
 								>
 									<LegalLinksProvider legalLinks={legalLinks}>
-										<GlobalComponentContext.Provider
-											value={{ Stage: stageComponent }}
-										>
-											<RouterWrapper
-												extraRoutes={extraRoutes}
-												entryPoint={entryPoint}
-											/>
-										</GlobalComponentContext.Provider>
+										<RegistrationProvider>
+											<GlobalComponentContext.Provider
+												value={{
+													Stage: stageComponent
+												}}
+											>
+												<RouterWrapper
+													extraRoutes={extraRoutes}
+													entryPoint={entryPoint}
+												/>
+											</GlobalComponentContext.Provider>
+										</RegistrationProvider>
 									</LegalLinksProvider>
 								</LanguagesProvider>
 							</LocaleProvider>
@@ -164,18 +165,14 @@ const RouterWrapper = ({ extraRoutes, entryPoint }: RouterWrapperProps) => {
 								<Route
 									path={[
 										'/registration',
-										'/:consultingTypeSlug/registration'
+										'/registration/topic-selection',
+										'/registration/zipcode',
+										'/registration/account-data',
+										'/registration/agency-selection'
 									]}
 								>
 									<UrlParamsProvider>
-										<Registration
-											handleUnmatchConsultingType={() =>
-												history.push('/login')
-											}
-											handleUnmatchConsultant={() =>
-												history.push('/login')
-											}
-										/>
+										<RegistrationWrapper />
 									</UrlParamsProvider>
 								</Route>
 
