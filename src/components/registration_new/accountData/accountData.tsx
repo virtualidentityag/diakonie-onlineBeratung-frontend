@@ -65,6 +65,7 @@ export const AccountData = () => {
 			passwordCriteria.every((criteria) => criteria.validation(password))
 		) {
 			setDisabledNextButton(false);
+			// TODO: Don't save password in session Storage ?
 			setDataForSessionStorage({ username, password });
 		} else {
 			setDisabledNextButton(true);

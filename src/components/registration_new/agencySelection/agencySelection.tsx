@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { useState, useEffect, VFC } from 'react';
+import { useState, useEffect, VFC, useContext } from 'react';
 import { AgencySelectionInput } from './agencySelectionInput';
 import { AgencySelectionResults } from './agencySelectionResults';
 import { apiAgencySelection } from '../../../api';
-import { AgencyDataInterface } from '../../../globalState';
+import { AgencyDataInterface, RegistrationContext } from '../../../globalState';
 
 export const AgencySelection: VFC = () => {
-	const [value, setValue] = useState<string>('');
+	const { sessionStorageRegistrationData } = useContext(RegistrationContext);
+	const [value, setValue] = useState<string>(
+		sessionStorageRegistrationData.agencyZipcode || undefined
+	);
 	const [headlineZipcode, setHeadlineZipcode] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [results, setResults] = useState<AgencyDataInterface[] | undefined>(

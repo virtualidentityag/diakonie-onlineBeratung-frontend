@@ -10,7 +10,7 @@ import {
 	Link
 } from '@mui/material';
 import * as React from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import InfoIcon from '@mui/icons-material/Info';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import NoResultsIllustration from '../../../resources/img/illustrations/no-results.svg';
@@ -37,8 +37,15 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 }) => {
 	const { t } = useTranslation();
 	const settings = useAppConfig();
-	const { setDisabledNextButton, setDataForSessionStorage } =
-		useContext(RegistrationContext);
+	const {
+		setDisabledNextButton,
+		setDataForSessionStorage,
+		sessionStorageRegistrationData
+	} = useContext(RegistrationContext);
+
+	const [agencyId, setAgencyId] = useState<number>(
+		sessionStorageRegistrationData.agencyId || undefined
+	);
 
 	useEffect(() => {
 		if (
@@ -47,10 +54,18 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 				return agency.external;
 			})
 		) {
+			setAgencyId(results[0].id);
 			setDisabledNextButton(false);
-			setDataForSessionStorage({ agencyId: results[0].id });
-		} else {
-			setDisabledNextButton(true);
+			setDataForSessionStorage({
+				agencyId: results[0].id,
+				agencyZipcode: zipcode
+			});
+		} else if (agencyId) {
+			setDisabledNextButton(false);
+			setDataForSessionStorage({
+				agencyId: agencyId,
+				agencyZipcode: zipcode
+			});
 		}
 	}, [results, setDataForSessionStorage, setDisabledNextButton]);
 
@@ -251,14 +266,23 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 									}}
 								>
 									<FormControlLabel
-										onClick={() => {
+										onClick={(e) => {
 											setDisabledNextButton(false);
+											setAgencyId(agency.id);
+											setDataForSessionStorage({
+												agencyId: agency.id,
+												agencyZipcode: zipcode
+											});
 										}}
 										sx={{
 											alignItems: 'flex-start'
 										}}
-										value={agency.name}
-										control={<Radio />}
+										value={agency.id}
+										control={
+											<Radio
+												checked={agencyId === agency.id}
+											/>
+										}
 										label={
 											<Box
 												sx={{

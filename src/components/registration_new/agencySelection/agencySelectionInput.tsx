@@ -16,7 +16,6 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 	onInputChange
 }) => {
 	const { t } = useTranslation();
-	const [shrinkInputLabel, setShrinkInputLabel] = useState<boolean>(false);
 
 	return (
 		<>
@@ -24,10 +23,8 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 				{t('registration.agency.headline')}
 			</Typography>
 			<Input
-				shrinkLabel={shrinkInputLabel}
 				onInputChange={(val) => {
 					if (val.length < 6) {
-						setShrinkInputLabel(true);
 						onInputChange(val);
 					}
 				}}
@@ -46,7 +43,6 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 							color="info"
 							onClick={() => {
 								onInputChange('');
-								setShrinkInputLabel(false);
 							}}
 						/>
 					</InputAdornment>

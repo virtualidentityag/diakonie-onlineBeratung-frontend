@@ -36,7 +36,7 @@ export const Input = ({
 	successMesssage,
 	multipleCriteria
 }: InputProps) => {
-	const [shrink, setShrink] = useState<boolean>(shrinkLabel || false);
+	const [shrink, setShrink] = useState<boolean>(value.length > 0);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
 	const [showSuccessMessage, setShowSuccessMessage] =
 		useState<boolean>(false);
