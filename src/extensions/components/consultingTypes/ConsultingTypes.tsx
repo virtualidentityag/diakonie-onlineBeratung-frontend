@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiGetConsultingTypeGroups } from '../../api/apiGetConsultingTypeGroups';
 import { ConsultingTypeGroupInterface } from '../../globalState/interfaces/ConsultingTypeGroupInterface';
-import { Stage } from '../stage/Stage';
+import { Stage } from '../stage/stage';
 import { ConsultingTypesGroupChild } from './ConsultingTypesGroupChild';
 import { ConsultingTypesOverlay } from './ConsultingTypesOverlay';
 import './ConsultingTypes.styles.scss';

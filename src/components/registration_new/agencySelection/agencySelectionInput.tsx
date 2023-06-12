@@ -1,6 +1,6 @@
 import { InputAdornment, Typography } from '@mui/material';
 import * as React from 'react';
-import { useState, VFC } from 'react';
+import { VFC } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';

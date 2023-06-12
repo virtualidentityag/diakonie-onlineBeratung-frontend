@@ -4,7 +4,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useState, useEffect, useRef, useCallback, MouseEvent } from 'react';
 import { ReactComponent as Logo } from './logo.svg';
 import { ReactComponent as Loader } from './loader.svg';
-import './Stage.styles';
+import './stage.styles';
 import { Banner } from '../../../components/banner/Banner';
 import { Headline } from '../../../components/headline/Headline';
 

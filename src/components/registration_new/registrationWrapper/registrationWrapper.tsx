@@ -1,7 +1,6 @@
 import { Typography, Link, Button, Box } from '@mui/material';
 import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
-import { Stage } from '../../stage/stage';
 import { StageLayout } from '../../stageLayout/StageLayout';
 import useIsFirstVisit from '../../../utils/useIsFirstVisit';
 import { StepBar } from '../stepBar/StepBar';
@@ -15,9 +14,11 @@ import { Link as RouterLink } from 'react-router-dom';
 import { WelcomeScreen } from '../welcomeScreen/welcomeScreen';
 import { RegistrationContext } from '../../../globalState';
 import { Helmet } from 'react-helmet';
+import { GlobalComponentContext } from '../../../globalState/provider/GlobalComponentContext';
 
 export const RegistrationWrapper = () => {
 	const isFirstVisit = useIsFirstVisit();
+	const { Stage } = useContext(GlobalComponentContext);
 	const {
 		disabledNextButton,
 		setDisabledNextButton,

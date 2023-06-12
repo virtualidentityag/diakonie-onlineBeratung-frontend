@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stage } from '../stage/Stage';
+import { Stage } from '../stage/stage';
 import useDocumentTitle from '../../resources/utils/useDocumentTitle';
 import './legalPage.styles';
 import { useTranslation } from 'react-i18next';

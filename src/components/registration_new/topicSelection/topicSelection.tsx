@@ -104,78 +104,74 @@ export const TopicSelection: VFC = () => {
 											if (a.name === b.name) return 0;
 											return a.name < b.name ? -1 : 1;
 										})
-										.map((topicId, index) => {
-											const topic = getTopic(topicId);
-											return (
-												<Box
+										.map((topic, index) => (
+											<Box
+												sx={{
+													display: 'flex',
+													justifyContent:
+														'space-between',
+													width: '100%',
+													mt:
+														index === 0
+															? '0'
+															: '16px'
+												}}
+											>
+												<FormControlLabel
 													sx={{
-														display: 'flex',
-														justifyContent:
-															'space-between',
-														width: '100%',
-														mt:
-															index === 0
-																? '0'
-																: '16px'
+														alignItems: 'flex-start'
 													}}
-												>
-													<FormControlLabel
-														sx={{
-															alignItems:
-																'flex-start'
-														}}
-														value={topic.id}
-														control={
-															<Radio
-																onClick={() => {
-																	setValue(
-																		topic.id
-																	);
-																	setDataForSessionStorage(
-																		{
-																			topicId:
-																				topic.id
-																		}
-																	);
-																}}
-																checked={
-																	value ===
+													value={topic.id}
+													control={
+														<Radio
+															onClick={() => {
+																setValue(
 																	topic.id
-																}
-															/>
-														}
-														label={
-															<Box
-																sx={{
-																	mt: '10px',
-																	ml: '10px'
-																}}
-															>
-																<Typography variant="body1">
-																	{topic.name}
-																</Typography>
-															</Box>
-														}
-													/>{' '}
-													{topic.description && (
-														<Tooltip
-															title={
-																topic.description
+																);
+																setDataForSessionStorage(
+																	{
+																		topicId:
+																			topic.id
+																	}
+																);
+															}}
+															checked={
+																value ===
+																topic.id
 															}
-															arrow
+														/>
+													}
+													label={
+														<Box
+															sx={{
+																mt: '10px',
+																ml: '10px'
+															}}
 														>
-															<InfoIcon
-																sx={{
-																	p: '9px',
-																	width: '42px',
-																	height: '42px'
-																}}
-															></InfoIcon>
-														</Tooltip>
-													)}
-												</Box>
-											);
-										})}
+															<Typography variant="body1">
+																{topic.name}
+															</Typography>
+														</Box>
+													}
+												/>{' '}
+												{topic.description && (
+													<Tooltip
+														title={
+															topic.description
+														}
+														arrow
+													>
+														<InfoIcon
+															sx={{
+																p: '9px',
+																width: '42px',
+																height: '42px'
+															}}
+														></InfoIcon>
+													</Tooltip>
+												)}
+											</Box>
+										))}
 								</AccordionDetails>
 							</Accordion>
 						);
