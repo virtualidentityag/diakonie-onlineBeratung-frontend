@@ -17,7 +17,7 @@ export const updateAskerSession = (
 	}
 };
 
-Cypress.Commands.add(
+Cypress.Commands.add<any>(
 	'askerSession',
 	(props: { [key: string]: any } = {}, index?: number) =>
 		new Promise((resolve) => {

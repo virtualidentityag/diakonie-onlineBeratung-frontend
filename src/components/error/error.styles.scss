@@ -85,8 +85,8 @@ $error-page-background: rgba($form-medium, 0.08) !default;
 			max-height: $illustrationWrapperMaxSize;
 			border-radius: calc(#{$illustrationSize} / 2);
 			margin: $grid-base-three;
-
 			animation: fadeIn linear 0.5s;
+
 			@keyframes fadeIn {
 				from {
 					opacity: 0;
@@ -124,11 +124,11 @@ $error-page-background: rgba($form-medium, 0.08) !default;
 		align-self: center;
 		margin-top: 0;
 
-		@media (min-width: 700px) {
+		@media (700px <= width) {
 			width: 650px;
 		}
 
-		@media (min-width: $fromLarge) {
+		@media ($fromLarge <= width) {
 			width: calc(50vw - 168px);
 			text-align: left;
 			margin-top: 0;

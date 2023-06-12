@@ -25,6 +25,7 @@
 		min-width: 400px;
 		max-width: 400px;
 		transition: opacity 0.1s ease-out;
+
 		@include rounded-drop-shadow;
 		display: grid !important;
 		grid-template-columns: auto;

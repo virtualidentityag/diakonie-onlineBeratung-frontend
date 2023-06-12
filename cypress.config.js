@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress');
+const webpackConfig = require('./config/webpack.config')('development');
 
 // @ts-ignore
 const wp = require('@cypress/webpack-preprocessor');
@@ -27,6 +28,13 @@ module.exports = defineConfig({
 		supportFile: 'cypress/support/e2e.{js,jsx,ts,tsx}',
 		setupNodeEvents(on, config) {
 			on('file:preprocessor', wp(options));
+		}
+	},
+	component: {
+		devServer: {
+			framework: 'react',
+			bundler: 'webpack',
+			webpackConfig
 		}
 	},
 	env: {

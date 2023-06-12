@@ -211,7 +211,7 @@ $tabBarHeightDesktop: 53px;
 		&__image {
 			width: $illustrationWrapperSize;
 			height: $illustrationWrapperSize;
-			border-radius: $illustrationWrapperSize / 2;
+			border-radius: $illustrationWrapperSize * 0.5;
 			background-color: $illustration-background-info;
 			display: flex;
 			align-items: center;

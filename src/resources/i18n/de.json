@@ -1724,6 +1724,9 @@
 		"iconTitle": "QR-Code"
 	},
 	"registration": {
+		"next": "Weiter",
+		"back": "Zurück",
+		"register": "Registrieren",
 		"accordion": {
 			"item": {
 				"continueButton": {
@@ -1736,12 +1739,64 @@
 			"dropdown": "Alter auswählen*",
 			"headline": "Alter angeben"
 		},
+		"stepbar": {
+			"step": "Schritt",
+			"of": "von"
+		},
+		"topic": {
+			"headline": "Zu welchem Thema suchen Sie Beratung?",
+			"subline": "Wählen Sie ein Thema aus unserem Beratungsangebot aus."
+		},
+		"zipcode": {
+			"headline": "Um Sie bestmöglich beraten zu können benötigen wir Ihre Postleitzahl",
+			"subline": "Warum? Weil dann unsere Fachleute:",
+			"bullet1": "• die Hilfen rund um Ihren Wohnort kennen",
+			"bullet2": "• die Gesetze Ihres Bundeslandes kennen",
+			"label": "Ihre Postleitzahl"
+		},
+		"account": {
+			"headline": "Anmeldedaten erfassen",
+			"subline": "Um Ihre Anonymität zu schützen, raten wir Ihnen, nicht Ihren tatsächlichen Namen oder Initialen zu verwenden.",
+			"username": {
+				"label": "Benutzername",
+				"error": "Ihr Benutzername ist zu kurz.",
+				"info": "5 oder mehr Zeichen",
+				"successMessage": "Ihr Benutzername ist geeignet."
+			},
+			"password": {
+				"label": "Passwort",
+				"criteria1": "mindestens 9 Zeichen",
+				"criteria2": "mindestens eine Zahl",
+				"criteria3": "Groß-/Kleinschreibung",
+				"criteria4": "mindestens ein Sonderzeichen"
+			},
+			"repeatPassword": {
+				"label": "Passwort wiederholen",
+				"success": "Ihr Passwort ist identisch.",
+				"error": "Ihr Passwort ist nicht identisch."
+			}
+		},
 		"agency": {
 			"preselected": {
 				"prefix": "Ihre vorausgewählte Beratungsstelle: ",
 				"isTeam": "Sie werden von einem Team beraten."
 			},
-			"headline": "Beratungsstelle wählen"
+			"headline": "Ihre Beratungsstelle wählen",
+			"search": "Suche nach einer PLZ",
+			"result": {
+				"headline": "Beratungsstellen zur Postleitzahl",
+				"external": {
+					"headline": "Die gefundene Beratungsstelle nutzt eine andere Anwendung für die Beratung",
+					"subline": "Bitte versuchen Sie es mit einer anderen Postleitzahl oder besuchen Sie unsere Website, um eine Beratungsstelle in Ihrer Nähe zu finden.",
+					"link": "Jetzt wechseln"
+				},
+				"languages": "Diese Beratungsstelle berät Sie auf:"
+			},
+			"noresult": {
+				"headline": "Keine Online-Beratungsstelle gefunden",
+				"subline": "Bitte versuchen Sie es mit einer anderen Postleitzahl oder besuchen Sie unsere Website, um eine Beratungsstelle in Ihrer Nähe zu finden.",
+				"label": "Zur Beratungsstellensuche"
+			}
 		},
 		"agencySelection": {
 			"headline": "Beratungsstelle wählen",
@@ -1801,7 +1856,7 @@
 			"label": {
 				"prefix": "Ich habe die ",
 				"and": " und ",
-				"suffix": " zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies."
+				"suffix": " zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies.*"
 			}
 		},
 		"form": {
@@ -1906,7 +1961,11 @@
 			},
 			"register": {
 				"buttonLabel": "Registrieren",
-				"helperText": "Noch nicht registriert?"
+				"helperText": "Neu bei der Online-Beratung?"
+			},
+			"login": {
+				"buttonLabel": "Einloggen",
+				"helperText": "Bereits registriert?"
 			},
 			"subline": "Wie läuft die Beratung & Hilfe der Caritas ab?"
 		}

@@ -42,16 +42,17 @@ export const AskerInfoData = () => {
 						: ''}
 				</p>
 			</div>
-			{activeSession.item.consultingType === 0 && !activeSession.isLive && (
-				<div className="profile__data__item">
-					<p className="profile__data__label">
-						{translate('userProfile.data.postcode')}
-					</p>
-					<p className="profile__data__content">
-						{activeSession.item.postcode}
-					</p>
-				</div>
-			)}
+			{activeSession.item.consultingType === 0 &&
+				!activeSession.isLive && (
+					<div className="profile__data__item">
+						<p className="profile__data__label">
+							{translate('userProfile.data.postcode')}
+						</p>
+						<p className="profile__data__content">
+							{activeSession.item.postcode}
+						</p>
+					</div>
+				)}
 			{preparedUserSessionData.map((item, index) =>
 				item.type === 'age' && item.value === 'null' ? null : (
 					<div className="profile__data__item" key={index}>

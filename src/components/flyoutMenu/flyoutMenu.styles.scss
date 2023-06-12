@@ -25,6 +25,7 @@
 		transition: opacity 0.25s ease, visibility 0.25s ease;
 		font-size: $font-size-primary;
 		line-height: $line-height-primary;
+
 		@include rounded-drop-shadow;
 
 		&--shown {

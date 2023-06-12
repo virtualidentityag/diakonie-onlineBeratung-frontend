@@ -16,7 +16,7 @@
 
 	&__detailsIcon {
 		position: relative;
-		margin-right: $grid-base / 2;
+		margin-right: $grid-base * 0.5;
 		top: -3px; // Align to baseline
 	}
 
@@ -35,6 +35,6 @@
 	}
 
 	&__explanationDescriptionPart {
-		margin-top: $grid-base / 2;
+		margin-top: $grid-base * 0.5;
 	}
 }

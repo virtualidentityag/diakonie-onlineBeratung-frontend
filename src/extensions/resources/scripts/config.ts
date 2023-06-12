@@ -3,15 +3,21 @@ import {
 	OVERLAY_RELEASE_NOTE,
 	OVERLAY_TWO_FACTOR_NAG
 } from '../../../globalState/interfaces/AppConfig/OverlaysConfigInterface';
-import deAgency from '../i18n/overwrites/de.agency.json';
-import deConsultingTypes from '../i18n/overwrites/de.consultingTypes.json';
+
+// Files completely overwritten in extension
+import deAgency from '../i18n/de.agency.json';
+import deConsultingTypes from '../i18n/de.consultingTypes.json';
+import deLanguages from '../i18n/de.languages.json';
+import enAgency from '../i18n/en.agency.json';
+import enConsultingTypes from '../i18n/en.consultingTypes.json';
+import enLanguages from '../i18n/en.languages.json';
+
+// File from main repo
+import en from '../../../resources/i18n/en.json';
+
+// Files which extends the original languages
 import deInformal from '../i18n/overwrites/de.informal.json';
 import de from '../i18n/overwrites/de.json';
-import deLanguages from '../i18n/overwrites/de.languages.json';
-import enAgency from '../i18n/overwrites/en.agency.json';
-import enConsultingTypes from '../i18n/overwrites/en.consultingTypes.json';
-import en from '../i18n/overwrites/en.json';
-import enLanguages from '../i18n/overwrites/en.languages.json';
 
 export const uiUrl = window.location.origin ?? '';
 

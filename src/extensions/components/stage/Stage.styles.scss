@@ -1,7 +1,7 @@
 $animation-duration: 2.5s;
-$animation-duration-loader: $animation-duration / 4 * 3;
-$animation-duration-width: $animation-duration / 4;
-$animation-duration-title: $animation-duration / 7;
+$animation-duration-loader: $animation-duration * 0.25 * 3;
+$animation-duration-width: $animation-duration * 0.25;
+$animation-duration-title: calc($animation-duration / 7);
 
 $animation-easing-width: cubic-bezier(0, 0, 0.1, 1);
 $animation-easing-title: cubic-bezier(0, 0, 0.5, 1);
@@ -55,8 +55,9 @@ $animation-easing-title: cubic-bezier(0, 0, 0.5, 1);
 				}
 			}
 
-			animation: loader #{$animation-duration-loader / 3 * 2} forwards linear;
-			animation-delay: $animation-duration-loader / 3;
+			animation: loader #{calc($animation-duration-loader / 3 * 2)} forwards
+				linear;
+			animation-delay: calc($animation-duration-loader / 3);
 
 			@include breakpoint($fromLarge) {
 				@keyframes loaderLarge {
