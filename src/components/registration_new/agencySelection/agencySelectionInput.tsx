@@ -26,7 +26,7 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 			<Input
 				shrinkLabel={shrinkInputLabel}
 				onInputChange={(val) => {
-					if (val.length < 6) {
+					if (val?.length < 6) {
 						setShrinkInputLabel(true);
 						onInputChange(val);
 					}

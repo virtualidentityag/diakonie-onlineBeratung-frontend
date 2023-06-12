@@ -19,7 +19,7 @@ export const StepBar: VFC<StepBarProps> = ({
 				<Box
 					sx={{
 						mr: '16px',
-						backgroundColor: '#cc1e1c',
+						backgroundColor: 'primary.main',
 						borderRadius: '50%',
 						height: '36px',
 						width: '36px',
