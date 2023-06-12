@@ -31,12 +31,11 @@ export const Input = ({
 	isValueValid,
 	inputType,
 	info,
-	shrinkLabel = false,
 	errorMessage,
 	successMesssage,
 	multipleCriteria
 }: InputProps) => {
-	const [shrink, setShrink] = useState<boolean>(value.length > 0);
+	const [shrink, setShrink] = useState<boolean>(value?.length > 0);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
 	const [showSuccessMessage, setShowSuccessMessage] =
 		useState<boolean>(false);
@@ -85,10 +84,6 @@ export const Input = ({
 			: blurredColor;
 		return { icon, color };
 	};
-
-	useEffect(() => {
-		setShrink(shrinkLabel);
-	}, [shrinkLabel]);
 
 	return (
 		<>
@@ -165,7 +160,7 @@ export const Input = ({
 				}}
 				onBlur={() => {
 					setWasBlurred(true);
-					if (value.length === 0) {
+					if (value?.length === 0) {
 						setShrink(false);
 					} else if (!isValid(value)) {
 						setInputError(true);
