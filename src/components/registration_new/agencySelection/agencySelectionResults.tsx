@@ -130,13 +130,17 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 							target="_blank"
 							component={Link}
 							// TODO: Add fallback URL from Tenant
-							href={parsePlaceholderString(
-								settings?.postcodeFallbackUrl,
-								{
-									url: 'https://fallbackURL.de',
-									postcode: zipcode
-								}
-							)}
+							href={
+								settings?.postcodeFallbackUrl
+									? parsePlaceholderString(
+											settings.postcodeFallbackUrl,
+											{
+												url: 'https://fallbackURL.de',
+												postcode: zipcode
+											}
+									  )
+									: 'https://fallbackURL.de'
+							}
 						>
 							{t('registration.agency.noresult.label')}
 						</Button>
