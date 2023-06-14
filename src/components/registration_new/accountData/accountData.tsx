@@ -135,7 +135,7 @@ export const AccountData = () => {
 			<FormGroup sx={{ mt: '40px' }}>
 				<FormControlLabel
 					sx={{ alignItems: 'flex-start' }}
-					control={<Checkbox sx={{ pt: 0 }} />}
+					control={<Checkbox sx={{ mt: '-9px' }} />}
 					label={
 						<Typography>
 							{t('registration.dataProtection.label.prefix')}
