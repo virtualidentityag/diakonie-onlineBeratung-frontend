@@ -42,6 +42,9 @@ export const TopicSelection: VFC = () => {
 								'&:before': {
 									display: 'none'
 								},
+								'& .MuiAccordionSummary-root:hover': {
+									backgroundColor: 'primary.lighter'
+								},
 								'&.Mui-expanded': {
 									margin: 0
 								}
@@ -61,9 +64,10 @@ export const TopicSelection: VFC = () => {
 								aria-controls={`panel-${topicGroup.name}-content`}
 								id={`panel-${topicGroup.name}`}
 								sx={{
-									'& .Mui-expanded': {
-										my: '12px'
-									}
+									'& .MuiAccordionSummary-content.Mui-expanded':
+										{
+											m: '12px 0'
+										}
 								}}
 							>
 								<Typography
