@@ -169,6 +169,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 							}}
 						>
 							<FormControlLabel
+								disabled
 								sx={{ alignItems: 'flex-start' }}
 								value={results?.[0].name || ''}
 								control={
