@@ -1759,7 +1759,10 @@
 			"subline": "Um Ihre Anonymität zu schützen, raten wir Ihnen, nicht Ihren tatsächlichen Namen oder Initialen zu verwenden.",
 			"username": {
 				"label": "Benutzername",
-				"error": "Ihr Benutzername ist zu kurz.",
+				"error": {
+					"available": "Ihr Benutzername ist zu kurz.",
+					"unavailable": "Dieser Benutzername ist bereits vergeben."
+				},
 				"info": "5 oder mehr Zeichen",
 				"success": "Ihr Benutzername ist geeignet."
 			},

@@ -20,6 +20,7 @@ import {
 } from '../../../utils/validateInputValue';
 import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvider';
 import { RegistrationContext } from '../../../globalState';
+import { apiGetIsUsernameAvailable } from '../../../api/apiGetIsUsernameAvailable';
 
 export const AccountData = () => {
 	const legalLinks = useContext(LegalLinksContext);
@@ -32,12 +33,11 @@ export const AccountData = () => {
 	const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] =
 		useState<boolean>();
 	const [username, setUsername] = useState<string>('');
-	const {
-		setDisabledNextButton,
-		setDataForSessionStorage,
-		isUsernameAvailable,
-		setIsUsernameAvailable
-	} = useContext(RegistrationContext);
+	const [isUsernameAvailable, setIsUsernameAvailable] =
+		useState<boolean>(true);
+	const { setDisabledNextButton, setDataForSessionStorage } =
+		useContext(RegistrationContext);
+
 	const passwordCriteria = [
 		{
 			info: t('registration.account.password.criteria1'),
@@ -60,6 +60,7 @@ export const AccountData = () => {
 	useEffect(() => {
 		if (
 			username.length >= 5 &&
+			isUsernameAvailable &&
 			password === repeatPassword &&
 			dataProtectionChecked &&
 			passwordCriteria.every((criteria) => criteria.validation(password))
@@ -72,6 +73,7 @@ export const AccountData = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [username, password, repeatPassword, dataProtectionChecked]);
+
 	return (
 		<>
 			<Typography variant="h3">
@@ -87,17 +89,32 @@ export const AccountData = () => {
 					</InputAdornment>
 				}
 				onInputChange={(val: string) => {
-					setIsUsernameAvailable(true);
 					setUsername(val);
 				}}
 				value={username}
 				label={t('registration.account.username.label')}
 				info={t('registration.account.username.info')}
-				errorMessage={t('registration.account.username.error')}
-				successMesssage={t('registration.account.username.success')}
-				isValueValid={(val: string) =>
-					isUsernameAvailable ? val.length >= 5 : false
+				errorMessage={
+					isUsernameAvailable
+						? t('registration.account.username.error.available')
+						: t('registration.account.username.error.unavailable')
 				}
+				successMesssage={t('registration.account.username.success')}
+				isValueValid={async (val: string) => {
+					if (val.length < 5) {
+						return false;
+					} else {
+						return await apiGetIsUsernameAvailable(val)
+							.then(() => {
+								setIsUsernameAvailable(false);
+								return false;
+							})
+							.catch(() => {
+								setIsUsernameAvailable(true);
+								return true;
+							});
+					}
+				}}
 			/>
 			<Input
 				inputType={isPasswordVisible ? 'text' : 'password'}

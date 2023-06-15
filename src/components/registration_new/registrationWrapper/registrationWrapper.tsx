@@ -3,6 +3,8 @@ import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { StageLayout } from '../../stageLayout/StageLayout';
 import useIsFirstVisit from '../../../utils/useIsFirstVisit';
+import { endpoints } from '../../../resources/scripts/endpoints';
+import { ReactComponent as HelloBannerIcon } from '../../../resources/img/illustrations/hello-banner.svg';
 import { StepBar } from '../stepBar/StepBar';
 import { AccountData } from '../accountData/accountData';
 import { ZipcodeInput } from '../zipcodeInput/zipcodeInput';
@@ -12,11 +14,18 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { WelcomeScreen } from '../welcomeScreen/welcomeScreen';
-import { RegistrationContext } from '../../../globalState';
+import { RegistrationContext, TenantContext } from '../../../globalState';
 import { Helmet } from 'react-helmet';
 import { GlobalComponentContext } from '../../../globalState/provider/GlobalComponentContext';
+import { apiPostRegistration } from '../../../api';
+import { useAppConfig } from '../../../hooks/useAppConfig';
+import { set } from 'lodash';
+import { OVERLAY_FUNCTIONS, Overlay, OverlayItem } from '../../overlay/Overlay';
+import { redirectToApp } from '../../registration/autoLogin';
+import { BUTTON_TYPES } from '../../button/Button';
 
 export const RegistrationWrapper = () => {
+	const settings = useAppConfig();
 	const isFirstVisit = useIsFirstVisit();
 	const { Stage } = useContext(GlobalComponentContext);
 	const {
@@ -25,12 +34,32 @@ export const RegistrationWrapper = () => {
 		dataForSessionStorage,
 		setSessionStorageRegistrationData
 	} = useContext(RegistrationContext);
+	const { tenant } = useContext(TenantContext);
 	const [isReady, setIsReady] = useState(false);
 	const [currentStep, setCurrentStep] = useState<number>(1);
+	const [redirectOverlayActive, setRedirectOverlayActive] =
+		useState<boolean>(false);
 	const location = useLocation();
 	const history = useHistory();
 	const { t: translate } = useTranslation();
-	// TODO: Needs to be adapted to available steps of topic
+	const handleOverlayAction = (buttonFunction: string) => {
+		if (buttonFunction === OVERLAY_FUNCTIONS.REDIRECT_WITH_BLUR) {
+			redirectToApp();
+		}
+	};
+	const overlayItemRegistrationSuccess: OverlayItem = {
+		illustrationStyle: 'large',
+		svg: HelloBannerIcon,
+		headline: translate('registration.overlay.success.headline'),
+		copy: translate('registration.overlay.success.copy'),
+		buttonSet: [
+			{
+				label: translate('registration.overlay.success.button'),
+				function: OVERLAY_FUNCTIONS.REDIRECT_WITH_BLUR,
+				type: BUTTON_TYPES.PRIMARY
+			}
+		]
+	};
 	const stepDefinition = {
 		0: { component: 'welcome', urlSuffix: '' },
 		1: {
@@ -215,7 +244,32 @@ export const RegistrationWrapper = () => {
 													}
 													variant="contained"
 													onClick={() => {
-														// TODO: Check if username is available, use data from sessionStorage & last step to trigger registration
+														const existingRegistrationData =
+															sessionStorage.getItem(
+																'registrationData'
+															);
+														const registrationData =
+															{
+																...(existingRegistrationData
+																	? JSON.parse(
+																			existingRegistrationData
+																	  )
+																	: null),
+																...dataForSessionStorage
+															};
+														console.log(
+															registrationData
+														);
+														// apiPostRegistration(
+														// 	endpoints.registerAsker,
+														// 	registrationData,
+														// 	settings.multitenancyWithSingleDomainEnabled,
+														// 	tenant
+														// ).then(()=>{
+														setRedirectOverlayActive(
+															true
+														);
+														// });
 													}}
 												>
 													{translate(
@@ -266,6 +320,12 @@ export const RegistrationWrapper = () => {
 					)}
 				</Box>
 			</StageLayout>
+			{redirectOverlayActive && (
+				<Overlay
+					item={overlayItemRegistrationSuccess}
+					handleOverlay={handleOverlayAction}
+				/>
+			)}
 		</>
 	);
 };

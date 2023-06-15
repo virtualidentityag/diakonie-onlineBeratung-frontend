@@ -1,9 +1,14 @@
 import React from 'react';
 import { AgencySelection } from './agencySelection';
 import { endpoints } from '../../../resources/scripts/endpoints';
+import { RegistrationProvider } from '../../../globalState';
 
 it('Get results for zipcode', () => {
-	cy.mount(<AgencySelection></AgencySelection>);
+	cy.mount(
+		<RegistrationProvider>
+			<AgencySelection></AgencySelection>
+		</RegistrationProvider>
+	);
 	cy.fixture('service.agencies.json').then((data) => {
 		cy.intercept(new RegExp(`${endpoints.agencyServiceBase}*`), data).as(
 			'agencies'

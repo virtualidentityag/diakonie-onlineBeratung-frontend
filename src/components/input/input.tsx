@@ -11,7 +11,7 @@ export interface InputProps {
 	onInputChange?: Function;
 	startAdornment?: JSX.Element;
 	endAdornment?: JSX.Element;
-	isValueValid?(value: string): boolean;
+	isValueValid?(value: string): boolean | Promise<boolean>;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
 	errorMessage?: string;
@@ -41,9 +41,9 @@ export const Input = ({
 		useState<boolean>(false);
 	const [inputError, setInputError] = useState<boolean>(false);
 
-	const isValid = (val) => {
+	const isValid = async (val) => {
 		if (isValueValid) {
-			return isValueValid(val);
+			return await isValueValid(val);
 		} else if (multipleCriteria) {
 			return multipleCriteria.every((criteria) =>
 				criteria.validation(val)
@@ -143,14 +143,15 @@ export const Input = ({
 				}}
 				value={value}
 				error={inputError}
-				onChange={(e) => {
+				onChange={async (e) => {
 					onInputChange(e.target.value);
-					if (inputError && isValid(e.target.value)) {
+					const valid = await isValid(e.target.value);
+					if (inputError && valid) {
 						setInputError(false);
 						setShowSuccessMessage(
 							!!successMesssage || !!multipleCriteria
 						);
-					} else if (showSuccessMessage && !isValid(e.target.value)) {
+					} else if (showSuccessMessage && !valid) {
 						setInputError(true);
 						setShowSuccessMessage(false);
 					}
@@ -158,17 +159,15 @@ export const Input = ({
 				onFocus={() => {
 					setShrink(true);
 				}}
-				onBlur={() => {
+				onBlur={async () => {
 					setWasBlurred(true);
+					const valid = await isValid(value);
 					if (value?.length === 0) {
 						setShrink(false);
-					} else if (!isValid(value)) {
+					} else if (!valid) {
 						setInputError(true);
 					}
-					if (
-						(successMesssage || multipleCriteria) &&
-						isValid(value)
-					) {
+					if ((successMesssage || multipleCriteria) && valid) {
 						setShowSuccessMessage(true);
 					} else {
 						setShowSuccessMessage(false);

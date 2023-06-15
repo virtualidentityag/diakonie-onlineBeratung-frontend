@@ -7,8 +7,6 @@ type RegistrationContextInterface = {
 	setDisabledNextButton?: Dispatch<SetStateAction<boolean>>;
 	dataForSessionStorage?: any;
 	setDataForSessionStorage?: Dispatch<SetStateAction<any>>;
-	isUsernameAvailable?: boolean;
-	setIsUsernameAvailable?: Dispatch<SetStateAction<boolean>>;
 	sessionStorageRegistrationData?: any;
 	setSessionStorageRegistrationData?: Dispatch<SetStateAction<boolean>>;
 };
@@ -19,8 +17,6 @@ export const RegistrationContext = createContext<RegistrationContextInterface>(
 
 export function RegistrationProvider(props) {
 	const [disabledNextButton, setDisabledNextButton] = useState<boolean>(true);
-	const [isUsernameAvailable, setIsUsernameAvailable] =
-		useState<boolean>(true);
 	const [dataForSessionStorage, setDataForSessionStorage] = useState<any>({});
 	const [sessionStorageRegistrationData, setSessionStorageRegistrationData] =
 		useState<any>({});
@@ -32,8 +28,6 @@ export function RegistrationProvider(props) {
 				setDisabledNextButton,
 				dataForSessionStorage,
 				setDataForSessionStorage,
-				isUsernameAvailable,
-				setIsUsernameAvailable,
 				sessionStorageRegistrationData,
 				setSessionStorageRegistrationData
 			}}

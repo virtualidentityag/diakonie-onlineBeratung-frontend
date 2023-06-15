@@ -500,7 +500,7 @@
 		"account": {
 			"subline": "Um Deine Anonymität zu schützen, raten wir Dir, nicht Deinen tatsächlichen Namen oder Initialen zu verwenden.",
 			"username": {
-				"error": "Dein Benutzername ist zu kurz.",
+				"error": { "available": "Dein Benutzername ist zu kurz." },
 				"success": "Dein Benutzername ist geeignet."
 			},
 			"repeatPassword": {

@@ -25,7 +25,7 @@ export const AgencySelection: VFC = () => {
 				// TODO: Add topic Id when available and remove consultingType
 				await apiAgencySelection({
 					postcode: value,
-					consultingType: 24
+					consultingType: 10
 				})
 					.then((res) => {
 						setResults(res);
