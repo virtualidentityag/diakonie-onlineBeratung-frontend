@@ -42,6 +42,14 @@ const config: StorybookConfig = {
 			module: {
 				...config.module,
 				rules: [
+					// Exclude svg from storybook file-loader
+					...config.module.rules.map((r: any) => {
+						if (r.test && /svg/.test(r.test)) {
+							// Silence the Storybook loaders for SVG files
+							return { ...r, exclude: /\.svg$/i };
+						}
+						return r;
+					}),
 					// Filter the last catch all because storybook needs to handle mjs files
 					...webpackConfig.module.rules.map((r) => {
 						if (!r.oneOf) {
@@ -53,8 +61,7 @@ const config: StorybookConfig = {
 								(o) => o.type !== 'asset/resource'
 							)
 						};
-					}),
-					...config.module.rules
+					})
 				]
 			}
 		} as Configuration;
