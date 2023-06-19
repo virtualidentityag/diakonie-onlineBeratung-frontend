@@ -45,36 +45,24 @@ export const TopicSelection: VFC = () => {
 	}, [value]);
 
 	useEffect(() => {
-		console.log(topicGroups);
-	}, [topicGroups]);
+		(async () => {
+			try {
+				const topicGroupsResponse = await apiGetTopicGroups();
+				const topicsResponse = await apiGetTopicsData();
 
-	useEffect(() => {
-		(async () => {
-			await apiGetTopicGroups()
-				.then((res) => {
-					setTopicGroups(
-						res.data.items
-							.filter(
-								(topicGroup) => topicGroup.topicIds.length > 0
-							)
-							.sort((a, b) => {
-								if (a.name === b.name) return 0;
-								return a.name < b.name ? -1 : 1;
-							})
-					);
-				})
-				.catch(() => {
-					setTopicGroups([]);
-				});
-		})();
-		(async () => {
-			await apiGetTopicsData()
-				.then((res) => {
-					setTopics(res);
-				})
-				.catch(() => {
-					setTopics([]);
-				});
+				setTopics(topicsResponse);
+				setTopicGroups(
+					topicGroupsResponse.data.items
+						.filter((topicGroup) => topicGroup.topicIds.length > 0)
+						.sort((a, b) => {
+							if (a.name === b.name) return 0;
+							return a.name < b.name ? -1 : 1;
+						})
+				);
+			} catch {
+				setTopics([]);
+				setTopicGroups([]);
+			}
 		})();
 	}, []);
 
@@ -193,7 +181,7 @@ export const TopicSelection: VFC = () => {
 															}}
 														>
 															<Typography variant="body1">
-																{topic.name}
+																{topic?.name}
 															</Typography>
 														</Box>
 													}

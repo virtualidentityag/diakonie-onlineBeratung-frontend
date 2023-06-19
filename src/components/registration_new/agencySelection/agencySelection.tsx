@@ -7,7 +7,7 @@ import { AgencyDataInterface, RegistrationContext } from '../../../globalState';
 
 export const AgencySelection: VFC = () => {
 	const { sessionStorageRegistrationData } = useContext(RegistrationContext);
-	const [value, setValue] = useState<string>(
+	const [zipcodeValue, setZipcodeValue] = useState<string>(
 		sessionStorageRegistrationData.agencyZipcode || undefined
 	);
 	const [headlineZipcode, setHeadlineZipcode] = useState<string>('');
@@ -17,33 +17,34 @@ export const AgencySelection: VFC = () => {
 	);
 
 	useEffect(() => {
-		if (value?.length === 5) {
-			setHeadlineZipcode(value);
+		if (zipcodeValue?.length === 5) {
+			setHeadlineZipcode(zipcodeValue);
 			setResults(undefined);
 			(async () => {
 				setIsLoading(true);
 				// TODO: Add topic Id when available and remove consultingType
-				await apiAgencySelection({
-					postcode: value,
-					consultingType: 10
-				})
-					.then((res) => {
-						setResults(res);
-					})
-					.catch(() => {
-						setResults([]);
-					})
-					.finally(() => setIsLoading(false));
+				try {
+					const agencyResponse = await apiAgencySelection({
+						postcode: zipcodeValue,
+						consultingType: 10
+					});
+					console.log(agencyResponse);
+
+					setResults(agencyResponse);
+				} catch {
+					setResults([]);
+				}
+				setIsLoading(false);
 			})();
 		}
-	}, [value]);
+	}, [zipcodeValue]);
 
 	return (
 		<>
 			<AgencySelectionInput
-				value={value}
+				value={zipcodeValue}
 				onInputChange={(val: string) => {
-					setValue(val);
+					setZipcodeValue(val);
 				}}
 			/>
 			<AgencySelectionResults
