@@ -53,7 +53,13 @@ export const StepBar: VFC<StepBarProps> = ({
 						: (currentStep / maxNumberOfSteps) * 100
 				}
 				color="primary"
-				sx={{ mt: '20px', mb: '48px', backgroundColor: '#0000001A' }}
+				sx={{
+					'mt': '20px',
+					'mb': '48px',
+					'backgroundColor': '#0000001A',
+					'borderRadius': '2px',
+					'& .MuiLinearProgress-bar': { borderRadius: '2px' }
+				}}
 			/>
 		</>
 	);

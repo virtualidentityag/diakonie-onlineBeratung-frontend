@@ -114,6 +114,9 @@ export const Input = ({
 					'& label.MuiInputLabel-shrink': {
 						top: '10px'
 					},
+					'& .MuiInputAdornment-root': {
+						mb: '5px'
+					},
 					'& .MuiOutlinedInput-root': {
 						'&.Mui-focused fieldset': {
 							borderColor: showSuccessMessage && 'success.main'

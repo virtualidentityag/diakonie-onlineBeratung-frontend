@@ -17,7 +17,9 @@ const theme = createTheme({
 	},
 	palette: {
 		primary: {
-			main: getCssVarValue('--primary')
+			main: getCssVarValue('--primary'),
+			light: getCssVarValue('--background-light'),
+			lighter: getCssVarValue('--background-lighter')
 		},
 		info: {
 			main: getCssVarValue('--black'),

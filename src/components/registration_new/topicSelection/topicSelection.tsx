@@ -90,134 +90,135 @@ export const TopicSelection: VFC = () => {
 				<RadioGroup aria-label="topic-selection" name="topic-selection">
 					{topicGroups &&
 						topics &&
-						topicGroups.map((topicGroup) => {
-							return (
-								<Accordion
-									defaultExpanded={topicGroup.topicIds.includes(
-										value
-									)}
+						topicGroups.map((topicGroup) => (
+							<Accordion
+								defaultExpanded={topicGroup.topicIds.includes(
+									value
+								)}
+								sx={{
+									'boxShadow': 'none',
+									'borderBottom': '1px solid #dddddd',
+									'borderRadius': '4px',
+									'&:before': {
+										display: 'none'
+									},
+									'& .MuiAccordionSummary-root:hover': {
+										backgroundColor: 'primary.lighter'
+									},
+									'&.Mui-expanded': {
+										margin: 0
+									}
+								}}
+							>
+								<AccordionSummary
+									expandIcon={
+										<ExpandMoreIcon
+											color="info"
+											sx={{
+												p: '6px',
+												width: '42px',
+												height: '42px'
+											}}
+										/>
+									}
+									aria-controls={`panel-${topicGroup.name}-content`}
+									id={`panel-${topicGroup.name}`}
 									sx={{
-										'boxShadow': 'none',
-										'borderBottom': '1px solid #dddddd',
-										'borderRadius': '4px',
-										'&:before': {
-											display: 'none'
-										},
-										'&.Mui-expanded': {
-											margin: 0
-										}
+										'& .MuiAccordionSummary-content.Mui-expanded':
+											{
+												m: '12px 0'
+											}
 									}}
 								>
-									<AccordionSummary
-										expandIcon={
-											<ExpandMoreIcon
-												color="info"
-												sx={{
-													p: '6px',
-													width: '42px',
-													height: '42px'
-												}}
-											/>
-										}
-										aria-controls={`panel-${topicGroup.name}-content`}
-										id={`panel-${topicGroup.name}`}
+									<Typography
+										variant="h4"
 										sx={{
-											'& .Mui-expanded': {
-												my: '12px'
-											}
+											lineHeight: '28px',
+											fontWeight: '400',
+											py: '12px'
 										}}
 									>
-										<Typography
-											variant="h4"
-											sx={{
-												lineHeight: '28px',
-												fontWeight: '400',
-												py: '12px'
-											}}
-										>
-											{topicGroup.name}
-										</Typography>
-									</AccordionSummary>
-									<AccordionDetails sx={{ pt: 0 }}>
-										{topicGroup.topicIds
-											.map((t) => getTopic(t))
-											.sort((a, b) => {
-												if (a.name === b.name) return 0;
-												return a.name < b.name ? -1 : 1;
-											})
-											.map((topic, index) => (
-												<Box
+										{topicGroup.name}
+									</Typography>
+								</AccordionSummary>
+								<AccordionDetails sx={{ pt: 0 }}>
+									{topicGroup.topicIds
+										.map((t) => getTopic(t))
+										.sort((a, b) => {
+											if (a.name === b.name) return 0;
+											return a.name < b.name ? -1 : 1;
+										})
+										.map((topic, index) => (
+											<Box
+												sx={{
+													display: 'flex',
+													justifyContent:
+														'space-between',
+													width: '100%',
+													mt:
+														index === 0
+															? '0'
+															: '16px'
+												}}
+											>
+												<FormControlLabel
 													sx={{
-														display: 'flex',
-														justifyContent:
-															'space-between',
-														width: '100%',
-														mt:
-															index === 0
-																? '0'
-																: '16px'
+														alignItems: 'flex-start'
 													}}
-												>
-													<FormControlLabel
-														sx={{
-															alignItems:
-																'flex-start'
-														}}
-														value={topic?.id}
-														control={
-															<Radio
-																onClick={() => {
-																	setValue(
-																		topic.id
-																	);
-																	setDataForSessionStorage(
-																		{
-																			topicId:
-																				topic?.id
-																		}
-																	);
-																}}
-																checked={
-																	value ===
-																	topic?.id
-																}
-															/>
-														}
-														label={
-															<Box
-																sx={{
-																	mt: '10px',
-																	ml: '10px'
-																}}
-															>
-																<Typography variant="body1">
-																	{topic.name}
-																</Typography>
-															</Box>
-														}
-													/>{' '}
-													{topic.description && (
-														<Tooltip
-															title={
-																topic.description
+													value={topic?.id}
+													control={
+														<Radio
+															onClick={() => {
+																setValue(
+																	topic.id
+																);
+																setDataForSessionStorage(
+																	{
+																		topicId:
+																			topic?.id
+																	}
+																);
+															}}
+															checked={
+																value ===
+																topic?.id
 															}
-															arrow
+														/>
+													}
+													label={
+														<Box
+															sx={{
+																mt: '10px',
+																ml: '10px'
+															}}
 														>
-															<InfoIcon
-																sx={{
-																	p: '9px',
-																	width: '42px',
-																	height: '42px'
-																}}
-															></InfoIcon>
-														</Tooltip>
-													)}
-												</Box>
-											))}
-									</AccordionDetails>
-								</Accordion>
-							);
-						})}
+															<Typography variant="body1">
+																{topic.name}
+															</Typography>
+														</Box>
+													}
+												/>{' '}
+												{topic.description && (
+													<Tooltip
+														title={
+															topic.description
+														}
+														arrow
+													>
+														<InfoIcon
+															sx={{
+																p: '9px',
+																width: '42px',
+																height: '42px'
+															}}
+														></InfoIcon>
+													</Tooltip>
+												)}
+											</Box>
+										))}
+								</AccordionDetails>
+							</Accordion>
+						))}
 				</RadioGroup>
 			</FormControl>
 		</>

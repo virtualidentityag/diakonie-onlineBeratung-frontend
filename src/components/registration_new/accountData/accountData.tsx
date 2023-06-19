@@ -187,7 +187,7 @@ export const AccountData = () => {
 					control={
 						<Checkbox
 							checked={dataProtectionChecked}
-							sx={{ pt: 0 }}
+							sx={{ mt: '-9px' }}
 						/>
 					}
 					label={

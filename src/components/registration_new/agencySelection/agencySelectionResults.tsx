@@ -162,13 +162,17 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 							target="_blank"
 							component={Link}
 							// TODO: Add fallback URL from Tenant
-							href={parsePlaceholderString(
-								settings?.postcodeFallbackUrl,
-								{
-									url: 'https://fallbackURL.de',
-									postcode: zipcode
-								}
-							)}
+							href={
+								settings?.postcodeFallbackUrl
+									? parsePlaceholderString(
+											settings.postcodeFallbackUrl,
+											{
+												url: 'https://fallbackURL.de',
+												postcode: zipcode
+											}
+									  )
+									: 'https://fallbackURL.de'
+							}
 						>
 							{t('registration.agency.noresult.label')}
 						</Button>
@@ -185,75 +189,72 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 				!results?.every((agency) => {
 					return agency.external;
 				}) && (
-					<>
-						<FormControl sx={{ width: '100%' }}>
-							<RadioGroup
-								aria-label="agency-selection-radio-group"
-								name="agency-selection-radio-group"
-								defaultValue={results?.[0].name || ''}
+					<FormControl sx={{ width: '100%' }}>
+						<RadioGroup
+							aria-label="agency-selection-radio-group"
+							name="agency-selection-radio-group"
+							defaultValue={results?.[0].name || ''}
+						>
+							<Box
+								sx={{
+									display: 'flex',
+									justifyContent: 'space-between',
+									width: '100%',
+									mt: '16px'
+								}}
 							>
-								<Box
-									sx={{
-										display: 'flex',
-										justifyContent: 'space-between',
-										width: '100%',
-										mt: '16px'
-									}}
-								>
-									<FormControlLabel
-										sx={{ alignItems: 'flex-start' }}
-										value={results?.[0].name || ''}
-										control={
-											<Radio
-												color="default"
-												checkedIcon={
-													<TaskAltIcon color="info" />
-												}
-												icon={<TaskAltIcon />}
-											/>
-										}
-										label={
-											<Box
-												sx={{ mt: '10px', ml: '10px' }}
-											>
-												<Typography variant="body1">
-													{results?.[0].name || ''}
-												</Typography>
-												<Typography
-													variant="body2"
-													sx={{
-														color: 'info.light',
-														mt: '8px'
-													}}
-												>
-													{t(
-														'registration.agency.result.languages'
-													)}
-												</Typography>
-												<AgencyLanguages
-													agencyId={results?.[0].id}
-												></AgencyLanguages>
-											</Box>
-										}
-									/>
-									{results?.[0].description && (
-										<Tooltip
-											title={results[0].description}
-											arrow
-										>
-											<InfoIcon
+								<FormControlLabel
+									disabled
+									sx={{ alignItems: 'flex-start' }}
+									value={results?.[0].name || ''}
+									control={
+										<Radio
+											color="default"
+											checkedIcon={
+												<TaskAltIcon color="info" />
+											}
+											icon={<TaskAltIcon />}
+										/>
+									}
+									label={
+										<Box sx={{ mt: '10px', ml: '10px' }}>
+											<Typography variant="body1">
+												{results?.[0].name || ''}
+											</Typography>
+											<Typography
+												variant="body2"
 												sx={{
-													p: '9px',
-													width: '38px',
-													height: '38px'
+													color: 'info.light',
+													mt: '8px'
 												}}
-											/>
-										</Tooltip>
-									)}
-								</Box>
-							</RadioGroup>
-						</FormControl>
-					</>
+											>
+												{t(
+													'registration.agency.result.languages'
+												)}
+											</Typography>
+											<AgencyLanguages
+												agencyId={results?.[0].id}
+											></AgencyLanguages>
+										</Box>
+									}
+								/>
+								{results?.[0].description && (
+									<Tooltip
+										title={results[0].description}
+										arrow
+									>
+										<InfoIcon
+											sx={{
+												p: '9px',
+												width: '38px',
+												height: '38px'
+											}}
+										/>
+									</Tooltip>
+								)}
+							</Box>
+						</RadioGroup>
+					</FormControl>
 				)}
 			{/* more Results */}
 			{results?.length > 1 &&
