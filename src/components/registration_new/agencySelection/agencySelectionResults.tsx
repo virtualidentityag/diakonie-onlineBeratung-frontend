@@ -67,6 +67,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 				agencyZipcode: zipcode
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [results, setDataForSessionStorage, setDisabledNextButton]);
 
 	return (

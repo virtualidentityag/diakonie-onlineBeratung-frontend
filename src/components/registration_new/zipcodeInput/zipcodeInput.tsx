@@ -24,6 +24,7 @@ export const ZipcodeInput: VFC = () => {
 		} else {
 			setDisabledNextButton(true);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
 
 	return (

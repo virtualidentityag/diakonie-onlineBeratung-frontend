@@ -42,6 +42,7 @@ export const TopicSelection: VFC = () => {
 		if (value) {
 			setDisabledNextButton(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
 
 	useEffect(() => {

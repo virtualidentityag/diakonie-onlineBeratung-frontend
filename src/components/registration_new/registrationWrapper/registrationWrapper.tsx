@@ -3,7 +3,6 @@ import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import { StageLayout } from '../../stageLayout/StageLayout';
 import useIsFirstVisit from '../../../utils/useIsFirstVisit';
-import { endpoints } from '../../../resources/scripts/endpoints';
 import { ReactComponent as HelloBannerIcon } from '../../../resources/img/illustrations/hello-banner.svg';
 import { StepBar } from '../stepBar/StepBar';
 import { AccountData } from '../accountData/accountData';
@@ -14,18 +13,16 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { WelcomeScreen } from '../welcomeScreen/welcomeScreen';
-import { RegistrationContext, TenantContext } from '../../../globalState';
+import { RegistrationContext } from '../../../globalState';
 import { Helmet } from 'react-helmet';
 import { GlobalComponentContext } from '../../../globalState/provider/GlobalComponentContext';
-import { apiPostRegistration } from '../../../api';
-import { useAppConfig } from '../../../hooks/useAppConfig';
-import { set } from 'lodash';
+// import { useAppConfig } from '../../../hooks/useAppConfig';
 import { OVERLAY_FUNCTIONS, Overlay, OverlayItem } from '../../overlay/Overlay';
 import { redirectToApp } from '../../registration/autoLogin';
 import { BUTTON_TYPES } from '../../button/Button';
 
 export const RegistrationWrapper = () => {
-	const settings = useAppConfig();
+	// const settings = useAppConfig();
 	const isFirstVisit = useIsFirstVisit();
 	const { Stage } = useContext(GlobalComponentContext);
 	const {
@@ -34,7 +31,7 @@ export const RegistrationWrapper = () => {
 		dataForSessionStorage,
 		setSessionStorageRegistrationData
 	} = useContext(RegistrationContext);
-	const { tenant } = useContext(TenantContext);
+	// const { tenant } = useContext(TenantContext);
 	const [isReady, setIsReady] = useState(false);
 	const [currentStep, setCurrentStep] = useState<number>(1);
 	const [redirectOverlayActive, setRedirectOverlayActive] =
@@ -118,6 +115,7 @@ export const RegistrationWrapper = () => {
 		if (availableRegistrationData) {
 			setSessionStorageRegistrationData(availableRegistrationData);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location]);
 
 	useEffect(() => {
@@ -132,6 +130,7 @@ export const RegistrationWrapper = () => {
 				}`
 			);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentStep]);
 
 	return (
