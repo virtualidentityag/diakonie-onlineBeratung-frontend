@@ -92,6 +92,12 @@ const theme = createTheme({
 			color: 'black',
 			fontSize: '20px',
 			lineHeight: '28px'
+		},
+		subtitle2: {
+			fontFamily: getCssVarValue('--font-family-sans-serif'),
+			color: 'black',
+			fontSize: '12px',
+			lineHeight: '16px'
 		}
 	},
 	components: {
@@ -99,12 +105,13 @@ const theme = createTheme({
 			styleOverrides: {
 				root: {
 					fontSize: getCssVarValue('--font-size-primary'),
-					lineHeight: '20px'
+					lineHeight: '20px',
+					borderRadius: getCssVarValue('--button-border-radius')
 				},
 				contained: {
 					'paddingTop': '14px',
 					'paddingBottom': '14px',
-					'borderRadius': '4px',
+					'borderRadius': getCssVarValue('--button-border-radius'),
 					'backgroundColor': 'primary.main',
 					'textTransform': 'none',
 					'outline': 'none',
@@ -120,6 +127,7 @@ const theme = createTheme({
 				outlined: {
 					'paddingTop': '14px',
 					'paddingBottom': '14px',
+					'borderRadius': getCssVarValue('--button-border-radius'),
 					'textTransform': 'none',
 					'&:hover': {
 						backgroundColor: getCssVarValue('--hover-primary'),

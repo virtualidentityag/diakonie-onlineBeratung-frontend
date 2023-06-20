@@ -7,6 +7,15 @@ import CancelIcon from '@mui/icons-material/Cancel';
 export interface InputProps {
 	label: string;
 	value: string;
+	inputMode?:
+		| 'tel'
+		| 'text'
+		| 'email'
+		| 'search'
+		| 'url'
+		| 'none'
+		| 'numeric'
+		| 'decimal';
 	shrinkLabel?: boolean;
 	onInputChange?: Function;
 	startAdornment?: JSX.Element;
@@ -14,6 +23,7 @@ export interface InputProps {
 	isValueValid?(value: string): boolean;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
+	autoComplete?: string;
 	errorMessage?: string;
 	successMesssage?: string;
 	multipleCriteria?: Array<{
@@ -32,9 +42,11 @@ export const Input = ({
 	inputType,
 	info,
 	shrinkLabel = false,
+	inputMode,
 	errorMessage,
 	successMesssage,
-	multipleCriteria
+	multipleCriteria,
+	autoComplete
 }: InputProps) => {
 	const [shrink, setShrink] = useState<boolean>(shrinkLabel || false);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
@@ -96,6 +108,10 @@ export const Input = ({
 				type={inputType || 'text'}
 				fullWidth
 				label={label}
+				autoComplete={autoComplete}
+				inputProps={{
+					inputMode: inputMode
+				}}
 				sx={{
 					'&[type=number]': {
 						'-moz-appearance': 'textfield'
