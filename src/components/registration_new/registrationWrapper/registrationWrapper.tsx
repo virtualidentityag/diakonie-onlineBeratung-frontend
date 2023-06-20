@@ -52,7 +52,7 @@ export const RegistrationWrapper = () => {
 			{
 				label: translate('registration.overlay.success.button'),
 				function: OVERLAY_FUNCTIONS.REDIRECT_WITH_BLUR,
-				type: BUTTON_TYPES.PRIMARY
+				type: BUTTON_TYPES.AUTO_CLOSE
 			}
 		]
 	};
