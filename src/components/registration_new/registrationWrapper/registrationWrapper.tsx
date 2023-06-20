@@ -32,7 +32,6 @@ export const RegistrationWrapper = () => {
 		setSessionStorageRegistrationData
 	} = useContext(RegistrationContext);
 	// const { tenant } = useContext(TenantContext);
-	const [isReady, setIsReady] = useState(false);
 	const [currentStep, setCurrentStep] = useState<number>(1);
 	const [redirectOverlayActive, setRedirectOverlayActive] =
 		useState<boolean>(false);
@@ -138,7 +137,7 @@ export const RegistrationWrapper = () => {
 			<StageLayout
 				showLegalLinks={false}
 				showLoginLink={true}
-				stage={<Stage hasAnimation={isFirstVisit} isReady={isReady} />}
+				stage={<Stage hasAnimation={isFirstVisit} />}
 			>
 				<Box sx={{ pb: '96px' }}>
 					{stepDefinition[currentStep].component === 'welcome' ? (
