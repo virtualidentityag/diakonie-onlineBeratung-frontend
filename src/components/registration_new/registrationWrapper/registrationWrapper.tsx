@@ -105,6 +105,20 @@ export const RegistrationWrapper = () => {
 		return [];
 	};
 
+	const onNextClick = () => {
+		const existingRegistrationData =
+			sessionStorage.getItem('registrationData');
+		sessionStorage.setItem(
+			'registrationData',
+			JSON.stringify({
+				...(existingRegistrationData
+					? JSON.parse(existingRegistrationData)
+					: null),
+				...dataForSessionStorage
+			})
+		);
+	};
+
 	useEffect(() => {
 		setDisabledNextButton(true);
 		getCurrentStep();
@@ -166,7 +180,13 @@ export const RegistrationWrapper = () => {
 
 								{stepDefinition[currentStep].component ===
 									'topicSelection' && (
-									<TopicSelection></TopicSelection>
+									<TopicSelection
+										onNextClick={onNextClick}
+										nextStepUrl={`/registration${
+											stepDefinition[currentStep + 1]
+												.urlSuffix
+										}`}
+									></TopicSelection>
 								)}
 								{stepDefinition[currentStep].component ===
 									'zipcode' && <ZipcodeInput></ZipcodeInput>}
@@ -287,23 +307,7 @@ export const RegistrationWrapper = () => {
 															currentStep + 1
 														].urlSuffix
 													}`}
-													onClick={() => {
-														const existingRegistrationData =
-															sessionStorage.getItem(
-																'registrationData'
-															);
-														sessionStorage.setItem(
-															'registrationData',
-															JSON.stringify({
-																...(existingRegistrationData
-																	? JSON.parse(
-																			existingRegistrationData
-																	  )
-																	: null),
-																...dataForSessionStorage
-															})
-														);
-													}}
+													onClick={onNextClick}
 												>
 													{translate(
 														'registration.next'

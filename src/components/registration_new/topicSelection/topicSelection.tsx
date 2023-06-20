@@ -8,7 +8,9 @@ import {
 	Radio,
 	RadioGroup,
 	Tooltip,
-	FormControl
+	FormControl,
+	Modal,
+	Button
 } from '@mui/material';
 import * as React from 'react';
 import { VFC, useContext, useState, useEffect } from 'react';
@@ -20,8 +22,13 @@ import { apiGetTopicGroups } from '../../../api/apiGetTopicGroups';
 import { TopicGroup } from '../../../globalState/interfaces/TopicGroups';
 import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
 import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Link as RouterLink } from 'react-router-dom';
 
-export const TopicSelection: VFC = () => {
+export const TopicSelection: VFC<{
+	nextStepUrl: string;
+	onNextClick(): void;
+}> = ({ nextStepUrl, onNextClick }) => {
 	const {
 		setDisabledNextButton,
 		setDataForSessionStorage,
@@ -31,6 +38,8 @@ export const TopicSelection: VFC = () => {
 	const [value, setValue] = useState<number>(
 		sessionStorageRegistrationData.topicId || undefined
 	);
+	const [infoOverlayContent, setInfoOverlayContent] = useState<string>('');
+	const [isInfoOverlayOpen, setIsInfoOverlayOpen] = useState<boolean>(false);
 	const [topicGroups, setTopicGroups] = useState<TopicGroup[]>([]);
 	const [topics, setTopics] = useState<TopicsDataInterface[]>([]);
 
@@ -186,22 +195,57 @@ export const TopicSelection: VFC = () => {
 															</Typography>
 														</Box>
 													}
-												/>{' '}
+												/>
 												{topic.description && (
-													<Tooltip
-														title={
-															topic.description
-														}
-														arrow
-													>
+													<>
+														<Tooltip
+															title={
+																topic.description
+															}
+															arrow
+														>
+															<InfoIcon
+																sx={{
+																	display: {
+																		xs: 'none',
+																		md: 'inline'
+																	},
+																	p: '9px',
+																	width: '42px',
+																	height: '42px'
+																}}
+															></InfoIcon>
+														</Tooltip>
 														<InfoIcon
+															onClick={() => {
+																setDataForSessionStorage(
+																	{
+																		topicId:
+																			topic.id
+																	}
+																);
+																setValue(
+																	topic.id
+																);
+																setIsInfoOverlayOpen(
+																	true
+																);
+																setInfoOverlayContent(
+																	topic.description
+																);
+															}}
 															sx={{
+																display: {
+																	xs: 'inline',
+																	md: 'none'
+																},
+																cursor: 'pointer',
 																p: '9px',
 																width: '42px',
 																height: '42px'
 															}}
 														></InfoIcon>
-													</Tooltip>
+													</>
 												)}
 											</Box>
 										))}
@@ -210,6 +254,59 @@ export const TopicSelection: VFC = () => {
 						))}
 				</RadioGroup>
 			</FormControl>
+			<Modal
+				open={isInfoOverlayOpen}
+				onClose={() => {
+					setValue(undefined);
+					setIsInfoOverlayOpen(false);
+				}}
+			>
+				<Box
+					sx={{
+						width: '100vw',
+						height: '100vh',
+						overflowY: 'scroll',
+						backgroundColor: 'white',
+						p: '22px'
+					}}
+				>
+					<ArrowBackIosIcon
+						sx={{
+							mb: '26px',
+							cursor: 'pointer',
+							p: '9px',
+							width: '42px',
+							height: '42px'
+						}}
+						onClick={() => {
+							setIsInfoOverlayOpen(false);
+						}}
+					/>
+
+					<Typography>{infoOverlayContent}</Typography>
+					<Button
+						fullWidth
+						sx={{ mt: '16px' }}
+						variant="contained"
+						component={RouterLink}
+						to={nextStepUrl}
+						onClick={onNextClick}
+					>
+						Thema auswählen und fortfahren
+					</Button>
+					<Button
+						fullWidth
+						sx={{ mt: '24px' }}
+						variant="outlined"
+						onClick={() => {
+							setValue(undefined);
+							setIsInfoOverlayOpen(false);
+						}}
+					>
+						Anderes Thema auswählen
+					</Button>
+				</Box>
+			</Modal>
 		</>
 	);
 };
