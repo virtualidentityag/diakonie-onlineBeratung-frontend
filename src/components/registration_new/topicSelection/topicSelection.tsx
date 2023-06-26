@@ -7,23 +7,17 @@ import {
 	FormControlLabel,
 	Radio,
 	RadioGroup,
-	Tooltip,
-	FormControl,
-	Modal,
-	Button
+	FormControl
 } from '@mui/material';
 import * as React from 'react';
 import { VFC, useContext, useState, useEffect } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import { RegistrationContext } from '../../../globalState';
 import { apiGetTopicGroups } from '../../../api/apiGetTopicGroups';
 import { TopicGroup } from '../../../globalState/interfaces/TopicGroups';
 import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
 import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Link as RouterLink } from 'react-router-dom';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 
 export const TopicSelection: VFC<{

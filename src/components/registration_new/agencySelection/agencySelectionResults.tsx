@@ -5,13 +5,11 @@ import {
 	Radio,
 	RadioGroup,
 	Box,
-	Tooltip,
 	Button,
 	Link
 } from '@mui/material';
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import InfoIcon from '@mui/icons-material/Info';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import NoResultsIllustration from '../../../resources/img/illustrations/no-results.svg';
 import ConsultantIllustration from '../../../resources/img/illustrations/consultant-found.svg';
