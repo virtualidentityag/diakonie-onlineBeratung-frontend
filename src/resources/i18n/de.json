@@ -1745,6 +1745,7 @@
 			"of": "von"
 		},
 		"topic": {
+			"summary": "Ihr Thema:",
 			"headline": "Zu welchem Thema suchen Sie Beratung?",
 			"subline": "Wählen Sie ein Thema aus unserem Beratungsangebot aus.",
 			"infoOverlay": {
@@ -1785,6 +1786,7 @@
 			}
 		},
 		"agency": {
+			"summary": "Ihre Beratungsstelle:",
 			"preselected": {
 				"prefix": "Ihre vorausgewählte Beratungsstelle: ",
 				"isTeam": "Sie werden von einem Team beraten."

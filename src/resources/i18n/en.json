@@ -1729,6 +1729,7 @@
 			"of": "of"
 		},
 		"topic": {
+			"summary": "Your topic:",
 			"headline": "On what topic are you looking for advice?",
 			"subline": "Select a topic from our consulting offer."
 		},
@@ -1765,6 +1766,7 @@
 			}
 		},
 		"agency": {
+			"summary": "Your agency:",
 			"preselected": {
 				"prefix": "Your pre-selected counseling center: ",
 				"isTeam": "You will be advised by a team."

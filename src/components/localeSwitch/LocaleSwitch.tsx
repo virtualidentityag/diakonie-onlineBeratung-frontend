@@ -1,13 +1,13 @@
 import * as React from 'react';
 import './localeSwitch.styles';
 import { ReactComponent as LanguageIconOutline } from '../../resources/img/icons/language_outline.svg';
-import { ReactComponent as LanguageIconFilled } from '../../resources/img/icons/language_filled.svg';
 import { useTranslation } from 'react-i18next';
 import { useContext, useEffect, useState } from 'react';
 import { LocaleContext, UserDataContext } from '../../globalState';
 import { apiPatchUserData } from '../../api/apiPatchUserData';
 import { SelectDropdown, SelectDropdownItem } from '../select/SelectDropdown';
 import { setValueInCookie } from '../sessionCookie/accessSessionCookie';
+import LanguageIcon from '@mui/icons-material/Language';
 
 export interface LocaleSwitchProp {
 	updateUserData?: boolean;
@@ -19,6 +19,9 @@ export interface LocaleSwitchProp {
 	menuPlacement?: 'top' | 'bottom' | 'right';
 	selectRef?: any;
 	isInsideMenu?: boolean;
+	color?: string;
+	colorHover?: string;
+	iconOnly?: boolean;
 }
 
 export const LocaleSwitch: React.FC<LocaleSwitchProp> = ({
@@ -30,7 +33,10 @@ export const LocaleSwitch: React.FC<LocaleSwitchProp> = ({
 	menuPlacement = 'bottom',
 	label,
 	selectRef,
-	isInsideMenu = false
+	isInsideMenu = false,
+	color = 'var(--secondary)',
+	colorHover = 'var(--hover-primary)',
+	iconOnly
 }) => {
 	const { t: translate } = useTranslation(['common', 'languages']);
 
@@ -85,7 +91,7 @@ export const LocaleSwitch: React.FC<LocaleSwitchProp> = ({
 			value: locale,
 			label: (
 				<>
-					{showIcon && (
+					{(showIcon || iconOnly) && (
 						<>
 							{isInsideMenu && (
 								<LanguageIconOutline
@@ -96,20 +102,24 @@ export const LocaleSwitch: React.FC<LocaleSwitchProp> = ({
 									className="navigation__icon__outline"
 								/>
 							)}
-							<LanguageIconFilled
-								title={translate('app.selectLanguage')}
+							<LanguageIcon
 								aria-label={translate('app.selectLanguage')}
 								width={iconSize}
 								height={iconSize}
 								className="navigation__icon__filled"
+								color="inherit"
 							/>
 						</>
 					)}{' '}
-					<span>
-						{label
-							? label
-							: translate([locale, locale], { ns: 'languages' })}
-					</span>
+					{!iconOnly && (
+						<span>
+							{label
+								? label
+								: translate([locale, locale], {
+										ns: 'languages'
+								  })}
+						</span>
+					)}
 				</>
 			)
 		},
@@ -129,14 +139,33 @@ export const LocaleSwitch: React.FC<LocaleSwitchProp> = ({
 			dropdownIndicator: () => ({
 				display: 'none'
 			}),
+			menu: () => {
+				return (
+					iconOnly && {
+						width: 'auto',
+						left: '-100%'
+					}
+				);
+			},
+			menuSwitch: () => {
+				return (
+					iconOnly && {
+						display: 'inline-block'
+					}
+				);
+			},
 			singleValue: () => ({
-				maxWidth: 'auto',
-				position: 'relative',
-				top: 0,
-				transform: 'none',
-				display: 'flex',
-				flexDirection: vertical ? 'column' : 'row',
-				alignItems: 'center'
+				'maxWidth': 'auto',
+				'position': 'relative',
+				'top': 0,
+				'transform': 'none',
+				'display': 'flex',
+				'flexDirection': vertical ? 'column' : 'row',
+				'alignItems': 'center',
+				color,
+				'&:hover': {
+					color: colorHover
+				}
 			}),
 			valueContainer: () => ({
 				overflow: 'visible',

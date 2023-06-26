@@ -509,10 +509,12 @@
 			}
 		},
 		"topic": {
+			"summary": "Dein Thema:",
 			"headline": "Zu welchem Thema suchst Du Beratung?",
 			"subline": "Wähle ein Thema aus unserem Beratungsangebot aus."
 		},
 		"agency": {
+			"summary": "Deine Beratungsstelle",
 			"preselected": {
 				"prefix": "Deine vorausgewählte Beratungsstelle: ",
 				"isTeam": "Du wirst von einem Team beraten."

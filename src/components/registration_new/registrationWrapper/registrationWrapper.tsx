@@ -152,6 +152,7 @@ export const RegistrationWrapper = () => {
 				showLegalLinks={false}
 				showLoginLink={true}
 				stage={<Stage hasAnimation={isFirstVisit} />}
+				showRegistrationInfoDrawer={true}
 			>
 				<Box sx={{ pb: '96px', maxWidth: '560px !important' }}>
 					{stepDefinition[currentStep].component === 'welcome' ? (
