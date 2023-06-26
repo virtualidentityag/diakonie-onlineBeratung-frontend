@@ -38,7 +38,8 @@ export const ZipcodeInput: VFC = () => {
 			<Typography>{t('registration.zipcode.bullet1')}</Typography>
 			<Typography>{t('registration.zipcode.bullet2')}</Typography>
 			<Input
-				inputType="number"
+				inputMode="numeric"
+				inputType="text"
 				isValueValid={(val: string) => val.length === 5}
 				startAdornment={
 					<InputAdornment position="start">
@@ -46,7 +47,8 @@ export const ZipcodeInput: VFC = () => {
 					</InputAdornment>
 				}
 				onInputChange={(val: string) => {
-					if (val.length < 6) {
+					const reg = /^\d*$/;
+					if (val.length < 6 && reg.test(val)) {
 						setValue(val);
 					}
 				}}

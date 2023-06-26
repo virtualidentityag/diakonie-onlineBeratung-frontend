@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Divider } from '@mui/material';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import CreateIcon from '@mui/icons-material/Create';
@@ -85,13 +85,19 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 					display: 'flex',
 					justifyContent: 'space-between',
 					alignItems: 'center',
-					p: '32px',
+					flexDirection: { xs: 'column', md: 'row' },
+					p: { xs: '0', md: '32px' },
 					mt: '48px',
 					borderRadius: '4px',
-					border: '1px solid #c6c5c4'
+					border: { xs: 'none', md: '1px solid #c6c5c4' }
 				}}
 			>
-				<Box sx={{ mr: '24px', width: '50%' }}>
+				<Box
+					sx={{
+						mr: { xs: '0', md: '24px' },
+						width: { xs: '100%', md: '50%' }
+					}}
+				>
 					<Typography
 						variant="body2"
 						sx={{ textAlign: 'center', fontWeight: '600' }}
@@ -100,7 +106,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 					</Typography>
 					<Button
 						fullWidth
-						sx={{ mt: '16px' }}
+						sx={{ mt: { xs: '8px', md: '16px' } }}
 						variant="contained"
 						component={RouterLink}
 						to={nextStepUrl}
@@ -108,7 +114,22 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 						{t('registration.welcomeScreen.register.buttonLabel')}
 					</Button>
 				</Box>
-				<Box sx={{ width: '50%' }}>
+				<Divider
+					sx={{ mt: '32px', width: '100%', display: { md: 'none' } }}
+				>
+					<Typography
+						variant="subtitle2"
+						sx={{ textTransform: 'uppercase', color: 'info.light' }}
+					>
+						Oder
+					</Typography>
+				</Divider>
+				<Box
+					sx={{
+						width: { xs: '100%', md: '50%' },
+						mt: { xs: '32px', md: '0' }
+					}}
+				>
 					<Typography
 						variant="body2"
 						sx={{ textAlign: 'center', fontWeight: '600' }}
@@ -117,7 +138,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 					</Typography>
 					<Button
 						fullWidth
-						sx={{ mt: '16px' }}
+						sx={{ mt: { xs: '8px', md: '16px' } }}
 						variant="outlined"
 						component={RouterLink}
 						to={`/login`}

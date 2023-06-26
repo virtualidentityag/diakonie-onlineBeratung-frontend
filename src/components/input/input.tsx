@@ -7,6 +7,15 @@ import CancelIcon from '@mui/icons-material/Cancel';
 export interface InputProps {
 	label: string;
 	value: string;
+	inputMode?:
+		| 'tel'
+		| 'text'
+		| 'email'
+		| 'search'
+		| 'url'
+		| 'none'
+		| 'numeric'
+		| 'decimal';
 	shrinkLabel?: boolean;
 	onInputChange?: Function;
 	startAdornment?: JSX.Element;
@@ -31,6 +40,7 @@ export const Input = ({
 	isValueValid,
 	inputType,
 	info,
+	inputMode,
 	errorMessage,
 	successMesssage,
 	multipleCriteria
@@ -91,6 +101,9 @@ export const Input = ({
 				type={inputType || 'text'}
 				fullWidth
 				label={label}
+				inputProps={{
+					inputMode: inputMode
+				}}
 				sx={{
 					'&[type=number]': {
 						'-moz-appearance': 'textfield'
