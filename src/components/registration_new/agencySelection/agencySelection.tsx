@@ -5,7 +5,10 @@ import { AgencySelectionResults } from './agencySelectionResults';
 import { apiAgencySelection } from '../../../api';
 import { AgencyDataInterface, RegistrationContext } from '../../../globalState';
 
-export const AgencySelection: VFC = () => {
+export const AgencySelection: VFC<{
+	nextStepUrl: string;
+	onNextClick(): void;
+}> = ({ nextStepUrl, onNextClick }) => {
 	const { sessionStorageRegistrationData } = useContext(RegistrationContext);
 	const [zipcodeValue, setZipcodeValue] = useState<string>(
 		sessionStorageRegistrationData.agencyZipcode || undefined
@@ -22,13 +25,12 @@ export const AgencySelection: VFC = () => {
 			setResults(undefined);
 			(async () => {
 				setIsLoading(true);
-				// TODO: Add topic Id when available and remove consultingType
 				try {
 					const agencyResponse = await apiAgencySelection({
 						postcode: zipcodeValue,
-						consultingType: 10
+						consultingType: 10,
+						topicId: sessionStorageRegistrationData.topicId
 					});
-					console.log(agencyResponse);
 
 					setResults(agencyResponse);
 				} catch {
@@ -37,6 +39,7 @@ export const AgencySelection: VFC = () => {
 				setIsLoading(false);
 			})();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [zipcodeValue]);
 
 	return (
@@ -48,6 +51,8 @@ export const AgencySelection: VFC = () => {
 				}}
 			/>
 			<AgencySelectionResults
+				nextStepUrl={nextStepUrl}
+				onNextClick={onNextClick}
 				zipcode={headlineZipcode}
 				isLoading={isLoading}
 				results={results}

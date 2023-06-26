@@ -23,17 +23,22 @@ import { AgencyLanguages } from './agencyLanguages';
 import { parsePlaceholderString } from '../../../utils/parsePlaceholderString';
 import { useAppConfig } from '../../../hooks/useAppConfig';
 import { VFC } from 'react';
+import { MetaInfo } from '../metaInfo/MetaInfo';
 
 interface AgencySelectionResultsProps {
 	isLoading?: boolean;
 	zipcode?: string;
 	results?: AgencyDataInterface[];
+	nextStepUrl: string;
+	onNextClick(): void;
 }
 
 export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 	isLoading,
 	zipcode,
-	results
+	results,
+	nextStepUrl,
+	onNextClick
 }) => {
 	const { t } = useTranslation();
 	const settings = useAppConfig();
@@ -240,18 +245,26 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 									}
 								/>
 								{results?.[0].description && (
-									<Tooltip
-										title={results[0].description}
-										arrow
-									>
-										<InfoIcon
-											sx={{
-												p: '9px',
-												width: '38px',
-												height: '38px'
-											}}
-										/>
-									</Tooltip>
+									<MetaInfo
+										description={results?.[0].description}
+										onOverlayClose={() =>
+											setAgencyId(undefined)
+										}
+										backButtonLabel={t(
+											'registration.agency.infoOverlay.backButtonLabel'
+										)}
+										nextButtonLabel={t(
+											'registration.agency.infoOverlay.nextButtonLabel'
+										)}
+										nextStepUrl={nextStepUrl}
+										onNextClick={onNextClick}
+										onOverlayOpen={() => {
+											setDataForSessionStorage({
+												agencyId: results?.[0].id
+											});
+											setAgencyId(results?.[0].id);
+										}}
+									/>
 								)}
 							</Box>
 						</RadioGroup>
@@ -321,18 +334,26 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 										}
 									/>
 									{agency.description && (
-										<Tooltip
-											title={agency.description}
-											arrow
-										>
-											<InfoIcon
-												sx={{
-													p: '9px',
-													width: '38px',
-													height: '38px'
-												}}
-											/>
-										</Tooltip>
+										<MetaInfo
+											description={agency.description}
+											onOverlayClose={() =>
+												setAgencyId(undefined)
+											}
+											backButtonLabel={t(
+												'registration.agency.infoOverlay.backButtonLabel'
+											)}
+											nextButtonLabel={t(
+												'registration.agency.infoOverlay.nextButtonLabel'
+											)}
+											nextStepUrl={nextStepUrl}
+											onNextClick={onNextClick}
+											onOverlayOpen={() => {
+												setDataForSessionStorage({
+													agencyId: agency.id
+												});
+												setAgencyId(agency.id);
+											}}
+										/>
 									)}
 								</Box>
 							))}

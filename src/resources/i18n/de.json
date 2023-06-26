@@ -132,6 +132,7 @@
 		"menu": "Weitere Funktionen",
 		"back": "Zurück",
 		"next": "Weiter",
+		"info": "Information",
 		"successful": "Erfolgreich",
 		"faulty": "Fehlerhaft",
 		"selectLanguage": "Sprache wählen",
@@ -1745,7 +1746,11 @@
 		},
 		"topic": {
 			"headline": "Zu welchem Thema suchen Sie Beratung?",
-			"subline": "Wählen Sie ein Thema aus unserem Beratungsangebot aus."
+			"subline": "Wählen Sie ein Thema aus unserem Beratungsangebot aus.",
+			"infoOverlay": {
+				"backButtonLabel": "Anderes Thema auswählen",
+				"nextButtonLabel": "Thema auswählen und fortfahren"
+			}
 		},
 		"zipcode": {
 			"headline": "Um Sie bestmöglich beraten zu können benötigen wir Ihre Postleitzahl",
@@ -1799,6 +1804,10 @@
 				"headline": "Keine Online-Beratungsstelle gefunden",
 				"subline": "Bitte versuchen Sie es mit einer anderen Postleitzahl oder besuchen Sie unsere Website, um eine Beratungsstelle in Ihrer Nähe zu finden.",
 				"label": "Zur Beratungsstellensuche"
+			},
+			"infoOverlay": {
+				"backButtonLabel": "Andere Beratungsstelle auswählen",
+				"nextButtonLabel": "Beratungsstelle auswählen und fortfahren"
 			}
 		},
 		"agencySelection": {

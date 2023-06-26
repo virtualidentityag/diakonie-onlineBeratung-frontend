@@ -192,7 +192,13 @@ export const RegistrationWrapper = () => {
 									'zipcode' && <ZipcodeInput></ZipcodeInput>}
 								{stepDefinition[currentStep].component ===
 									'agencySelection' && (
-									<AgencySelection></AgencySelection>
+									<AgencySelection
+										onNextClick={onNextClick}
+										nextStepUrl={`/registration${
+											stepDefinition[currentStep + 1]
+												.urlSuffix
+										}`}
+									></AgencySelection>
 								)}
 								{stepDefinition[currentStep].component ===
 									'accountData' && (

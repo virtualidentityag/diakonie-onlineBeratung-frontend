@@ -24,6 +24,7 @@ import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
 import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Link as RouterLink } from 'react-router-dom';
+import { MetaInfo } from '../metaInfo/MetaInfo';
 
 export const TopicSelection: VFC<{
 	nextStepUrl: string;
@@ -38,8 +39,6 @@ export const TopicSelection: VFC<{
 	const [value, setValue] = useState<number>(
 		sessionStorageRegistrationData.topicId || undefined
 	);
-	const [infoOverlayContent, setInfoOverlayContent] = useState<string>('');
-	const [isInfoOverlayOpen, setIsInfoOverlayOpen] = useState<boolean>(false);
 	const [topicGroups, setTopicGroups] = useState<TopicGroup[]>([]);
 	const [topics, setTopics] = useState<TopicsDataInterface[]>([]);
 
@@ -197,55 +196,35 @@ export const TopicSelection: VFC<{
 													}
 												/>
 												{topic.description && (
-													<>
-														<Tooltip
-															title={
-																topic.description
-															}
-															arrow
-														>
-															<InfoIcon
-																sx={{
-																	display: {
-																		xs: 'none',
-																		md: 'inline'
-																	},
-																	p: '9px',
-																	width: '42px',
-																	height: '42px'
-																}}
-															></InfoIcon>
-														</Tooltip>
-														<InfoIcon
-															onClick={() => {
-																setDataForSessionStorage(
-																	{
-																		topicId:
-																			topic.id
-																	}
-																);
-																setValue(
-																	topic.id
-																);
-																setIsInfoOverlayOpen(
-																	true
-																);
-																setInfoOverlayContent(
-																	topic.description
-																);
-															}}
-															sx={{
-																display: {
-																	xs: 'inline',
-																	md: 'none'
-																},
-																cursor: 'pointer',
-																p: '9px',
-																width: '42px',
-																height: '42px'
-															}}
-														></InfoIcon>
-													</>
+													<MetaInfo
+														description={
+															topic.description
+														}
+														onOverlayClose={() =>
+															setValue(undefined)
+														}
+														backButtonLabel={t(
+															'registration.topic.infoOverlay.backButtonLabel'
+														)}
+														nextButtonLabel={t(
+															'registration.topic.infoOverlay.nextButtonLabel'
+														)}
+														nextStepUrl={
+															nextStepUrl
+														}
+														onNextClick={
+															onNextClick
+														}
+														onOverlayOpen={() => {
+															setDataForSessionStorage(
+																{
+																	topicId:
+																		topic.id
+																}
+															);
+															setValue(topic.id);
+														}}
+													/>
 												)}
 											</Box>
 										))}
@@ -254,59 +233,6 @@ export const TopicSelection: VFC<{
 						))}
 				</RadioGroup>
 			</FormControl>
-			<Modal
-				open={isInfoOverlayOpen}
-				onClose={() => {
-					setValue(undefined);
-					setIsInfoOverlayOpen(false);
-				}}
-			>
-				<Box
-					sx={{
-						width: '100vw',
-						height: '100vh',
-						overflowY: 'scroll',
-						backgroundColor: 'white',
-						p: '22px'
-					}}
-				>
-					<ArrowBackIosIcon
-						sx={{
-							mb: '26px',
-							cursor: 'pointer',
-							p: '9px',
-							width: '42px',
-							height: '42px'
-						}}
-						onClick={() => {
-							setIsInfoOverlayOpen(false);
-						}}
-					/>
-
-					<Typography>{infoOverlayContent}</Typography>
-					<Button
-						fullWidth
-						sx={{ mt: '16px' }}
-						variant="contained"
-						component={RouterLink}
-						to={nextStepUrl}
-						onClick={onNextClick}
-					>
-						Thema auswählen und fortfahren
-					</Button>
-					<Button
-						fullWidth
-						sx={{ mt: '24px' }}
-						variant="outlined"
-						onClick={() => {
-							setValue(undefined);
-							setIsInfoOverlayOpen(false);
-						}}
-					>
-						Anderes Thema auswählen
-					</Button>
-				</Box>
-			</Modal>
 		</>
 	);
 };
