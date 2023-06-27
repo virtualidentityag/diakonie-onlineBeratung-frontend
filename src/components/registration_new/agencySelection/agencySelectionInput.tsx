@@ -26,14 +26,17 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 			<Input
 				shrinkLabel={shrinkInputLabel}
 				onInputChange={(val) => {
-					if (val?.length < 6) {
+					const reg = /^\d*$/;
+					if (val.length < 6 && reg.test(val)) {
 						setShrinkInputLabel(true);
 						onInputChange(val);
 					}
 				}}
+				autoComplete="postal-code"
 				value={value}
 				label={t('registration.agency.search')}
-				inputType="number"
+				inputMode="numeric"
+				inputType="text"
 				startAdornment={
 					<InputAdornment position="start">
 						<SearchIcon color="info" />
