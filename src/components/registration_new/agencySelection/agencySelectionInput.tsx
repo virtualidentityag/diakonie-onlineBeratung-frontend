@@ -24,13 +24,16 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 			</Typography>
 			<Input
 				onInputChange={(val) => {
-					if (val?.length < 6) {
+					const reg = /^\d*$/;
+					if (val.length < 6 && reg.test(val)) {
 						onInputChange(val);
 					}
 				}}
+				autoComplete="postal-code"
 				value={value}
 				label={t('registration.agency.search')}
-				inputType="number"
+				inputMode="numeric"
+				inputType="text"
 				startAdornment={
 					<InputAdornment position="start">
 						<SearchIcon color="info" />

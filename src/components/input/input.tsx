@@ -23,6 +23,7 @@ export interface InputProps {
 	isValueValid?(value: string): boolean | Promise<boolean>;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
+	autoComplete?: string;
 	errorMessage?: string;
 	successMesssage?: string;
 	multipleCriteria?: Array<{
@@ -43,7 +44,8 @@ export const Input = ({
 	inputMode,
 	errorMessage,
 	successMesssage,
-	multipleCriteria
+	multipleCriteria,
+	autoComplete
 }: InputProps) => {
 	const [shrink, setShrink] = useState<boolean>(value?.length > 0);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
@@ -101,6 +103,7 @@ export const Input = ({
 				type={inputType || 'text'}
 				fullWidth
 				label={label}
+				autoComplete={autoComplete}
 				inputProps={{
 					inputMode: inputMode
 				}}

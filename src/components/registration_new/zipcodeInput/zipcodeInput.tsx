@@ -38,6 +38,7 @@ export const ZipcodeInput: VFC = () => {
 			<Typography>{t('registration.zipcode.bullet1')}</Typography>
 			<Typography>{t('registration.zipcode.bullet2')}</Typography>
 			<Input
+				autoComplete="postal-code"
 				inputMode="numeric"
 				inputType="text"
 				isValueValid={(val: string) => val.length === 5}
