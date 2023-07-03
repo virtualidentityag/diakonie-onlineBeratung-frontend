@@ -65,6 +65,33 @@ export const Input = ({
 		}
 	};
 
+	const handleBlur = async () => {
+		setWasBlurred(true);
+		const valid = await isValid(value);
+		if (value?.length === 0) {
+			setShrink(false);
+		} else if (!valid) {
+			setInputError(true);
+		}
+		if ((successMesssage || multipleCriteria) && valid) {
+			setShowSuccessMessage(true);
+		} else {
+			setShowSuccessMessage(false);
+		}
+	};
+
+	const handleChange = async (e) => {
+		onInputChange(e.target.value);
+		const valid = await isValid(e.target.value);
+		if (inputError && valid) {
+			setInputError(false);
+			setShowSuccessMessage(!!successMesssage || !!multipleCriteria);
+		} else if (showSuccessMessage && !valid) {
+			setInputError(true);
+			setShowSuccessMessage(false);
+		}
+	};
+
 	const getMultipleCriteriaDesign = (criteria) => {
 		const blurredIcon = wasBlurred ? (
 			<CancelIcon
@@ -162,36 +189,11 @@ export const Input = ({
 				}}
 				value={value}
 				error={inputError}
-				onChange={async (e) => {
-					onInputChange(e.target.value);
-					const valid = await isValid(e.target.value);
-					if (inputError && valid) {
-						setInputError(false);
-						setShowSuccessMessage(
-							!!successMesssage || !!multipleCriteria
-						);
-					} else if (showSuccessMessage && !valid) {
-						setInputError(true);
-						setShowSuccessMessage(false);
-					}
-				}}
+				onChange={handleChange}
 				onFocus={() => {
 					setShrink(true);
 				}}
-				onBlur={async () => {
-					setWasBlurred(true);
-					const valid = await isValid(value);
-					if (value?.length === 0) {
-						setShrink(false);
-					} else if (!valid) {
-						setInputError(true);
-					}
-					if ((successMesssage || multipleCriteria) && valid) {
-						setShowSuccessMessage(true);
-					} else {
-						setShowSuccessMessage(false);
-					}
-				}}
+				onBlur={handleBlur}
 			></TextField>
 			{info && !inputError && !showSuccessMessage && (
 				<Typography
