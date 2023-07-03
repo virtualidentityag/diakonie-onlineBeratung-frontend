@@ -1734,6 +1734,10 @@
 			"headline": "On what topic are you looking for advice?",
 			"subline": "Select a topic from our consulting offer."
 		},
+		"infoOverlay": {
+			"backButtonLabel": "Choose another topic",
+			"nextButtonLabel": "Choose topic and continue"
+		},
 		"zipcode": {
 			"headline": "To be able to advise you in the best possible way we need your zip code",
 			"subline": "Why? Because then our professionals:",

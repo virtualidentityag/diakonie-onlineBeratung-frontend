@@ -22,6 +22,7 @@ export interface InputProps {
 	isValueValid?(value: string): boolean | Promise<boolean>;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
+	autoComplete?: string;
 	errorMessage?: string;
 	successMesssage?: string;
 	multipleCriteria?: Array<{
@@ -42,7 +43,8 @@ export const Input = ({
 	inputMode,
 	errorMessage,
 	successMesssage,
-	multipleCriteria
+	multipleCriteria,
+	autoComplete
 }: InputProps) => {
 	const [shrink, setShrink] = useState<boolean>(value?.length > 0);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
@@ -59,6 +61,33 @@ export const Input = ({
 			);
 		} else {
 			return true;
+		}
+	};
+
+	const handleBlur = async () => {
+		setWasBlurred(true);
+		const valid = await isValid(value);
+		if (value?.length === 0) {
+			setShrink(false);
+		} else if (!valid) {
+			setInputError(true);
+		}
+		if ((successMesssage || multipleCriteria) && valid) {
+			setShowSuccessMessage(true);
+		} else {
+			setShowSuccessMessage(false);
+		}
+	};
+
+	const handleChange = async (e) => {
+		onInputChange(e.target.value);
+		const valid = await isValid(e.target.value);
+		if (inputError && valid) {
+			setInputError(false);
+			setShowSuccessMessage(!!successMesssage || !!multipleCriteria);
+		} else if (showSuccessMessage && !valid) {
+			setInputError(true);
+			setShowSuccessMessage(false);
 		}
 	};
 
@@ -110,6 +139,7 @@ export const Input = ({
 				type={inputType || 'text'}
 				fullWidth
 				label={label}
+				autoComplete={autoComplete}
 				inputProps={{
 					inputMode: inputMode
 				}}
@@ -168,36 +198,11 @@ export const Input = ({
 				}}
 				value={value}
 				error={inputError}
-				onChange={async (e) => {
-					onInputChange(e.target.value);
-					const valid = await isValid(e.target.value);
-					if (inputError && valid) {
-						setInputError(false);
-						setShowSuccessMessage(
-							!!successMesssage || !!multipleCriteria
-						);
-					} else if (showSuccessMessage && !valid) {
-						setInputError(true);
-						setShowSuccessMessage(false);
-					}
-				}}
+				onChange={handleChange}
 				onFocus={() => {
 					setShrink(true);
 				}}
-				onBlur={async () => {
-					setWasBlurred(true);
-					const valid = await isValid(value);
-					if (value?.length === 0) {
-						setShrink(false);
-					} else if (!valid) {
-						setInputError(true);
-					}
-					if ((successMesssage || multipleCriteria) && valid) {
-						setShowSuccessMessage(true);
-					} else {
-						setShowSuccessMessage(false);
-					}
-				}}
+				onBlur={handleBlur}
 			></TextField>
 			{info && !inputError && !showSuccessMessage && (
 				<Typography

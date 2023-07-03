@@ -29,10 +29,12 @@ export const AgencySelectionInput: VFC<AgencySelectionInputProps> = ({
 			{!isConsultantLink && (
 				<Input
 					onInputChange={(val) => {
-						if (val?.length < 6) {
+						const reg = /^\d*$/;
+						if (val.length < 6 && reg.test(val)) {
 							onInputChange(val);
 						}
 					}}
+					autoComplete="postal-code"
 					inputMode="numeric"
 					inputType="text"
 					value={value}

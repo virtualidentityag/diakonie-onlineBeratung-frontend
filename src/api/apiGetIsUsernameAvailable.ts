@@ -5,7 +5,7 @@ export const apiGetIsUsernameAvailable = async (
 	username: string
 ): Promise<any> => {
 	return fetchData({
-		url: `${endpoints.isUsernameAvailable}/${username}`,
+		url: `${endpoints.baseUserService}/${username}`,
 		method: FETCH_METHODS.GET,
 		headersData: {},
 		responseHandling: [FETCH_ERRORS.EMPTY, FETCH_ERRORS.NO_MATCH]

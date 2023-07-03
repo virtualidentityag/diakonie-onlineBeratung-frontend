@@ -106,7 +106,7 @@ export const endpoints = {
 	registerAnonymousAsker:
 		apiUrl + '/service/conversations/askers/anonymous/new',
 	registerAsker: apiUrl + '/service/users/askers/new',
-	isUsernameAvailable: apiUrl + '/service/users',
+	baseUserService: apiUrl + '/service/users',
 	registerAskerNewConsultingType:
 		apiUrl + '/service/users/askers/consultingType/new',
 	rejectVideoCall: apiUrl + '/service/videocalls/reject',
