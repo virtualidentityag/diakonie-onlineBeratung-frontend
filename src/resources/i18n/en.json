@@ -137,7 +137,8 @@
 		"successful": "Successful",
 		"faulty": "Faulty",
 		"selectLanguage": "Select language",
-		"wait": "Please wait"
+		"wait": "Please wait",
+		"or": "or"
 	},
 	"appointments": {
 		"title": "Appointment overview",
@@ -1906,7 +1907,7 @@
 			"label": {
 				"prefix": "I have the ",
 				"and": " and ",
-				"suffix": " noted. For authentication and navigation, this website uses cookies. I agree with this.*"
+				"suffix": " noted. For authentication and navigation, this website uses cookies. I agree with this."
 			}
 		},
 		"submitButton": {

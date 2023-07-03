@@ -137,7 +137,8 @@
 		"faulty": "Fehlerhaft",
 		"selectLanguage": "Sprache wählen",
 		"wait": "Bitte warten",
-		"closeBanner": "Banner schließen"
+		"closeBanner": "Banner schließen",
+		"or": "oder"
 	},
 	"appointments": {
 		"copy": {
@@ -1736,6 +1737,21 @@
 				}
 			}
 		},
+		"consultantlink": "Ihr_e Berater_in hat Sie zur Online-Beratung eingeladen! Bitte registrieren Sie sich, um mit Ihrer_m Berater_in in Kontakt zu kommen.",
+		"errors": {
+			"tid": {
+				"headline": "Das ausgewählte Thema existiert nicht.",
+				"subline": "Bitte wählen Sie erneut ein passendes Thema bei der Registrierung aus."
+			},
+			"aid": {
+				"headline": "Die ausgewählte Beratungsstelle existiert nicht.",
+				"subline": "Bitte wählen Sie eine Beratungsstelle bei der Registrierung aus."
+			},
+			"cid": {
+				"headline": "Leider konnten wir Ihre_n Berater_in nicht finden.",
+				"subline": "Bitte kontaktieren Sie ihn/sie, damit er/sie Ihnen erneut einen Link zusendet."
+			}
+		},
 		"age": {
 			"dropdown": "Alter auswählen*",
 			"headline": "Alter angeben"
@@ -1792,6 +1808,7 @@
 				"isTeam": "Sie werden von einem Team beraten."
 			},
 			"headline": "Ihre Beratungsstelle wählen",
+			"consultantheadline": "Ihre Beratungsstelle",
 			"search": "Suche nach einer PLZ",
 			"result": {
 				"headline": "Beratungsstellen zur Postleitzahl",
@@ -1870,7 +1887,7 @@
 			"label": {
 				"prefix": "Ich habe die ",
 				"and": " und ",
-				"suffix": " zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies.*"
+				"suffix": " zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies."
 			}
 		},
 		"form": {

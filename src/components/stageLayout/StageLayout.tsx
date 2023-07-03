@@ -65,7 +65,7 @@ export const StageLayout = ({
 							color="inherit"
 							component="div"
 						>
-							Beratung & Hilfe
+							{translate('app.stage.title')}
 						</Typography>
 						<Box sx={{ flexGrow: 1 }} />
 						<Box sx={{ display: 'flex' }}>

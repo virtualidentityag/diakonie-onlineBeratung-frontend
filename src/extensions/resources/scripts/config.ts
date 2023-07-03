@@ -46,13 +46,13 @@ export const config: AppConfigInterface = {
 		error404: uiUrl + '/error.404.html',
 		error500: uiUrl + '/error.500.html',
 		finishedAnonymousChatRedirect: 'https://www.diakonie.de',
-		home: uiUrl + '/themen',
+		home: uiUrl + '/registration',
 		redirectToApp: uiUrl + '/' + APP_PATH,
 		registration: uiUrl + '/registration',
 		releases: uiUrl + '/releases',
-		toEntry: uiUrl + '/themen',
+		toEntry: uiUrl + '/registration',
 		toLogin: uiUrl + '/login',
-		toRegistration: uiUrl + '/themen',
+		toRegistration: uiUrl + '/registration',
 		videoCall: '/videoanruf/:domain/:jwt/:video?/:username?/:e2e?',
 		videoConference: '/videoberatung/:type/:appointmentId',
 		...legalLinks
@@ -65,7 +65,7 @@ export const config: AppConfigInterface = {
 		 * This must be enabled in jitsi too. (Config value is named equal)
 		 * https://github.com/jitsi/lib-jitsi-meet/blob/afc006e99a42439c305c20faab50a1f786254676/modules/browser/BrowserCapabilities.js#L259
 		 */
-		enableEncodedTransformSupport: false,
+		enableEncodedTransformSupport: true,
 		/**
 		 * Enable the e2ee banner outside the jitsi iframe. Set this to true when video-backend is on the latest develop
 		 * where the e2ee banner is removed inside jitsi and need to be rendered inside the frontend

@@ -9,9 +9,12 @@ export const AgencySelection: VFC<{
 	nextStepUrl: string;
 	onNextClick(): void;
 }> = ({ nextStepUrl, onNextClick }) => {
-	const { sessionStorageRegistrationData } = useContext(RegistrationContext);
+	const { sessionStorageRegistrationData, isConsultantLink, consultant } =
+		useContext(RegistrationContext);
 	const [zipcodeValue, setZipcodeValue] = useState<string>(
-		sessionStorageRegistrationData.agencyZipcode || undefined
+		sessionStorageRegistrationData.zipcode ||
+			sessionStorageRegistrationData.agencyZipcode ||
+			undefined
 	);
 	const [headlineZipcode, setHeadlineZipcode] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -20,7 +23,9 @@ export const AgencySelection: VFC<{
 	);
 
 	useEffect(() => {
-		if (zipcodeValue?.length === 5) {
+		if (isConsultantLink) {
+			setResults(consultant.agencies);
+		} else if (zipcodeValue?.length === 5) {
 			setHeadlineZipcode(zipcodeValue);
 			setResults(undefined);
 			(async () => {
@@ -28,8 +33,9 @@ export const AgencySelection: VFC<{
 				try {
 					const agencyResponse = await apiAgencySelection({
 						postcode: zipcodeValue,
-						consultingType: 10,
-						topicId: sessionStorageRegistrationData.topicId
+						consultingType: 24,
+						topicId:
+							sessionStorageRegistrationData.topicId || undefined
 					});
 
 					setResults(agencyResponse);
@@ -40,7 +46,7 @@ export const AgencySelection: VFC<{
 			})();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [zipcodeValue]);
+	}, [zipcodeValue, consultant]);
 
 	return (
 		<>

@@ -102,6 +102,7 @@ export const AccountData = () => {
 				successMesssage={t('registration.account.username.success')}
 				isValueValid={async (val: string) => {
 					if (val.length < 5) {
+						setIsUsernameAvailable(true);
 						return false;
 					} else {
 						return await apiGetIsUsernameAvailable(val)
@@ -134,6 +135,12 @@ export const AccountData = () => {
 							onClick={() => {
 								setIsPasswordVisible(!isPasswordVisible);
 							}}
+							tabIndex={0}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									setIsPasswordVisible(!isPasswordVisible);
+								}
+							}}
 						/>
 					</InputAdornment>
 				}
@@ -159,10 +166,18 @@ export const AccountData = () => {
 					>
 						<VisibilityIcon
 							sx={{ cursor: 'pointer', color: 'info.light' }}
+							tabIndex={0}
 							onClick={() => {
 								setIsRepeatPasswordVisible(
 									!isRepeatPasswordVisible
 								);
+							}}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									setIsRepeatPasswordVisible(
+										!isRepeatPasswordVisible
+									);
+								}
 							}}
 						/>
 					</InputAdornment>

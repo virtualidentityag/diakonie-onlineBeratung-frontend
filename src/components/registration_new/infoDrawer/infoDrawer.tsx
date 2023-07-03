@@ -6,15 +6,14 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, SwipeableDrawer, Typography } from '@mui/material';
 import { Global } from '@emotion/react';
 import { RegistrationContext } from '../../../globalState';
-import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
-import { apiGetAgencyById } from '../../../api';
 
 interface InfoDrawerProps {
 	trigger?: boolean;
 }
 
 export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
-	const { sessionStorageRegistrationData } = useContext(RegistrationContext);
+	const { preselectedAgencyName, preselectedTopicName } =
+		useContext(RegistrationContext);
 	const { t } = useTranslation();
 	const drawerBleeding = 92;
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -34,35 +33,14 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 	};
 
 	useEffect(() => {
-		if (sessionStorageRegistrationData.topicId) {
-			(async () => {
-				try {
-					const topicsResponse = await apiGetTopicsData();
-					setTopicName(
-						topicsResponse.filter(
-							(topic) =>
-								topic.id ===
-								sessionStorageRegistrationData.topicId
-						)[0]?.name || '-'
-					);
-				} catch {
-					setTopicName('-');
-				}
-			})();
+		if (preselectedTopicName) {
+			setTopicName(preselectedTopicName);
 		}
-		if (sessionStorageRegistrationData.agencyId) {
-			(async () => {
-				try {
-					const agencyResponse = await apiGetAgencyById(
-						sessionStorageRegistrationData.agencyId
-					);
-					setAgencyName(agencyResponse.name || '-');
-				} catch {
-					setAgencyName('-');
-				}
-			})();
+		if (preselectedAgencyName) {
+			setAgencyName(preselectedAgencyName);
 		}
-	}, [sessionStorageRegistrationData]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [preselectedAgencyName, preselectedTopicName]);
 
 	return (
 		<>
@@ -71,13 +49,13 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 					'.MuiDrawer-root > .MuiPaper-root': {
 						top: -drawerBleeding,
 						overflow: 'visible'
-						// maxHeight: '70vh'
 					}
 				}}
 			/>
 			<SwipeableDrawer
 				sx={{
-					display: { md: 'none' }
+					display: { md: 'none' },
+					top: 0
 				}}
 				hideBackdrop={true}
 				anchor="top"
@@ -90,12 +68,17 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 			>
 				<Box
 					onClick={toggleDrawer}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							toggleDrawer(e);
+						}
+					}}
+					tabIndex={0}
 					sx={{
 						'px': '16px',
 						'pt': '16px',
 						'mt': trigger ? 0 : '48px',
 						'position': 'relative',
-						'top': drawerBleeding,
 						'borderBottomLeftRadius': 8,
 						'borderBottomRightRadius': 8,
 						'visibility': 'visible',
@@ -107,6 +90,7 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 						'animationName': 'slideIn',
 						'animationDuration': '0.8s',
 						'animationDelay': '0.3s',
+						'animationFillMode': 'forwards',
 						'@keyframes slideIn': {
 							'0%': {
 								top: 0
@@ -117,24 +101,31 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 						}
 					}}
 				>
-					<Typography sx={{ color: 'white', fontWeight: '600' }}>
-						{t('registration.topic.summary')}
-					</Typography>
-					<Typography sx={{ color: 'white', mt: '8px' }}>
-						{topicName}
-					</Typography>
-					<Typography
-						sx={{
-							color: 'white',
-							fontWeight: '600',
-							mt: '16px'
-						}}
-					>
-						{t('registration.agency.summary')}
-					</Typography>
-					<Typography sx={{ color: 'white', mt: '8px' }}>
-						{agencyName}
-					</Typography>
+					{/* TODO: Fix initial drawer positioning */}
+					{isDrawerOpen && (
+						<>
+							<Typography
+								sx={{ color: 'white', fontWeight: '600' }}
+							>
+								{t('registration.topic.summary')}
+							</Typography>
+							<Typography sx={{ color: 'white', mt: '8px' }}>
+								{topicName}
+							</Typography>
+							<Typography
+								sx={{
+									color: 'white',
+									fontWeight: '600',
+									mt: '16px'
+								}}
+							>
+								{t('registration.agency.summary')}
+							</Typography>
+							<Typography sx={{ color: 'white', mt: '8px' }}>
+								{agencyName}
+							</Typography>{' '}
+						</>
+					)}
 					<Box
 						onClick={toggleDrawer}
 						sx={{

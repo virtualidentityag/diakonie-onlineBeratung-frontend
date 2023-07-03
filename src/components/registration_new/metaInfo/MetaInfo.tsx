@@ -39,6 +39,7 @@ export const MetaInfo: VFC<{
 						width: '42px',
 						height: '42px'
 					}}
+					tabIndex={0}
 					aria-label={t('app.info')}
 				></InfoIcon>
 			</Tooltip>
@@ -48,6 +49,13 @@ export const MetaInfo: VFC<{
 					onOverlayOpen();
 					setIsInfoOverlayOpen(true);
 				}}
+				onKeyDown={(e) => {
+					if (e.key === 'Enter') {
+						onOverlayOpen();
+						setIsInfoOverlayOpen(true);
+					}
+				}}
+				tabIndex={0}
 				sx={{
 					display: {
 						xs: 'inline',
@@ -84,6 +92,13 @@ export const MetaInfo: VFC<{
 							width: '42px',
 							height: '42px'
 						}}
+						onKeyDown={(e) => {
+							if (e.key === 'Enter') {
+								onOverlayClose();
+								setIsInfoOverlayOpen(false);
+							}
+						}}
+						tabIndex={0}
 						onClick={() => {
 							onOverlayClose();
 							setIsInfoOverlayOpen(false);
