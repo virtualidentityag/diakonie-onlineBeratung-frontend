@@ -101,31 +101,26 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 						}
 					}}
 				>
-					{/* TODO: Fix initial drawer positioning */}
-					{isDrawerOpen && (
-						<>
-							<Typography
-								sx={{ color: 'white', fontWeight: '600' }}
-							>
-								{t('registration.topic.summary')}
-							</Typography>
-							<Typography sx={{ color: 'white', mt: '8px' }}>
-								{topicName}
-							</Typography>
-							<Typography
-								sx={{
-									color: 'white',
-									fontWeight: '600',
-									mt: '16px'
-								}}
-							>
-								{t('registration.agency.summary')}
-							</Typography>
-							<Typography sx={{ color: 'white', mt: '8px' }}>
-								{agencyName}
-							</Typography>{' '}
-						</>
-					)}
+					<Box sx={{ opacity: isDrawerOpen ? 1 : 0 }}>
+						<Typography sx={{ color: 'white', fontWeight: '600' }}>
+							{t('registration.topic.summary')}
+						</Typography>
+						<Typography sx={{ color: 'white', mt: '8px' }}>
+							{topicName}
+						</Typography>
+						<Typography
+							sx={{
+								color: 'white',
+								fontWeight: '600',
+								mt: '16px'
+							}}
+						>
+							{t('registration.agency.summary')}
+						</Typography>
+						<Typography sx={{ color: 'white', mt: '8px' }}>
+							{agencyName}
+						</Typography>
+					</Box>
 					<Box
 						onClick={toggleDrawer}
 						sx={{

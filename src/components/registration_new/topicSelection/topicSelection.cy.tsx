@@ -14,10 +14,7 @@ it('Get accordion content', () => {
 	});
 	cy.mount(
 		<RegistrationProvider>
-			<TopicSelection
-				nextStepUrl=""
-				onNextClick={() => {}}
-			></TopicSelection>
+			<TopicSelection nextStepUrl="" onNextClick={() => {}} />
 		</RegistrationProvider>
 	);
 	cy.get('h4').should('contains.text', 'Alter');

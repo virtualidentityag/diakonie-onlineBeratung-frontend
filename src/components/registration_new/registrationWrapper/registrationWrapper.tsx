@@ -27,6 +27,7 @@ import { PreselectedDataBox } from '../preselectedDataBox/PreselectedDataBox';
 import { endpoints } from '../../../resources/scripts/endpoints';
 import { apiPostRegistration } from '../../../api';
 import { useAppConfig } from '../../../hooks/useAppConfig';
+import { REGISTRATION_DATA_VALIDATION } from './registrationDataValidation';
 
 export const RegistrationWrapper = () => {
 	const settings = useAppConfig();
@@ -39,7 +40,6 @@ export const RegistrationWrapper = () => {
 		refreshSessionStorageRegistrationData,
 		sessionStorageRegistrationData,
 		availableSteps,
-		preselectedData,
 		dataPrepForSessionStorage
 	} = useContext(RegistrationContext);
 	const { tenant } = useContext(TenantContext);
@@ -76,20 +76,21 @@ export const RegistrationWrapper = () => {
 		const step = availableSteps.findIndex(
 			(step) => step?.urlSuffix === currentLocation
 		);
-		console.log(currentLocation, step);
 		setCurrentStep(step === -1 ? 0 : step);
 	};
 
 	const checkForStepsWithMissingMandatoryFields = (): number[] => {
 		if (currentStep > 0) {
+			//fix missing step stuff
+			console.log(sessionStorageRegistrationData);
 			return availableSteps.reduce<number[]>(
 				(missingSteps, step, currentIndex) => {
 					if (
-						step?.mandatoryFields?.every(
+						step?.mandatoryFields?.some(
 							(mandatoryField) =>
 								sessionStorageRegistrationData?.[
 									mandatoryField
-								] === undefined
+								] === (undefined || null)
 						)
 					) {
 						return [...missingSteps, currentIndex];
@@ -118,6 +119,8 @@ export const RegistrationWrapper = () => {
 		const missingPreviousSteps = checkForStepsWithMissingMandatoryFields()
 			.sort()
 			.filter((missingStep) => missingStep < currentStep);
+
+		console.log(missingPreviousSteps);
 		if (missingPreviousSteps.length > 0) {
 			history.push(
 				`/registration${
@@ -126,7 +129,7 @@ export const RegistrationWrapper = () => {
 			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [currentStep, availableSteps]);
+	}, [currentStep, availableSteps, sessionStorageRegistrationData]);
 
 	return (
 		<>
@@ -148,7 +151,7 @@ export const RegistrationWrapper = () => {
 							nextStepUrl={`/registration${
 								availableSteps[currentStep + 1]?.urlSuffix
 							}`}
-						></WelcomeScreen>
+						/>
 					) : (
 						<>
 							<Helmet>
@@ -163,13 +166,11 @@ export const RegistrationWrapper = () => {
 									{t('registration.headline')}
 								</Typography>
 
-								{preselectedData.length > 0 && (
-									<PreselectedDataBox hasDrawer={false} />
-								)}
+								{<PreselectedDataBox hasDrawer={false} />}
 								<StepBar
 									maxNumberOfSteps={availableSteps.length - 1}
 									currentStep={currentStep}
-								></StepBar>
+								/>
 
 								{availableSteps[currentStep]?.component ===
 									'topicSelection' && (
@@ -179,10 +180,10 @@ export const RegistrationWrapper = () => {
 											availableSteps[currentStep + 1]
 												?.urlSuffix
 										}`}
-									></TopicSelection>
+									/>
 								)}
 								{availableSteps[currentStep]?.component ===
-									'zipcode' && <ZipcodeInput></ZipcodeInput>}
+									'zipcode' && <ZipcodeInput />}
 								{availableSteps[currentStep]?.component ===
 									'agencySelection' && (
 									<AgencySelection
@@ -191,12 +192,10 @@ export const RegistrationWrapper = () => {
 											availableSteps[currentStep + 1]
 												?.urlSuffix
 										}`}
-									></AgencySelection>
+									/>
 								)}
 								{availableSteps[currentStep]?.component ===
-									'accountData' && (
-									<AccountData></AccountData>
-								)}
+									'accountData' && <AccountData />}
 
 								{availableSteps[currentStep]?.component !==
 									'welcome' && (
@@ -275,20 +274,33 @@ export const RegistrationWrapper = () => {
 																consultingType:
 																	'24'
 															};
-														updateSessionStorageWithPreppedData();
-														apiPostRegistration(
-															endpoints.registerAsker,
-															registrationData,
-															settings.multitenancyWithSingleDomainEnabled,
-															tenant
-														).then(() => {
-															sessionStorage.removeItem(
-																registrationSessionStorageKey
-															);
-															setRedirectOverlayActive(
-																true
-															);
-														});
+														if (
+															Object.keys(
+																REGISTRATION_DATA_VALIDATION
+															).every((item) =>
+																REGISTRATION_DATA_VALIDATION[
+																	item
+																].validation(
+																	registrationData[
+																		item
+																	]
+																)
+															)
+														) {
+															apiPostRegistration(
+																endpoints.registerAsker,
+																registrationData,
+																settings.multitenancyWithSingleDomainEnabled,
+																tenant
+															).then(() => {
+																sessionStorage.removeItem(
+																	registrationSessionStorageKey
+																);
+																setRedirectOverlayActive(
+																	true
+																);
+															});
+														}
 													}}
 												>
 													{t('registration.register')}

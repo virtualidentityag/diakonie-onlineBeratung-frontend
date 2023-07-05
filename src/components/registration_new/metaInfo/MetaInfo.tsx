@@ -41,7 +41,7 @@ export const MetaInfo: VFC<{
 					}}
 					tabIndex={0}
 					aria-label={t('app.info')}
-				></InfoIcon>
+				/>
 			</Tooltip>
 			<InfoIcon
 				aria-label={t('app.info')}
@@ -66,7 +66,7 @@ export const MetaInfo: VFC<{
 					width: '42px',
 					height: '42px'
 				}}
-			></InfoIcon>
+			/>
 			<Modal
 				open={isInfoOverlayOpen}
 				onClose={() => {

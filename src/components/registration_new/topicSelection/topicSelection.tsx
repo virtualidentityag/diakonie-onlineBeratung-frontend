@@ -20,6 +20,7 @@ import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
 import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 import { Loading } from '../../app/Loading';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
 
 export const TopicSelection: VFC<{
 	nextStepUrl: string;
@@ -46,9 +47,12 @@ export const TopicSelection: VFC<{
 	};
 
 	useEffect(() => {
-		if (value) {
+		if (
+			REGISTRATION_DATA_VALIDATION.topicId.validation(value?.toString())
+		) {
 			setDisabledNextButton(false);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
 

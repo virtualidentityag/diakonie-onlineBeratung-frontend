@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useState, useEffect, VFC, useContext } from 'react';
-import { AgencySelectionInput } from './agencySelectionInput';
 import { AgencySelectionResults } from './agencySelectionResults';
 import { apiAgencySelection } from '../../../api';
 import { AgencyDataInterface, RegistrationContext } from '../../../globalState';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export const AgencySelection: VFC<{
 	nextStepUrl: string;
@@ -11,11 +12,8 @@ export const AgencySelection: VFC<{
 }> = ({ nextStepUrl, onNextClick }) => {
 	const { sessionStorageRegistrationData, isConsultantLink, consultant } =
 		useContext(RegistrationContext);
-	const [zipcodeValue, setZipcodeValue] = useState<string>(
-		sessionStorageRegistrationData.zipcode ||
-			sessionStorageRegistrationData.agencyZipcode ||
-			undefined
-	);
+
+	const { t } = useTranslation();
 	const [headlineZipcode, setHeadlineZipcode] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [results, setResults] = useState<AgencyDataInterface[] | undefined>(
@@ -25,14 +23,14 @@ export const AgencySelection: VFC<{
 	useEffect(() => {
 		if (isConsultantLink) {
 			setResults(consultant.agencies);
-		} else if (zipcodeValue?.length === 5) {
-			setHeadlineZipcode(zipcodeValue);
+		} else if (sessionStorageRegistrationData.zipcode?.length === 5) {
+			setHeadlineZipcode(sessionStorageRegistrationData.zipcode);
 			setResults(undefined);
 			(async () => {
 				setIsLoading(true);
 				try {
 					const agencyResponse = await apiAgencySelection({
-						postcode: zipcodeValue,
+						postcode: sessionStorageRegistrationData.zipcode,
 						consultingType: 24,
 						topicId:
 							sessionStorageRegistrationData.topicId || undefined
@@ -46,16 +44,16 @@ export const AgencySelection: VFC<{
 			})();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [zipcodeValue, consultant]);
+	}, [sessionStorageRegistrationData, consultant]);
 
 	return (
 		<>
-			<AgencySelectionInput
-				value={zipcodeValue}
-				onInputChange={(val: string) => {
-					setZipcodeValue(val);
-				}}
-			/>
+			<Typography variant="h3">
+				{(isConsultantLink && consultant?.agencies?.length === 1) ||
+				results?.length === 1
+					? t('registration.agency.consultantheadline')
+					: t('registration.agency.headline')}
+			</Typography>
 			<AgencySelectionResults
 				nextStepUrl={nextStepUrl}
 				onNextClick={onNextClick}

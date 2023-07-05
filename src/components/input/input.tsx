@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { TextField, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useTranslation } from 'react-i18next';
 
 export interface InputProps {
 	label: string;
@@ -46,6 +47,7 @@ export const Input = ({
 	multipleCriteria,
 	autoComplete
 }: InputProps) => {
+	const { t } = useTranslation();
 	const [shrink, setShrink] = useState<boolean>(value?.length > 0);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
 	const [showSuccessMessage, setShowSuccessMessage] =
@@ -259,7 +261,7 @@ export const Input = ({
 							}}
 						>
 							{getMultipleCriteriaDesign(criteria).icon}{' '}
-							{criteria.info}
+							{t(criteria.info)}
 						</Typography>
 					);
 				})}

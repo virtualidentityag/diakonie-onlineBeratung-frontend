@@ -22,6 +22,7 @@ import { parsePlaceholderString } from '../../../utils/parsePlaceholderString';
 import { useAppConfig } from '../../../hooks/useAppConfig';
 import { VFC } from 'react';
 import { MetaInfo } from '../metaInfo/MetaInfo';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
 
 interface AgencySelectionResultsProps {
 	isLoading?: boolean;
@@ -70,7 +71,11 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 				agencyId: undefined,
 				agencyZipcode: zipcode
 			});
-		} else if (agencyId) {
+		} else if (
+			REGISTRATION_DATA_VALIDATION.agencyId.validation(
+				agencyId?.toString()
+			)
+		) {
 			setDisabledNextButton(false);
 			setDataForSessionStorage({
 				agencyId: agencyId,
@@ -263,7 +268,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 											</Typography>
 											<AgencyLanguages
 												agencyId={results?.[0].id}
-											></AgencyLanguages>
+											/>
 										</Box>
 									}
 								/>

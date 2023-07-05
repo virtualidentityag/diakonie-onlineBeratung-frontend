@@ -10,7 +10,6 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { apiGetAgencyById } from '../../api';
 import { apiGetTopicsData } from '../../api/apiGetTopicsData';
-import { PreselectionError } from '../../components/registration_new/preselectionError/PreselectionError';
 import { apiGetConsultant } from '../../api/apiGetConsultant';
 import { ConsultantDataInterface } from '../interfaces/UserDataInterface';
 
@@ -35,6 +34,9 @@ interface RegistrationContextInterface {
 	preselectedTopicName?: string;
 	isConsultantLink?: boolean;
 	consultant?: ConsultantDataInterface;
+	hasConsultantError?: boolean;
+	hasAgencyError?: boolean;
+	hasTopicError?: boolean;
 }
 
 export const RegistrationContext = createContext<RegistrationContextInterface>(
@@ -58,7 +60,6 @@ export function RegistrationProvider(props) {
 			sessionStorage.getItem(registrationSessionStorageKey) || '{}'
 		);
 	const [disabledNextButton, setDisabledNextButton] = useState<boolean>(true);
-	const [errors, setErrors] = useState<Array<'tid' | 'cid' | 'aid'>>([]);
 	const [hasTopicError, setHasTopicError] = useState<boolean>(false);
 	const [hasAgencyError, setHasAgencyError] = useState<boolean>(false);
 	const [hasConsultantError, setHasConsultantError] =
@@ -93,7 +94,8 @@ export function RegistrationProvider(props) {
 			component: 'zipcode',
 			urlSuffix: '/zipcode',
 			mandatoryFields: ['zipcode'],
-			urlParams: ['zipcode']
+			// old links used postcode as parameter
+			urlParams: ['postcode']
 		},
 		{
 			component: 'agencySelection',
@@ -111,18 +113,18 @@ export function RegistrationProvider(props) {
 
 	useEffect(() => {
 		if (
-			urlQuery.get('zipcode') ||
+			urlQuery.get('postcode') ||
 			urlQuery.get('aid') ||
 			urlQuery.get('tid')
 		) {
 			const zipcodeRegex = new RegExp(
 				/^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$/
 			);
-			const isZipcodeValid = zipcodeRegex.test(urlQuery.get('zipcode'));
+			const isZipcodeValid = zipcodeRegex.test(urlQuery.get('postcode'));
 			sessionStorage.removeItem(registrationSessionStorageKey);
 			setPreselectedData(
 				[
-					urlQuery.get('zipcode') && isZipcodeValid ? 'zipcode' : '',
+					urlQuery.get('postcode') && isZipcodeValid ? 'zipcode' : '',
 					urlQuery.get('aid') ? 'aid' : '',
 					urlQuery.get('tid') ? 'tid' : ''
 				].filter((preselection) => preselection !== '') as (
@@ -132,7 +134,7 @@ export function RegistrationProvider(props) {
 				)[]
 			);
 			updateSessionStorage({
-				zipcode: isZipcodeValid ? urlQuery.get('zipcode') : undefined,
+				zipcode: isZipcodeValid ? urlQuery.get('postcode') : undefined,
 				agencyId: parseInt(urlQuery.get('aid')),
 				topicId: parseInt(urlQuery.get('tid'))
 			});
@@ -143,7 +145,7 @@ export function RegistrationProvider(props) {
 						!step.urlParams?.every(
 							(param) =>
 								urlQuery.get(param) &&
-								(param !== 'zipcode' || isZipcodeValid)
+								(param !== 'postcode' || isZipcodeValid)
 						)
 				)
 			);
@@ -227,44 +229,27 @@ export function RegistrationProvider(props) {
 	}, [sessionStorageRegistrationData]);
 
 	useEffect(() => {
-		if (hasAgencyError && hasTopicError) {
-			setErrors(['tid', 'aid']);
-		} else if (hasAgencyError) {
-			setErrors(['aid']);
-		} else if (hasTopicError) {
-			setErrors(['tid']);
-		} else if (hasConsultantError) {
-			setErrors(['cid']);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [hasTopicError, hasAgencyError, hasConsultantError]);
-
-	useEffect(() => {
-		console.log(preselectedData);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [preselectedData]);
-
-	useEffect(() => {
-		if (errors.length > 0) {
+		if (hasAgencyError || hasTopicError) {
 			setAvailableSteps(
 				defaultSteps.filter(
 					(step) =>
 						!step.urlParams?.every(
 							(param) =>
 								urlQuery.get(param) &&
-								!errors.includes(param as any)
+								(param !== 'aid' || !hasAgencyError) &&
+								(param !== 'tid' || !hasTopicError)
 						)
 				)
 			);
 			if (
-				(!urlQuery.get('aid') || errors.includes('aid')) &&
-				(!urlQuery.get('tid') || errors.includes('tid'))
+				(!urlQuery.get('aid') || hasAgencyError) &&
+				(!urlQuery.get('tid') || hasTopicError)
 			) {
 				setPreselectedData([]);
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [errors]);
+	}, [hasAgencyError, hasTopicError]);
 
 	const updateSessionStorage = (
 		dataToAdd?: Partial<RegistrationSessionStorageData>
@@ -301,16 +286,13 @@ export function RegistrationProvider(props) {
 				preselectedAgencyName,
 				preselectedTopicName,
 				isConsultantLink,
-				consultant
+				consultant,
+				hasConsultantError,
+				hasAgencyError,
+				hasTopicError
 			}}
 		>
 			{props.children}
-
-			<PreselectionError
-				open={errors.length > 0}
-				handleClose={() => setErrors([])}
-				errors={errors}
-			></PreselectionError>
 		</RegistrationContext.Provider>
 	);
 }

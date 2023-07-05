@@ -6,8 +6,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import MailIcon from '@mui/icons-material/Mail';
 import LockIcon from '@mui/icons-material/Lock';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { useContext, useMemo, VFC } from 'react';
-import { RegistrationContext } from '../../../globalState';
+import { useMemo, VFC } from 'react';
 import { PreselectedDataBox } from '../preselectedDataBox/PreselectedDataBox';
 
 interface WelcomeScreenProps {
@@ -17,8 +16,6 @@ interface WelcomeScreenProps {
 export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 	const { t } = useTranslation();
 	const { search } = useLocation();
-	const { preselectedData, isConsultantLink } =
-		useContext(RegistrationContext);
 
 	const infoDefinitions = useMemo(
 		() => [
@@ -71,9 +68,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 	return (
 		<>
 			<Typography variant="h2">{t('registration.overline')}</Typography>
-			{(preselectedData.length > 0 || isConsultantLink) && (
-				<PreselectedDataBox hasDrawer={true} />
-			)}
+			<PreselectedDataBox hasDrawer={true} showErrors={true} />
 			<Typography variant="subtitle1" sx={{ mt: '12px', mb: '48px' }}>
 				{t('registration.welcomeScreen.subline')}
 			</Typography>

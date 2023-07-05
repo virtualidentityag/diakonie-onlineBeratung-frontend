@@ -5,6 +5,7 @@ import { useState, VFC, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from '../../input/input';
 import { RegistrationContext } from '../../../globalState';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
 
 export const ZipcodeInput: VFC = () => {
 	const { t } = useTranslation();
@@ -18,12 +19,13 @@ export const ZipcodeInput: VFC = () => {
 	);
 
 	useEffect(() => {
-		if (value.length === 5) {
+		if (REGISTRATION_DATA_VALIDATION.zipcode.validation(value)) {
 			setDisabledNextButton(false);
 			setDataForSessionStorage({ zipcode: value });
 		} else {
 			setDisabledNextButton(true);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
 

@@ -11,10 +11,7 @@ it('Get results for zipcode', () => {
 	});
 	cy.mount(
 		<RegistrationProvider>
-			<AgencySelection
-				nextStepUrl=""
-				onNextClick={() => {}}
-			></AgencySelection>
+			<AgencySelection nextStepUrl="" onNextClick={() => {}} />
 		</RegistrationProvider>
 	);
 	cy.get('input').type('12345');
