@@ -8,10 +8,6 @@ export const apiGetIsUsernameAvailable = async (
 		url: `${endpoints.baseUserService}/${username}`,
 		method: FETCH_METHODS.GET,
 		headersData: {},
-		responseHandling: [
-			FETCH_ERRORS.EMPTY,
-			FETCH_ERRORS.NO_MATCH,
-			FETCH_ERRORS.CATCH_ALL
-		]
+		responseHandling: [FETCH_ERRORS.EMPTY, FETCH_ERRORS.NO_MATCH]
 	});
 };

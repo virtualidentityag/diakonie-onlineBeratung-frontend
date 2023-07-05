@@ -1,21 +1,26 @@
 import React from 'react';
 import { RegistrationProvider } from '../../../globalState';
 import { ZipcodeInput } from './zipcodeInput';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 it('shows correct label', () => {
 	cy.mount(
-		<RegistrationProvider>
-			<ZipcodeInput />
-		</RegistrationProvider>
+		<Router>
+			<RegistrationProvider>
+				<ZipcodeInput />
+			</RegistrationProvider>
+		</Router>
 	);
 	cy.get('label').should('contains.text', 'registration.zipcode.label');
 });
 
 it('shows correct value', () => {
 	cy.mount(
-		<RegistrationProvider>
-			<ZipcodeInput />
-		</RegistrationProvider>
+		<Router>
+			<RegistrationProvider>
+				<ZipcodeInput />
+			</RegistrationProvider>
+		</Router>
 	);
 	cy.get('input').type('12345');
 	cy.get('input').invoke('val').should('equal', '12345');
@@ -23,9 +28,11 @@ it('shows correct value', () => {
 
 it('show invalid input onBlur', () => {
 	cy.mount(
-		<RegistrationProvider>
-			<ZipcodeInput />
-		</RegistrationProvider>
+		<Router>
+			<RegistrationProvider>
+				<ZipcodeInput />
+			</RegistrationProvider>
+		</Router>
 	);
 	cy.get('input').type('123');
 	cy.get('body').click(0, 0);
@@ -34,9 +41,11 @@ it('show invalid input onBlur', () => {
 
 it('does not show wrong characters', () => {
 	cy.mount(
-		<RegistrationProvider>
-			<ZipcodeInput />
-		</RegistrationProvider>
+		<Router>
+			<RegistrationProvider>
+				<ZipcodeInput />
+			</RegistrationProvider>
+		</Router>
 	);
 	cy.get('input').type('abc123');
 	cy.get('input').invoke('val').should('equal', '123');

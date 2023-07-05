@@ -19,11 +19,11 @@ export const AgencySelection: VFC<{
 	const [results, setResults] = useState<AgencyDataInterface[] | undefined>(
 		undefined
 	);
-
+	console.log(sessionStorageRegistrationData);
 	useEffect(() => {
 		if (isConsultantLink) {
 			setResults(consultant.agencies);
-		} else if (sessionStorageRegistrationData.zipcode?.length === 5) {
+		} else if (sessionStorageRegistrationData?.zipcode?.length === 5) {
 			setHeadlineZipcode(sessionStorageRegistrationData.zipcode);
 			setResults(undefined);
 			(async () => {
