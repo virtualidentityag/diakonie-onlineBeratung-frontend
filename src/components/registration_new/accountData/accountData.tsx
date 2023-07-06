@@ -21,6 +21,26 @@ import {
 import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvider';
 import { RegistrationContext } from '../../../globalState';
 import { apiGetIsUsernameAvailable } from '../../../api/apiGetIsUsernameAvailable';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
+
+export const passwordCriteria = [
+	{
+		info: 'registration.account.password.criteria1',
+		validation: (val) => val.length > 9
+	},
+	{
+		info: 'registration.account.password.criteria2',
+		validation: (val) => hasNumber(val)
+	},
+	{
+		info: 'registration.account.password.criteria3',
+		validation: (val) => hasMixedLetters(val)
+	},
+	{
+		info: 'registration.account.password.criteria4',
+		validation: (val) => hasSpecialChar(val)
+	}
+];
 
 export const AccountData = () => {
 	const legalLinks = useContext(LegalLinksContext);
@@ -38,35 +58,15 @@ export const AccountData = () => {
 	const { setDisabledNextButton, setDataForSessionStorage } =
 		useContext(RegistrationContext);
 
-	const passwordCriteria = [
-		{
-			info: t('registration.account.password.criteria1'),
-			validation: (val) => val.length > 9
-		},
-		{
-			info: t('registration.account.password.criteria2'),
-			validation: (val) => hasNumber(val)
-		},
-		{
-			info: t('registration.account.password.criteria3'),
-			validation: (val) => hasMixedLetters(val)
-		},
-		{
-			info: t('registration.account.password.criteria4'),
-			validation: (val) => hasSpecialChar(val)
-		}
-	];
-
 	useEffect(() => {
 		if (
-			username.length >= 5 &&
 			isUsernameAvailable &&
+			REGISTRATION_DATA_VALIDATION.username.validation(username) &&
+			REGISTRATION_DATA_VALIDATION.password.validation(password) &&
 			password === repeatPassword &&
-			dataProtectionChecked &&
-			passwordCriteria.every((criteria) => criteria.validation(password))
+			dataProtectionChecked
 		) {
 			setDisabledNextButton(false);
-			// TODO: Don't save password in session Storage ?
 			setDataForSessionStorage({ username, password });
 		} else {
 			setDisabledNextButton(true);
@@ -102,6 +102,7 @@ export const AccountData = () => {
 				successMesssage={t('registration.account.username.success')}
 				isValueValid={async (val: string) => {
 					if (val.length < 5) {
+						setIsUsernameAvailable(true);
 						return false;
 					} else {
 						return await apiGetIsUsernameAvailable(val)
@@ -134,6 +135,12 @@ export const AccountData = () => {
 							onClick={() => {
 								setIsPasswordVisible(!isPasswordVisible);
 							}}
+							tabIndex={0}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									setIsPasswordVisible(!isPasswordVisible);
+								}
+							}}
 						/>
 					</InputAdornment>
 				}
@@ -143,7 +150,7 @@ export const AccountData = () => {
 				value={password}
 				label={t('registration.account.password.label')}
 				multipleCriteria={passwordCriteria}
-			></Input>
+			/>
 			<Input
 				inputType={isRepeatPasswordVisible ? 'text' : 'password'}
 				startAdornment={
@@ -159,10 +166,18 @@ export const AccountData = () => {
 					>
 						<VisibilityIcon
 							sx={{ cursor: 'pointer', color: 'info.light' }}
+							tabIndex={0}
 							onClick={() => {
 								setIsRepeatPasswordVisible(
 									!isRepeatPasswordVisible
 								);
+							}}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									setIsRepeatPasswordVisible(
+										!isRepeatPasswordVisible
+									);
+								}
 							}}
 						/>
 					</InputAdornment>

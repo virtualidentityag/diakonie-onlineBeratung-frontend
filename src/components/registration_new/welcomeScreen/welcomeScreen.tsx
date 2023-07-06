@@ -5,8 +5,9 @@ import CreateIcon from '@mui/icons-material/Create';
 import ChatIcon from '@mui/icons-material/Chat';
 import MailIcon from '@mui/icons-material/Mail';
 import LockIcon from '@mui/icons-material/Lock';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useMemo, VFC } from 'react';
+import { PreselectedDataBox } from '../preselectedDataBox/PreselectedDataBox';
 
 interface WelcomeScreenProps {
 	nextStepUrl: string;
@@ -14,6 +15,7 @@ interface WelcomeScreenProps {
 
 export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 	const { t } = useTranslation();
+	const { search } = useLocation();
 
 	const infoDefinitions = useMemo(
 		() => [
@@ -66,6 +68,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 	return (
 		<>
 			<Typography variant="h2">{t('registration.overline')}</Typography>
+			<PreselectedDataBox hasDrawer={true} showErrors={true} />
 			<Typography variant="subtitle1" sx={{ mt: '12px', mb: '48px' }}>
 				{t('registration.welcomeScreen.subline')}
 			</Typography>
@@ -84,7 +87,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 				sx={{
 					display: 'flex',
 					justifyContent: 'space-between',
-					alignItems: 'center',
+					alignItems: 'flex-end',
 					flexDirection: { xs: 'column', md: 'row' },
 					p: { xs: '0', md: '32px' },
 					mt: '48px',
@@ -109,7 +112,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 						sx={{ mt: { xs: '8px', md: '16px' } }}
 						variant="contained"
 						component={RouterLink}
-						to={nextStepUrl}
+						to={`${nextStepUrl}${search}`}
 					>
 						{t('registration.welcomeScreen.register.buttonLabel')}
 					</Button>
@@ -121,7 +124,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 						variant="subtitle2"
 						sx={{ textTransform: 'uppercase', color: 'info.light' }}
 					>
-						Oder
+						{t('app.or')}
 					</Typography>
 				</Divider>
 				<Box

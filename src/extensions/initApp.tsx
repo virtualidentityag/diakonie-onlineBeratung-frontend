@@ -31,7 +31,7 @@ ReactDOM.render(
 			}
 		]}
 		stageComponent={Stage}
-		entryPoint="/themen"
+		entryPoint="/registration"
 	/>,
 	document.getElementById('appRoot')
 );

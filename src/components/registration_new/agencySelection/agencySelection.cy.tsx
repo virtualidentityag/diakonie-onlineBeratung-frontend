@@ -1,7 +1,8 @@
 import React from 'react';
 import { AgencySelection } from './agencySelection';
 import { endpoints } from '../../../resources/scripts/endpoints';
-import { RegistrationProvider } from '../../../globalState';
+import { RegistrationContext } from '../../../globalState';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 it('Get results for zipcode', () => {
 	cy.fixture('service.agencies.json').then((data) => {
@@ -10,14 +11,26 @@ it('Get results for zipcode', () => {
 		);
 	});
 	cy.mount(
-		<RegistrationProvider>
-			<AgencySelection
-				nextStepUrl=""
-				onNextClick={() => {}}
-			></AgencySelection>
-		</RegistrationProvider>
+		<Router>
+			<RegistrationContext.Provider
+				value={{
+					setDisabledNextButton: () => {},
+					setDataForSessionStorage: () => {},
+					isConsultantLink: false,
+					consultant: null,
+					sessionStorageRegistrationData: {
+						zipcode: '12345',
+						username: null,
+						agencyId: null,
+						agencyZipcode: null,
+						topicId: null,
+						password: null
+					}
+				}}
+			>
+				<AgencySelection nextStepUrl="" onNextClick={() => {}} />
+			</RegistrationContext.Provider>
+		</Router>
 	);
-	cy.get('input').type('12345');
-	cy.get('input').invoke('val').should('equal', '12345');
 	cy.get('p').should('contains.text', 'name');
 });

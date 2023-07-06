@@ -10,7 +10,7 @@ export const Loading = () => {
 	useEffect(() => {
 		// Delay showing the loading indicator, but hide it again if loading takes too long
 		const timeoutIds = [
-			setTimeout(() => setIsVisible(true), 500),
+			setTimeout(() => setIsVisible(true), 200),
 			setTimeout(() => setIsVisible(false), 2000)
 		];
 		return () => timeoutIds.forEach(clearTimeout);

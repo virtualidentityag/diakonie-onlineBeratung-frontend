@@ -137,7 +137,8 @@
 		"successful": "Successful",
 		"faulty": "Faulty",
 		"selectLanguage": "Select language",
-		"wait": "Please wait"
+		"wait": "Please wait",
+		"or": "or"
 	},
 	"appointments": {
 		"title": "Appointment overview",
@@ -1729,6 +1730,7 @@
 			"of": "of"
 		},
 		"topic": {
+			"summary": "Your topic:",
 			"headline": "On what topic are you looking for advice?",
 			"subline": "Select a topic from our consulting offer."
 		},
@@ -1769,6 +1771,7 @@
 			}
 		},
 		"agency": {
+			"summary": "Your agency:",
 			"preselected": {
 				"prefix": "Your pre-selected counseling center: ",
 				"isTeam": "You will be advised by a team."
@@ -1908,7 +1911,7 @@
 			"label": {
 				"prefix": "I have the ",
 				"and": " and ",
-				"suffix": " noted. For authentication and navigation, this website uses cookies. I agree with this.*"
+				"suffix": " noted. For authentication and navigation, this website uses cookies. I agree with this."
 			}
 		},
 		"submitButton": {

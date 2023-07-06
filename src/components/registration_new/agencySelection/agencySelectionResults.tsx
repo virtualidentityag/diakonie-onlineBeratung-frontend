@@ -22,6 +22,7 @@ import { parsePlaceholderString } from '../../../utils/parsePlaceholderString';
 import { useAppConfig } from '../../../hooks/useAppConfig';
 import { VFC } from 'react';
 import { MetaInfo } from '../metaInfo/MetaInfo';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
 
 interface AgencySelectionResultsProps {
 	isLoading?: boolean;
@@ -43,7 +44,8 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 	const {
 		setDisabledNextButton,
 		setDataForSessionStorage,
-		sessionStorageRegistrationData
+		sessionStorageRegistrationData,
+		isConsultantLink
 	} = useContext(RegistrationContext);
 
 	const [agencyId, setAgencyId] = useState<number>(
@@ -63,7 +65,17 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 				agencyId: results[0].id,
 				agencyZipcode: zipcode
 			});
-		} else if (agencyId) {
+		} else if (agencyId && results?.length === 0) {
+			setDisabledNextButton(true);
+			setDataForSessionStorage({
+				agencyId: undefined,
+				agencyZipcode: zipcode
+			});
+		} else if (
+			REGISTRATION_DATA_VALIDATION.agencyId.validation(
+				agencyId?.toString()
+			)
+		) {
 			setDisabledNextButton(false);
 			setDataForSessionStorage({
 				agencyId: agencyId,
@@ -87,7 +99,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 					<Loading />
 				</Box>
 			)}
-			{results !== undefined && !isLoading && (
+			{results !== undefined && !isLoading && !isConsultantLink && (
 				<Typography variant="h5" sx={{ mt: '40px', fontWeight: '600' }}>
 					{t('registration.agency.result.headline') + ' ' + zipcode}:
 				</Typography>
@@ -98,6 +110,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 					<Box
 						sx={{
 							display: 'flex',
+							flexWrap: { xs: 'wrap-reverse', md: 'nowrap' },
 							justifyContent: 'space-between',
 							alignItems: 'center',
 							p: '16px',
@@ -106,7 +119,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 							border: '1px solid #c6c5c4'
 						}}
 					>
-						<Box sx={{ mr: '24px' }}>
+						<Box sx={{ mr: { xs: '0', md: '24px' } }}>
 							<Typography variant="h5" sx={{ fontWeight: '600' }}>
 								{t(
 									'registration.agency.result.external.headline'
@@ -122,7 +135,10 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 									target="_blank"
 									component={Link}
 									href={results?.[0]?.url}
-									sx={{ mt: '16px' }}
+									sx={{
+										mt: '16px',
+										width: { xs: '100%', md: 'auto' }
+									}}
 									variant="contained"
 									startIcon={<OpenInNewIcon />}
 								>
@@ -135,7 +151,12 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 						<Box
 							component="img"
 							src={ConsultantIllustration}
-							sx={{ height: '156px', width: '156px' }}
+							sx={{
+								height: '156px',
+								width: '156px',
+								mx: 'auto',
+								mb: { xs: '24px', md: '0' }
+							}}
 						/>
 					</Box>
 				)}
@@ -144,6 +165,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 				<Box
 					sx={{
 						display: 'flex',
+						flexWrap: { xs: 'wrap-reverse', md: 'nowrap' },
 						justifyContent: 'space-between',
 						alignItems: 'center',
 						p: '16px',
@@ -152,7 +174,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 						border: '1px solid #c6c5c4'
 					}}
 				>
-					<Box sx={{ mr: '24px' }}>
+					<Box sx={{ mr: { xs: '0', md: '24px' } }}>
 						<Typography variant="h5" sx={{ fontWeight: '600' }}>
 							{t('registration.agency.noresult.headline')}
 						</Typography>
@@ -160,7 +182,10 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 							{t('registration.agency.noresult.subline')}
 						</Typography>
 						<Button
-							sx={{ mt: '16px' }}
+							sx={{
+								mt: '16px',
+								width: { xs: '100%', md: 'auto' }
+							}}
 							variant="contained"
 							startIcon={<OpenInNewIcon />}
 							target="_blank"
@@ -184,7 +209,12 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 					<Box
 						component="img"
 						src={NoResultsIllustration}
-						sx={{ height: '156px', width: '156px' }}
+						sx={{
+							height: '156px',
+							width: '156px',
+							mx: 'auto',
+							mb: { xs: '24px', md: '0' }
+						}}
 					/>
 				</Box>
 			)}
@@ -238,7 +268,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 											</Typography>
 											<AgencyLanguages
 												agencyId={results?.[0].id}
-											></AgencyLanguages>
+											/>
 										</Box>
 									}
 								/>

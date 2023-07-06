@@ -33,11 +33,7 @@ describe('Login', () => {
 
 	it('displays the consultingtype page at the root', () => {
 		cy.visit('/');
-		cy.contains(
-			'Willkommen bei den Online-Beratungsangeboten der Diakonie'
-		);
-		cy.contains('Impressum');
-		cy.contains('Datenschutzerklärung');
+		cy.contains('Willkommen bei der Online-Beratung');
 	});
 
 	it('displays the login for resorts', () => {

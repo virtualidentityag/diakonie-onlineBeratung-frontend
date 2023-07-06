@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { TextField, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useTranslation } from 'react-i18next';
 
 export interface InputProps {
 	label: string;
@@ -16,7 +17,6 @@ export interface InputProps {
 		| 'none'
 		| 'numeric'
 		| 'decimal';
-	shrinkLabel?: boolean;
 	onInputChange?: Function;
 	startAdornment?: JSX.Element;
 	endAdornment?: JSX.Element;
@@ -47,6 +47,7 @@ export const Input = ({
 	multipleCriteria,
 	autoComplete
 }: InputProps) => {
+	const { t } = useTranslation();
 	const [shrink, setShrink] = useState<boolean>(value?.length > 0);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
 	const [showSuccessMessage, setShowSuccessMessage] =
@@ -97,8 +98,8 @@ export const Input = ({
 			<CancelIcon
 				color="error"
 				sx={{
-					width: '12px',
-					height: '12px',
+					width: '16px',
+					height: '16px',
 					mr: '3px'
 				}}
 			/>
@@ -109,8 +110,8 @@ export const Input = ({
 			<CheckCircleIcon
 				color="success"
 				sx={{
-					width: '12px',
-					height: '12px',
+					width: '16px',
+					height: '16px',
 					mr: '3px'
 				}}
 			/>
@@ -123,10 +124,20 @@ export const Input = ({
 			: blurredColor;
 		return { icon, color };
 	};
+	const inputRef = useRef();
+	useEffect(() => {
+		if (
+			value?.length === 0 &&
+			document.activeElement !== inputRef.current
+		) {
+			setShrink(false);
+		}
+	}, [value]);
 
 	return (
 		<>
 			<TextField
+				inputRef={inputRef}
 				type={inputType || 'text'}
 				fullWidth
 				label={label}
@@ -200,7 +211,7 @@ export const Input = ({
 					variant="body2"
 					sx={{
 						mt: '8px',
-						fontSize: '12px',
+						fontSize: '16px',
 						lineHeight: '16px',
 						color: 'info.light'
 					}}
@@ -213,7 +224,7 @@ export const Input = ({
 					variant="body2"
 					sx={{
 						mt: '8px',
-						fontSize: '12px',
+						fontSize: '16px',
 						lineHeight: '16px',
 						color: 'error.main'
 					}}
@@ -226,7 +237,7 @@ export const Input = ({
 					variant="body2"
 					sx={{
 						mt: '8px',
-						fontSize: '12px',
+						fontSize: '16px',
 						lineHeight: '16px',
 						color: 'success.main'
 					}}
@@ -241,7 +252,7 @@ export const Input = ({
 							variant="body2"
 							sx={{
 								mt: '8px',
-								fontSize: '12px',
+								fontSize: '16px',
 								lineHeight: '16px',
 								color: getMultipleCriteriaDesign(criteria)
 									.color,
@@ -250,7 +261,7 @@ export const Input = ({
 							}}
 						>
 							{getMultipleCriteriaDesign(criteria).icon}{' '}
-							{criteria.info}
+							{t(criteria.info)}
 						</Typography>
 					);
 				})}

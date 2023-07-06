@@ -13,31 +13,42 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { WelcomeScreen } from '../welcomeScreen/welcomeScreen';
-import { RegistrationContext } from '../../../globalState';
+import {
+	RegistrationContext,
+	TenantContext,
+	registrationSessionStorageKey
+} from '../../../globalState';
 import { Helmet } from 'react-helmet';
 import { GlobalComponentContext } from '../../../globalState/provider/GlobalComponentContext';
-// import { useAppConfig } from '../../../hooks/useAppConfig';
 import { OVERLAY_FUNCTIONS, Overlay, OverlayItem } from '../../overlay/Overlay';
 import { redirectToApp } from '../../registration/autoLogin';
 import { BUTTON_TYPES } from '../../button/Button';
+import { PreselectedDataBox } from '../preselectedDataBox/PreselectedDataBox';
+import { endpoints } from '../../../resources/scripts/endpoints';
+import { apiPostRegistration } from '../../../api';
+import { useAppConfig } from '../../../hooks/useAppConfig';
+import { REGISTRATION_DATA_VALIDATION } from './registrationDataValidation';
 
 export const RegistrationWrapper = () => {
-	// const settings = useAppConfig();
+	const settings = useAppConfig();
 	const isFirstVisit = useIsFirstVisit();
 	const { Stage } = useContext(GlobalComponentContext);
 	const {
 		disabledNextButton,
 		setDisabledNextButton,
-		dataForSessionStorage,
-		setSessionStorageRegistrationData
+		updateSessionStorageWithPreppedData,
+		refreshSessionStorageRegistrationData,
+		sessionStorageRegistrationData,
+		availableSteps,
+		dataPrepForSessionStorage
 	} = useContext(RegistrationContext);
-	// const { tenant } = useContext(TenantContext);
+	const { tenant } = useContext(TenantContext);
 	const [currentStep, setCurrentStep] = useState<number>(1);
 	const [redirectOverlayActive, setRedirectOverlayActive] =
 		useState<boolean>(false);
 	const location = useLocation();
 	const history = useHistory();
-	const { t: translate } = useTranslation();
+	const { t } = useTranslation();
 	const handleOverlayAction = (buttonFunction: string) => {
 		if (buttonFunction === OVERLAY_FUNCTIONS.REDIRECT_WITH_BLUR) {
 			redirectToApp();
@@ -46,105 +57,79 @@ export const RegistrationWrapper = () => {
 	const overlayItemRegistrationSuccess: OverlayItem = {
 		illustrationStyle: 'large',
 		svg: HelloBannerIcon,
-		headline: translate('registration.overlay.success.headline'),
-		copy: translate('registration.overlay.success.copy'),
+		headline: t('registration.overlay.success.headline'),
+		copy: t('registration.overlay.success.copy'),
 		buttonSet: [
 			{
-				label: translate('registration.overlay.success.button'),
+				label: t('registration.overlay.success.button'),
 				function: OVERLAY_FUNCTIONS.REDIRECT_WITH_BLUR,
 				type: BUTTON_TYPES.AUTO_CLOSE
 			}
 		]
 	};
-	const stepDefinition = {
-		0: { component: 'welcome', urlSuffix: '' },
-		1: {
-			component: 'topicSelection',
-			urlSuffix: '/topic-selection',
-			mandatoryFields: ['topicId']
-		},
-		2: {
-			component: 'zipcode',
-			urlSuffix: '/zipcode',
-			mandatoryFields: ['zipcode']
-		},
-		3: {
-			component: 'agencySelection',
-			urlSuffix: '/agency-selection',
-			mandatoryFields: ['agencyId']
-		},
-		4: {
-			component: 'accountData',
-			urlSuffix: '/account-data',
-			mandatoryFields: ['username', 'password']
-		}
-	};
-	const getCurrentStep = () => {
-		const currentLocation =
-			window.location.href.split('?')[0].split('/registration')[1] || '';
-		const step =
-			Object.keys(stepDefinition).filter(
-				(step) =>
-					stepDefinition[step || 0].urlSuffix === currentLocation
-			)[0] || '0';
-		setCurrentStep(parseInt(step, 10));
+
+	const updateCurrentStep = () => {
+		const currentLocation = location?.pathname?.replace(
+			'/registration',
+			''
+		);
+		const step = availableSteps.findIndex(
+			(step) => step?.urlSuffix === currentLocation
+		);
+		setCurrentStep(step === -1 ? 0 : step);
 	};
 
-	const checkMissingSteps = () => {
+	const checkForStepsWithMissingMandatoryFields = (): number[] => {
 		if (currentStep > 0) {
-			return Object.keys(stepDefinition).filter((step) => {
-				const registrationData =
-					sessionStorage.getItem('registrationData') || '{}';
-				return stepDefinition[step]?.mandatoryFields?.every(
-					(mandatoryField) =>
-						JSON.parse(registrationData)?.[mandatoryField] ===
-						undefined
-				);
-			});
+			//fix missing step stuff
+			console.log(sessionStorageRegistrationData);
+			return availableSteps.reduce<number[]>(
+				(missingSteps, step, currentIndex) => {
+					if (
+						step?.mandatoryFields?.some(
+							(mandatoryField) =>
+								sessionStorageRegistrationData?.[
+									mandatoryField
+								] === (undefined || null)
+						)
+					) {
+						return [...missingSteps, currentIndex];
+					}
+					return missingSteps;
+				},
+				[]
+			);
 		}
 		return [];
 	};
 
 	const onNextClick = () => {
-		const existingRegistrationData =
-			sessionStorage.getItem('registrationData');
-		sessionStorage.setItem(
-			'registrationData',
-			JSON.stringify({
-				...(existingRegistrationData
-					? JSON.parse(existingRegistrationData)
-					: null),
-				...dataForSessionStorage
-			})
-		);
+		updateSessionStorageWithPreppedData();
 	};
 
 	useEffect(() => {
 		setDisabledNextButton(true);
-		getCurrentStep();
-		const availableRegistrationData = JSON.parse(
-			sessionStorage.getItem('registrationData')
-		);
-		if (availableRegistrationData) {
-			setSessionStorageRegistrationData(availableRegistrationData);
-		}
+		updateCurrentStep();
+		refreshSessionStorageRegistrationData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location]);
 
 	useEffect(() => {
 		// Check if mandatory fields from previous steps are missing
-		const missingPreviousSteps = checkMissingSteps()
+		const missingPreviousSteps = checkForStepsWithMissingMandatoryFields()
 			.sort()
-			.filter((missingStep) => parseInt(missingStep, 10) < currentStep);
+			.filter((missingStep) => missingStep < currentStep);
+
+		console.log(missingPreviousSteps);
 		if (missingPreviousSteps.length > 0) {
 			history.push(
 				`/registration${
-					stepDefinition[missingPreviousSteps[0]].urlSuffix
+					availableSteps[missingPreviousSteps[0]]?.urlSuffix
 				}`
 			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [currentStep]);
+	}, [currentStep, availableSteps, sessionStorageRegistrationData]);
 
 	return (
 		<>
@@ -152,14 +137,21 @@ export const RegistrationWrapper = () => {
 				showLegalLinks={false}
 				showLoginLink={true}
 				stage={<Stage hasAnimation={isFirstVisit} />}
+				showRegistrationInfoDrawer={true}
 			>
-				<Box sx={{ pb: '96px', maxWidth: '560px !important' }}>
-					{stepDefinition[currentStep].component === 'welcome' ? (
+				<Box
+					sx={{
+						pb: '96px',
+						maxWidth: '560px !important',
+						width: '100%'
+					}}
+				>
+					{availableSteps[currentStep]?.component === 'welcome' ? (
 						<WelcomeScreen
 							nextStepUrl={`/registration${
-								stepDefinition[currentStep + 1].urlSuffix
+								availableSteps[currentStep + 1]?.urlSuffix
 							}`}
-						></WelcomeScreen>
+						/>
 					) : (
 						<>
 							<Helmet>
@@ -171,41 +163,41 @@ export const RegistrationWrapper = () => {
 									component="h1"
 									variant="h2"
 								>
-									{translate('registration.headline')}
+									{t('registration.headline')}
 								</Typography>
-								<StepBar
-									maxNumberOfSteps={4}
-									currentStep={currentStep}
-								></StepBar>
 
-								{stepDefinition[currentStep].component ===
+								{<PreselectedDataBox hasDrawer={false} />}
+								<StepBar
+									maxNumberOfSteps={availableSteps.length - 1}
+									currentStep={currentStep}
+								/>
+
+								{availableSteps[currentStep]?.component ===
 									'topicSelection' && (
 									<TopicSelection
 										onNextClick={onNextClick}
 										nextStepUrl={`/registration${
-											stepDefinition[currentStep + 1]
-												.urlSuffix
+											availableSteps[currentStep + 1]
+												?.urlSuffix
 										}`}
-									></TopicSelection>
+									/>
 								)}
-								{stepDefinition[currentStep].component ===
-									'zipcode' && <ZipcodeInput></ZipcodeInput>}
-								{stepDefinition[currentStep].component ===
+								{availableSteps[currentStep]?.component ===
+									'zipcode' && <ZipcodeInput />}
+								{availableSteps[currentStep]?.component ===
 									'agencySelection' && (
 									<AgencySelection
 										onNextClick={onNextClick}
 										nextStepUrl={`/registration${
-											stepDefinition[currentStep + 1]
-												.urlSuffix
+											availableSteps[currentStep + 1]
+												?.urlSuffix
 										}`}
-									></AgencySelection>
+									/>
 								)}
-								{stepDefinition[currentStep].component ===
-									'accountData' && (
-									<AccountData></AccountData>
-								)}
+								{availableSteps[currentStep]?.component ===
+									'accountData' && <AccountData />}
 
-								{stepDefinition[currentStep].component !==
+								{availableSteps[currentStep]?.component !==
 									'welcome' && (
 									<Box
 										sx={{
@@ -223,7 +215,8 @@ export const RegistrationWrapper = () => {
 											borderTop: '1px solid #c6c5c4',
 											display: 'flex',
 											justifyContent: 'center',
-											alignItems: 'center'
+											alignItems: 'center',
+											zIndex: 1
 										}}
 									>
 										<Box
@@ -249,56 +242,68 @@ export const RegistrationWrapper = () => {
 													}}
 													component={RouterLink}
 													to={`/registration${
-														stepDefinition[
+														availableSteps[
 															currentStep - 1
-														].urlSuffix
-													}`}
+														]?.urlSuffix
+													}${location.search}`}
 												>
-													{translate(
-														'registration.back'
-													)}
+													{t('registration.back')}
 												</Link>
 											)}
 											{currentStep ===
-											Object.keys(stepDefinition).length -
-												1 ? (
+											availableSteps.length - 1 ? (
 												<Button
 													disabled={
 														disabledNextButton
 													}
 													variant="contained"
 													onClick={() => {
-														const existingRegistrationData =
-															sessionStorage.getItem(
-																'registrationData'
-															);
 														const registrationData =
 															{
-																...(existingRegistrationData
-																	? JSON.parse(
-																			existingRegistrationData
-																	  )
-																	: null),
-																...dataForSessionStorage
+																...sessionStorageRegistrationData,
+																...dataPrepForSessionStorage,
+																agencyId:
+																	sessionStorageRegistrationData.agencyId.toString(),
+																postcode:
+																	sessionStorageRegistrationData.zipcode,
+																termsAccepted:
+																	'true',
+																preferredLanguage:
+																	'de',
+																// TODO: remove consultingType once it is adjusted in BE
+																consultingType:
+																	'24'
 															};
-														console.log(
-															registrationData
-														);
-														// apiPostRegistration(
-														// 	endpoints.registerAsker,
-														// 	registrationData,
-														// 	settings.multitenancyWithSingleDomainEnabled,
-														// 	tenant
-														// ).then(()=>{
-														setRedirectOverlayActive(
-															true
-														);
-														// });
+														if (
+															Object.keys(
+																REGISTRATION_DATA_VALIDATION
+															).every((item) =>
+																REGISTRATION_DATA_VALIDATION[
+																	item
+																].validation(
+																	registrationData[
+																		item
+																	]
+																)
+															)
+														) {
+															apiPostRegistration(
+																endpoints.registerAsker,
+																registrationData,
+																settings.multitenancyWithSingleDomainEnabled,
+																tenant
+															).then(() => {
+																sessionStorage.removeItem(
+																	registrationSessionStorageKey
+																);
+																setRedirectOverlayActive(
+																	true
+																);
+															});
+														}
 													}}
 												>
-													{translate(
-														'registration.register'
-													)}
+													{t('registration.register')}
 												</Button>
 											) : (
 												<Button
@@ -309,15 +314,13 @@ export const RegistrationWrapper = () => {
 													variant="contained"
 													component={RouterLink}
 													to={`/registration${
-														stepDefinition[
+														availableSteps[
 															currentStep + 1
-														].urlSuffix
-													}`}
+														]?.urlSuffix
+													}${location.search}`}
 													onClick={onNextClick}
 												>
-													{translate(
-														'registration.next'
-													)}
+													{t('registration.next')}
 												</Button>
 											)}
 										</Box>

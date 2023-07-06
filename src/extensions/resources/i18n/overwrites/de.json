@@ -191,6 +191,13 @@
 		}
 	},
 	"registration": {
+		"errors": {
+			"cid": {
+				"headline": "Leider konnten wir Ihre Beraterin oder Ihren Berater nicht finden.",
+				"subline": "Bitte kontaktieren Sie ihn/sie, damit er/sie Ihnen erneut einen Link zusendet."
+			}
+		},
+		"consultantlink": "Ihre Beraterin oder Ihr Berater hat Sie zur Online-Beratung eingeladen! Bitte registrieren Sie sich, um mit Ihrer Beraterin oder Ihrem Berater in Kontakt zu kommen.",
 		"agencySelection": {
 			"postcode": {
 				"unavailable": {
@@ -201,6 +208,11 @@
 		"overlay": {
 			"success": {
 				"headline": "Herzlich willkommen<br>bei der Beratung der Diakonie."
+			}
+		},
+		"agency": {
+			"noresult": {
+				"subline": "Momentan haben wir leider noch keine Online-Beratungsstelle in Ihrer Nähe. Auf unserer Webseite finden Sie Beratungsstellen vor Ort für Ihr Anliegen."
 			}
 		},
 		"user": {

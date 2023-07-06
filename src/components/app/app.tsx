@@ -94,18 +94,16 @@ export const App = ({
 									spoken={spokenLanguages}
 								>
 									<LegalLinksProvider legalLinks={legalLinks}>
-										<RegistrationProvider>
-											<GlobalComponentContext.Provider
-												value={{
-													Stage: stageComponent
-												}}
-											>
-												<RouterWrapper
-													extraRoutes={extraRoutes}
-													entryPoint={entryPoint}
-												/>
-											</GlobalComponentContext.Provider>
-										</RegistrationProvider>
+										<GlobalComponentContext.Provider
+											value={{
+												Stage: stageComponent
+											}}
+										>
+											<RouterWrapper
+												extraRoutes={extraRoutes}
+												entryPoint={entryPoint}
+											/>
+										</GlobalComponentContext.Provider>
 									</LegalLinksProvider>
 								</LanguagesProvider>
 							</LocaleProvider>
@@ -171,9 +169,9 @@ const RouterWrapper = ({ extraRoutes, entryPoint }: RouterWrapperProps) => {
 										'/registration/agency-selection'
 									]}
 								>
-									<UrlParamsProvider>
+									<RegistrationProvider>
 										<RegistrationWrapper />
-									</UrlParamsProvider>
+									</RegistrationProvider>
 								</Route>
 
 								<Route path="/:consultingTypeSlug/warteraum">
