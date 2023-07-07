@@ -152,7 +152,7 @@
 		"@storybook/addon-links": "^7.0.18",
 		"@storybook/blocks": "^7.0.18",
 		"@storybook/preset-scss": "^1.0.3",
-		"@storybook/react": "^7.0.18",
+		"@storybook/react": "^7.0.26",
 		"@storybook/react-webpack5": "^7.0.18",
 		"@storybook/testing-library": "^0.1.0",
 		"@types/prettier": "^2.7.3",
