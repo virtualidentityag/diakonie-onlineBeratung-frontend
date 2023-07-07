@@ -98,7 +98,7 @@ jobs:
                   path: build
             - name: Get current time
               id: time
-              uses: nanzm/get-time-action@v1.1
+              uses: nanzm/get-time-action@v2.0
               with:
                   timeZone: 2
                   format: 'YYYYMMDD[_]HHmmss'
