@@ -55,9 +55,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 	useEffect(() => {
 		if (
 			results?.length === 1 &&
-			!results?.every((agency) => {
-				return agency.external;
-			})
+			!results?.every((agency) => agency.external)
 		) {
 			setAgencyId(results[0].id);
 			setDisabledNextButton(false);
