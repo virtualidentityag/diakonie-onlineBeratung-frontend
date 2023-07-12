@@ -97,7 +97,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 					<Loading />
 				</Box>
 			)}
-			{results !== undefined && !isLoading && !isConsultantLink && (
+			{!!results && !isLoading && !isConsultantLink && (
 				<Typography variant="h5" sx={{ mt: '40px', fontWeight: '600' }}>
 					{t('registration.agency.result.headline') + ' ' + zipcode}:
 				</Typography>
