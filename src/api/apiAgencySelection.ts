@@ -6,7 +6,7 @@ import { AgencyDataInterface } from '../globalState';
 export const apiAgencySelection = async (
 	params: {
 		postcode: string;
-		consultingType: number | undefined;
+		consultingType?: number | undefined;
 		topicId?: number;
 	},
 	signal?: AbortSignal

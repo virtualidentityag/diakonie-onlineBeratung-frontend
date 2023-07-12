@@ -68,7 +68,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 	return (
 		<>
 			<Typography variant="h2">{t('registration.overline')}</Typography>
-			<PreselectedDataBox hasDrawer={true} showErrors={true} />
+			<PreselectedDataBox hasDrawer={true} />
 			<Typography variant="subtitle1" sx={{ mt: '12px', mb: '48px' }}>
 				{t('registration.welcomeScreen.subline')}
 			</Typography>

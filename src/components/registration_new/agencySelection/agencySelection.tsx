@@ -30,7 +30,9 @@ export const AgencySelection: VFC<{
 				try {
 					const agencyResponse = await apiAgencySelection({
 						postcode: sessionStorageRegistrationData.zipcode,
-						consultingType: 24,
+						// We will keep consultingTypeId identical to topicId
+						consultingType:
+							sessionStorageRegistrationData.topicId || undefined,
 						topicId:
 							sessionStorageRegistrationData.topicId || undefined
 					});

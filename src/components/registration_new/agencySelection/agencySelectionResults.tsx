@@ -49,7 +49,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 	} = useContext(RegistrationContext);
 
 	const [agencyId, setAgencyId] = useState<number>(
-		sessionStorageRegistrationData.agencyId || undefined
+		sessionStorageRegistrationData?.agencyId
 	);
 
 	useEffect(() => {
@@ -60,28 +60,35 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 			setAgencyId(results[0].id);
 			setDisabledNextButton(false);
 			setDataForSessionStorage({
-				agencyId: results[0].id,
-				agencyZipcode: zipcode
+				agencyId: results[0].id
 			});
-		} else if (agencyId && results?.length === 0) {
+			return;
+		}
+		if (agencyId && results?.length === 0) {
 			setDisabledNextButton(true);
 			setDataForSessionStorage({
-				agencyId: undefined,
-				agencyZipcode: zipcode
+				agencyId: undefined
 			});
-		} else if (
+			return;
+		}
+		if (
 			REGISTRATION_DATA_VALIDATION.agencyId.validation(
 				agencyId?.toString()
 			)
 		) {
 			setDisabledNextButton(false);
 			setDataForSessionStorage({
-				agencyId: agencyId,
-				agencyZipcode: zipcode
+				agencyId: agencyId
 			});
+			return;
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [results, setDataForSessionStorage, setDisabledNextButton]);
+	}, [
+		agencyId,
+		results,
+		setDataForSessionStorage,
+		setDisabledNextButton,
+		zipcode
+	]);
 
 	return (
 		<>
@@ -318,8 +325,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 											setDisabledNextButton(false);
 											setAgencyId(agency.id);
 											setDataForSessionStorage({
-												agencyId: agency.id,
-												agencyZipcode: zipcode
+												agencyId: agency.id
 											});
 										}}
 										sx={{

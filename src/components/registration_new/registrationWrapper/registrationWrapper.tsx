@@ -270,9 +270,9 @@ export const RegistrationWrapper = () => {
 																	'true',
 																preferredLanguage:
 																	'de',
-																// TODO: remove consultingType once it is adjusted in BE
+																// ConsultingType and topicId are identical for the MVP
 																consultingType:
-																	'24'
+																	sessionStorageRegistrationData.topicId
 															};
 														if (
 															Object.keys(

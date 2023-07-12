@@ -43,7 +43,7 @@ export const ZipcodeInput: VFC = () => {
 				autoComplete="postal-code"
 				inputMode="numeric"
 				inputType="text"
-				isValueValid={(val: string) => val.length === 5}
+				isValueValid={async (val: string) => val.length === 5}
 				startAdornment={
 					<InputAdornment position="start">
 						<FmdGoodIcon color="info" />

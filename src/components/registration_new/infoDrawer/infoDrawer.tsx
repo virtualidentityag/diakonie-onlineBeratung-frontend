@@ -12,7 +12,7 @@ interface InfoDrawerProps {
 }
 
 export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
-	const { preselectedAgencyName, preselectedTopicName } =
+	const { preselectedAgency, preselectedTopicName } =
 		useContext(RegistrationContext);
 	const { t } = useTranslation();
 	const drawerBleeding = 92;
@@ -35,11 +35,11 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 		if (preselectedTopicName) {
 			setTopicName(preselectedTopicName);
 		}
-		if (preselectedAgencyName) {
-			setAgencyName(preselectedAgencyName);
+		if (preselectedAgency) {
+			setAgencyName(preselectedAgency.name);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [preselectedAgencyName, preselectedTopicName]);
+	}, [preselectedAgency, preselectedTopicName]);
 
 	return (
 		<>

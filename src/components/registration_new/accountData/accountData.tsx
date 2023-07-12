@@ -187,7 +187,9 @@ export const AccountData = () => {
 				}}
 				value={repeatPassword}
 				label={t('registration.account.repeatPassword.label')}
-				isValueValid={(val) => val === password && password.length > 0}
+				isValueValid={async (val) =>
+					val === password && password.length > 0
+				}
 				errorMessage={t('registration.account.repeatPassword.error')}
 				successMesssage={t(
 					'registration.account.repeatPassword.success'

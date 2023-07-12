@@ -11,7 +11,10 @@ import { useLocation } from 'react-router-dom';
 import { apiGetAgencyById } from '../../api';
 import { apiGetTopicsData } from '../../api/apiGetTopicsData';
 import { apiGetConsultant } from '../../api/apiGetConsultant';
-import { ConsultantDataInterface } from '../interfaces/UserDataInterface';
+import {
+	AgencyDataInterface,
+	ConsultantDataInterface
+} from '../interfaces/UserDataInterface';
 
 interface RegistrationContextInterface {
 	disabledNextButton?: boolean;
@@ -30,7 +33,7 @@ interface RegistrationContextInterface {
 		urlParams?: string[];
 	}[];
 	preselectedData?: Array<'tid' | 'zipcode' | 'aid'>;
-	preselectedAgencyName?: string;
+	preselectedAgency?: AgencyDataInterface;
 	preselectedTopicName?: string;
 	isConsultantLink?: boolean;
 	consultant?: ConsultantDataInterface;
@@ -47,7 +50,6 @@ interface RegistrationSessionStorageData {
 	username: string;
 	password: string;
 	agencyId: number;
-	agencyZipcode: string;
 	topicId: number;
 	zipcode: string;
 }
@@ -69,8 +71,8 @@ export function RegistrationProvider(props) {
 	const [preselectedData, setPreselectedData] = useState<
 		Array<'tid' | 'zipcode' | 'aid'>
 	>([]);
-	const [preselectedAgencyName, setPreselectedAgencyName] =
-		useState<string>();
+	const [preselectedAgency, setPreselectedAgency] =
+		useState<AgencyDataInterface>();
 	const [preselectedTopicName, setPreselectedTopicName] = useState<string>();
 	const [dataPrepForSessionStorage, setDataPrepForSessionStorage] = useState<
 		Partial<RegistrationSessionStorageData>
@@ -213,9 +215,9 @@ export function RegistrationProvider(props) {
 					const agencyResponse = await apiGetAgencyById(
 						sessionStorageRegistrationData.agencyId
 					);
-					setPreselectedAgencyName(agencyResponse.name || undefined);
+					setPreselectedAgency(agencyResponse || undefined);
 				} catch {
-					setPreselectedAgencyName(undefined);
+					setPreselectedAgency(undefined);
 					if (urlQuery.get('aid')) {
 						updateSessionStorage({
 							agencyId: undefined
@@ -241,12 +243,6 @@ export function RegistrationProvider(props) {
 						)
 				)
 			);
-			if (
-				(!urlQuery.get('aid') || hasAgencyError) &&
-				(!urlQuery.get('tid') || hasTopicError)
-			) {
-				setPreselectedData([]);
-			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [hasAgencyError, hasTopicError]);
@@ -283,7 +279,7 @@ export function RegistrationProvider(props) {
 				refreshSessionStorageRegistrationData: refreshSessionStorage,
 				availableSteps,
 				preselectedData,
-				preselectedAgencyName,
+				preselectedAgency,
 				preselectedTopicName,
 				isConsultantLink,
 				consultant,

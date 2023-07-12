@@ -20,7 +20,7 @@ export interface InputProps {
 	onInputChange?: Function;
 	startAdornment?: JSX.Element;
 	endAdornment?: JSX.Element;
-	isValueValid?(value: string): boolean | Promise<boolean>;
+	isValueValid?(value: string): Promise<boolean>;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
 	autoComplete?: string;

@@ -22,7 +22,6 @@ it('Get results for zipcode', () => {
 						zipcode: '12345',
 						username: null,
 						agencyId: null,
-						agencyZipcode: null,
 						topicId: null,
 						password: null
 					}

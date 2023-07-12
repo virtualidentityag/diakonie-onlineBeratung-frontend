@@ -31,7 +31,10 @@ export const TopicSelection: VFC<{
 		setDataForSessionStorage,
 		sessionStorageRegistrationData,
 		preselectedData,
-		isConsultantLink
+		preselectedAgency,
+		isConsultantLink,
+		consultant,
+		hasAgencyError
 	} = useContext(RegistrationContext);
 	const { t } = useTranslation();
 	const [value, setValue] = useState<number>(
@@ -46,23 +49,38 @@ export const TopicSelection: VFC<{
 		return topics?.filter((topic) => topic?.id === topicId)?.[0];
 	};
 
+	const getFilteredTopics = (topics: TopicsDataInterface[]) => {
+		if (preselectedData.includes('aid') && !hasAgencyError) {
+			const topicIds = preselectedAgency?.topicIds;
+			return topics?.filter((topic) => topicIds.includes(topic.id));
+		}
+		if (isConsultantLink && consultant) {
+			const topicIds = consultant?.agencies
+				.map((agency) => agency.topicIds)
+				.flat();
+			return topics?.filter((topic) => topicIds.includes(topic.id));
+		}
+		return topics;
+	};
+
 	useEffect(() => {
 		if (
 			REGISTRATION_DATA_VALIDATION.topicId.validation(value?.toString())
 		) {
 			setDisabledNextButton(false);
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [value]);
+	}, [setDisabledNextButton, value]);
 
 	useEffect(() => {
-		if (preselectedData.includes('aid') || isConsultantLink) {
+		if (
+			(preselectedData.includes('aid') && !hasAgencyError) ||
+			(isConsultantLink && consultant)
+		) {
 			setListView(true);
+		} else {
+			setListView(false);
 		}
-		// TODO: Get only topics for agency/consultant
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [preselectedData]);
+	}, [consultant, hasAgencyError, isConsultantLink, preselectedData]);
 
 	useEffect(() => {
 		(async () => {
@@ -71,7 +89,7 @@ export const TopicSelection: VFC<{
 				const topicGroupsResponse = await apiGetTopicGroups();
 				const topicsResponse = await apiGetTopicsData();
 
-				setTopics(topicsResponse);
+				setTopics(getFilteredTopics(topicsResponse));
 				setTopicGroups(
 					topicGroupsResponse.data.items
 						.filter((topicGroup) => topicGroup.topicIds.length > 0)
@@ -86,7 +104,7 @@ export const TopicSelection: VFC<{
 				setTopicGroups([]);
 			}
 		})();
-	}, []);
+	}, [consultant, preselectedAgency]);
 
 	return (
 		<>
@@ -162,7 +180,7 @@ export const TopicSelection: VFC<{
 													</Box>
 												}
 											/>
-											{topic.description && (
+											{topic?.description && (
 												<MetaInfo
 													description={
 														topic.description

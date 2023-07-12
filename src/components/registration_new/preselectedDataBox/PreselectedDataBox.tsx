@@ -4,14 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 import { RegistrationContext } from '../../../globalState';
 import { PreselectedDataDrawer } from '../preselectedDataDrawer/PreselectedDataDrawer';
-import CloseIcon from '@mui/icons-material/Close';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 export const PreselectedDataBox: VFC<{
 	hasDrawer?: boolean;
-	showErrors?: boolean;
-}> = ({ hasDrawer = false, showErrors = false }) => {
+}> = ({ hasDrawer = false }) => {
 	const {
-		preselectedAgencyName,
+		preselectedAgency,
 		preselectedTopicName,
 		isConsultantLink,
 		hasConsultantError,
@@ -27,110 +26,105 @@ export const PreselectedDataBox: VFC<{
 		if (preselectedTopicName) {
 			setTopicName(preselectedTopicName);
 		}
-		if (preselectedAgencyName) {
-			setAgencyName(preselectedAgencyName);
+		if (preselectedAgency) {
+			setAgencyName(preselectedAgency?.name);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [preselectedAgencyName, preselectedTopicName]);
+	}, [preselectedAgency, preselectedTopicName]);
+	console.log(preselectedData);
+	// if (hasConsultantError || hasTopicError || hasAgencyError) {
+	// 	return (
+	// 		<Box
+	// 			sx={{
+	// 				display: {
+	// 					xs: 'none',
+	// 					md: 'block'
+	// 				},
+	// 				gridTemplateColumns: 'auto 1fr',
+	// 				gridColumnGap: '24px',
+	// 				gridRowGap: '16px',
+	// 				p: '16px',
+	// 				my: '32px',
+	// 				borderRadius: '4px',
+	// 				border: '1px solid #c6c5c4'
+	// 			}}
+	// 		>
+	// 			{hasConsultantError && (
+	// 				<Typography>
+	// 					<ReportProblemIcon
+	// 						aria-hidden="true"
+	// 						color="inherit"
+	// 						sx={{
+	// 							width: '20px',
+	// 							height: '20px',
+	// 							mr: '8px',
+	// 							color: '#FF9F00'
+	// 						}}
+	// 					/>
+	// 					{t('registration.errors.cid')}
+	// 				</Typography>
+	// 			)}
+	// 			{hasTopicError && (
+	// 				<>
+	// 					<Typography
+	// 						sx={{
+	// 							fontWeight: '600',
+	// 							mb: '8px'
+	// 						}}
+	// 					>
+	// 						{t('registration.topic.summary')}
+	// 					</Typography>
+	// 					<Typography
+	// 						sx={{ mb: hasAgencyError ? '24px' : '0px' }}
+	// 					>
+	// 						<>
+	// 							<ReportProblemIcon
+	// 								aria-hidden="true"
+	// 								color="inherit"
+	// 								sx={{
+	// 									width: '20px',
+	// 									height: '20px',
+	// 									mr: '8px',
+	// 									color: '#FF9F00'
+	// 								}}
+	// 							/>
+	// 							{t('registration.errors.tid')}
+	// 						</>
+	// 					</Typography>
+	// 				</>
+	// 			)}
+	// 			{hasAgencyError && (
+	// 				<>
+	// 					<Typography
+	// 						sx={{
+	// 							fontWeight: '600',
+	// 							mb: '8px'
+	// 						}}
+	// 					>
+	// 						{t('registration.agency.summary')}
+	// 					</Typography>
+
+	// 					<Typography>
+	// 						<ReportProblemIcon
+	// 							aria-hidden="true"
+	// 							color="inherit"
+	// 							sx={{
+	// 								width: '20px',
+	// 								height: '20px',
+	// 								mr: '8px',
+	// 								color: '#FF9F00'
+	// 							}}
+	// 						/>
+	// 						{t('registration.errors.aid')}
+	// 					</Typography>
+	// 				</>
+	// 			)}
+	// 		</Box>
+	// 	);
+	// }
 
 	if (preselectedData.length === 0 && !isConsultantLink) {
 		return null;
-	}
-
-	if ((hasConsultantError || hasTopicError || hasAgencyError) && showErrors) {
-		return (
-			<Box
-				sx={{
-					'display': {
-						xs: 'none',
-						md: 'block'
-					},
-					'gridTemplateColumns': 'auto 1fr',
-					'gridColumnGap': '24px',
-					'gridRowGap': '16px',
-					'p': '16px',
-					'my': '32px',
-					'borderRadius': '4px',
-					'border': '1px solid #c6c5c4',
-					'& p:not(:last-child)': {
-						mb: '24px'
-					}
-				}}
-			>
-				{hasConsultantError && (
-					<Typography sx={{ display: 'flex', alignItems: 'center' }}>
-						<Box
-							sx={{
-								mr: '8px',
-								backgroundColor: 'error.main',
-								borderRadius: '50%',
-								p: '4px',
-								maxHeight: '24px',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								color: 'white'
-							}}
-						>
-							<CloseIcon
-								aria-hidden="true"
-								color="inherit"
-								sx={{ width: '16px', height: '16px' }}
-							/>
-						</Box>
-						{t('registration.errors.cid.headline')}
-					</Typography>
-				)}
-				{hasAgencyError && (
-					<Typography sx={{ display: 'flex', alignItems: 'center' }}>
-						<Box
-							sx={{
-								mr: '8px',
-								backgroundColor: 'error.main',
-								borderRadius: '50%',
-								p: '4px',
-								maxHeight: '24px',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								color: 'white'
-							}}
-						>
-							<CloseIcon
-								aria-hidden="true"
-								color="inherit"
-								sx={{ width: '16px', height: '16px' }}
-							/>
-						</Box>
-						{t('registration.errors.aid.headline')}
-					</Typography>
-				)}
-				{hasTopicError && (
-					<Typography sx={{ display: 'flex', alignItems: 'center' }}>
-						<Box
-							sx={{
-								mr: '8px',
-								backgroundColor: 'error.main',
-								borderRadius: '50%',
-								p: '4px',
-								maxHeight: '24px',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								color: 'white'
-							}}
-						>
-							<CloseIcon
-								aria-hidden="true"
-								color="inherit"
-								sx={{ width: '16px', height: '16px' }}
-							/>
-						</Box>
-						{t('registration.errors.tid.headline')}
-					</Typography>
-				)}
-			</Box>
-		);
 	}
 
 	return (
@@ -139,11 +133,8 @@ export const PreselectedDataBox: VFC<{
 				sx={{
 					display: {
 						xs: 'none',
-						md: isConsultantLink ? 'block' : 'grid'
+						md: 'block'
 					},
-					gridTemplateColumns: 'auto 1fr',
-					gridColumnGap: '24px',
-					gridRowGap: '16px',
 					p: '16px',
 					my: '32px',
 					borderRadius: '4px',
@@ -153,24 +144,73 @@ export const PreselectedDataBox: VFC<{
 				{isConsultantLink && (
 					<Typography> {t('registration.consultantlink')}</Typography>
 				)}
-				{preselectedTopicName && !isConsultantLink && (
-					<>
-						<Typography sx={{ fontWeight: '600' }}>
-							{t('registration.topic.summary')}
-						</Typography>
-						<Typography>{preselectedTopicName}</Typography>
-					</>
-				)}
-				{preselectedAgencyName && !isConsultantLink && (
+				{(preselectedTopicName || hasTopicError) &&
+					!isConsultantLink && (
+						<>
+							<Typography sx={{ fontWeight: '600', mb: '8px' }}>
+								{t('registration.topic.summary')}
+							</Typography>
+							{hasTopicError && !preselectedTopicName ? (
+								<Typography
+									sx={{ mb: hasAgencyError ? '16px' : '0px' }}
+								>
+									<>
+										<ReportProblemIcon
+											aria-hidden="true"
+											color="inherit"
+											sx={{
+												width: '20px',
+												height: '20px',
+												mr: '8px',
+												color: '#FF9F00'
+											}}
+										/>
+										{t('registration.errors.tid')}
+									</>
+								</Typography>
+							) : (
+								<Typography
+									sx={{
+										mb:
+											preselectedAgency || hasAgencyError
+												? '16px'
+												: '0px'
+									}}
+								>
+									{preselectedTopicName}
+								</Typography>
+							)}
+						</>
+					)}
+				{(preselectedAgency || hasAgencyError) && !isConsultantLink && (
 					<>
 						<Typography
 							sx={{
-								fontWeight: '600'
+								fontWeight: '600',
+								mb: '8px'
 							}}
 						>
 							{t('registration.agency.summary')}
 						</Typography>
-						<Typography>{preselectedAgencyName}</Typography>
+						{hasAgencyError && !preselectedAgency ? (
+							<Typography>
+								<>
+									<ReportProblemIcon
+										aria-hidden="true"
+										color="inherit"
+										sx={{
+											width: '20px',
+											height: '20px',
+											mr: '8px',
+											color: '#FF9F00'
+										}}
+									/>
+									{t('registration.errors.aid')}
+								</>
+							</Typography>
+						) : (
+							<Typography>{preselectedAgency?.name}</Typography>
+						)}
 					</>
 				)}
 			</Box>

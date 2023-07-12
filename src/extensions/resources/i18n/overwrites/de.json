@@ -197,7 +197,7 @@
 				"subline": "Bitte kontaktieren Sie ihn/sie, damit er/sie Ihnen erneut einen Link zusendet."
 			}
 		},
-		"consultantlink": "Ihre Beraterin oder Ihr Berater hat Sie zur Online-Beratung eingeladen! Bitte registrieren Sie sich, um mit Ihrer Beraterin oder Ihrem Berater in Kontakt zu kommen.",
+		"consultantlink": "Ihre Beraterin oder Ihr Berater hat Sie zur Online-Beratung eingeladen! Bitte registrieren Sie sich, um mit Ihrer beratenden Person in Kontakt zu treten.",
 		"agencySelection": {
 			"postcode": {
 				"unavailable": {
@@ -219,7 +219,7 @@
 			"infoText": "Um Ihre Anonymität zu schützen, raten wir Ihnen, nicht Ihren tatsächlichen Namen oder Initialien zu verwenden.<br>Wählen Sie bitte einen geeigneten Benutzernamen mit min. 5 Zeichen."
 		},
 		"welcomeScreen": {
-			"subline": "Wie läuft die Beratung der Diakonie ab?",
+			"subline": "So läuft die Beratung der Diakonie ab",
 			"info3": {
 				"text": "Innerhalb von 2 Arbeitstagen bekommen Sie eine Antwort"
 			},
