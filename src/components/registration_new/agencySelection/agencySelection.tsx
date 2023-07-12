@@ -19,7 +19,6 @@ export const AgencySelection: VFC<{
 	const [results, setResults] = useState<AgencyDataInterface[] | undefined>(
 		undefined
 	);
-	console.log(sessionStorageRegistrationData);
 	useEffect(() => {
 		if (isConsultantLink) {
 			setResults(consultant.agencies);
