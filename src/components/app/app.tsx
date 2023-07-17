@@ -35,7 +35,6 @@ import { GlobalComponentContext } from '../../globalState/provider/GlobalCompone
 import theme from '../../theme';
 import { ThemeProvider } from '@mui/material';
 import { UrlParamsProvider } from '../../globalState/provider/UrlParamsProvider';
-import { Registration } from '../registration/Registration';
 
 const Login = lazy(() =>
 	import('../login/Login').then((m) => ({ default: m.Login }))
@@ -46,6 +45,11 @@ const AuthenticatedApp = lazy(() =>
 const WaitingRoomLoader = lazy(() =>
 	import('../waitingRoom/WaitingRoomLoader').then((m) => ({
 		default: m.WaitingRoomLoader
+	}))
+);
+const Registration = lazy(() =>
+	import('../registration/Registration').then((m) => ({
+		default: m.Registration
 	}))
 );
 const VideoConference = lazy(
