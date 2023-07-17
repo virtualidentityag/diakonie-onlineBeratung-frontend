@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 
-import { ZipcodeInput } from './zipcodeInput';
+import { ZipcodeInput } from './ZipcodeInput';
 
 export default {
 	title: 'Registration/ZicodeInput',

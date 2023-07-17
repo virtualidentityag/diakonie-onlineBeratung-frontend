@@ -6,14 +6,20 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, SwipeableDrawer, Typography } from '@mui/material';
 import { Global } from '@emotion/react';
 import { RegistrationContext } from '../../../globalState';
+import { PreselectionError } from '../preselectionError/PreselectionError';
 
 interface InfoDrawerProps {
 	trigger?: boolean;
 }
 
 export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
-	const { preselectedAgency, preselectedTopicName } =
-		useContext(RegistrationContext);
+	const {
+		preselectedAgency,
+		preselectedTopicName,
+		hasAgencyError,
+		hasConsultantError,
+		hasTopicError
+	} = useContext(RegistrationContext);
 	const { t } = useTranslation();
 	const drawerBleeding = 92;
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -101,24 +107,54 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 					}}
 				>
 					<Box sx={{ opacity: isDrawerOpen ? 1 : 0 }}>
-						<Typography sx={{ color: 'white', fontWeight: '600' }}>
-							{t('registration.topic.summary')}
-						</Typography>
-						<Typography sx={{ color: 'white', mt: '8px' }}>
-							{topicName}
-						</Typography>
-						<Typography
-							sx={{
-								color: 'white',
-								fontWeight: '600',
-								mt: '16px'
-							}}
-						>
-							{t('registration.agency.summary')}
-						</Typography>
-						<Typography sx={{ color: 'white', mt: '8px' }}>
-							{agencyName}
-						</Typography>
+						{hasConsultantError ? (
+							<PreselectionError
+								errorMessage={t('registration.errors.cid')}
+							></PreselectionError>
+						) : (
+							<>
+								<Typography
+									sx={{ color: 'white', fontWeight: '600' }}
+								>
+									{t('registration.topic.summary')}
+								</Typography>
+								{hasTopicError && topicName === '-' ? (
+									<PreselectionError
+										errorMessage={t(
+											'registration.errors.tid'
+										)}
+									></PreselectionError>
+								) : (
+									<Typography
+										sx={{ color: 'white', mt: '8px' }}
+									>
+										{topicName}
+									</Typography>
+								)}
+								<Typography
+									sx={{
+										color: 'white',
+										fontWeight: '600',
+										mt: '16px'
+									}}
+								>
+									{t('registration.agency.summary')}
+								</Typography>
+								{hasAgencyError && agencyName === '-' ? (
+									<PreselectionError
+										errorMessage={t(
+											'registration.errors.aid'
+										)}
+									></PreselectionError>
+								) : (
+									<Typography
+										sx={{ color: 'white', mt: '8px' }}
+									>
+										{agencyName}
+									</Typography>
+								)}
+							</>
+						)}
 					</Box>
 					<Box
 						onClick={toggleDrawer}

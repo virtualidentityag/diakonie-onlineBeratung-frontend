@@ -20,6 +20,7 @@ import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
 import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 import { Loading } from '../../app/Loading';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 
 export const TopicSelection: VFC<{
@@ -49,20 +50,6 @@ export const TopicSelection: VFC<{
 		return topics?.filter((topic) => topic?.id === topicId)?.[0];
 	};
 
-	const getFilteredTopics = (topics: TopicsDataInterface[]) => {
-		if (preselectedData.includes('aid') && !hasAgencyError) {
-			const topicIds = preselectedAgency?.topicIds;
-			return topics?.filter((topic) => topicIds.includes(topic.id));
-		}
-		if (isConsultantLink && consultant) {
-			const topicIds = consultant?.agencies
-				.map((agency) => agency.topicIds)
-				.flat();
-			return topics?.filter((topic) => topicIds.includes(topic.id));
-		}
-		return topics;
-	};
-
 	useEffect(() => {
 		if (
 			REGISTRATION_DATA_VALIDATION.topicId.validation(value?.toString())
@@ -83,6 +70,25 @@ export const TopicSelection: VFC<{
 	}, [consultant, hasAgencyError, isConsultantLink, preselectedData]);
 
 	useEffect(() => {
+		if (topics.length === 1) {
+			setValue(topics[0].id);
+		}
+	}, [topics]);
+
+	useEffect(() => {
+		const getFilteredTopics = (topics: TopicsDataInterface[]) => {
+			if (preselectedData.includes('aid') && !hasAgencyError) {
+				const topicIds = preselectedAgency?.topicIds;
+				return topics?.filter((topic) => topicIds.includes(topic.id));
+			}
+			if (isConsultantLink && consultant) {
+				const topicIds = consultant?.agencies
+					.map((agency) => agency.topicIds)
+					.flat();
+				return topics?.filter((topic) => topicIds.includes(topic.id));
+			}
+			return topics;
+		};
 		(async () => {
 			try {
 				setIsLoading(true);
@@ -104,16 +110,30 @@ export const TopicSelection: VFC<{
 				setTopicGroups([]);
 			}
 		})();
-	}, [consultant, preselectedAgency]);
+	}, [
+		consultant,
+		hasAgencyError,
+		isConsultantLink,
+		preselectedAgency,
+		preselectedData
+	]);
 
 	return (
 		<>
-			<Typography variant="h3">
-				{t('registration.topic.headline')}
-			</Typography>
-			<Typography sx={{ mt: '16px', mb: '24px' }}>
-				{t('registration.topic.subline')}
-			</Typography>
+			{topics.length === 1 ? (
+				<Typography variant="h3" sx={{ mb: '24px' }}>
+					{t('registration.topic.oneResult')}
+				</Typography>
+			) : (
+				<>
+					<Typography variant="h3">
+						{t('registration.topic.headline')}
+					</Typography>
+					<Typography sx={{ mt: '16px', mb: '24px' }}>
+						{t('registration.topic.subline')}
+					</Typography>
+				</>
+			)}
 			{isLoading ? (
 				<Box
 					sx={{
@@ -130,6 +150,7 @@ export const TopicSelection: VFC<{
 					<RadioGroup
 						aria-label="topic-selection"
 						name="topic-selection"
+						defaultValue={topics.length === 1 ? topics[0].id : ''}
 					>
 						{topicGroups && topics && listView
 							? topics
@@ -147,6 +168,7 @@ export const TopicSelection: VFC<{
 											}}
 										>
 											<FormControlLabel
+												disabled={topics.length === 1}
 												sx={{
 													alignItems: 'flex-start'
 												}}
@@ -164,6 +186,18 @@ export const TopicSelection: VFC<{
 														}}
 														checked={
 															value === topic?.id
+														}
+														checkedIcon={
+															topics.length ===
+															1 ? (
+																<TaskAltIcon color="info" />
+															) : undefined
+														}
+														icon={
+															topics.length ===
+															1 ? (
+																<TaskAltIcon color="info" />
+															) : undefined
 														}
 													/>
 												}

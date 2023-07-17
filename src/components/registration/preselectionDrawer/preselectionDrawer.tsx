@@ -1,14 +1,21 @@
 import * as React from 'react';
-import { useState, VFC } from 'react';
+import { useContext, useState, VFC, useEffect } from 'react';
 import { Box, Drawer, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Loading } from '../../app/Loading';
+import { RegistrationContext } from '../../../globalState';
+import { PreselectionError } from '../preselectionError/PreselectionError';
 
 export const PreselectionDrawer: VFC<{
 	topicName: string;
 	agencyName: string;
-	isConsultantLink: boolean;
-}> = ({ topicName, agencyName, isConsultantLink }) => {
+}> = ({ topicName, agencyName }) => {
+	const {
+		hasTopicError,
+		hasAgencyError,
+		hasConsultantError,
+		isConsultantLink
+	} = useContext(RegistrationContext);
 	const { t } = useTranslation();
 	const [loading, isLoading] = useState<boolean>(true);
 	const [isOverlayDrawerOpen, setIsOverlayDrawerOpen] =
@@ -86,15 +93,20 @@ export const PreselectionDrawer: VFC<{
 						}}
 					>
 						{isConsultantLink ? (
-							<Typography
-								sx={{
-									color: 'white',
-									mt: '24px'
-								}}
-							>
-								{' '}
-								{t('registration.consultantlink')}
-							</Typography>
+							hasConsultantError ? (
+								<PreselectionError
+									errorMessage={t('registration.errors.cid')}
+								></PreselectionError>
+							) : (
+								<Typography
+									sx={{
+										color: 'white',
+										mt: '24px'
+									}}
+								>
+									{t('registration.consultantlink')}
+								</Typography>
+							)
 						) : (
 							<>
 								<Typography
@@ -106,9 +118,19 @@ export const PreselectionDrawer: VFC<{
 								>
 									{t('registration.topic.summary')}
 								</Typography>
-								<Typography sx={{ color: 'white', mt: '8px' }}>
-									{topicName}
-								</Typography>
+								{hasTopicError ? (
+									<PreselectionError
+										errorMessage={t(
+											'registration.errors.tid'
+										)}
+									></PreselectionError>
+								) : (
+									<Typography
+										sx={{ color: 'white', mt: '8px' }}
+									>
+										{topicName}
+									</Typography>
+								)}
 								<Typography
 									sx={{
 										color: 'white',
@@ -118,9 +140,19 @@ export const PreselectionDrawer: VFC<{
 								>
 									{t('registration.agency.summary')}
 								</Typography>
-								<Typography sx={{ color: 'white', mt: '8px' }}>
-									{agencyName}
-								</Typography>
+								{hasAgencyError ? (
+									<PreselectionError
+										errorMessage={t(
+											'registration.errors.aid'
+										)}
+									></PreselectionError>
+								) : (
+									<Typography
+										sx={{ color: 'white', mt: '8px' }}
+									>
+										{agencyName}
+									</Typography>
+								)}
 							</>
 						)}
 						<Button

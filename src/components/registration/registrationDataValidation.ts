@@ -1,4 +1,4 @@
-import { passwordCriteria } from './accountData/accountData';
+import { passwordCriteria } from './accountData/AccountData';
 
 interface RegistrationDataValidation {
 	[key: string]: {

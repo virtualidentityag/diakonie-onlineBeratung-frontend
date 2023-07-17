@@ -1,5 +1,5 @@
 import React from 'react';
-import { AgencySelection } from './agencySelection';
+import { AgencySelection } from './AgencySelection';
 import { endpoints } from '../../../resources/scripts/endpoints';
 import { RegistrationContext } from '../../../globalState';
 import { BrowserRouter as Router } from 'react-router-dom';

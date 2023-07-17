@@ -145,7 +145,6 @@ export const PreselectionBox: VFC<{
 				<PreselectionDrawer
 					topicName={topicName}
 					agencyName={agencyName}
-					isConsultantLink={isConsultantLink}
 				/>
 			)}
 		</>

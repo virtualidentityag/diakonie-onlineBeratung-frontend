@@ -17,7 +17,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Loading } from '../../app/Loading';
 import { useTranslation } from 'react-i18next';
 import { AgencyDataInterface, RegistrationContext } from '../../../globalState';
-import { AgencyLanguages } from './agencyLanguages';
+import { AgencyLanguages } from './AgencyLanguages';
 import { parsePlaceholderString } from '../../../utils/parsePlaceholderString';
 import { useAppConfig } from '../../../hooks/useAppConfig';
 import { VFC } from 'react';

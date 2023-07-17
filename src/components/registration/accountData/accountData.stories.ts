@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 
-import { AccountData } from './accountData';
+import { AccountData } from './AccountData';
 
 export default {
 	title: 'Registration/AccountData',

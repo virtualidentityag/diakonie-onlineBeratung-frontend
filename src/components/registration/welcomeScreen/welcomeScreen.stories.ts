@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 
-import { WelcomeScreen } from './welcomeScreen';
+import { WelcomeScreen } from './WelcomeScreen';
 
 export default {
 	title: 'Registration/WelcomeScreen',

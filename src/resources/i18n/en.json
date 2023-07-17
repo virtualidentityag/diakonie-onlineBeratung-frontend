@@ -1729,6 +1729,12 @@
 			"step": "Step",
 			"of": "of"
 		},
+		"consultantlink": "Your advisor has invited you to online consulting! Please register to get in touch with your advisor.",
+		"errors": {
+			"tid": "Sorry, the topic you selected could not be found. Please select a suitable topic again during registration.",
+			"aid": "Unfortunately, the consulting center you selected could not be found. Please select a consulting center again during registration.",
+			"cid": "Unfortunately, we could not find your advisor. Please contact your counseling person to get a new link or register here at your desired counseling center."
+		},
 		"topic": {
 			"summary": "Your topic:",
 			"headline": "On what topic are you looking for advice?",

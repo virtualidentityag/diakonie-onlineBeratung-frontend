@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, VFC, useContext } from 'react';
-import { AgencySelectionResults } from './agencySelectionResults';
+import { AgencySelectionResults } from './AgencySelectionResults';
 import { apiAgencySelection } from '../../../api';
 import { AgencyDataInterface, RegistrationContext } from '../../../globalState';
 import { Typography } from '@mui/material';

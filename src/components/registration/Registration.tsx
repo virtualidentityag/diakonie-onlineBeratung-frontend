@@ -5,14 +5,14 @@ import { StageLayout } from '../stageLayout/StageLayout';
 import useIsFirstVisit from '../../utils/useIsFirstVisit';
 import { ReactComponent as HelloBannerIcon } from '../../resources/img/illustrations/hello-banner.svg';
 import { StepBar } from './stepBar/StepBar';
-import { AccountData } from './accountData/accountData';
-import { ZipcodeInput } from './zipcodeInput/zipcodeInput';
-import { AgencySelection } from './agencySelection/agencySelection';
-import { TopicSelection } from './topicSelection/topicSelection';
+import { AccountData } from './accountData/AccountData';
+import { ZipcodeInput } from './zipcodeInput/ZipcodeInput';
+import { AgencySelection } from './agencySelection/AgencySelection';
+import { TopicSelection } from './topicSelection/TopicSelection';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { WelcomeScreen } from './welcomeScreen/welcomeScreen';
+import { WelcomeScreen } from './welcomeScreen/WelcomeScreen';
 import {
 	RegistrationContext,
 	TenantContext,
@@ -82,7 +82,25 @@ export const Registration = () => {
 	const checkForStepsWithMissingMandatoryFields = (): number[] => {
 		if (currentStep > 0) {
 			//fix missing step stuff
-			console.log(sessionStorageRegistrationData);
+			console.log(
+				availableSteps.reduce<number[]>(
+					(missingSteps, step, currentIndex) => {
+						if (
+							step?.mandatoryFields?.some(
+								(mandatoryField) =>
+									sessionStorageRegistrationData?.[
+										mandatoryField
+									] === undefined
+							)
+						) {
+							return [...missingSteps, currentIndex];
+						}
+						return missingSteps;
+					},
+					[]
+				)
+			);
+			console.log(sessionStorageRegistrationData, availableSteps);
 			return availableSteps.reduce<number[]>(
 				(missingSteps, step, currentIndex) => {
 					if (
@@ -90,7 +108,7 @@ export const Registration = () => {
 							(mandatoryField) =>
 								sessionStorageRegistrationData?.[
 									mandatoryField
-								] === (undefined || null)
+								] === undefined
 						)
 					) {
 						return [...missingSteps, currentIndex];
@@ -120,7 +138,6 @@ export const Registration = () => {
 			.sort()
 			.filter((missingStep) => missingStep < currentStep);
 
-		console.log(missingPreviousSteps);
 		if (missingPreviousSteps.length > 0) {
 			history.push(
 				`/registration${

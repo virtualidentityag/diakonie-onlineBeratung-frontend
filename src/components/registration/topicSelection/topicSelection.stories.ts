@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 
-import { TopicSelection } from './topicSelection';
+import { TopicSelection } from './TopicSelection';
 
 export default {
 	title: 'Registration/TopicSelection',

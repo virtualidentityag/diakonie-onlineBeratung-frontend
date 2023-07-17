@@ -1,5 +1,5 @@
 import React from 'react';
-import { TopicSelection } from './topicSelection';
+import { TopicSelection } from './TopicSelection';
 import { endpoints } from '../../../resources/scripts/endpoints';
 import { RegistrationProvider } from '../../../globalState';
 import { BrowserRouter as Router } from 'react-router-dom';

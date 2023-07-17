@@ -137,8 +137,12 @@ export function RegistrationProvider(props) {
 			);
 			updateSessionStorage({
 				zipcode: isZipcodeValid ? urlQuery.get('postcode') : undefined,
-				agencyId: parseInt(urlQuery.get('aid')),
-				topicId: parseInt(urlQuery.get('tid'))
+				agencyId: urlQuery.get('aid')
+					? parseInt(urlQuery.get('aid'))
+					: undefined,
+				topicId: urlQuery.get('tid')
+					? parseInt(urlQuery.get('tid'))
+					: undefined
 			});
 
 			setAvailableSteps(
@@ -153,6 +157,7 @@ export function RegistrationProvider(props) {
 			);
 		}
 		if (urlQuery.get('cid')) {
+			setIsConsultantLink(true);
 			(async () => {
 				try {
 					const consultantResponse = await apiGetConsultant(
@@ -161,11 +166,9 @@ export function RegistrationProvider(props) {
 						'basic',
 						true
 					);
-					setIsConsultantLink(true);
 					setConsultant(consultantResponse);
 				} catch {
 					setHasConsultantError(true);
-					setIsConsultantLink(false);
 				}
 			})();
 		}

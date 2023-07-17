@@ -1,6 +1,6 @@
 import React from 'react';
 import { RegistrationProvider } from '../../../globalState';
-import { ZipcodeInput } from './zipcodeInput';
+import { ZipcodeInput } from './ZipcodeInput';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 it('shows correct label', () => {
