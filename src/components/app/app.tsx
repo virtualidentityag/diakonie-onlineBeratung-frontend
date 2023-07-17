@@ -35,7 +35,7 @@ import { GlobalComponentContext } from '../../globalState/provider/GlobalCompone
 import theme from '../../theme';
 import { ThemeProvider } from '@mui/material';
 import { UrlParamsProvider } from '../../globalState/provider/UrlParamsProvider';
-import { RegistrationWrapper } from '../registration_new/registrationWrapper/registrationWrapper';
+import { Registration } from '../registration/Registration';
 
 const Login = lazy(() =>
 	import('../login/Login').then((m) => ({ default: m.Login }))
@@ -170,7 +170,7 @@ const RouterWrapper = ({ extraRoutes, entryPoint }: RouterWrapperProps) => {
 									]}
 								>
 									<RegistrationProvider>
-										<RegistrationWrapper />
+										<Registration />
 									</RegistrationProvider>
 								</Route>
 

@@ -22,7 +22,7 @@ import { parsePlaceholderString } from '../../../utils/parsePlaceholderString';
 import { useAppConfig } from '../../../hooks/useAppConfig';
 import { VFC } from 'react';
 import { MetaInfo } from '../metaInfo/MetaInfo';
-import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 
 interface AgencySelectionResultsProps {
 	isLoading?: boolean;

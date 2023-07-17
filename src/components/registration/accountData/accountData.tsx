@@ -21,7 +21,7 @@ import {
 import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvider';
 import { RegistrationContext } from '../../../globalState';
 import { apiGetIsUsernameAvailable } from '../../../api/apiGetIsUsernameAvailable';
-import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 
 export const passwordCriteria = [
 	{

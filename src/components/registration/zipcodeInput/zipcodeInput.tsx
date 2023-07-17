@@ -5,7 +5,7 @@ import { useState, VFC, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from '../../input/input';
 import { RegistrationContext } from '../../../globalState';
-import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 
 export const ZipcodeInput: VFC = () => {
 	const { t } = useTranslation();

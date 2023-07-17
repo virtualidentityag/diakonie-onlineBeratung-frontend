@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useState, VFC } from 'react';
 import { Box, Drawer, Typography, Button } from '@mui/material';
+import { ReactComponent as Loader } from './loader.svg';
+import { ReactComponent as Logo } from './logo.svg';
 import { useTranslation } from 'react-i18next';
-import { Loading } from '../../app/Loading';
 
-export const PreselectedDataDrawer: VFC<{
+export const PreselectionDrawer: VFC<{
 	topicName: string;
 	agencyName: string;
 	isConsultantLink: boolean;
@@ -37,22 +38,56 @@ export const PreselectedDataDrawer: VFC<{
 			<Box
 				sx={{
 					width: '100vw',
-					minHeight: '100vh',
+					height: '30vh',
+					backgroundColor: 'primary.main',
+					p: '24px'
+				}}
+			>
+				<Logo
+					className="stage__logo"
+					aria-label={t('app.stage.title')}
+				/>
+			</Box>
+			<Box
+				sx={{
+					width: '100vw',
+					minHeight: '70vh',
 					backgroundColor: 'primary.dark',
 					p: '24px'
 				}}
 			>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						height: '40vh'
-					}}
-				>
-					{loading && <Loading />}
-				</Box>
-
+				{loading && (
+					<Box
+						sx={{
+							'display': 'flex',
+							'justifyContent': 'center',
+							'& svg': {
+								'width': '70%',
+								'animationName': 'loading',
+								'animationDuration': '2s',
+								'animationDelay': '0.3s',
+								'animationFillMode': 'both',
+								'@keyframes loading': {
+									'0%': {
+										width: '60%'
+									},
+									'35%': {
+										width: '70%'
+									},
+									'70%': {
+										width: '60%',
+										opacity: '1'
+									},
+									'100%': {
+										opacity: '0'
+									}
+								}
+							}
+						}}
+					>
+						<Loader />
+					</Box>
+				)}
 				<Typography
 					variant="h2"
 					sx={{ color: 'white', fontWeight: '600' }}

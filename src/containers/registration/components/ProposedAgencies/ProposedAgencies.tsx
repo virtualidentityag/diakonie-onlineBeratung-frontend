@@ -12,13 +12,27 @@ import {
 	VALIDITY_VALID,
 	VALIDITY_INVALID
 } from '../../../../components/registration/registrationHelpers';
-import { AgencyDataInterface } from '../../../../globalState';
+import {
+	AgencyDataInterface,
+	ConsultingTypeInterface
+} from '../../../../globalState';
 import { LABEL_TYPES, Text } from '../../../../components/text/Text';
 import './proposedAgencies.styles.scss';
 import { useTranslation } from 'react-i18next';
 import { PreselectedAgency } from '../PreSelectedAgency/PreselectedAgency';
-import { FormAccordionData } from '../../../../components/registration/RegistrationForm';
 import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
+import { TopicsDataInterface } from '../../../../globalState/interfaces/TopicsDataInterface';
+
+interface FormAccordionData {
+	username?: string;
+	password?: string;
+	agency?: AgencyDataInterface;
+	consultingType?: ConsultingTypeInterface;
+	mainTopic?: TopicsDataInterface;
+	postcode?: string;
+	state?: string;
+	age?: string;
+}
 
 interface ProposedAgenciesProps {
 	formAccordionData: FormAccordionData;

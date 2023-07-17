@@ -20,7 +20,7 @@ import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
 import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 import { Loading } from '../../app/Loading';
-import { REGISTRATION_DATA_VALIDATION } from '../registrationWrapper/registrationDataValidation';
+import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 
 export const TopicSelection: VFC<{
 	nextStepUrl: string;

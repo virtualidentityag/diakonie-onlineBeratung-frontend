@@ -7,7 +7,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import LockIcon from '@mui/icons-material/Lock';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useMemo, VFC } from 'react';
-import { PreselectedDataBox } from '../preselectedDataBox/PreselectedDataBox';
+import { PreselectionBox } from '../preselectionBox/PreselectionBox';
 
 interface WelcomeScreenProps {
 	nextStepUrl: string;
@@ -68,7 +68,7 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 	return (
 		<>
 			<Typography variant="h2">{t('registration.overline')}</Typography>
-			<PreselectedDataBox hasDrawer={true} />
+			<PreselectionBox hasDrawer={true} />
 			<Typography variant="subtitle1" sx={{ mt: '12px', mb: '48px' }}>
 				{t('registration.welcomeScreen.subline')}
 			</Typography>
