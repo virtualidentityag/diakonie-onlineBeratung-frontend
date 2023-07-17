@@ -7,7 +7,8 @@ import { apiGetConsultingTypes } from './apiGetConsultingTypes';
 export const apiGetConsultant = async (
 	consultantId: any,
 	fetchConsultingTypes?: boolean,
-	consultingTypeDetail: 'full' | 'basic' = 'full'
+	consultingTypeDetail: 'full' | 'basic' = 'full',
+	catchAllErrors?: boolean
 ): Promise<ConsultantDataInterface> => {
 	const url = endpoints.agencyConsultants + '/' + consultantId;
 
@@ -15,7 +16,11 @@ export const apiGetConsultant = async (
 		url: url,
 		method: FETCH_METHODS.GET,
 		skipAuth: true,
-		responseHandling: [FETCH_ERRORS.EMPTY, FETCH_ERRORS.NO_MATCH]
+		responseHandling: [
+			FETCH_ERRORS.EMPTY,
+			FETCH_ERRORS.NO_MATCH,
+			catchAllErrors && FETCH_ERRORS.CATCH_ALL
+		]
 	}).then((user) => {
 		if (!fetchConsultingTypes) {
 			return user;

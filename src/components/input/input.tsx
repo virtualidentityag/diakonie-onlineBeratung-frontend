@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { TextField, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useTranslation } from 'react-i18next';
 
 export interface InputProps {
 	label: string;
@@ -16,11 +17,10 @@ export interface InputProps {
 		| 'none'
 		| 'numeric'
 		| 'decimal';
-	shrinkLabel?: boolean;
 	onInputChange?: Function;
 	startAdornment?: JSX.Element;
 	endAdornment?: JSX.Element;
-	isValueValid?(value: string): boolean;
+	isValueValid?(value: string): Promise<boolean>;
 	inputType?: 'number' | 'tel' | 'text' | 'password';
 	info?: string;
 	autoComplete?: string;
@@ -41,22 +41,22 @@ export const Input = ({
 	isValueValid,
 	inputType,
 	info,
-	shrinkLabel = false,
 	inputMode,
 	errorMessage,
 	successMesssage,
 	multipleCriteria,
 	autoComplete
 }: InputProps) => {
-	const [shrink, setShrink] = useState<boolean>(shrinkLabel || false);
+	const { t } = useTranslation();
+	const [shrink, setShrink] = useState<boolean>(value?.length > 0);
 	const [wasBlurred, setWasBlurred] = useState<boolean>(false);
 	const [showSuccessMessage, setShowSuccessMessage] =
 		useState<boolean>(false);
 	const [inputError, setInputError] = useState<boolean>(false);
 
-	const isValid = (val) => {
+	const isValid = async (val) => {
 		if (isValueValid) {
-			return isValueValid(val);
+			return await isValueValid(val);
 		} else if (multipleCriteria) {
 			return multipleCriteria.every((criteria) =>
 				criteria.validation(val)
@@ -66,13 +66,40 @@ export const Input = ({
 		}
 	};
 
+	const handleBlur = async () => {
+		setWasBlurred(true);
+		const valid = await isValid(value);
+		if (value?.length === 0) {
+			setShrink(false);
+		} else if (!valid) {
+			setInputError(true);
+		}
+		if ((successMesssage || multipleCriteria) && valid) {
+			setShowSuccessMessage(true);
+		} else {
+			setShowSuccessMessage(false);
+		}
+	};
+
+	const handleChange = async (e) => {
+		onInputChange(e.target.value);
+		const valid = await isValid(e.target.value);
+		if (inputError && valid) {
+			setInputError(false);
+			setShowSuccessMessage(!!successMesssage || !!multipleCriteria);
+		} else if (showSuccessMessage && !valid) {
+			setInputError(true);
+			setShowSuccessMessage(false);
+		}
+	};
+
 	const getMultipleCriteriaDesign = (criteria) => {
 		const blurredIcon = wasBlurred ? (
 			<CancelIcon
 				color="error"
 				sx={{
-					width: '12px',
-					height: '12px',
+					width: '16px',
+					height: '16px',
 					mr: '3px'
 				}}
 			/>
@@ -83,8 +110,8 @@ export const Input = ({
 			<CheckCircleIcon
 				color="success"
 				sx={{
-					width: '12px',
-					height: '12px',
+					width: '16px',
+					height: '16px',
 					mr: '3px'
 				}}
 			/>
@@ -97,14 +124,20 @@ export const Input = ({
 			: blurredColor;
 		return { icon, color };
 	};
-
+	const inputRef = useRef();
 	useEffect(() => {
-		setShrink(shrinkLabel);
-	}, [shrinkLabel]);
+		if (
+			value?.length === 0 &&
+			document.activeElement !== inputRef.current
+		) {
+			setShrink(false);
+		}
+	}, [value]);
 
 	return (
 		<>
 			<TextField
+				inputRef={inputRef}
 				type={inputType || 'text'}
 				fullWidth
 				label={label}
@@ -167,44 +200,18 @@ export const Input = ({
 				}}
 				value={value}
 				error={inputError}
-				onChange={(e) => {
-					onInputChange(e.target.value);
-					if (inputError && isValid(e.target.value)) {
-						setInputError(false);
-						setShowSuccessMessage(
-							!!successMesssage || !!multipleCriteria
-						);
-					} else if (showSuccessMessage && !isValid(e.target.value)) {
-						setInputError(true);
-						setShowSuccessMessage(false);
-					}
-				}}
+				onChange={handleChange}
 				onFocus={() => {
 					setShrink(true);
 				}}
-				onBlur={() => {
-					setWasBlurred(true);
-					if (value.length === 0) {
-						setShrink(false);
-					} else if (!isValid(value)) {
-						setInputError(true);
-					}
-					if (
-						(successMesssage || multipleCriteria) &&
-						isValid(value)
-					) {
-						setShowSuccessMessage(true);
-					} else {
-						setShowSuccessMessage(false);
-					}
-				}}
+				onBlur={handleBlur}
 			></TextField>
 			{info && !inputError && !showSuccessMessage && (
 				<Typography
 					variant="body2"
 					sx={{
 						mt: '8px',
-						fontSize: '12px',
+						fontSize: '16px',
 						lineHeight: '16px',
 						color: 'info.light'
 					}}
@@ -217,7 +224,7 @@ export const Input = ({
 					variant="body2"
 					sx={{
 						mt: '8px',
-						fontSize: '12px',
+						fontSize: '16px',
 						lineHeight: '16px',
 						color: 'error.main'
 					}}
@@ -230,7 +237,7 @@ export const Input = ({
 					variant="body2"
 					sx={{
 						mt: '8px',
-						fontSize: '12px',
+						fontSize: '16px',
 						lineHeight: '16px',
 						color: 'success.main'
 					}}
@@ -245,7 +252,7 @@ export const Input = ({
 							variant="body2"
 							sx={{
 								mt: '8px',
-								fontSize: '12px',
+								fontSize: '16px',
 								lineHeight: '16px',
 								color: getMultipleCriteriaDesign(criteria)
 									.color,
@@ -254,7 +261,7 @@ export const Input = ({
 							}}
 						>
 							{getMultipleCriteriaDesign(criteria).icon}{' '}
-							{criteria.info}
+							{t(criteria.info)}
 						</Typography>
 					);
 				})}

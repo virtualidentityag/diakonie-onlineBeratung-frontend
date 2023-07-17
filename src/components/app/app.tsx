@@ -23,6 +23,7 @@ import {
 	InformalProvider,
 	LegalLinkInterface,
 	LocaleProvider,
+	RegistrationProvider,
 	TenantProvider
 } from '../../globalState';
 import { LegalLinksProvider } from '../../globalState/provider/LegalLinksProvider';
@@ -41,14 +42,14 @@ const Login = lazy(() =>
 const AuthenticatedApp = lazy(() =>
 	import('./AuthenticatedApp').then((m) => ({ default: m.AuthenticatedApp }))
 );
-const Registration = lazy(() =>
-	import('../registration/Registration').then((m) => ({
-		default: m.Registration
-	}))
-);
 const WaitingRoomLoader = lazy(() =>
 	import('../waitingRoom/WaitingRoomLoader').then((m) => ({
 		default: m.WaitingRoomLoader
+	}))
+);
+const Registration = lazy(() =>
+	import('../registration/Registration').then((m) => ({
+		default: m.Registration
 	}))
 );
 const VideoConference = lazy(
@@ -98,7 +99,9 @@ export const App = ({
 								>
 									<LegalLinksProvider legalLinks={legalLinks}>
 										<GlobalComponentContext.Provider
-											value={{ Stage: stageComponent }}
+											value={{
+												Stage: stageComponent
+											}}
 										>
 											<RouterWrapper
 												extraRoutes={extraRoutes}
@@ -164,19 +167,15 @@ const RouterWrapper = ({ extraRoutes, entryPoint }: RouterWrapperProps) => {
 								<Route
 									path={[
 										'/registration',
-										'/:consultingTypeSlug/registration'
+										'/registration/topic-selection',
+										'/registration/zipcode',
+										'/registration/account-data',
+										'/registration/agency-selection'
 									]}
 								>
-									<UrlParamsProvider>
-										<Registration
-											handleUnmatchConsultingType={() =>
-												history.push('/login')
-											}
-											handleUnmatchConsultant={() =>
-												history.push('/login')
-											}
-										/>
-									</UrlParamsProvider>
+									<RegistrationProvider>
+										<Registration />
+									</RegistrationProvider>
 								</Route>
 
 								<Route path="/:consultingTypeSlug/warteraum">

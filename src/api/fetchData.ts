@@ -145,6 +145,7 @@ export const fetchData = ({
 							responseHandling.includes(FETCH_SUCCESS.CONTENT))
 							? response.json()
 							: response;
+
 					resolve(data);
 				} else if (response.status === 204) {
 					if (responseHandling?.includes(FETCH_ERRORS.EMPTY)) {

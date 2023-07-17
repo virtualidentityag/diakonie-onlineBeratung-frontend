@@ -132,11 +132,13 @@
 		"menu": "Weitere Funktionen",
 		"back": "Zurück",
 		"next": "Weiter",
+		"info": "Information",
 		"successful": "Erfolgreich",
 		"faulty": "Fehlerhaft",
 		"selectLanguage": "Sprache wählen",
 		"wait": "Bitte warten",
-		"closeBanner": "Banner schließen"
+		"closeBanner": "Banner schließen",
+		"or": "oder"
 	},
 	"appointments": {
 		"copy": {
@@ -1735,6 +1737,12 @@
 				}
 			}
 		},
+		"consultantlink": "Ihr_e Berater_in hat Sie zur Online-Beratung eingeladen! Bitte registrieren Sie sich, um mit Ihrer_m Berater_in in Kontakt zu kommen.",
+		"errors": {
+			"tid": "Das von Ihnen gewählte Thema konnte leider nicht gefunden werden. Bitte wählen Sie bei der Registrierung erneut ein passendes Thema aus.",
+			"aid": "Die von Ihnen gewählte Beratungsstelle konnte leider nicht gefunden werden. Bitte wählen Sie bei der Registrierung erneut eine Beratungsstelle aus.",
+			"cid": "Leider konnten wir Ihre Beraterin oder Ihren Berater nicht finden. Bitte wenden Sie sich an Ihre beratende Person, um einen neuen Link zu erhalten oder registrieren Sie sich hier bei Ihrer gewünschten Beratungsstelle."
+		},
 		"age": {
 			"dropdown": "Alter auswählen*",
 			"headline": "Alter angeben"
@@ -1744,8 +1752,14 @@
 			"of": "von"
 		},
 		"topic": {
+			"oneResult": "Wir beraten Sie zum Thema",
+			"summary": "Ihr Thema:",
 			"headline": "Zu welchem Thema suchen Sie Beratung?",
-			"subline": "Wählen Sie ein Thema aus unserem Beratungsangebot aus."
+			"subline": "Wählen Sie ein Thema aus unserem Beratungsangebot aus.",
+			"infoOverlay": {
+				"backButtonLabel": "Anderes Thema auswählen",
+				"nextButtonLabel": "Thema auswählen und fortfahren"
+			}
 		},
 		"zipcode": {
 			"headline": "Um Sie bestmöglich beraten zu können, benötigen wir Ihre Postleitzahl",
@@ -1759,7 +1773,10 @@
 			"subline": "Um Ihre Anonymität zu schützen, raten wir Ihnen, nicht Ihren tatsächlichen Namen oder Initialen zu verwenden.",
 			"username": {
 				"label": "Benutzername",
-				"error": "Ihr Benutzername ist zu kurz.",
+				"error": {
+					"available": "Ihr Benutzername ist zu kurz.",
+					"unavailable": "Dieser Benutzername ist bereits vergeben."
+				},
 				"info": "5 oder mehr Zeichen",
 				"success": "Ihr Benutzername ist geeignet."
 			},
@@ -1777,11 +1794,13 @@
 			}
 		},
 		"agency": {
+			"summary": "Ihre Beratungsstelle:",
 			"preselected": {
 				"prefix": "Ihre vorausgewählte Beratungsstelle: ",
 				"isTeam": "Sie werden von einem Team beraten."
 			},
 			"headline": "Ihre Beratungsstelle wählen",
+			"consultantheadline": "Ihre Beratungsstelle",
 			"search": "Suche nach einer PLZ",
 			"result": {
 				"headline": "Beratungsstellen zur Postleitzahl",
@@ -1796,6 +1815,10 @@
 				"headline": "Keine Online-Beratungsstelle gefunden",
 				"subline": "Bitte versuchen Sie es mit einer anderen Postleitzahl oder besuchen Sie unsere Website, um eine Beratungsstelle in Ihrer Nähe zu finden.",
 				"label": "Zur Beratungsstellensuche"
+			},
+			"infoOverlay": {
+				"backButtonLabel": "Andere Beratungsstelle auswählen",
+				"nextButtonLabel": "Beratungsstelle auswählen und fortfahren"
 			}
 		},
 		"agencySelection": {
@@ -1856,7 +1879,7 @@
 			"label": {
 				"prefix": "Ich habe die ",
 				"and": " und ",
-				"suffix": " zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies.*"
+				"suffix": " zur Kenntnis genommen. Für Authentifizierung und Navigation verwendet diese Webseite Cookies."
 			}
 		},
 		"form": {

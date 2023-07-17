@@ -294,22 +294,22 @@ $overlay-illustration-size-large: 160px;
 
 		&--large {
 			background-color: #fff;
-			height: $overlay-illustration-size-large;
-			width: $overlay-illustration-size-large;
+			height: 100%;
+			width: auto;
 
 			@include breakpoint($fromLarge) {
-				width: $overlay-illustration-size-from-large;
-				height: $overlay-illustration-size-from-large;
+				height: 100%;
+				width: auto;
 			}
 
 			& > svg {
-				width: $overlay-illustration-size-large;
-				height: $overlay-illustration-size-large;
+				height: 100%;
+				width: auto;
 				align-self: center;
 
 				@include breakpoint($fromLarge) {
-					width: $overlay-illustration-size-from-large;
-					height: $overlay-illustration-size-from-large;
+					height: 100%;
+					width: auto;
 				}
 			}
 		}
@@ -333,12 +333,12 @@ $overlay-illustration-size-large: 160px;
 		.overlay__illustration {
 			background-color: transparent;
 			margin-top: $grid-base-six;
-			height: $overlay-illustration-size-large;
-			width: $overlay-illustration-size-large;
+			height: 100%;
+			width: auto;
 
 			& > svg {
-				width: $overlay-illustration-size-large;
-				height: $overlay-illustration-size-large;
+				height: 100%;
+				width: auto;
 				align-self: center;
 			}
 		}

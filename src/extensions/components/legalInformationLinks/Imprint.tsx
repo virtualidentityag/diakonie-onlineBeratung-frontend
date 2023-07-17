@@ -4,7 +4,7 @@ import { ReactComponent as BMILogo } from './bmi-foerder-logo.svg';
 import { ReactComponent as MBELogo } from './mbe-logo.svg';
 import { ReactComponent as GluecksspiraleLogo } from './gluecksspirale-logo.svg';
 import useDocumentTitle from '../../resources/utils/useDocumentTitle';
-import { Stage } from '../stage/Stage';
+import { Stage } from '../stage/stage';
 import './legalPage.styles';
 import { Headline } from '../../../components/headline/Headline';
 import { Text } from '../../../components/text/Text';

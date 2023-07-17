@@ -17,6 +17,7 @@ const theme = createTheme({
 	},
 	palette: {
 		primary: {
+			dark: getCssVarValue('--primary-3'),
 			main: getCssVarValue('--primary'),
 			light: getCssVarValue('--background-light'),
 			lighter: getCssVarValue('--background-lighter')
@@ -101,6 +102,24 @@ const theme = createTheme({
 		}
 	},
 	components: {
+		MuiLink: {
+			styleOverrides: {
+				root: {
+					'&:hover': {
+						color: getCssVarValue('--hover-primary')
+					}
+				}
+			}
+		},
+		MuiIconButton: {
+			styleOverrides: {
+				root: {
+					'&:hover': {
+						color: 'white'
+					}
+				}
+			}
+		},
 		MuiButton: {
 			styleOverrides: {
 				root: {
