@@ -54,7 +54,8 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 
 	useEffect(() => {
 		if (
-			results?.length === 1 &&
+			// only external agencies
+			results?.length > 0 &&
 			!results?.every((agency) => agency.external)
 		) {
 			setAgencyId(results[0].id);
@@ -64,7 +65,11 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 			});
 			return;
 		}
-		if (agencyId && results?.length === 0) {
+		if (
+			// invalid agencyId, needs to be removed
+			agencyId &&
+			results?.length === 0
+		) {
 			setDisabledNextButton(true);
 			setDataForSessionStorage({
 				agencyId: undefined
@@ -72,6 +77,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 			return;
 		}
 		if (
+			// valid agencyId
 			REGISTRATION_DATA_VALIDATION.agencyId.validation(
 				agencyId?.toString()
 			)
