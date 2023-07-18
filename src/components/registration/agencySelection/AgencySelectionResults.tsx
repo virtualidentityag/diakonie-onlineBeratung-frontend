@@ -58,6 +58,18 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 			results?.length > 0 &&
 			results?.every((agency) => agency.external)
 		) {
+			setAgencyId(undefined);
+			setDisabledNextButton(true);
+			setDataForSessionStorage({
+				agencyId: undefined
+			});
+			return;
+		}
+		if (
+			// only one agency
+			results?.length === 1 &&
+			results?.every((agency) => !agency.external)
+		) {
 			setAgencyId(results[0].id);
 			setDisabledNextButton(false);
 			setDataForSessionStorage({
