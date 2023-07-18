@@ -25,9 +25,13 @@ export const PreselectionBox: VFC<{
 	useEffect(() => {
 		if (preselectedTopicName) {
 			setTopicName(preselectedTopicName);
+		} else {
+			setTopicName('-');
 		}
 		if (preselectedAgency) {
 			setAgencyName(preselectedAgency?.name);
+		} else {
+			setAgencyName('-');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preselectedAgency, preselectedTopicName]);

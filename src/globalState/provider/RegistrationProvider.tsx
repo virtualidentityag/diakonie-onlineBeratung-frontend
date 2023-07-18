@@ -15,6 +15,7 @@ import {
 	AgencyDataInterface,
 	ConsultantDataInterface
 } from '../interfaces/UserDataInterface';
+import { TopicsDataInterface } from '../interfaces/TopicsDataInterface';
 
 interface RegistrationContextInterface {
 	disabledNextButton?: boolean;
@@ -73,6 +74,8 @@ export function RegistrationProvider(props) {
 	>([]);
 	const [preselectedAgency, setPreselectedAgency] =
 		useState<AgencyDataInterface>();
+	const [preselectedTopic, setPreselectedTopic] =
+		useState<TopicsDataInterface>();
 	const [preselectedTopicName, setPreselectedTopicName] = useState<string>();
 	const [dataPrepForSessionStorage, setDataPrepForSessionStorage] = useState<
 		Partial<RegistrationSessionStorageData>
@@ -117,7 +120,8 @@ export function RegistrationProvider(props) {
 		if (
 			urlQuery.get('postcode') ||
 			urlQuery.get('aid') ||
-			urlQuery.get('tid')
+			urlQuery.get('tid') ||
+			urlQuery.get('cid')
 		) {
 			const zipcodeRegex = new RegExp(
 				/^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$/
@@ -176,11 +180,17 @@ export function RegistrationProvider(props) {
 	}, [urlQuery]);
 
 	useEffect(() => {
-		// TODO: Check if topic and agency match once agencies get topics
 		if (sessionStorageRegistrationData.topicId) {
 			(async () => {
 				try {
 					const topicsResponse = await apiGetTopicsData();
+					setPreselectedTopic(
+						topicsResponse.filter(
+							(topic) =>
+								topic.id ===
+								sessionStorageRegistrationData.topicId
+						)[0] || undefined
+					);
 					setPreselectedTopicName(
 						topicsResponse.filter(
 							(topic) =>
@@ -211,6 +221,9 @@ export function RegistrationProvider(props) {
 					}
 				}
 			})();
+		} else {
+			setPreselectedTopic(undefined);
+			setPreselectedTopicName(undefined);
 		}
 		if (sessionStorageRegistrationData.agencyId) {
 			(async () => {
@@ -229,6 +242,8 @@ export function RegistrationProvider(props) {
 					}
 				}
 			})();
+		} else {
+			setPreselectedAgency(undefined);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sessionStorageRegistrationData]);
@@ -249,6 +264,19 @@ export function RegistrationProvider(props) {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [hasAgencyError, hasTopicError]);
+
+	useEffect(() => {
+		// Check if agency matches preselected topic
+		if (
+			urlQuery.get('tid') &&
+			preselectedTopic &&
+			preselectedAgency &&
+			!preselectedAgency?.topicIds?.includes(preselectedTopic.id)
+		) {
+			setPreselectedAgency(undefined);
+			setHasAgencyError(true);
+		}
+	}, [preselectedAgency, preselectedTopic, urlQuery]);
 
 	const updateSessionStorage = (
 		dataToAdd?: Partial<RegistrationSessionStorageData>
