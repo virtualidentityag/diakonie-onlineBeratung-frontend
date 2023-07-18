@@ -81,26 +81,6 @@ export const Registration = () => {
 
 	const checkForStepsWithMissingMandatoryFields = (): number[] => {
 		if (currentStep > 0) {
-			//fix missing step stuff
-			console.log(
-				availableSteps.reduce<number[]>(
-					(missingSteps, step, currentIndex) => {
-						if (
-							step?.mandatoryFields?.some(
-								(mandatoryField) =>
-									sessionStorageRegistrationData?.[
-										mandatoryField
-									] === undefined
-							)
-						) {
-							return [...missingSteps, currentIndex];
-						}
-						return missingSteps;
-					},
-					[]
-				)
-			);
-			console.log(sessionStorageRegistrationData, availableSteps);
 			return availableSteps.reduce<number[]>(
 				(missingSteps, step, currentIndex) => {
 					if (

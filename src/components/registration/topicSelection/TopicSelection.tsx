@@ -72,8 +72,11 @@ export const TopicSelection: VFC<{
 	useEffect(() => {
 		if (topics.length === 1) {
 			setValue(topics[0].id);
+			setDataForSessionStorage({
+				topicId: topics[0].id
+			});
 		}
-	}, [topics]);
+	}, [setDataForSessionStorage, topics]);
 
 	useEffect(() => {
 		const getFilteredTopics = (topics: TopicsDataInterface[]) => {
