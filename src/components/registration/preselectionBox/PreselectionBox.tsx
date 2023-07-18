@@ -36,7 +36,7 @@ export const PreselectionBox: VFC<{
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preselectedAgency, preselectedTopicName]);
 
-	if (preselectedData.length === 0 && !isConsultantLink) {
+	if (preselectedData.length === 0 && (!isConsultantLink || !hasDrawer)) {
 		return null;
 	}
 
