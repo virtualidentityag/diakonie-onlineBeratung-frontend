@@ -1,4 +1,4 @@
-import { Box, Tooltip, Modal, Button, Typography, Drawer } from '@mui/material';
+import { Box, Tooltip, Button, Typography, Drawer } from '@mui/material';
 import * as React from 'react';
 import { VFC, useState } from 'react';
 import InfoIcon from '@mui/icons-material/Info';
