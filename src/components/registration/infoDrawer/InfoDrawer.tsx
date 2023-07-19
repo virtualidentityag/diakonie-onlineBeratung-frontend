@@ -27,6 +27,7 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 	const [topicName, setTopicName] = useState('-');
 	const [agencyName, setAgencyName] = useState('-');
+
 	const toggleDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
 		if (
 			event?.type === 'keydown' &&
