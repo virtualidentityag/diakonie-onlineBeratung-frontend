@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 import { RegistrationContext } from '../../../globalState';
 import { PreselectionDrawer } from '../preselectionDrawer/preselectionDrawer';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import { useResponsive } from '../../../hooks/useResponsive';
 
 export const PreselectionBox: VFC<{
 	hasDrawer?: boolean;
@@ -21,6 +22,7 @@ export const PreselectionBox: VFC<{
 	const { t } = useTranslation();
 	const [topicName, setTopicName] = useState('-');
 	const [agencyName, setAgencyName] = useState('-');
+	const { fromM } = useResponsive();
 
 	useEffect(() => {
 		if (preselectedTopicName) {
@@ -145,7 +147,7 @@ export const PreselectionBox: VFC<{
 					</>
 				)}
 			</Box>
-			{hasDrawer && (
+			{hasDrawer && !fromM && (
 				<PreselectionDrawer
 					topicName={topicName}
 					agencyName={agencyName}
