@@ -1,4 +1,4 @@
-import { Box, Tooltip, Modal, Button, Typography } from '@mui/material';
+import { Box, Tooltip, Modal, Button, Typography, Drawer } from '@mui/material';
 import * as React from 'react';
 import { VFC, useState } from 'react';
 import InfoIcon from '@mui/icons-material/Info';
@@ -14,6 +14,7 @@ export const MetaInfo: VFC<{
 	onNextClick(): void;
 	backButtonLabel: string;
 	nextButtonLabel: string;
+	headline: string;
 }> = ({
 	description,
 	onOverlayClose,
@@ -21,7 +22,8 @@ export const MetaInfo: VFC<{
 	nextStepUrl,
 	onOverlayOpen,
 	nextButtonLabel,
-	backButtonLabel
+	backButtonLabel,
+	headline
 }) => {
 	const [isInfoOverlayOpen, setIsInfoOverlayOpen] = useState<boolean>(false);
 	const { t } = useTranslation();
@@ -67,7 +69,9 @@ export const MetaInfo: VFC<{
 					height: '42px'
 				}}
 			/>
-			<Modal
+			<Drawer
+				sx={{ zIndex: (theme) => theme.zIndex.drawer + 2 }}
+				anchor="left"
 				open={isInfoOverlayOpen}
 				onClose={() => {
 					onOverlayClose();
@@ -104,6 +108,9 @@ export const MetaInfo: VFC<{
 							setIsInfoOverlayOpen(false);
 						}}
 					/>
+					<Typography variant="h3" sx={{ mb: '24px' }}>
+						{headline}
+					</Typography>
 					<Typography>{description}</Typography>
 					<Button
 						fullWidth
@@ -131,7 +138,7 @@ export const MetaInfo: VFC<{
 						{backButtonLabel}
 					</Button>
 				</Box>
-			</Modal>
+			</Drawer>
 		</>
 	);
 };

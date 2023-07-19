@@ -297,6 +297,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 								/>
 								{results?.[0].description && (
 									<MetaInfo
+										headline={results?.[0].name}
 										description={results?.[0].description}
 										onOverlayClose={() =>
 											setAgencyId(undefined)
@@ -385,6 +386,7 @@ export const AgencySelectionResults: VFC<AgencySelectionResultsProps> = ({
 									/>
 									{agency.description && (
 										<MetaInfo
+											headline={agency.name}
 											description={agency.description}
 											onOverlayClose={() =>
 												setAgencyId(undefined)

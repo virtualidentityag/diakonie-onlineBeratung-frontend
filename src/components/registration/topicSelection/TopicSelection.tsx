@@ -219,6 +219,7 @@ export const TopicSelection: VFC<{
 											/>
 											{topic?.description && (
 												<MetaInfo
+													headline={topic.name}
 													description={
 														topic.description
 													}
@@ -364,6 +365,9 @@ export const TopicSelection: VFC<{
 														/>
 														{topic.description && (
 															<MetaInfo
+																headline={
+																	topic.name
+																}
 																description={
 																	topic.description
 																}

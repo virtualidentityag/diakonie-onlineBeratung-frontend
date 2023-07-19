@@ -115,6 +115,25 @@ export function RegistrationProvider(props) {
 		}
 	];
 	const [availableSteps, setAvailableSteps] = useState(defaultSteps);
+	const updateSessionStorage = (
+		dataToAdd?: Partial<RegistrationSessionStorageData>
+	) => {
+		const updatedData = {
+			...sessionStorageRegistrationData,
+			...dataPrepForSessionStorage,
+			...dataToAdd
+		};
+
+		sessionStorage.setItem(
+			registrationSessionStorageKey,
+			JSON.stringify(updatedData)
+		);
+		setSessionStorageRegistrationData(updatedData);
+	};
+
+	const refreshSessionStorage = () => {
+		setSessionStorageRegistrationData(getSessionStorageData());
+	};
 
 	useEffect(() => {
 		if (
@@ -274,29 +293,13 @@ export function RegistrationProvider(props) {
 			!preselectedAgency?.topicIds?.includes(preselectedTopic.id)
 		) {
 			setPreselectedAgency(undefined);
+			updateSessionStorage({
+				agencyId: undefined
+			});
 			setHasAgencyError(true);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preselectedAgency, preselectedTopic, urlQuery]);
-
-	const updateSessionStorage = (
-		dataToAdd?: Partial<RegistrationSessionStorageData>
-	) => {
-		const updatedData = {
-			...sessionStorageRegistrationData,
-			...dataPrepForSessionStorage,
-			...dataToAdd
-		};
-
-		sessionStorage.setItem(
-			registrationSessionStorageKey,
-			JSON.stringify(updatedData)
-		);
-		setSessionStorageRegistrationData(updatedData);
-	};
-
-	const refreshSessionStorage = () => {
-		setSessionStorageRegistrationData(getSessionStorageData());
-	};
 
 	return (
 		<RegistrationContext.Provider
