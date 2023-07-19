@@ -18,7 +18,9 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 		preselectedTopicName,
 		hasAgencyError,
 		hasConsultantError,
-		hasTopicError
+		hasTopicError,
+		isConsultantLink,
+		preselectedData
 	} = useContext(RegistrationContext);
 	const { t } = useTranslation();
 	const drawerBleeding = 92;
@@ -46,6 +48,13 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preselectedAgency, preselectedTopicName]);
+
+	if (
+		!(preselectedData.includes('tid') || preselectedData.includes('aid')) &&
+		!isConsultantLink
+	) {
+		return null;
+	}
 
 	return (
 		<>
