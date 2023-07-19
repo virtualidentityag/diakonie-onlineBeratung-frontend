@@ -26,7 +26,7 @@ import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 export const passwordCriteria = [
 	{
 		info: 'registration.account.password.criteria1',
-		validation: (val) => val.length > 9
+		validation: (val) => val.length > 8
 	},
 	{
 		info: 'registration.account.password.criteria2',

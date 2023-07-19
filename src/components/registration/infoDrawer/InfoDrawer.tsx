@@ -49,6 +49,12 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preselectedAgency, preselectedTopicName]);
 
+	useEffect(() => {
+		if (isDrawerOpen) {
+			document.body.style.overflow = 'scroll';
+		}
+	}, [isDrawerOpen]);
+
 	if (
 		!(preselectedData.includes('tid') || preselectedData.includes('aid')) &&
 		!isConsultantLink
@@ -115,7 +121,13 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 						}
 					}}
 				>
-					<Box sx={{ opacity: isDrawerOpen ? 1 : 0 }}>
+					<Box
+						sx={{
+							opacity: isDrawerOpen ? 1 : 0,
+							overflow: 'scroll',
+							maxHeight: isDrawerOpen ? '75vh' : 0
+						}}
+					>
 						{hasConsultantError ? (
 							<PreselectionError
 								errorMessage={t('registration.errors.cid')}
