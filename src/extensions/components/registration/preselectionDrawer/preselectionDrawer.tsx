@@ -199,7 +199,7 @@ export const PreselectionDrawer: VFC<{
 								ml: 'auto',
 								mr: '0',
 								backgroundColor: 'white',
-								position: 'absolute',
+								position: 'fixed',
 								bottom: '24px',
 								right: '24px'
 							}}
