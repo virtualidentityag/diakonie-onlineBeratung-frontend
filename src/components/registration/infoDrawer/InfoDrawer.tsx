@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, SwipeableDrawer, Typography } from '@mui/material';
-import { Global } from '@emotion/react';
 import { RegistrationContext } from '../../../globalState';
 import { PreselectionError } from '../preselectionError/PreselectionError';
 
@@ -59,18 +58,14 @@ export const InfoDrawer = ({ trigger }: InfoDrawerProps) => {
 
 	return (
 		<>
-			<Global
-				styles={{
-					'.MuiDrawer-root > .MuiPaper-root': {
-						top: -drawerBleeding,
-						overflow: 'visible'
-					}
-				}}
-			/>
 			<SwipeableDrawer
 				sx={{
-					display: { md: 'none' },
-					top: 0
+					'display': { md: 'none' },
+					'> .MuiPaper-root': {
+						top: -drawerBleeding,
+						overflow: 'visible'
+					},
+					'top': 0
 				}}
 				anchor="top"
 				onClose={() => setIsDrawerOpen(false)}
