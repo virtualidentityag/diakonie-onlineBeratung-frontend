@@ -52,11 +52,17 @@ export const TopicSelection: VFC<{
 
 	useEffect(() => {
 		if (
-			REGISTRATION_DATA_VALIDATION.topicId.validation(value?.toString())
+			REGISTRATION_DATA_VALIDATION.topicId.validation(
+				value?.toString()
+			) &&
+			(topicGroups.some((topicGroup) =>
+				topicGroup.topicIds.includes(value)
+			) ||
+				(listView && topics.some((topic) => topic.id === value)))
 		) {
 			setDisabledNextButton(false);
 		}
-	}, [setDisabledNextButton, value]);
+	}, [setDisabledNextButton, value, topicGroups, listView]);
 
 	useEffect(() => {
 		if (

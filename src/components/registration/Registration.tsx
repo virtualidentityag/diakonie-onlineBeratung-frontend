@@ -40,7 +40,9 @@ export const Registration = () => {
 		refreshSessionStorageRegistrationData,
 		sessionStorageRegistrationData,
 		availableSteps,
-		dataPrepForSessionStorage
+		dataPrepForSessionStorage,
+		consultant,
+		isConsultantLink
 	} = useContext(RegistrationContext);
 	const { tenant } = useContext(TenantContext);
 	const [currentStep, setCurrentStep] = useState<number>(1);
@@ -122,7 +124,7 @@ export const Registration = () => {
 			history.push(
 				`/registration${
 					availableSteps[missingPreviousSteps[0]]?.urlSuffix
-				}`
+				}${location.search}`
 			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -269,7 +271,10 @@ export const Registration = () => {
 																	'de',
 																// ConsultingType and topicId are identical for the MVP
 																consultingType:
-																	sessionStorageRegistrationData.topicId
+																	sessionStorageRegistrationData.topicId,
+																consultantId:
+																	isConsultantLink &&
+																	consultant?.consultantId
 															};
 														if (
 															Object.keys(
