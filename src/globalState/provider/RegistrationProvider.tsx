@@ -201,10 +201,6 @@ export function RegistrationProvider(props) {
 	}, [urlQuery]);
 
 	useEffect(() => {
-		console.log(
-			'sessionStorageRegistrationData',
-			sessionStorageRegistrationData
-		);
 		if (sessionStorageRegistrationData.topicId) {
 			(async () => {
 				try {

@@ -62,7 +62,7 @@ export const TopicSelection: VFC<{
 		) {
 			setDisabledNextButton(false);
 		}
-	}, [setDisabledNextButton, value, topicGroups, listView]);
+	}, [setDisabledNextButton, value, topicGroups, listView, topics]);
 
 	useEffect(() => {
 		if (
