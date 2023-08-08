@@ -115,6 +115,7 @@ export function RegistrationProvider(props) {
 		}
 	];
 	const [availableSteps, setAvailableSteps] = useState(defaultSteps);
+
 	const updateSessionStorage = (
 		dataToAdd?: Partial<RegistrationSessionStorageData>
 	) => {
@@ -146,7 +147,6 @@ export function RegistrationProvider(props) {
 				/^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$/
 			);
 			const isZipcodeValid = zipcodeRegex.test(urlQuery.get('postcode'));
-			sessionStorage.removeItem(registrationSessionStorageKey);
 			setPreselectedData(
 				[
 					urlQuery.get('postcode') && isZipcodeValid ? 'zipcode' : '',
@@ -159,13 +159,15 @@ export function RegistrationProvider(props) {
 				)[]
 			);
 			updateSessionStorage({
-				zipcode: isZipcodeValid ? urlQuery.get('postcode') : undefined,
+				zipcode: isZipcodeValid
+					? urlQuery.get('postcode')
+					: sessionStorageRegistrationData.zipcode,
 				agencyId: urlQuery.get('aid')
 					? parseInt(urlQuery.get('aid'))
-					: undefined,
+					: sessionStorageRegistrationData.agencyId,
 				topicId: urlQuery.get('tid')
 					? parseInt(urlQuery.get('tid'))
-					: undefined
+					: sessionStorageRegistrationData.topicId
 			});
 
 			setAvailableSteps(
@@ -199,6 +201,10 @@ export function RegistrationProvider(props) {
 	}, [urlQuery]);
 
 	useEffect(() => {
+		console.log(
+			'sessionStorageRegistrationData',
+			sessionStorageRegistrationData
+		);
 		if (sessionStorageRegistrationData.topicId) {
 			(async () => {
 				try {
@@ -268,6 +274,7 @@ export function RegistrationProvider(props) {
 	}, [sessionStorageRegistrationData]);
 
 	useEffect(() => {
+		// readd steps for agency and topic if error in preselection
 		if (hasAgencyError || hasTopicError) {
 			setAvailableSteps(
 				defaultSteps.filter(
@@ -298,8 +305,28 @@ export function RegistrationProvider(props) {
 			});
 			setHasAgencyError(true);
 		}
+		// Check if saved topic matches preselected agency
+		if (
+			!urlQuery.get('tid') &&
+			urlQuery.get('aid') &&
+			sessionStorageRegistrationData.topicId &&
+			preselectedAgency &&
+			!preselectedAgency?.topicIds?.includes(
+				sessionStorageRegistrationData.topicId
+			)
+		) {
+			setPreselectedTopic(undefined);
+			setPreselectedTopicName(undefined);
+			updateSessionStorage({ topicId: undefined });
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [preselectedAgency, preselectedTopic, urlQuery]);
+	}, [
+		preselectedAgency,
+		preselectedTopic,
+		urlQuery,
+		sessionStorageRegistrationData.topicId,
+		preselectedTopicName
+	]);
 
 	return (
 		<RegistrationContext.Provider
