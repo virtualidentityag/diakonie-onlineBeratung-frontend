@@ -10,8 +10,12 @@ export const AgencySelection: VFC<{
 	nextStepUrl: string;
 	onNextClick(): void;
 }> = ({ nextStepUrl, onNextClick }) => {
-	const { sessionStorageRegistrationData, isConsultantLink, consultant } =
-		useContext(RegistrationContext);
+	const {
+		sessionStorageRegistrationData,
+		isConsultantLink,
+		consultant,
+		setDataForSessionStorage
+	} = useContext(RegistrationContext);
 
 	const { t } = useTranslation();
 	const [headlineZipcode, setHeadlineZipcode] = useState<string>('');
@@ -21,7 +25,13 @@ export const AgencySelection: VFC<{
 	);
 	useEffect(() => {
 		if (isConsultantLink) {
-			setResults(consultant.agencies);
+			setResults(
+				consultant?.agencies?.filter((agency) =>
+					agency?.topicIds?.includes(
+						sessionStorageRegistrationData?.topicId
+					)
+				)
+			);
 		} else if (sessionStorageRegistrationData?.zipcode?.length === 5) {
 			setHeadlineZipcode(sessionStorageRegistrationData.zipcode);
 			setResults(undefined);
@@ -38,6 +48,15 @@ export const AgencySelection: VFC<{
 					});
 
 					setResults(agencyResponse);
+					if (
+						agencyResponse.every(
+							(agency) =>
+								agency.id !==
+								sessionStorageRegistrationData.agencyId
+						)
+					) {
+						setDataForSessionStorage({ agencyId: undefined });
+					}
 				} catch {
 					setResults([]);
 				}
