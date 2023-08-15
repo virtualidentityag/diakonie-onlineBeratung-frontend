@@ -27,13 +27,16 @@ export const GenerateQrCode: React.FC<GenerateQrCodeProps> = ({
 	const [overlayActive, setOverlayActive] = useState(false);
 	const generateQrCodeRef = useRef();
 
+	const backgroundColor = '#ffffff';
+	const foregroundColor = '#000000';
+
 	useEffect(() => {
 		QRCode.toDataURL(url, {
 			errorCorrectionLevel: 'L',
 			width: 360,
 			color: {
-				dark: '#00000099',
-				light: '#ffffff00'
+				dark: foregroundColor,
+				light: backgroundColor
 			}
 		}).then((url) => {
 			setQr(url);
@@ -43,8 +46,8 @@ export const GenerateQrCode: React.FC<GenerateQrCodeProps> = ({
 			errorCorrectionLevel: 'L',
 			width: 360,
 			color: {
-				dark: '#000000',
-				light: '#ffffff00'
+				dark: foregroundColor,
+				light: backgroundColor
 			}
 		}).then((url) => {
 			setQrDownload(url);
