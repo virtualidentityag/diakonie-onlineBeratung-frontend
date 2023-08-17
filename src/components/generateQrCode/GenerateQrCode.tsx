@@ -23,7 +23,6 @@ export const GenerateQrCode: React.FC<GenerateQrCodeProps> = ({
 }) => {
 	const { t: translate } = useTranslation();
 	const [qr, setQr] = useState('');
-	const [qrDownload, setQrDownload] = useState('');
 	const [overlayActive, setOverlayActive] = useState(false);
 	const generateQrCodeRef = useRef();
 
@@ -41,17 +40,6 @@ export const GenerateQrCode: React.FC<GenerateQrCodeProps> = ({
 		}).then((url) => {
 			setQr(url);
 		});
-
-		QRCode.toDataURL(url, {
-			errorCorrectionLevel: 'L',
-			width: 360,
-			color: {
-				dark: foregroundColor,
-				light: backgroundColor
-			}
-		}).then((url) => {
-			setQrDownload(url);
-		});
 	}, [url]);
 
 	const qrCodeNested = (): JSX.Element => {
@@ -66,7 +54,7 @@ export const GenerateQrCode: React.FC<GenerateQrCodeProps> = ({
 							filename
 						}) + '.png'
 					}
-					href={qrDownload}
+					href={qr}
 				>
 					<DownloadIcon />
 					{translate(`qrCode.overlay.download`)}
