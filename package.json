@@ -172,7 +172,7 @@
 		"prettier-eslint-cli": "^7.1.0",
 		"serve": "^14.2.0",
 		"standard-version": "^9.5.0",
-		"storybook": "^7.0.18",
+		"storybook": "^7.4.0",
 		"storybook-react-i18next": "^2.0.6",
 		"stylelint": "^15.7.0",
 		"stylelint-config-standard-scss": "^9.0.0",
