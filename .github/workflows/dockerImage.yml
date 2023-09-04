@@ -21,7 +21,7 @@ jobs:
             FAIL_WEBHOOK_SECRET: ${{ secrets.MS_TEAMS_FAIL_WEBHOOK_URI }}
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
             - name: set env
               run: |
                   RAW=$(git branch -r --contains ${{ github.ref }})
@@ -90,7 +90,7 @@ jobs:
             IMAGE_WEBHOOK_SECRET: ${{ secrets.MS_TEAMS_IMAGE_WEBHOOK_URI }}
             FAIL_WEBHOOK_SECRET: ${{ secrets.MS_TEAMS_FAIL_WEBHOOK_URI }}
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
             - name: Download buildfiles artifact
               uses: actions/download-artifact@v2
               with:
