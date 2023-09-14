@@ -8,7 +8,6 @@ import {
 	useTenant
 } from '../../../globalState';
 import { useConsultantAgenciesAndConsultingTypes } from './useConsultantAgenciesAndConsultingTypes';
-import { ConsultingTypeRegistrationDefaults } from '../components/ProposedAgencies/ProposedAgencies';
 import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
 
@@ -40,9 +39,11 @@ export const useAgenciesForRegistration = ({
 		agency,
 		consultingType: preselectedConsultingType
 	} = useContext(UrlParamsContext);
-
 	const { autoSelectPostcode, autoSelectAgency } =
-		consultingType?.registration || ConsultingTypeRegistrationDefaults;
+		consultingType?.registration || {
+			autoSelectPostcode: true,
+			autoSelectAgency: false
+		};
 
 	const allAgencies = useMemo(() => {
 		// As long as no consulting type is selected we can't show any agencies

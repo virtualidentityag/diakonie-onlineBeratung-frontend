@@ -86,7 +86,7 @@ export const Login = () => {
 	const hasTenant = tenant != null;
 
 	const consultantId = getUrlParameter('cid');
-	const { consultant, loaded: isReady } = useContext(UrlParamsContext);
+	const { consultant: consultantFromUrl, loaded: isReady } = useContext(UrlParamsContext);
 
 	const [labelState, setLabelState] = useState<InputFieldLabelState>(null);
 	const [username, setUsername] = useState<string>('');
@@ -314,24 +314,28 @@ export const Login = () => {
 					patchedUserData['preferredLanguage'] = locale;
 				}
 
+				// If user is consultant set available default to false
 				if (
 					hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData)
 				) {
 					patchedUserData['available'] = false;
 				}
 
+				// If we changed something in the user data patch it and reload
 				if (Object.keys(patchedUserData).length > 0) {
 					await apiPatchUserData(patchedUserData);
 					await reloadUserData().catch(console.log);
 				}
 
+				// If no consultant is set in the url or the user is not an asker redirect to app
 				if (
-					!consultant ||
+					!consultantFromUrl ||
 					!hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData)
 				) {
 					return redirectToApp(gcid);
 				}
 
+				// If the user can only have one consulting type and agency
 				if (
 					possibleAgencies.length === 1 &&
 					possibleConsultingTypes.length === 1
@@ -344,7 +348,7 @@ export const Login = () => {
 		[
 			locale,
 			initLocale,
-			consultant,
+			consultantFromUrl,
 			possibleAgencies,
 			possibleConsultingTypes.length,
 			reloadUserData,

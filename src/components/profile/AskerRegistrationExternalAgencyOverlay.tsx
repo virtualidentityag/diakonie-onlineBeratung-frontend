@@ -2,17 +2,17 @@ import * as React from 'react';
 import { Overlay, OVERLAY_FUNCTIONS } from '../overlay/Overlay';
 import { ReactComponent as ArrowIcon } from '../../resources/img/illustrations/arrow.svg';
 import { BUTTON_TYPES } from '../button/Button';
-import { ConsultingTypeBasicInterface } from '../../globalState';
 import { useTranslation } from 'react-i18next';
+import { TopicsDataInterface } from '../../globalState/interfaces/TopicsDataInterface';
 
 interface AskerRegistrationExternalAgencyOverlayProps {
-	consultingType: ConsultingTypeBasicInterface;
+	topic: TopicsDataInterface;
 	handleOverlayAction: (action: string) => void;
 	selectedAgency: any;
 }
 
 export const AskerRegistrationExternalAgencyOverlay = ({
-	consultingType,
+	topic,
 	handleOverlayAction,
 	selectedAgency
 }: AskerRegistrationExternalAgencyOverlayProps) => {
@@ -34,8 +34,8 @@ export const AskerRegistrationExternalAgencyOverlay = ({
 					translate('profile.externalRegistration.copy.start') +
 					translate(
 						[
-							`consultingType.${consultingType.id}.titles.default`,
-							consultingType.titles.default
+							// TODO: Translate
+							topic.titles.short
 						],
 						{ ns: 'consultingTypes' }
 					) +

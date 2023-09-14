@@ -24,21 +24,8 @@ export type RegistrationWelcomeScreenInterface = {
 
 export interface ConsultingTypeBasicInterface {
 	id: number;
-	showAskerProfile: boolean;
-	titles: {
-		default: string;
-		short: string;
-		long: string;
-		welcome: string;
-		registrationDropdown: string;
-	};
 	isAnonymousConversationAllowed: boolean;
-	isVideoCallAllowed: boolean;
 	isSubsequentRegistrationAllowed: boolean;
-	urls: {
-		registrationPostcodeFallbackUrl: string;
-		requiredAidMissingRedirectUrl: string;
-	};
 	registration: {
 		autoSelectAgency: boolean;
 		autoSelectPostcode: boolean;
@@ -60,4 +47,13 @@ export interface ConsultingTypeInterface extends ConsultingTypeBasicInterface {
 	requiredComponents?: RequiredComponentsInterface;
 	languageFormal: boolean;
 	welcomeScreen: RegistrationWelcomeScreenInterface;
+}
+
+export interface ConsultingTypeInterfaceNew extends ConsultingTypeBasicInterface {
+	description: string;
+	furtherInformation?: {
+		label: string;
+		url: string;
+	};
+	languageFormal: boolean;
 }

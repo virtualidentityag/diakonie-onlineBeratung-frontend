@@ -6,4 +6,14 @@ export interface TopicsDataInterface {
 	status: string;
 	createDate: string;
 	updateDate: string;
+	titles: {
+		short: string;
+		long: string;
+		welcome: string;
+		registrationDropdown: string;
+	};
+	sendNextStepMessage: boolean;
+	welcomeMessage: string;
+    fallbackAgencyId?: number;
+    fallbackUrl?: string;
 }

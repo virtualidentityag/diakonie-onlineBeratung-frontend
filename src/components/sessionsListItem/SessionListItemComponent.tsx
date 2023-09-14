@@ -80,6 +80,7 @@ export const SessionListItemComponent = ({
 
 	const language = activeSession.item.language || defaultLanguage;
 	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = activeSession.item.topic as TopicSessionInterface;
 
 	const { key, keyID, encrypted, ready } = useE2EE(
 		activeSession.item.groupId,
@@ -268,8 +269,7 @@ export const SessionListItemComponent = ({
 							{consultingType
 								? translate(
 										[
-											`consultingType.${consultingType.id}.titles.default`,
-											consultingType.titles?.default
+											topic.name
 										],
 										{ ns: 'consultingTypes' }
 								  )
@@ -382,11 +382,10 @@ export const SessionListItemComponent = ({
 						<div className="sessionsListItem__consultingType">
 							{showConsultingType &&
 							consultingType?.id &&
-							consultingType.titles?.default
+							topic.name
 								? translate(
 										[
-											`consultingType.${consultingType.id}.titles.default`,
-											consultingType.titles.default
+											topic.name
 										],
 										{ ns: 'consultingTypes' }
 								  ) + ' '
