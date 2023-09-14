@@ -29,4 +29,6 @@ export interface TenantDataSettingsInterface {
 	featureTopicsEnabled: boolean;
 	topicsInRegistrationEnabled: boolean;
 	featureAttachmentUploadDisabled: boolean;
+	isVideoCallAllowed: boolean;
+	showAskerProfile: boolean;
 }

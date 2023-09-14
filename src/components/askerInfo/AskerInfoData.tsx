@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { handleNumericTranslation } from '../../utils/translate';
-import { getContact, useConsultingType } from '../../globalState';
+import { TopicSessionInterface, getContact, useConsultingType } from '../../globalState';
 import {
 	convertUserDataObjectToArray,
 	getUserDataTranslateBase
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 export const AskerInfoData = () => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 	const { activeSession } = useContext(ActiveSessionContext);
+	const topic = activeSession.item.topic as TopicSessionInterface;
 
 	const consultingType = useConsultingType(activeSession.item.consultingType);
 
@@ -35,7 +36,7 @@ export const AskerInfoData = () => {
 						? translate(
 								[
 									`consultingType.${consultingType.id}.titles.default`,
-									consultingType.titles.default
+									topic.name
 								],
 								{ ns: 'consultingTypes' }
 						  )

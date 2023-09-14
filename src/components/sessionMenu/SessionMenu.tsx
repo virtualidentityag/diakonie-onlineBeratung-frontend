@@ -15,7 +15,6 @@ import {
 	SessionItemInterface,
 	SessionTypeContext,
 	STATUS_FINISHED,
-	useConsultingType,
 	UserDataContext
 } from '../../globalState';
 import {
@@ -66,6 +65,7 @@ import { useSearchParam } from '../../hooks/useSearchParams';
 import { useAppConfig } from '../../hooks/useAppConfig';
 import { useTranslation } from 'react-i18next';
 import { LegalLinksContext } from '../../globalState/provider/LegalLinksProvider';
+import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 
 type TReducedSessionItemInterface = Omit<
 	SessionItemInterface,
@@ -93,7 +93,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 	const { activeSession, reloadActiveSession } =
 		useContext(ActiveSessionContext);
-	const consultingType = useConsultingType(activeSession.item.consultingType);
 
 	const [overlayItem, setOverlayItem] = useState(null);
 	const [flyoutOpen, setFlyoutOpen] = useState(null);
@@ -369,7 +368,7 @@ export const SessionMenu = (props: SessionMenuProps) => {
 		activeSession.isSession &&
 		!activeSession.isLive &&
 		type !== SESSION_LIST_TYPES.ENQUIRY &&
-		consultingType.isVideoCallAllowed;
+		getTenantSettings().isVideoCallAllowed;
 
 	const handleStartVideoCall = (isVideoActivated: boolean = false) => {
 		if (!supportsE2EEncryptionVideoCall(userData.e2eEncryptionEnabled)) {

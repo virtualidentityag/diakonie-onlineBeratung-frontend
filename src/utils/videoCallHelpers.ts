@@ -6,6 +6,7 @@ import {
 	UserDataInterface
 } from '../globalState';
 import { appConfig } from './appConfig';
+import { getTenantSettings } from './tenantSettingsHelper';
 
 export const currentUserWasVideoCallInitiator = (initiatorRcUserId: string) =>
 	initiatorRcUserId === getValueFromCookie('rc_uid');
@@ -83,7 +84,10 @@ const supportsInsertableStreams = () => {
 	}
 };
 
-export const hasVideoCallFeature = (userData, consultingTypes) =>
+export const hasVideoCallFeature = (
+	userData: UserDataInterface,
+	consultingTypes: ConsultingTypeBasicInterface[]
+) =>
 	userData &&
 	hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
 	userData.agencies.some(
@@ -91,7 +95,7 @@ export const hasVideoCallFeature = (userData, consultingTypes) =>
 			!!(consultingTypes || []).find(
 				(consultingType) =>
 					consultingType.id === agency.consultingType &&
-					consultingType.isVideoCallAllowed
+					getTenantSettings().isVideoCallAllowed
 			)
 	);
 
@@ -110,7 +114,7 @@ export const hasVideoCallAbility = (
 			Object.values(consultingTypes).some(
 				(consultingType) =>
 					consultingType.id === el &&
-					consultingType.isVideoCallAllowed
+					getTenantSettings().isVideoCallAllowed
 			)
 		);
 		if (userCanBeCalled) {

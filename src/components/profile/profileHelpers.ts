@@ -3,6 +3,7 @@ import {
 	ConsultingTypeBasicInterface,
 	getConsultingType
 } from '../../globalState';
+import { TopicsDataInterface } from '../../globalState/interfaces/TopicsDataInterface';
 
 export const convertUserDataObjectToArray = (object) => {
 	const array = [];
@@ -35,7 +36,7 @@ export const getConsultingTypesForRegistrationStatus = (
 	return Object.keys(userData.consultingTypes)
 		.map((key) => {
 			return {
-				consultingType: key,
+				consultingTypeId: key,
 				data: userData.consultingTypes[key]
 			};
 		})
@@ -43,33 +44,30 @@ export const getConsultingTypesForRegistrationStatus = (
 			return registrationStatus === REGISTRATION_STATUS_KEYS.REGISTERED
 				? value.data.isRegistered
 				: consultingTypes.find(
-						(cur) => cur.id === parseInt(value.consultingType)
+						(cur) => cur.id === parseInt(value.consultingTypeId)
 				  )?.isSubsequentRegistrationAllowed &&
 						!value.data.isRegistered;
 		});
 };
 
-export const consultingTypeSelectOptionsSet = (
+export const topicsSelectOptionsSet = (
 	userData: UserDataInterface,
-	consultingTypes: Array<ConsultingTypeBasicInterface>
+	topics: Array<TopicsDataInterface>
 ) => {
+	// ISSUE: We don't know which topic is already registered
 	const unregisteredConsultingTypesData =
 		getConsultingTypesForRegistrationStatus(
 			userData,
 			consultingTypes,
 			REGISTRATION_STATUS_KEYS.UNREGISTERED
 		);
-	return unregisteredConsultingTypesData.map((value) => {
-		const id = parseInt(value.consultingType);
-		const consultingType = getConsultingType(consultingTypes, id);
-
-		return {
-			id: id,
-			value: value.consultingType,
+	return unregisteredConsultingTypesData.map((value: TopicsDataInterface) => {
+			id: value.id,
+			value,
 			// ToDo: translate missing!
-			label: consultingType.titles.registrationDropdown
-		};
-	});
+			label: value.titles.short
+		
+	};
 };
 
 export const isUniqueLanguage = (value, index, self) => {

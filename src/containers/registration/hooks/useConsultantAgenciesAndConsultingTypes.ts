@@ -10,7 +10,7 @@ import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvide
 
 export const useConsultantAgenciesAndConsultingTypes = () => {
 	const settings = useAppConfig();
-	const { consultingType, consultant, agency } = useContext(UrlParamsContext);
+	const { consultingType, consultant: consultantFromUrl, agency } = useContext(UrlParamsContext);
 
 	const [consultingTypes, setConsultingTypes] = useState<
 		ConsultingTypeInterface[]
@@ -19,7 +19,7 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 	const [agencies, setAgencies] = useState<AgencyDataInterface[]>([]);
 
 	useEffect(() => {
-		if (!consultant) {
+		if (!consultantFromUrl) {
 			return;
 		}
 
@@ -28,9 +28,9 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 		// ToDo: This logic breaks consultant direct links with multiple consulting types
 		if (
 			settings.multitenancyWithSingleDomainEnabled &&
-			consultant?.agencies?.length > 0
+			consultantFromUrl?.agencies?.length > 0
 		) {
-			setAgencies(consultant?.agencies);
+			setAgencies(consultantFromUrl?.agencies);
 			setConsultingTypes([consultingType]);
 			return;
 		}
@@ -38,7 +38,7 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 		const consultingTypes =
 			// Remove consultingType duplicates
 			unionBy(
-				consultant.agencies.map(
+				consultantFromUrl.agencies.map(
 					({ consultingTypeRel }) => consultingTypeRel
 				),
 				'id'
@@ -48,7 +48,7 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 
 		if (agency) {
 			const consultingTypeIds = consultingTypes.map((c) => c.id);
-			const preselectedAgency = consultant.agencies.find(
+			const preselectedAgency = consultantFromUrl.agencies.find(
 				(a) =>
 					a.id === agency.id &&
 					consultingTypeIds.includes(a.consultingType)
@@ -60,7 +60,7 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 			}
 		}
 
-		const possibleAgencies = consultant.agencies
+		const possibleAgencies = consultantFromUrl.agencies
 			// If a consultingType is selected filter the agencies
 			.filter((agency) =>
 				consultingTypes.find((ct) => ct.id === agency.consultingType)
@@ -69,7 +69,7 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 		setAgencies(possibleAgencies);
 		setConsultingTypes(consultingTypes);
 	}, [
-		consultant,
+		consultantFromUrl,
 		consultingType,
 		agency,
 		settings.multitenancyWithSingleDomainEnabled

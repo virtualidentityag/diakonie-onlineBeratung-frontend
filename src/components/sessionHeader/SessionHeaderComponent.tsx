@@ -10,6 +10,7 @@ import {
 	hasUserAuthority,
 	SessionConsultantInterface,
 	SessionTypeContext,
+	TopicSessionInterface,
 	useConsultingType,
 	UserDataContext
 } from '../../globalState';
@@ -34,6 +35,7 @@ import './sessionHeader.styles';
 import './sessionHeader.yellowTheme.styles';
 import { useSearchParam } from '../../hooks/useSearchParams';
 import { useTranslation } from 'react-i18next';
+import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 
 export interface SessionHeaderProps {
 	consultantAbsent?: SessionConsultantInterface;
@@ -51,6 +53,7 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 	const { activeSession } = useContext(ActiveSessionContext);
 	const { userData } = useContext(UserDataContext);
 	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = activeSession.item.topic as TopicSessionInterface;
 	const [flyoutOpenId, setFlyoutOpenId] = useState('');
 
 	const username = getContact(
@@ -143,7 +146,7 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 
 	const isAskerInfoAvailable = () =>
 		!hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
-		consultingType?.showAskerProfile &&
+		getTenantSettings().showAskerProfile &&
 		activeSession.isSession &&
 		!activeSession.isLive &&
 		((type === SESSION_LIST_TYPES.ENQUIRY &&
@@ -386,8 +389,7 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 							{consultingType
 								? translate(
 										[
-											`consultingType.${consultingType.id}.titles.short`,
-											consultingType.titles.short
+											topic.name
 										],
 										{ ns: 'consultingTypes' }
 								  )

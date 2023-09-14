@@ -38,6 +38,7 @@ export const AskerRegistration: React.FC = () => {
 	const [selectedConsultingTypeId, setSelectedConsultingTypeId] =
 		useState<number>(null);
 	const [selectedAgency, setSelectedAgency] = useState<any>({});
+	const [selectedTopic, setSelectedTopic] = useState<any>({});
 	const [successOverlayActive, setSuccessOverlayActive] = useState(false);
 	const [successOverlayItem, setSuccessOverlayItem] =
 		useState<OverlayItem>(null);
@@ -286,8 +287,8 @@ export const AskerRegistration: React.FC = () => {
 			{externalAgencyOverlayActive && (
 				<AskerRegistrationExternalAgencyOverlay
 					selectedAgency={selectedAgency}
-					consultingType={selectedConsultingType}
 					handleOverlayAction={handleExternalAgencyOverlayAction}
+					topic={selectedTopic}
 				/>
 			)}
 		</div>
