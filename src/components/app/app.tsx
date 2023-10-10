@@ -1,7 +1,7 @@
 import '../../polyfill';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { ComponentType, useState, lazy, Suspense } from 'react';
+import { ComponentType, useState, lazy, Suspense, useContext } from 'react';
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -24,6 +24,7 @@ import {
 	LegalLinkInterface,
 	LocaleProvider,
 	RegistrationProvider,
+	NotificationsContext,
 	TenantProvider
 } from '../../globalState';
 import { LegalLinksProvider } from '../../globalState/provider/LegalLinksProvider';
@@ -35,6 +36,7 @@ import { GlobalComponentContext } from '../../globalState/provider/GlobalCompone
 import theme from '../../theme';
 import { ThemeProvider } from '@mui/material';
 import { UrlParamsProvider } from '../../globalState/provider/UrlParamsProvider';
+import { Notifications } from '../notifications/Notifications';
 
 const Login = lazy(() =>
 	import('../login/Login').then((m) => ({ default: m.Login }))
@@ -158,7 +160,14 @@ const RouterWrapper = ({ extraRoutes, entryPoint }: RouterWrapperProps) => {
 							<Switch>
 								{extraRoutes.map(
 									({ route, component: Component }) => (
-										<Route {...route}>
+										<Route
+											{...route}
+											key={
+												typeof route.path === 'string'
+													? route.path
+													: route.path.join('-')
+											}
+										>
 											<Component />
 										</Route>
 									)
@@ -210,10 +219,20 @@ const RouterWrapper = ({ extraRoutes, entryPoint }: RouterWrapperProps) => {
 									}
 								/>
 							</Switch>
+							<NotificationsContainer />
 						</Suspense>
 					</ContextProvider>
 				</Route>
 			</Switch>
 		</Router>
+	);
+};
+
+const NotificationsContainer = () => {
+	const { notifications } = useContext(NotificationsContext);
+	return (
+		notifications.length > 0 && (
+			<Notifications notifications={notifications} />
+		)
 	);
 };
