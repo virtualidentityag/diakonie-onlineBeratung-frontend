@@ -1,6 +1,6 @@
 import { Typography, Link, Button, Box } from '@mui/material';
 import * as React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import { StageLayout } from '../stageLayout/StageLayout';
 import useIsFirstVisit from '../../utils/useIsFirstVisit';
 import { ReactComponent as HelloBannerIcon } from '../../resources/img/illustrations/hello-banner.svg';
@@ -130,6 +130,47 @@ export const Registration = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentStep, availableSteps, sessionStorageRegistrationData]);
 
+	const onRegisterClick = useCallback(() => {
+		const registrationData = {
+			...sessionStorageRegistrationData,
+			...dataPrepForSessionStorage,
+			agencyId: sessionStorageRegistrationData.agencyId.toString(),
+			postcode: sessionStorageRegistrationData.zipcode,
+			termsAccepted: 'true',
+			preferredLanguage: 'de',
+			// ConsultingType and mainTopicId are identical for the MVP
+			consultingType: sessionStorageRegistrationData.mainTopicId,
+			...(isConsultantLink
+				? { consultantId: consultant?.consultantId }
+				: {})
+		};
+
+		if (
+			Object.keys(REGISTRATION_DATA_VALIDATION).every((item) =>
+				REGISTRATION_DATA_VALIDATION[item].validation(
+					registrationData[item]
+				)
+			)
+		) {
+			apiPostRegistration(
+				endpoints.registerAsker,
+				registrationData,
+				settings.multitenancyWithSingleDomainEnabled,
+				tenant
+			).then(() => {
+				sessionStorage.removeItem(registrationSessionStorageKey);
+				setRedirectOverlayActive(true);
+			});
+		}
+	}, [
+		consultant?.consultantId,
+		dataPrepForSessionStorage,
+		isConsultantLink,
+		sessionStorageRegistrationData,
+		settings.multitenancyWithSingleDomainEnabled,
+		tenant
+	]);
+
 	return (
 		<>
 			<StageLayout
@@ -256,54 +297,7 @@ export const Registration = () => {
 														disabledNextButton
 													}
 													variant="contained"
-													onClick={() => {
-														const registrationData =
-															{
-																...sessionStorageRegistrationData,
-																...dataPrepForSessionStorage,
-																agencyId:
-																	sessionStorageRegistrationData.agencyId.toString(),
-																postcode:
-																	sessionStorageRegistrationData.zipcode,
-																termsAccepted:
-																	'true',
-																preferredLanguage:
-																	'de',
-																// ConsultingType and topicId are identical for the MVP
-																consultingType:
-																	sessionStorageRegistrationData.topicId,
-																consultantId:
-																	isConsultantLink &&
-																	consultant?.consultantId
-															};
-														if (
-															Object.keys(
-																REGISTRATION_DATA_VALIDATION
-															).every((item) =>
-																REGISTRATION_DATA_VALIDATION[
-																	item
-																].validation(
-																	registrationData[
-																		item
-																	]
-																)
-															)
-														) {
-															apiPostRegistration(
-																endpoints.registerAsker,
-																registrationData,
-																settings.multitenancyWithSingleDomainEnabled,
-																tenant
-															).then(() => {
-																sessionStorage.removeItem(
-																	registrationSessionStorageKey
-																);
-																setRedirectOverlayActive(
-																	true
-																);
-															});
-														}
-													}}
+													onClick={onRegisterClick}
 												>
 													{t('registration.register')}
 												</Button>
@@ -312,15 +306,15 @@ export const Registration = () => {
 													disabled={
 														disabledNextButton
 													}
-													sx={{ width: 'unset' }}
 													variant="contained"
+													onClick={onNextClick}
+													sx={{ width: 'unset' }}
 													component={RouterLink}
 													to={`/registration${
 														availableSteps[
 															currentStep + 1
 														]?.urlSuffix
 													}${location.search}`}
-													onClick={onNextClick}
 												>
 													{t('registration.next')}
 												</Button>
