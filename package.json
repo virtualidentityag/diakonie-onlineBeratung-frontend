@@ -160,7 +160,7 @@
 		"breakpoint-sass": "^2.7.1",
 		"concurrently": "^8.1.0",
 		"cross-env": "^7.0.3",
-		"cypress": "^12.13.0",
+		"cypress": "^13.3.0",
 		"cypress-file-upload": "^5.0.8",
 		"cz-conventional-changelog": "^3.3.0",
 		"dtsgenerator": "^3.18.0",
