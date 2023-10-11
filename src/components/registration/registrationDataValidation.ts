@@ -7,7 +7,7 @@ interface RegistrationDataValidation {
 }
 
 export const REGISTRATION_DATA_VALIDATION: RegistrationDataValidation = {
-	topicId: {
+	mainTopicId: {
 		validation: (val) => !!val
 	},
 	agencyId: {

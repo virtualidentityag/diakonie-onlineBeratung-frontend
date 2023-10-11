@@ -51,7 +51,8 @@ interface RegistrationSessionStorageData {
 	username: string;
 	password: string;
 	agencyId: number;
-	topicId: number;
+	mainTopicId: number;
+	topicId?: number;
 	zipcode: string;
 }
 
@@ -92,7 +93,7 @@ export function RegistrationProvider(props) {
 		{
 			component: 'topicSelection',
 			urlSuffix: '/topic-selection',
-			mandatoryFields: ['topicId'],
+			mandatoryFields: ['mainTopicId'],
 			urlParams: ['tid']
 		},
 		{
@@ -165,9 +166,9 @@ export function RegistrationProvider(props) {
 				agencyId: urlQuery.get('aid')
 					? parseInt(urlQuery.get('aid'))
 					: sessionStorageRegistrationData.agencyId,
-				topicId: urlQuery.get('tid')
+				mainTopicId: urlQuery.get('tid')
 					? parseInt(urlQuery.get('tid'))
-					: sessionStorageRegistrationData.topicId
+					: sessionStorageRegistrationData.mainTopicId
 			});
 
 			setAvailableSteps(
@@ -201,7 +202,7 @@ export function RegistrationProvider(props) {
 	}, [urlQuery]);
 
 	useEffect(() => {
-		if (sessionStorageRegistrationData.topicId) {
+		if (sessionStorageRegistrationData.mainTopicId) {
 			(async () => {
 				try {
 					const topicsResponse = await apiGetTopicsData();
@@ -209,14 +210,14 @@ export function RegistrationProvider(props) {
 						topicsResponse.filter(
 							(topic) =>
 								topic.id ===
-								sessionStorageRegistrationData.topicId
+								sessionStorageRegistrationData.mainTopicId
 						)[0] || undefined
 					);
 					setPreselectedTopicName(
 						topicsResponse.filter(
 							(topic) =>
 								topic.id ===
-								sessionStorageRegistrationData.topicId
+								sessionStorageRegistrationData.mainTopicId
 						)[0]?.name || undefined
 					);
 					if (
@@ -224,11 +225,11 @@ export function RegistrationProvider(props) {
 						topicsResponse.filter(
 							(topic) =>
 								topic.id ===
-								sessionStorageRegistrationData.topicId
+								sessionStorageRegistrationData.mainTopicId
 						)[0]?.name === undefined
 					) {
 						updateSessionStorage({
-							topicId: undefined
+							mainTopicId: undefined
 						});
 						setHasTopicError(true);
 					}
@@ -236,7 +237,7 @@ export function RegistrationProvider(props) {
 					setPreselectedTopicName(undefined);
 					if (urlQuery.get('tid')) {
 						updateSessionStorage({
-							topicId: undefined
+							mainTopicId: undefined
 						});
 						setHasTopicError(true);
 					}
@@ -305,22 +306,22 @@ export function RegistrationProvider(props) {
 		if (
 			!urlQuery.get('tid') &&
 			urlQuery.get('aid') &&
-			sessionStorageRegistrationData.topicId &&
+			sessionStorageRegistrationData.mainTopicId &&
 			preselectedAgency &&
 			!preselectedAgency?.topicIds?.includes(
-				sessionStorageRegistrationData.topicId
+				sessionStorageRegistrationData.mainTopicId
 			)
 		) {
 			setPreselectedTopic(undefined);
 			setPreselectedTopicName(undefined);
-			updateSessionStorage({ topicId: undefined });
+			updateSessionStorage({ mainTopicId: undefined });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		preselectedAgency,
 		preselectedTopic,
 		urlQuery,
-		sessionStorageRegistrationData.topicId,
+		sessionStorageRegistrationData.mainTopicId,
 		preselectedTopicName
 	]);
 

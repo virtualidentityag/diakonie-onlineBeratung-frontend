@@ -28,7 +28,7 @@ export const AgencySelection: VFC<{
 			setResults(
 				consultant?.agencies?.filter((agency) =>
 					agency?.topicIds?.includes(
-						sessionStorageRegistrationData?.topicId
+						sessionStorageRegistrationData?.mainTopicId
 					)
 				)
 			);
@@ -40,11 +40,13 @@ export const AgencySelection: VFC<{
 				try {
 					const agencyResponse = await apiAgencySelection({
 						postcode: sessionStorageRegistrationData.zipcode,
-						// We will keep consultingTypeId identical to topicId
+						// We will keep consultingTypeId identical to mainTopicId
 						consultingType:
-							sessionStorageRegistrationData.topicId || undefined,
+							sessionStorageRegistrationData.mainTopicId ||
+							undefined,
 						topicId:
-							sessionStorageRegistrationData.topicId || undefined
+							sessionStorageRegistrationData.mainTopicId ||
+							undefined
 					});
 
 					setResults(agencyResponse);

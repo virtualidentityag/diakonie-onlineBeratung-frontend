@@ -39,20 +39,20 @@ export const TopicSelection: VFC<{
 	} = useContext(RegistrationContext);
 	const { t } = useTranslation();
 	const [value, setValue] = useState<number>(
-		sessionStorageRegistrationData.topicId || undefined
+		sessionStorageRegistrationData.mainTopicId || undefined
 	);
 	const [topicGroups, setTopicGroups] = useState<TopicGroup[]>([]);
 	const [topics, setTopics] = useState<TopicsDataInterface[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [listView, setListView] = useState<boolean>(false);
 
-	const getTopic = (topicId: number) => {
-		return topics?.filter((topic) => topic?.id === topicId)?.[0];
+	const getTopic = (mainTopicId: number) => {
+		return topics?.filter((topic) => topic?.id === mainTopicId)?.[0];
 	};
 
 	useEffect(() => {
 		if (
-			REGISTRATION_DATA_VALIDATION.topicId.validation(
+			REGISTRATION_DATA_VALIDATION.mainTopicId.validation(
 				value?.toString()
 			) &&
 			(topicGroups.some((topicGroup) =>
@@ -79,7 +79,7 @@ export const TopicSelection: VFC<{
 		if (topics.length === 1) {
 			setValue(topics[0].id);
 			setDataForSessionStorage({
-				topicId: topics[0].id
+				mainTopicId: topics[0].id
 			});
 		}
 	}, [setDataForSessionStorage, topics]);
@@ -188,7 +188,7 @@ export const TopicSelection: VFC<{
 															setValue(topic.id);
 															setDataForSessionStorage(
 																{
-																	topicId:
+																	mainTopicId:
 																		topic?.id
 																}
 															);
@@ -243,7 +243,7 @@ export const TopicSelection: VFC<{
 													onOverlayOpen={() => {
 														setDataForSessionStorage(
 															{
-																topicId:
+																mainTopicId:
 																	topic.id
 															}
 														);
@@ -343,7 +343,7 @@ export const TopicSelection: VFC<{
 																		);
 																		setDataForSessionStorage(
 																			{
-																				topicId:
+																				mainTopicId:
 																					topic?.id
 																			}
 																		);
@@ -397,7 +397,7 @@ export const TopicSelection: VFC<{
 																onOverlayOpen={() => {
 																	setDataForSessionStorage(
 																		{
-																			topicId:
+																			mainTopicId:
 																				topic.id
 																		}
 																	);

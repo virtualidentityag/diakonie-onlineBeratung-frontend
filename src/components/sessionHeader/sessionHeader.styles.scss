@@ -91,6 +91,7 @@ $iconSize: 24px;
 		overflow: hidden;
 
 		@include breakpoint($fromLarge) {
+			flex-grow: 1;
 			margin: 0;
 		}
 
@@ -117,6 +118,10 @@ $iconSize: 24px;
 				}
 			}
 		}
+	}
+
+	&__videoCallButtons {
+		margin-right: 20px;
 	}
 
 	&__feedbackButton {
