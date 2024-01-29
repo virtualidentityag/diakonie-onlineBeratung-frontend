@@ -169,4 +169,54 @@ $animation-easing-title: cubic-bezier(0, 0, 0.5, 1);
 			padding: 0;
 		}
 	}
+
+	&__legalLinks {
+		display: flex;
+		align-items: center;
+		margin: 30px 0;
+
+		@include breakpoint($fromXLarge) {
+			justify-content: flex-start;
+		}
+
+		.button-as-link {
+			background: none;
+			border: none;
+			cursor: pointer;
+			text-decoration: underline;
+			padding: 0;
+			white-space: nowrap;
+			color: $tertiary;
+
+			&:focus {
+				outline: $focus-outline;
+				border-radius: 4px;
+			}
+
+			&:focus:not(:focus-visible) {
+				outline: none;
+			}
+
+			&:hover {
+				color: var(--skin-color-primary-hover, $hover-primary);
+			}
+		}
+
+		.text {
+			font-size: $font-size-tertiary;
+		}
+	}
+
+	&__legalLinksItem {
+		color: $dark-grey;
+		&:hover {
+			color: $white;
+		}
+	}
+
+	&__legalLinksSeparator {
+		display: inline-block;
+		color: $white;
+		margin: 0 $grid-base;
+	}
 }

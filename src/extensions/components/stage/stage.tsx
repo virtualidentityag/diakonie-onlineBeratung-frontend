@@ -1,9 +1,18 @@
 import clsx from 'clsx';
 import * as React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { useState, useEffect, useRef, useCallback, MouseEvent } from 'react';
+import {
+	useState,
+	useEffect,
+	useRef,
+	useCallback,
+	MouseEvent,
+	useContext
+} from 'react';
 import { ReactComponent as Logo } from './logo.svg';
 import { ReactComponent as Loader } from './loader.svg';
+import { Text } from '../../../components/text/Text';
+import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvider';
 import './stage.styles';
 import { Banner } from '../../../components/banner/Banner';
 import { Headline } from '../../../components/headline/Headline';
@@ -22,6 +31,7 @@ export const Stage = ({
 	const rootNodeRef = useRef(null);
 	const [isOpen, setIsOpen] = useState(!hasAnimation);
 	const [hasAnimationFinished, setHasAnimationFinished] = useState(false);
+	const legalLinks = useContext(LegalLinksContext);
 	const { t: translate } = useTranslation();
 
 	useEffect(() => {
@@ -92,6 +102,35 @@ export const Stage = ({
 						semanticLevel="4"
 						text={translate('app.claim')}
 					/>
+					{
+						<div className={`stage__legalLinks`}>
+							{legalLinks.map((legalLink, index) => (
+								<React.Fragment key={legalLink.url}>
+									{index > 0 && (
+										<Text
+											type="infoSmall"
+											className="stage__legalLinksSeparator"
+											text=" | "
+										/>
+									)}
+									<button
+										type="button"
+										className="button-as-link"
+										data-cy-link={legalLink.url}
+										onClick={() =>
+											window.open(legalLink.url, '_blank')
+										}
+									>
+										<Text
+											className="stage__legalLinksItem"
+											type="infoSmall"
+											text={translate(legalLink.label)}
+										/>
+									</button>
+								</React.Fragment>
+							))}
+						</div>
+					}
 				</div>
 			</div>
 			<div className="stage__loader">
