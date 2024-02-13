@@ -45,9 +45,14 @@ export const TopicSelection: VFC<{
 	const [topics, setTopics] = useState<TopicsDataInterface[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [listView, setListView] = useState<boolean>(false);
+	const [topicGroupId, setTopicGroupId] = useState<number>(0);
 
 	const getTopic = (mainTopicId: number) => {
 		return topics?.filter((topic) => topic?.id === mainTopicId)?.[0];
+	};
+
+	const getTopicInteraction = (topicGroupId: number) => {
+		setTopicGroupId(topicGroupId);
 	};
 
 	useEffect(() => {
@@ -347,10 +352,15 @@ export const TopicSelection: VFC<{
 																					topic?.id
 																			}
 																		);
+																		getTopicInteraction(
+																			topicGroup.id
+																		);
 																	}}
 																	checked={
 																		value ===
-																		topic?.id
+																			topic?.id &&
+																		topicGroup.id ===
+																			topicGroupId
 																	}
 																/>
 															}
@@ -411,7 +421,7 @@ export const TopicSelection: VFC<{
 												))}
 										</AccordionDetails>
 									</Accordion>
-							  ))}
+								))}
 					</RadioGroup>
 				</FormControl>
 			)}
