@@ -52,6 +52,7 @@ interface RegistrationSessionStorageData {
 	password: string;
 	agencyId: number;
 	mainTopicId: number;
+	topicGroupId?: number;
 	topicId?: number;
 	zipcode: string;
 }

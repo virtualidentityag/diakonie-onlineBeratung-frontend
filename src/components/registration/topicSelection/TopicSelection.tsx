@@ -45,14 +45,12 @@ export const TopicSelection: VFC<{
 	const [topics, setTopics] = useState<TopicsDataInterface[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [listView, setListView] = useState<boolean>(false);
-	const [topicGroupId, setTopicGroupId] = useState<number>(0);
+	const [topicGroupId, setTopicGroupId] = useState<number>(
+		sessionStorageRegistrationData.topicGroupId || undefined
+	);
 
 	const getTopic = (mainTopicId: number) => {
 		return topics?.filter((topic) => topic?.id === mainTopicId)?.[0];
-	};
-
-	const getTopicInteraction = (topicGroupId: number) => {
-		setTopicGroupId(topicGroupId);
 	};
 
 	useEffect(() => {
@@ -260,9 +258,11 @@ export const TopicSelection: VFC<{
 									))
 							: topicGroups.map((topicGroup) => (
 									<Accordion
-										defaultExpanded={topicGroup.topicIds.includes(
-											value
-										)}
+										defaultExpanded={
+											topicGroup.topicIds.includes(
+												value
+											) && topicGroup.id === topicGroupId
+										}
 										sx={{
 											'boxShadow': 'none',
 											'borderBottom': '1px solid #dddddd',
@@ -346,14 +346,16 @@ export const TopicSelection: VFC<{
 																		setValue(
 																			topic.id
 																		);
+																		setTopicGroupId(
+																			topicGroup.id
+																		);
 																		setDataForSessionStorage(
 																			{
 																				mainTopicId:
-																					topic?.id
+																					topic?.id,
+																				topicGroupId:
+																					topicGroup?.id
 																			}
-																		);
-																		getTopicInteraction(
-																			topicGroup.id
 																		);
 																	}}
 																	checked={
@@ -408,11 +410,16 @@ export const TopicSelection: VFC<{
 																	setDataForSessionStorage(
 																		{
 																			mainTopicId:
-																				topic.id
+																				topic.id,
+																			topicGroupId:
+																				topicGroup.id
 																		}
 																	);
 																	setValue(
 																		topic.id
+																	);
+																	setTopicGroupId(
+																		topicGroup.id
 																	);
 																}}
 															/>
@@ -421,7 +428,7 @@ export const TopicSelection: VFC<{
 												))}
 										</AccordionDetails>
 									</Accordion>
-							  ))}
+								))}
 					</RadioGroup>
 				</FormControl>
 			)}
