@@ -428,7 +428,7 @@ export const TopicSelection: VFC<{
 												))}
 										</AccordionDetails>
 									</Accordion>
-								))}
+							  ))}
 					</RadioGroup>
 				</FormControl>
 			)}
