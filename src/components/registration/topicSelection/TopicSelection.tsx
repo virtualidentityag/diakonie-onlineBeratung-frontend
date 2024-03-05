@@ -50,7 +50,7 @@ export const TopicSelection: VFC<{
 	);
 
 	const getTopic = (mainTopicId: number) => {
-		return topics?.filter((topic) => topic?.id === mainTopicId)?.[0];
+		return topics?.find((topic) => topic?.id === mainTopicId);
 	};
 
 	useEffect(() => {
