@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useState, VFC, useEffect } from 'react';
+import { useContext, useState, VFC } from 'react';
 import { Box, Drawer, Typography, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Loading } from '../../app/Loading';
