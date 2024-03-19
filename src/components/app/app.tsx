@@ -42,11 +42,9 @@ const AuthenticatedApp = lazy(() =>
 	import('./AuthenticatedApp').then((m) => ({ default: m.AuthenticatedApp }))
 );
 const Registration = lazy(() =>
-	import('../../extensions/components/registration/Registration').then(
-		(m) => ({
-			default: m.Registration
-		})
-	)
+	import('../registration/Registration').then((m) => ({
+		default: m.Registration
+	}))
 );
 const WaitingRoomLoader = lazy(() =>
 	import('../waitingRoom/WaitingRoomLoader').then((m) => ({
