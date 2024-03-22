@@ -1,6 +1,13 @@
 import { Typography, Link, Button, Box } from '@mui/material';
 import * as React from 'react';
-import { useState, useEffect, useContext, useCallback, useMemo } from 'react';
+import {
+	useState,
+	useEffect,
+	useContext,
+	useCallback,
+	useMemo,
+	FormEvent
+} from 'react';
 import {
 	Route,
 	Switch,
@@ -115,14 +122,36 @@ export const Registration = () => {
 			);
 		}, [availableSteps, registrationData]);
 
-	const onNextClick = useCallback(() => {
-		updateRegistrationData(stepData);
-		setStepData({});
-	}, [updateRegistrationData, stepData]);
-
 	const currStepIndex = useMemo(
 		() => availableSteps.findIndex(({ name }) => name === step),
 		[availableSteps, step]
+	);
+
+	const [prevStepUrl, nextStepUrl] = useMemo(
+		() => [
+			availableSteps[currStepIndex - 1]
+				? `${generatePath(path, { topicSlug, step: availableSteps[currStepIndex - 1]?.name || 'welcome' })}${location.search}`
+				: null,
+			availableSteps[currStepIndex + 1]
+				? `${generatePath(path, { topicSlug, step: availableSteps[currStepIndex + 1]?.name || 'welcome' })}${location.search}`
+				: null
+		],
+		[availableSteps, currStepIndex, path, topicSlug, location.search]
+	);
+
+	const onNextClick = useCallback(() => {
+		updateRegistrationData(stepData);
+		setStepData({});
+		history.push(nextStepUrl);
+	}, [updateRegistrationData, stepData, history, nextStepUrl]);
+
+	const handleSubmit = useCallback(
+		(e: FormEvent<HTMLFormElement>) => {
+			e.preventDefault();
+			if (disabledNextButton) return;
+			onNextClick();
+		},
+		[disabledNextButton, onNextClick]
 	);
 
 	useEffect(() => {
@@ -183,18 +212,6 @@ export const Registration = () => {
 		tenant
 	]);
 
-	const [prevStepUrl, nextStepUrl] = useMemo(
-		() => [
-			availableSteps[currStepIndex - 1]
-				? `${generatePath(path, { topicSlug, step: availableSteps[currStepIndex - 1]?.name || 'welcome' })}${location.search}`
-				: null,
-			availableSteps[currStepIndex + 1]
-				? `${generatePath(path, { topicSlug, step: availableSteps[currStepIndex + 1]?.name || 'welcome' })}${location.search}`
-				: null
-		],
-		[availableSteps, currStepIndex, path, topicSlug, location.search]
-	);
-
 	const stepPaths = useMemo(
 		() =>
 			availableSteps.reduce(
@@ -226,6 +243,7 @@ export const Registration = () => {
 								<meta name="robots" content="noindex"></meta>
 							</Helmet>
 							<form
+								onSubmit={handleSubmit}
 								data-cy="registration-form"
 								data-cy-step={step}
 								data-cy-steps={availableSteps
@@ -313,10 +331,10 @@ export const Registration = () => {
 
 										{!nextStepUrl ? (
 											<Button
+												data-cy="button-register"
 												disabled={disabledNextButton}
 												variant="contained"
 												onClick={onRegisterClick}
-												data-cy="button-register"
 											>
 												{t('registration.register')}
 											</Button>
@@ -327,8 +345,6 @@ export const Registration = () => {
 												variant="contained"
 												onClick={onNextClick}
 												sx={{ width: 'unset' }}
-												component={RouterLink}
-												to={nextStepUrl}
 											>
 												{t('registration.next')}
 											</Button>

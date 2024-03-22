@@ -80,8 +80,15 @@ export const AccountData: VFC<{
 		} else {
 			setDisabledNextButton(true);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [username, password, repeatPassword, dataProtectionChecked]);
+	}, [
+		username,
+		password,
+		repeatPassword,
+		dataProtectionChecked,
+		isUsernameAvailable,
+		setDisabledNextButton,
+		onChange
+	]);
 
 	return (
 		<>
@@ -191,9 +198,7 @@ export const AccountData: VFC<{
 						/>
 					</InputAdornment>
 				}
-				onInputChange={(val: string) => {
-					setRepeatPassword(val);
-				}}
+				onInputChange={setRepeatPassword}
 				value={repeatPassword}
 				label={t('registration.account.repeatPassword.label')}
 				isValueValid={async (val) =>

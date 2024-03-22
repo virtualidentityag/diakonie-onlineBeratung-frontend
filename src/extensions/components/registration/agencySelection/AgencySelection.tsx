@@ -9,10 +9,11 @@ import {
 } from 'react';
 import { AgencySelectionResults } from './AgencySelectionResults';
 import { RegistrationContext, RegistrationData } from '../../../../globalState';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
 import { useAgenciesForRegistration } from '../../../../containers/registration/hooks/useAgenciesForRegistration';
+import { Loading } from '../../../../components/app/Loading';
 
 export const AgencySelection: VFC<{
 	onChange: Dispatch<SetStateAction<Partial<RegistrationData>>>;
@@ -36,6 +37,21 @@ export const AgencySelection: VFC<{
 		}
 	}, [registrationData, preselectedConsultant]);
 
+	if (isLoading) {
+		return (
+			<Box
+				sx={{
+					mt: '80px',
+					width: '100%',
+					display: 'flex',
+					justifyContent: 'center'
+				}}
+			>
+				<Loading />
+			</Box>
+		);
+	}
+
 	return (
 		<>
 			<Typography variant="h3">
@@ -49,7 +65,6 @@ export const AgencySelection: VFC<{
 				nextStepUrl={nextStepUrl}
 				onNextClick={onNextClick}
 				zipcode={headlineZipcode}
-				isLoading={isLoading}
 				results={agencies}
 			/>
 		</>

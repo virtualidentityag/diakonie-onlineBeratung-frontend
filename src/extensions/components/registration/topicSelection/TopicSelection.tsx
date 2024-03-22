@@ -119,19 +119,20 @@ export const TopicSelection: VFC<{
 			try {
 				const topicIds = topics.map((t) => t.id);
 				const topicGroupsResponse = await apiGetTopicGroups();
-				//const filer
 				setTopicGroups(
 					topicGroupsResponse.data.items
 						.filter((topicGroup) => topicGroup.topicIds.length > 0)
 						.filter((topicGroup) =>
-							topicGroup.topicIds.some(topicIds.includes)
+							topicGroup.topicIds.some((id) =>
+								topicIds.includes(id)
+							)
 						)
 						.sort((a, b) => {
 							if (a.name === b.name) return 0;
 							return a.name < b.name ? -1 : 1;
 						})
 				);
-			} catch {
+			} catch (e) {
 				setTopicGroups([]);
 				setListView(true);
 			}
