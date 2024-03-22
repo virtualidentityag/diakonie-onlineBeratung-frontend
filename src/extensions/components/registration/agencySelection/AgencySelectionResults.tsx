@@ -20,7 +20,6 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import NoResultsIllustration from '../../../../resources/img/illustrations/no-results.svg';
 import ConsultantIllustration from '../../../../resources/img/illustrations/consultant-found.svg';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Loading } from '../../../../components/app/Loading';
 import { useTranslation } from 'react-i18next';
 import { RegistrationContext, RegistrationData } from '../../../../globalState';
 import { AgencyDataInterface } from '../../../../globalState/interfaces';
