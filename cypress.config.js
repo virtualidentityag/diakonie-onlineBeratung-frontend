@@ -33,6 +33,7 @@ module.exports = defineConfig(
 	_.mergeWith(
 		{
 			e2e: {
+				testIsolation: true,
 				baseUrl: 'http://localhost:9001',
 				supportFile: 'cypress/support/e2e.{js,jsx,ts,tsx}',
 				setupNodeEvents(on, config) {
@@ -47,6 +48,8 @@ module.exports = defineConfig(
 			retries: {
 				runMode: 2
 			},
+			experimentalMemoryManagement: true,
+			numTestsKeptInMemory: 20,
 			video: false,
 			chromeWebSecurity: false,
 			viewportWidth: 1200,

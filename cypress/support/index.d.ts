@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-
 import { LoginArgs } from './commands/mockApi';
 import { AppointmentsDataInterface } from '../../src/globalState/interfaces';
 import * as Bluebird from 'cypress/types/bluebird';

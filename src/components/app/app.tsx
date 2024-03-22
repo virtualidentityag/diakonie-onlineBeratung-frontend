@@ -61,7 +61,7 @@ type TExtraRoute = {
 	component: ComponentType;
 };
 
-interface AppProps {
+export interface AppProps {
 	stageComponent: ComponentType<StageProps>;
 	legalLinks?: Array<LegalLinkInterface>;
 	extraRoutes?: TExtraRoute[];
