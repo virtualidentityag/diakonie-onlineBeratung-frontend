@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useCallback, useMemo } from 'react';
-import { LegalLinkInterface } from '../interfaces/LegalLinkInterface';
+import { LegalLinkInterface } from '../interfaces';
 import * as React from 'react';
 import { useAppConfig } from '../../hooks/useAppConfig';
 
@@ -44,7 +44,7 @@ export function LegalLinksProvider({
 
 	const legalLinks = useMemo<TProvidedLegalLink[]>(
 		() =>
-			(externalLegalLinks ?? settings.legalLinks ?? []).map(
+			(externalLegalLinks ?? settings?.legalLinks ?? []).map(
 				({ url, ...legalLink }) => ({
 					...legalLink,
 					getUrl: (params: {
@@ -58,7 +58,7 @@ export function LegalLinksProvider({
 						)
 				})
 			),
-		[externalLegalLinks, settings.legalLinks, getUrl]
+		[externalLegalLinks, settings?.legalLinks, getUrl]
 	);
 
 	return (

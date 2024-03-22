@@ -42,7 +42,6 @@ interface AgencySelectionResultsProps {
 
 export const AgencySelectionResults = ({
 	onChange,
-	isLoading,
 	zipcode,
 	results,
 	nextStepUrl,
@@ -111,72 +110,10 @@ export const AgencySelectionResults = ({
 
 	return (
 		<>
-			{isLoading && (
-				<Box
-					sx={{
-						mt: '80px',
-						width: '100%',
-						display: 'flex',
-						justifyContent: 'center'
-					}}
-				>
-					<Loading />
-				</Box>
-			)}
-			{!!results && !isLoading && !preselectedConsultant && (
+			{!!results && !preselectedConsultant && (
 				<Typography variant="h5" sx={{ mt: '40px', fontWeight: '600' }}>
 					{t('registration.agency.result.headline') + ' ' + zipcode}:
 				</Typography>
-			)}
-
-			{/* only external results */}
-			{results?.length > 0 && onlyExternalAgencies && (
-				<Box
-					sx={{
-						display: 'flex',
-						flexWrap: { xs: 'wrap-reverse', md: 'nowrap' },
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						p: '16px',
-						mt: '16px',
-						borderRadius: '4px',
-						border: '1px solid #c6c5c4'
-					}}
-				>
-					<Box sx={{ mr: { xs: '0', md: '24px' } }}>
-						<Typography variant="h5" sx={{ fontWeight: '600' }}>
-							{t('registration.agency.result.external.headline')}
-						</Typography>
-						<Typography sx={{ mt: '16px' }}>
-							{t('registration.agency.result.external.subline')}
-						</Typography>
-						{results?.[0]?.url && (
-							<Button
-								target="_blank"
-								component={Link}
-								href={results?.[0]?.url}
-								sx={{
-									mt: '16px',
-									width: { xs: '100%', md: 'auto' }
-								}}
-								variant="contained"
-								startIcon={<OpenInNewIcon />}
-							>
-								{t('registration.agency.result.external.link')}
-							</Button>
-						)}
-					</Box>
-					<Box
-						component="img"
-						src={ConsultantIllustration}
-						sx={{
-							height: '156px',
-							width: '156px',
-							mx: 'auto',
-							mb: { xs: '24px', md: '0' }
-						}}
-					/>
-				</Box>
 			)}
 
 			{/* no Results */}
@@ -228,6 +165,56 @@ export const AgencySelectionResults = ({
 					<Box
 						component="img"
 						src={NoResultsIllustration}
+						sx={{
+							height: '156px',
+							width: '156px',
+							mx: 'auto',
+							mb: { xs: '24px', md: '0' }
+						}}
+					/>
+				</Box>
+			)}
+
+			{/* only external results */}
+			{results?.length > 0 && onlyExternalAgencies && (
+				<Box
+					sx={{
+						display: 'flex',
+						flexWrap: { xs: 'wrap-reverse', md: 'nowrap' },
+						justifyContent: 'space-between',
+						alignItems: 'center',
+						p: '16px',
+						mt: '16px',
+						borderRadius: '4px',
+						border: '1px solid #c6c5c4'
+					}}
+				>
+					<Box sx={{ mr: { xs: '0', md: '24px' } }}>
+						<Typography variant="h5" sx={{ fontWeight: '600' }}>
+							{t('registration.agency.result.external.headline')}
+						</Typography>
+						<Typography sx={{ mt: '16px' }}>
+							{t('registration.agency.result.external.subline')}
+						</Typography>
+						{results?.[0]?.url && (
+							<Button
+								target="_blank"
+								component={Link}
+								href={results?.[0]?.url}
+								sx={{
+									mt: '16px',
+									width: { xs: '100%', md: 'auto' }
+								}}
+								variant="contained"
+								startIcon={<OpenInNewIcon />}
+							>
+								{t('registration.agency.result.external.link')}
+							</Button>
+						)}
+					</Box>
+					<Box
+						component="img"
+						src={ConsultantIllustration}
 						sx={{
 							height: '156px',
 							width: '156px',
