@@ -1,7 +1,6 @@
-import { Steps } from 'intro.js-react';
-import * as React from 'react';
-import { useContext, useCallback, useRef } from 'react';
+import React, { useContext, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Steps } from 'intro.js-react';
 
 import 'intro.js/introjs.css';
 import './walkthrough.styles.scss';

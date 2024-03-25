@@ -1,6 +1,7 @@
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import { Typography, Link, Button, Box } from '@mui/material';
-import * as React from 'react';
-import { useState, useEffect, useContext, useCallback } from 'react';
 import { StageLayout } from '../stageLayout/StageLayout';
 import useIsFirstVisit from '../../utils/useIsFirstVisit';
 import { ReactComponent as HelloBannerIcon } from '../../resources/img/illustrations/hello-banner.svg';
@@ -10,8 +11,6 @@ import { ZipcodeInput } from './zipcodeInput/ZipcodeInput';
 import { AgencySelection } from './agencySelection/AgencySelection';
 import { TopicSelection } from './topicSelection/TopicSelection';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 import { WelcomeScreen } from './welcomeScreen/WelcomeScreen';
 import {
 	RegistrationContext,
@@ -213,7 +212,7 @@ export const Registration = () => {
 								/>
 
 								{availableSteps[currentStep]?.component ===
-									'topicSelection' && (
+									'topicAgencySelection' && (
 									<TopicSelection
 										onNextClick={onNextClick}
 										nextStepUrl={`/registration${

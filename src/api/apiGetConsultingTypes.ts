@@ -2,6 +2,9 @@ import { ConsultingTypeBasicInterface } from '../globalState';
 import { endpoints } from '../resources/scripts/endpoints';
 import { fetchData, FETCH_METHODS } from './fetchData';
 
+/**
+ * @deprecated
+ */
 export const apiGetConsultingTypes = async (): Promise<
 	Array<ConsultingTypeBasicInterface>
 > => {

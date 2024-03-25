@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import './E2EEncryptionSupportHelp.styles.scss';
 import { useTranslation } from 'react-i18next';
 import { Headline } from '../headline/Headline';

@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React, { JSX } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ReactComponent as InfoIcon } from '../../resources/img/icons/i.svg';
 import { ReactComponent as ErrorIcon } from '../../resources/img/icons/exclamation-mark.svg';
 import './messageSubmitInfo.styles';
-import { useTranslation } from 'react-i18next';
 
 export interface MessageSubmitInfoInterface {
 	isInfo: boolean;

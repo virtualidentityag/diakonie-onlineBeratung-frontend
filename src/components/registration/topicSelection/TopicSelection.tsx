@@ -14,10 +14,12 @@ import { VFC, useContext, useState, useEffect } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { RegistrationContext } from '../../../globalState';
-import { apiGetTopicGroups } from '../../../api/apiGetTopicGroups';
-import { TopicGroup } from '../../../globalState/interfaces/TopicGroups';
-import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
-import { TopicsDataInterface } from '../../../globalState/interfaces/TopicsDataInterface';
+import {
+	TopicGroup,
+	TopicsDataInterface,
+	TopicsContext,
+	TopicGroupsContext
+} from '../../../globalState';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 import { Loading } from '../../app/Loading';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
@@ -27,6 +29,7 @@ export const TopicSelection: VFC<{
 	nextStepUrl: string;
 	onNextClick(): void;
 }> = ({ nextStepUrl, onNextClick }) => {
+	const { t } = useTranslation();
 	const {
 		setDisabledNextButton,
 		setDataForSessionStorage,
@@ -37,7 +40,10 @@ export const TopicSelection: VFC<{
 		consultant,
 		hasAgencyError
 	} = useContext(RegistrationContext);
-	const { t } = useTranslation();
+
+	const { topicGroups: allTopicGroups } = useContext(TopicGroupsContext);
+	const { topics: allTopics } = useContext(TopicsContext);
+
 	const [value, setValue] = useState<number>(
 		sessionStorageRegistrationData.mainTopicId || undefined
 	);
@@ -101,12 +107,10 @@ export const TopicSelection: VFC<{
 		(async () => {
 			try {
 				setIsLoading(true);
-				const topicGroupsResponse = await apiGetTopicGroups();
-				const topicsResponse = await apiGetTopicsData();
 
-				setTopics(getFilteredTopics(topicsResponse));
+				setTopics(getFilteredTopics(allTopics));
 				setTopicGroups(
-					topicGroupsResponse.data.items
+					allTopicGroups
 						.filter((topicGroup) => topicGroup.topicIds.length > 0)
 						.sort((a, b) => {
 							if (a.name === b.name) return 0;
@@ -124,7 +128,9 @@ export const TopicSelection: VFC<{
 		hasAgencyError,
 		isConsultantLink,
 		preselectedAgency,
-		preselectedData
+		preselectedData,
+		allTopics,
+		allTopicGroups
 	]);
 
 	return (
@@ -169,6 +175,7 @@ export const TopicSelection: VFC<{
 									})
 									.map((topic, index) => (
 										<Box
+											key={`topic-${topic.id}`}
 											sx={{
 												display: 'flex',
 												justifyContent: 'space-between',
@@ -255,6 +262,7 @@ export const TopicSelection: VFC<{
 									))
 							: topicGroups.map((topicGroup) => (
 									<Accordion
+										key={`topicGroup-${topicGroup.id}`}
 										defaultExpanded={topicGroup.topicIds.includes(
 											value
 										)}
@@ -318,6 +326,7 @@ export const TopicSelection: VFC<{
 												})
 												.map((topic, index) => (
 													<Box
+														key={`topic-${topic.id}`}
 														sx={{
 															display: 'flex',
 															justifyContent:

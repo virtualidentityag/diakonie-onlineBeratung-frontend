@@ -1,20 +1,21 @@
-import * as React from 'react';
-import { useContext } from 'react';
-import { useConsultingTypes, UserDataContext } from '../../globalState';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { UserDataContext } from '../../globalState';
 import { handleNumericTranslation } from '../../utils/translate';
 import { getUserDataTranslateBase } from './profileHelpers';
 import { Headline } from '../headline/Headline';
 import { Box } from '../box/Box';
-import { useTranslation } from 'react-i18next';
+import { useTopics } from '../../globalState/provider/TopicsProvider';
 
 export const AskerConsultingTypeData = () => {
 	const { t: translate } = useTranslation([
 		'common',
+		'topics',
 		'consultingTypes',
 		'agencies'
 	]);
 	const { userData } = useContext(UserDataContext);
-	const consultingTypes = useConsultingTypes();
+	const topics = useTopics();
 
 	return (
 		<>
@@ -32,15 +33,22 @@ export const AskerConsultingTypeData = () => {
 										className="pr--3"
 										text={translate(
 											[
+												`topic.${resort.agency.consultingType}.titles.default`,
+												// ToDo: Fallback for old translations of consultingTypes
 												`consultingType.${resort.agency.consultingType}.titles.default`,
-												consultingTypes.find(
+												topics.find(
 													(cur) =>
 														cur.id ===
 														resort.agency
 															.consultingType
-												)?.titles.default
+												)?.name
 											],
-											{ ns: 'consultingTypes' }
+											{
+												ns: [
+													'topics',
+													'consultingTypes'
+												]
+											}
 										)}
 										semanticLevel="5"
 									/>

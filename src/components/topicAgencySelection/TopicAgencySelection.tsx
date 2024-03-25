@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AgencyDataInterface } from '../../globalState';
-import './consultingTypeAgencySelection.styles';
+import './topicAgencySelection.styles';
 import '../profile/profile.styles';
 import { RadioButton } from '../radioButton/RadioButton';
 import { AgencyInfo } from '../agencySelection/AgencyInfo';
@@ -16,58 +16,56 @@ import {
 } from '../select/SelectDropdown';
 import { Text } from '../text/Text';
 import { AgencyLanguages } from '../agencySelection/AgencyLanguages';
-import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '../../hooks/useAppConfig';
-import { useConsultantAgenciesAndConsultingTypes } from '../../containers/registration/hooks/useConsultantAgenciesAndConsultingTypes';
+import { useConsultantAgenciesAndTopics } from '../../containers/registration/hooks/useConsultantAgenciesAndTopics';
 
-export interface ConsultingTypeAgencySelectionProps {
+export interface TopicAgencySelectionProps {
 	onChange: Function;
 	onValidityChange?: Function;
 	agency?: any;
 	onKeyDown?: Function;
 }
 
-export const ConsultingTypeAgencySelection = ({
+export const TopicAgencySelection = ({
 	onChange,
 	onValidityChange,
 	agency,
 	onKeyDown
-}: ConsultingTypeAgencySelectionProps) => {
-	const { t: translate } = useTranslation(['common', 'consultingTypes']);
+}: TopicAgencySelectionProps) => {
+	const { t: translate } = useTranslation([
+		'common',
+		'topics',
+		'consultingTypes'
+	]);
 	const settings = useAppConfig();
-	const [selectedConsultingTypeOption, setSelectedConsultingTypeOption] =
+	const [selectedTopicOption, setSelectedTopicOption] =
 		useState<SelectOption>(null);
-	const [consultingTypeOptions, setConsultingTypeOptions] = useState<
-		SelectOption[]
-	>([]);
+	const [topicOptions, setTopicOptions] = useState<SelectOption[]>([]);
 	const [agencyOptions, setAgencyOptions] = useState<AgencyDataInterface[]>(
 		[]
 	);
 
-	const {
-		agencies: possibleAgencies,
-		consultingTypes: possibleConsultingTypes
-	} = useConsultantAgenciesAndConsultingTypes();
+	const { agencies: possibleAgencies, topics: possibleTopics } =
+		useConsultantAgenciesAndTopics();
 
 	useEffect(() => {
-		const consultingTypeOptions = possibleConsultingTypes.map(
-			(consultingType) => ({
-				value: consultingType.id.toString(),
-				label: translate(
-					[
-						`consultingType.${consultingType.id}.titles.long`,
-						consultingType.titles.long
-					],
-					{ ns: 'consultingTypes' }
-				)
-			})
-		);
-		setConsultingTypeOptions(consultingTypeOptions);
-		setSelectedConsultingTypeOption(consultingTypeOptions[0]);
-	}, [possibleConsultingTypes, translate]);
+		const topicOptions = possibleTopics.map((topic) => ({
+			value: topic.id.toString(),
+			label: translate(
+				[
+					`topic.${topic.id}.titles.long`,
+					`consultingType.${topic.id}.titles.long`,
+					topic.titles.long
+				],
+				{ ns: ['topics', 'consultingTypes'] }
+			)
+		}));
+		setTopicOptions(topicOptions);
+		setSelectedTopicOption(topicOptions[0]);
+	}, [possibleTopics, translate]);
 
 	useEffect(() => {
-		if (!selectedConsultingTypeOption) {
+		if (!selectedTopicOption) {
 			setAgencyOptions([]);
 			onChange(null);
 			return;
@@ -75,10 +73,10 @@ export const ConsultingTypeAgencySelection = ({
 
 		const agencyOptions = settings.multitenancyWithSingleDomainEnabled
 			? possibleAgencies
-			: possibleAgencies.filter(
-					(agency) =>
-						agency.consultingType.toString() ===
-						selectedConsultingTypeOption.value
+			: possibleAgencies.filter((agency) =>
+					agency.topicIds.includes(
+						parseInt(selectedTopicOption.value)
+					)
 			  );
 
 		setAgencyOptions(agencyOptions);
@@ -88,7 +86,7 @@ export const ConsultingTypeAgencySelection = ({
 	}, [
 		onChange,
 		possibleAgencies,
-		selectedConsultingTypeOption,
+		selectedTopicOption,
 		settings.multitenancyWithSingleDomainEnabled
 	]);
 
@@ -99,41 +97,38 @@ export const ConsultingTypeAgencySelection = ({
 		onValidityChange(agency ? VALIDITY_VALID : VALIDITY_INVALID);
 	}, [agency]); // eslint-disable-line react-hooks/exhaustive-deps
 
-	const consultingTypeSelect: SelectDropdownItem = {
-		id: 'consultingTypeSelection',
-		selectedOptions: consultingTypeOptions,
-		handleDropdownSelect: setSelectedConsultingTypeOption,
+	const topicSelect: SelectDropdownItem = {
+		id: 'topicAgencySelection',
+		selectedOptions: topicOptions,
+		handleDropdownSelect: setSelectedTopicOption,
 		selectInputLabel: translate(
 			'registration.consultingTypeAgencySelection.consultingType.select.label'
 		),
 		menuPlacement: 'bottom',
-		defaultValue: selectedConsultingTypeOption
+		defaultValue: selectedTopicOption
 	};
 
-	if (possibleAgencies.length <= 1 && possibleConsultingTypes.length <= 1) {
+	if (possibleAgencies.length <= 1 && possibleTopics.length <= 1) {
 		return null;
 	}
 
 	return (
-		<div className="consultingTypeSelection">
-			{consultingTypeOptions.length > 1 && (
-				<div className="consultingTypeSelection__possibleConsultingTypes">
+		<div className="topicSelection">
+			{topicOptions.length > 1 && (
+				<div className="topicSelection__possibleTopics">
 					<Text
 						text={translate(
 							'registration.consultingTypeAgencySelection.consultingType.infoText'
 						)}
 						type="standard"
 					/>
-					<SelectDropdown
-						{...consultingTypeSelect}
-						onKeyDown={onKeyDown}
-					/>
+					<SelectDropdown {...topicSelect} onKeyDown={onKeyDown} />
 				</div>
 			)}
 
-			{selectedConsultingTypeOption && agencyOptions.length > 1 && (
+			{selectedTopicOption && agencyOptions.length > 1 && (
 				<div className="agencySelection">
-					{consultingTypeOptions.length <= 1 && (
+					{topicOptions.length <= 1 && (
 						<Text
 							text={translate(
 								'registration.consultingTypeAgencySelection.agency.infoText'

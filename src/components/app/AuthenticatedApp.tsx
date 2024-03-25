@@ -6,12 +6,10 @@ import {
 	UserDataContext,
 	hasUserAuthority,
 	AUTHORITIES,
-	ConsultingTypesContext,
 	RocketChatProvider,
 	InformalContext,
 	LocaleContext
 } from '../../globalState';
-import { apiGetConsultingTypes } from '../../api';
 import { Loading } from './Loading';
 import { handleTokenRefresh } from '../auth/auth';
 import { logout } from '../logout/logout';
@@ -37,7 +35,6 @@ export const AuthenticatedApp = ({
 	onAppReady
 }: AuthenticatedAppProps) => {
 	const { releaseToggles } = useAppConfig();
-	const { setConsultingTypes } = useContext(ConsultingTypesContext);
 	const { userData, reloadUserData } = useContext(UserDataContext);
 	const { locale, setLocale } = useContext(LocaleContext);
 	const { setInformal } = useContext(InformalContext);
@@ -69,11 +66,10 @@ export const AuthenticatedApp = ({
 
 			handleTokenRefresh(false)
 				.then(() => {
-					Promise.all([reloadUserData(), apiGetConsultingTypes()])
-						.then(([userProfileData, consultingTypes]) => {
+					reloadUserData()
+						.then((userProfileData) => {
 							// set informal / formal cookie depending on the given userdata
 							setInformal(!userProfileData.formalLanguage);
-							setConsultingTypes(consultingTypes);
 
 							if (userProfileData.preferredLanguage) {
 								setLocale(userProfileData.preferredLanguage);
@@ -92,14 +88,7 @@ export const AuthenticatedApp = ({
 					setLoading(false);
 				});
 		}
-	}, [
-		locale,
-		setConsultingTypes,
-		setInformal,
-		setLocale,
-		reloadUserData,
-		userDataRequested
-	]);
+	}, [locale, setInformal, setLocale, reloadUserData, userDataRequested]);
 
 	useEffect(() => {
 		onAppReady();

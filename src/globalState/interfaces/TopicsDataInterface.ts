@@ -1,6 +1,9 @@
+import { ConsultingTypeInterface } from './ConsultingTypeInterface';
+
 export interface TopicsDataInterface {
 	id: number;
 	name: string;
+	slug: string;
 	description: string;
 	internalIdentifier: string;
 	status: string;
@@ -14,6 +17,8 @@ export interface TopicsDataInterface {
 	};
 	sendNextStepMessage: boolean;
 	welcomeMessage: string;
-    fallbackAgencyId?: number;
-    fallbackUrl?: string;
+	fallbackAgencyId?: number;
+	fallbackUrl?: string;
+	/** @deprecated */
+	consultingType?: ConsultingTypeInterface;
 }

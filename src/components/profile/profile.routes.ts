@@ -7,7 +7,7 @@ import { ConsultantInformation } from './ConsultantInformation';
 import { ConsultantSpokenLanguages } from './ConsultantSpokenLanguages';
 import { ConsultantAgencies } from './ConsultantAgencies';
 import { AskerConsultingTypeData } from './AskerConsultingTypeData';
-import { consultingTypeSelectOptionsSet } from './profileHelpers';
+import { topicsSelectOptionsSet } from './profileHelpers';
 import { AskerRegistration } from './AskerRegistration';
 import { ConsultantPrivateData } from './ConsultantPrivateData';
 import { AskerAboutMeData } from './AskerAboutMeData';
@@ -21,7 +21,7 @@ import { OverviewSessions } from './OverviewMobile/Sessions';
 import { profileRoutesSettings } from './profileSettings.routes';
 import { profileRoutesHelp } from './profileHelp.routes';
 import { ConsultantLiveChatAvailability } from './ConsultantLiveChatAvailability';
-import { TenantDataInterface } from '../../globalState/interfaces/TenantDataInterface';
+import { TenantDataInterface } from '../../globalState';
 import { EmailNotification } from './EmailNotifications';
 import { BrowserNotification } from './BrowserNotifications';
 import { browserNotificationsSettings } from '../../utils/notificationHelpers';
@@ -120,14 +120,15 @@ const profileRoutes = (
 							column: COLUMN_RIGHT
 						},
 						{
-							condition: (userData, consultingTypes) =>
+							condition: (userData, consultingTypes, topics) =>
 								!hasUserAuthority(
 									AUTHORITIES.CONSULTANT_DEFAULT,
 									userData
 								) &&
-								consultingTypeSelectOptionsSet(
+								topicsSelectOptionsSet(
 									userData,
-									consultingTypes
+									consultingTypes,
+									topics
 								).length > 0,
 							component: AskerRegistration,
 							order: 3,

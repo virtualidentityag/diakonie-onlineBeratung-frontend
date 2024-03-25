@@ -12,7 +12,11 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Overlay, OVERLAY_FUNCTIONS, OverlayItem } from '../overlay/Overlay';
 import { BUTTON_TYPES } from '../button/Button';
 import { endpoints } from '../../resources/scripts/endpoints';
-import { buildExtendedSession, STATUS_EMPTY } from '../../globalState';
+import {
+	buildExtendedSession,
+	STATUS_EMPTY,
+	TopicsContext
+} from '../../globalState';
 import { ActiveSessionContext } from '../../globalState/provider/ActiveSessionProvider';
 
 import {
@@ -49,6 +53,7 @@ export const WriteEnquiry: React.FC = () => {
 	const history = useHistory();
 
 	const { fixed: fixedLanguages } = useContext(LanguagesContext);
+	const { topics } = useContext(TopicsContext);
 
 	const [activeSession, setActiveSession] = useState(null);
 	const [overlayActive, setOverlayActive] = useState(false);
@@ -77,7 +82,7 @@ export const WriteEnquiry: React.FC = () => {
 					sessions[0]?.session?.status === STATUS_EMPTY
 				) {
 					setIsFirstEnquiry(true);
-					setActiveSession(buildExtendedSession(sessions[0]));
+					setActiveSession(buildExtendedSession(sessions[0], topics));
 					setIsLoading(false);
 					return;
 				}
@@ -87,7 +92,7 @@ export const WriteEnquiry: React.FC = () => {
 			setIsLoading(false);
 			return;
 		}
-	}, [sessionReady, sessionIdFromParam, session]);
+	}, [sessionReady, sessionIdFromParam, session, topics]);
 
 	const { fromL } = useResponsive();
 	useEffect(() => {

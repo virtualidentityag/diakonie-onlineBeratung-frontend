@@ -72,8 +72,11 @@ export const WelcomeScreen: VFC<WelcomeScreenProps> = ({ nextStepUrl }) => {
 			<Typography variant="subtitle1" sx={{ mt: '12px', mb: '48px' }}>
 				{t('registration.welcomeScreen.subline')}
 			</Typography>
-			{infoDefinitions.map((info) => (
-				<Box sx={{ display: 'flex', alignItems: 'center', mb: '32px' }}>
+			{infoDefinitions.map((info, i) => (
+				<Box
+					sx={{ display: 'flex', alignItems: 'center', mb: '32px' }}
+					key={`info-${i}`}
+				>
 					{info.icon}
 					<Box sx={{ ml: '24px' }}>
 						<Typography variant="h5">{info.headline}</Typography>

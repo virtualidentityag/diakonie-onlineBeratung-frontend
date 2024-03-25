@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as CallOffIcon } from '../../resources/img/icons/call-off.svg';
 import {

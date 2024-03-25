@@ -1,9 +1,6 @@
 import { endpoints } from '../../resources/scripts/endpoints';
 import { fetchData, FETCH_METHODS, FETCH_ERRORS } from './../fetchData';
-import {
-	AppointmentsDataInterface,
-	STATUS_CREATED
-} from '../../globalState/interfaces/AppointmentsDataInterface';
+import { AppointmentsDataInterface, STATUS_CREATED } from '../../globalState';
 
 export const postAppointments = async (
 	data: Partial<AppointmentsDataInterface>

@@ -6,8 +6,7 @@ import {
 	SessionTypeContext,
 	UserDataContext,
 	getContact,
-	hasUserAuthority,
-	useConsultingType
+	hasUserAuthority
 } from '../../../globalState';
 import { useSearchParam } from '../../../hooks/useSearchParams';
 import {
@@ -60,7 +59,6 @@ export const GroupChatHeader = ({
 	const { type, path: listPath } = useContext(SessionTypeContext);
 	const sessionListTab = useSearchParam<SESSION_LIST_TAB>('sessionListTab');
 	const sessionView = getViewPathForType(type);
-	const consultingType = useConsultingType(activeSession.item.consultingType);
 	const [flyoutOpenId, setFlyoutOpenId] = useState('');
 	const isConsultant = hasUserAuthority(
 		AUTHORITIES.CONSULTANT_DEFAULT,
@@ -83,7 +81,6 @@ export const GroupChatHeader = ({
 	).sessionData;
 	const isAskerInfoAvailable = () =>
 		!hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
-		consultingType?.showAskerProfile &&
 		activeSession.isSession &&
 		!activeSession.isLive &&
 		((type === SESSION_LIST_TYPES.ENQUIRY &&
@@ -158,10 +155,10 @@ export const GroupChatHeader = ({
 						<Link
 							to={`/sessions/consultant/${sessionView}/${activeSession.item.groupId}/${activeSession.item.id}/groupChatInfo${sessionTabPath}`}
 						>
-							<h3>{activeSession.item.topic}</h3>
+							<h3>{activeSession.chatTopic}</h3>
 						</Link>
 					) : (
-						<h3>{activeSession.item.topic}</h3>
+						<h3>{activeSession.chatTopic}</h3>
 					)}
 				</div>
 

@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { useContext, useState, VFC, useEffect } from 'react';
-import { Box, Drawer, Typography, Button } from '@mui/material';
+import React, { useContext, useState, VFC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Box, Drawer, Typography, Button } from '@mui/material';
 import { Loading } from '../../app/Loading';
 import { RegistrationContext } from '../../../globalState';
 import { PreselectionError } from '../preselectionError/PreselectionError';

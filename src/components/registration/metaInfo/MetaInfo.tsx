@@ -1,10 +1,9 @@
+import React, { VFC, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Box, Tooltip, Button, Typography, Drawer } from '@mui/material';
-import * as React from 'react';
-import { VFC, useState } from 'react';
 import InfoIcon from '@mui/icons-material/Info';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 
 export const MetaInfo: VFC<{
 	description: string;

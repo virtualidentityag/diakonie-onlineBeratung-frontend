@@ -304,7 +304,8 @@ export const config: AppConfigInterface = {
 				}
 			}
 		}
-	}
+	},
+	u25ids: []
 };
 
 export const ALIAS_LAST_MESSAGES = {

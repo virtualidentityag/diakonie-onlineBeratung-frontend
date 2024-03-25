@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import {
 	IncomingVideoCall,
 	IncomingVideoCallProps,

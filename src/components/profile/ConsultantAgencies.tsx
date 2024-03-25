@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { ReactComponent as CopyIcon } from '../../resources/img/icons/documents.svg';
 import {
 	NotificationsContext,

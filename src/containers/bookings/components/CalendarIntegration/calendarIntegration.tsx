@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Headline } from '../../../../components/headline/Headline';
 import { Text } from '../../../../components/text/Text';
 import { AssignedCalendars } from '../AssignedCalendars/assignedCalendars';
 import AddCalendar from '../AddCalendar/addCalendar';
-import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Box } from '../../../../components/box/Box';
 import { useAppConfig } from '../../../../hooks/useAppConfig';
 

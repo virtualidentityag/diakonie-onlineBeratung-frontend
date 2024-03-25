@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { useContext, useState, useEffect, VFC } from 'react';
+import React, { useContext, useState, useEffect, VFC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { RegistrationContext } from '../../../globalState';
 import { PreselectionDrawer } from '../preselectionDrawer/preselectionDrawer';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { useResponsive } from '../../../hooks/useResponsive';
 
 export const PreselectionBox: VFC<{

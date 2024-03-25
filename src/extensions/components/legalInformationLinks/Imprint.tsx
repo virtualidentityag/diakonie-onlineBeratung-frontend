@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as BMILogo } from './bmi-foerder-logo.svg';
 import { ReactComponent as MBELogo } from './mbe-logo.svg';

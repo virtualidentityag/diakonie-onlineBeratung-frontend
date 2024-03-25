@@ -1,5 +1,20 @@
-import * as React from 'react';
-import { useState, useRef, useContext, useEffect, Fragment } from 'react';
+import React, {
+	useState,
+	useRef,
+	useContext,
+	useEffect,
+	Fragment
+} from 'react';
+import {
+	Link,
+	NavLink,
+	Redirect,
+	Route,
+	Switch,
+	useLocation,
+	generatePath
+} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { logout } from '../logout/logout';
 import {
 	AUTHORITIES,
@@ -15,15 +30,6 @@ import { ReactComponent as BackIcon } from '../../resources/img/icons/arrow-left
 import { Text } from '../text/Text';
 import './profile.styles';
 import profileRoutes from './profile.routes';
-import {
-	Link,
-	NavLink,
-	Redirect,
-	Route,
-	Switch,
-	useLocation,
-	generatePath
-} from 'react-router-dom';
 import { Box } from '../box/Box';
 import { useResponsive } from '../../hooks/useResponsive';
 import {
@@ -45,10 +51,10 @@ import {
 	TabGroups,
 	TabType
 } from '../../utils/tabsHelper';
-import { useTranslation } from 'react-i18next';
 import { LegalLinksContext } from '../../globalState/provider/LegalLinksProvider';
 import { useAppConfig } from '../../hooks/useAppConfig';
 import useIsFirstVisit from '../../utils/useIsFirstVisit';
+import { TopicsContext } from '../../globalState/provider/TopicsProvider';
 
 export const Profile = () => {
 	const settings = useAppConfig();
@@ -61,6 +67,7 @@ export const Profile = () => {
 	const legalLinks = useContext(LegalLinksContext);
 	const { userData } = useContext(UserDataContext);
 	const { consultingTypes } = useContext(ConsultingTypesContext);
+	const { topics } = useContext(TopicsContext);
 
 	const [mobileMenu, setMobileMenu] = useState<
 		(LinkMenuGroupType | LinkMenuItemType | LinkMenuComponentType)[]
@@ -98,12 +105,14 @@ export const Profile = () => {
 									? solveGroupConditions(
 											element,
 											userData,
-											consultingTypes ?? []
+											consultingTypes ?? [],
+											topics ?? []
 									  )
 									: solveCondition(
 											element.condition,
 											userData,
-											consultingTypes ?? []
+											consultingTypes ?? [],
+											topics ?? []
 									  )
 							)
 							.map((element) =>
@@ -128,6 +137,7 @@ export const Profile = () => {
 		);
 	}, [
 		consultingTypes,
+		topics,
 		translate,
 		settings,
 		userData,
@@ -362,7 +372,8 @@ export const Profile = () => {
 													solveCondition(
 														element.condition,
 														userData,
-														consultingTypes ?? []
+														consultingTypes ?? [],
+														topics ?? []
 													)
 												)
 												.sort(
@@ -426,7 +437,8 @@ export const Profile = () => {
 											solveGroupConditions(
 												element,
 												userData,
-												consultingTypes ?? []
+												consultingTypes ?? [],
+												topics ?? []
 											)
 										)
 										.map((element) =>
@@ -523,6 +535,7 @@ const ProfileItem = ({
 const ProfileGroup = ({ group }: { group: TabGroups }) => {
 	const { userData } = useContext(UserDataContext);
 	const { consultingTypes } = useContext(ConsultingTypesContext);
+	const { topics } = useContext(TopicsContext);
 
 	return (
 		<>
@@ -531,7 +544,8 @@ const ProfileGroup = ({ group }: { group: TabGroups }) => {
 					solveCondition(
 						element.condition,
 						userData,
-						consultingTypes ?? []
+						consultingTypes ?? [],
+						topics ?? []
 					)
 				)
 				.sort((a, b) => (a?.order || 99) - (b?.order || 99))

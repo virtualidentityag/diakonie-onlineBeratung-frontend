@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AgencyDataInterface } from '../../globalState';
 import { ReactComponent as InfoIcon } from '../../resources/img/icons/i.svg';
 import { isMobile } from 'react-device-detect';

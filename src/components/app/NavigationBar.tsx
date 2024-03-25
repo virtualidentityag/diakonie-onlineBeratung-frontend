@@ -12,11 +12,10 @@ import {
 	UserDataContext,
 	hasUserAuthority,
 	AUTHORITIES,
-	ConsultingTypesContext,
 	SessionsDataContext,
 	SET_SESSIONS,
 	LocaleContext,
-	TenantContext
+	ToolsContext
 } from '../../globalState';
 import { initNavigationHandler } from './navigationHandler';
 import { ReactComponent as LogoutIconOutline } from '../../resources/img/icons/logout_outline.svg';
@@ -29,14 +28,15 @@ import {
 } from '../../api';
 import { useTranslation } from 'react-i18next';
 import { LocaleSwitch } from '../localeSwitch/LocaleSwitch';
-import { userHasBudibaseTools } from '../../api/apiGetTools';
 import { browserNotificationsSettings } from '../../utils/notificationHelpers';
 import useIsFirstVisit from '../../utils/useIsFirstVisit';
 import { useResponsive } from '../../hooks/useResponsive';
+import { TopicsContext } from '../../globalState/provider/TopicsProvider';
+import { RouterConfigNavigation } from './RouterConfig';
 
 export interface NavigationBarProps {
 	onLogout: any;
-	routerConfig: any;
+	routerConfig: RouterConfigNavigation[];
 }
 
 const REGEX_DASH = /\//g;
@@ -46,23 +46,24 @@ export const NavigationBar = ({
 }: NavigationBarProps) => {
 	const { t: translate } = useTranslation();
 	const isFirstVisit = useIsFirstVisit();
+
 	const { userData } = useContext(UserDataContext);
-	const { consultingTypes } = useContext(ConsultingTypesContext);
+	const { topics } = useContext(TopicsContext);
 	const { sessions, dispatch } = useContext(SessionsDataContext);
 	const { selectableLocales } = useContext(LocaleContext);
-	const [sessionId, setSessionId] = useState(null);
-	const [hasTools, setHasTools] = useState<boolean>(false);
-
-	const isConsultant = hasUserAuthority(
-		AUTHORITIES.CONSULTANT_DEFAULT,
-		userData
-	);
+	const { tools } = useContext(ToolsContext);
 	const {
 		sessions: unreadSessions,
 		group: unreadGroup,
 		teamsessions: unreadTeamSessions
 	} = useContext(RocketChatUnreadContext);
-	const { tenant } = useContext(TenantContext);
+
+	const [sessionId, setSessionId] = useState(null);
+
+	const isConsultant = hasUserAuthority(
+		AUTHORITIES.CONSULTANT_DEFAULT,
+		userData
+	);
 
 	const ref_menu = useRef<any>([]);
 	const ref_local = useRef<any>();
@@ -86,25 +87,17 @@ export const NavigationBar = ({
 	}, []);
 
 	useEffect(() => {
-		if (!isConsultant) {
-			apiGetAskerSessionList().then((sessionsData) => {
-				dispatch({
-					type: SET_SESSIONS,
-					ready: true,
-					sessions: sessionsData.sessions
-				});
-				setSessionId(sessionsData?.sessions?.[0]?.session?.id);
-			});
-		}
-	}, [dispatch, isConsultant]);
+		if (isConsultant) return;
 
-	useEffect(() => {
-		if (tenant?.settings?.featureToolsEnabled && !isConsultant) {
-			userHasBudibaseTools(userData.userId).then((resp) =>
-				setHasTools(resp)
-			);
-		}
-	}, [tenant, userData, isConsultant]);
+		apiGetAskerSessionList().then((sessionsData) => {
+			dispatch({
+				type: SET_SESSIONS,
+				ready: true,
+				sessions: sessionsData.sessions
+			});
+			setSessionId(sessionsData?.sessions?.[0]?.session?.id);
+		});
+	}, [dispatch, isConsultant]);
 
 	const animateNavIconTimeoutRef = useRef(null);
 	useEffect(() => {
@@ -237,15 +230,15 @@ export const NavigationBar = ({
 			<div className="navigation__itemContainer" role="tablist">
 				<NavGroup className="navigation__item__top">
 					{sessions &&
-						routerConfig.navigation
+						routerConfig
 							.filter(
-								(item: any) =>
+								(item) =>
 									!item.condition ||
 									item.condition(
 										userData,
-										consultingTypes,
+										topics,
 										sessions,
-										hasTools
+										tools
 									)
 							)
 							.map((item, index) => {

@@ -44,9 +44,9 @@ import { StageLayout } from '../stageLayout/StageLayout';
 import { appConfig } from '../../utils/appConfig';
 import { Loading } from '../app/Loading';
 import { GlobalComponentContext } from '../../globalState/provider/GlobalComponentContext';
+import { TopicsDataInterface } from '../../globalState';
 export interface WaitingRoomProps {
-	consultingTypeSlug: string;
-	consultingTypeId: number;
+	topic: TopicsDataInterface;
 	onAnonymousRegistration: Function;
 }
 
@@ -55,7 +55,10 @@ const USERNAME_CONFLICT_RETRY_LIMIT = 20;
 // Slowdown request after every 5 requests to prevent 429
 const USERNAME_CONFLICT_RETRY_SLOWDOWN = 5;
 
-export const WaitingRoom = (props: WaitingRoomProps) => {
+export const WaitingRoom = ({
+	topic,
+	onAnonymousRegistration
+}: WaitingRoomProps) => {
 	const { t: translate } = useTranslation();
 	const history = useHistory();
 
@@ -81,7 +84,9 @@ export const WaitingRoom = (props: WaitingRoomProps) => {
 	} = useContext(WebsocketConnectionDeactivatedContext);
 	const { anonymousConversationStarted, setAnonymousConversationStarted } =
 		useContext(AnonymousConversationStartedContext);
-	const registrationUrl = `/${props.consultingTypeSlug}/registration`;
+	const registrationUrl = topic.slug
+		? `/${topic.slug}/registration`
+		: `/registration?tid=${topic.id}`;
 
 	const getPseudoPasswordForUser = (rc_uid) => {
 		let pseudoPassword = localStorage.getItem(`pseudoPassword_${rc_uid}`);
@@ -96,7 +101,7 @@ export const WaitingRoom = (props: WaitingRoomProps) => {
 		const rc_uid = getValueFromCookie('rc_uid');
 		const pseuodPassword = getPseudoPasswordForUser(rc_uid);
 		handleE2EESetup(pseuodPassword, rc_uid, null, true).then(() =>
-			props.onAnonymousRegistration()
+			onAnonymousRegistration()
 		);
 	};
 
@@ -126,7 +131,7 @@ export const WaitingRoom = (props: WaitingRoomProps) => {
 
 		document.title = `${translate(
 			'anonymous.waitingroom.title.start'
-		)} ${capitalizeFirstLetter(props.consultingTypeSlug)}`;
+		)} ${capitalizeFirstLetter(topic.name)}`;
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
@@ -187,26 +192,22 @@ export const WaitingRoom = (props: WaitingRoomProps) => {
 
 	const retryCount = useRef(1);
 	const registerAnonymous = useCallback(() => {
-		return apiPostAnonymousRegistration(props.consultingTypeId).catch(
-			(err: Error) => {
-				if (
-					err.message === FETCH_ERRORS.CONFLICT &&
-					retryCount.current <= USERNAME_CONFLICT_RETRY_LIMIT
-				) {
-					retryCount.current += 1;
-					return new Promise<AnonymousRegistrationResponse>(
-						(resolve) => {
-							setTimeout(() => {
-								resolve(registerAnonymous());
-							}, Math.ceil(retryCount.current / USERNAME_CONFLICT_RETRY_SLOWDOWN) * 500);
-						}
-					);
-				} else {
-					throw err;
-				}
+		return apiPostAnonymousRegistration(topic.id).catch((err: Error) => {
+			if (
+				err.message === FETCH_ERRORS.CONFLICT &&
+				retryCount.current <= USERNAME_CONFLICT_RETRY_LIMIT
+			) {
+				retryCount.current += 1;
+				return new Promise<AnonymousRegistrationResponse>((resolve) => {
+					setTimeout(() => {
+						resolve(registerAnonymous());
+					}, Math.ceil(retryCount.current / USERNAME_CONFLICT_RETRY_SLOWDOWN) * 500);
+				});
+			} else {
+				throw err;
 			}
-		);
-	}, [props.consultingTypeId]);
+		});
+	}, [topic.id]);
 
 	const handleConfirmButton = () => {
 		if (!isRequestInProgress) {

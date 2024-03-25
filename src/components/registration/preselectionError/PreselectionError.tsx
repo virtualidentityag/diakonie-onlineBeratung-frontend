@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { VFC } from 'react';
+import React, { VFC } from 'react';
 import { Box, Typography } from '@mui/material';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 

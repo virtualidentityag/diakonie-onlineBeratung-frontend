@@ -9,9 +9,9 @@ import { OVERLAY_TERMS_AND_CONDITION } from '../../globalState/interfaces/AppCon
 import {
 	UserDataContext,
 	UserDataInterface,
+	TenantDataInterface,
 	useTenant
 } from '../../globalState';
-import { TenantDataInterface } from '../../globalState/interfaces/TenantDataInterface';
 import { Checkbox, CheckboxItem } from '../checkbox/Checkbox';
 import { apiPatchUserData } from '../../api/apiPatchUserData';
 import { logout } from '../logout/logout';

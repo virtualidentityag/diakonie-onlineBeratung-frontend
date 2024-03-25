@@ -1,9 +1,9 @@
 import {
 	UserDataInterface,
-	ConsultingTypeBasicInterface,
-	getConsultingType
+	ConsultingTypeBasicInterface
 } from '../../globalState';
-import { TopicsDataInterface } from '../../globalState/interfaces/TopicsDataInterface';
+import { TopicsDataInterface } from '../../globalState';
+import { SelectOption } from '../select/SelectDropdown';
 
 export const convertUserDataObjectToArray = (object) => {
 	const array = [];
@@ -30,44 +30,63 @@ export enum REGISTRATION_STATUS_KEYS {
 }
 export const getConsultingTypesForRegistrationStatus = (
 	userData: UserDataInterface,
-	consultingTypes: Array<ConsultingTypeBasicInterface>,
-	registrationStatus: REGISTRATION_STATUS_KEYS
+	registrationStatus: REGISTRATION_STATUS_KEYS,
+	// ToDo: Replace consutingTypes with topics when isSubsequentRegistrationAllowed is migrated
+	consultingTypes?: Array<ConsultingTypeBasicInterface>
 ) => {
+	if (
+		registrationStatus !== REGISTRATION_STATUS_KEYS.REGISTERED &&
+		consultingTypes === undefined
+	) {
+		throw new Error(
+			`getConsultingTypesForRegistrationStatus requires consultingTypes if registrationStatus is not ${REGISTRATION_STATUS_KEYS.REGISTERED}`
+		);
+	}
+
+	// ToDo: Replace userData.consultingTypes to userData.topics when migrated
 	return Object.keys(userData.consultingTypes)
-		.map((key) => {
-			return {
-				consultingTypeId: key,
-				data: userData.consultingTypes[key]
-			};
-		})
-		.filter((value) => {
-			return registrationStatus === REGISTRATION_STATUS_KEYS.REGISTERED
+		.map((key) => ({
+			consultingTypeId: parseInt(key),
+			data: userData.consultingTypes[key]
+		}))
+		.filter((value) =>
+			registrationStatus === REGISTRATION_STATUS_KEYS.REGISTERED
 				? value.data.isRegistered
-				: consultingTypes.find(
-						(cur) => cur.id === parseInt(value.consultingTypeId)
-				  )?.isSubsequentRegistrationAllowed &&
-						!value.data.isRegistered;
-		});
+				: !value.data.isRegistered &&
+				  consultingTypes.find(
+						(cur) => cur.id === value.consultingTypeId
+				  )?.isSubsequentRegistrationAllowed
+		);
 };
 
 export const topicsSelectOptionsSet = (
 	userData: UserDataInterface,
-	topics: Array<TopicsDataInterface>
-) => {
-	// ISSUE: We don't know which topic is already registered
+	consultingTypes: ConsultingTypeBasicInterface[],
+	topics: TopicsDataInterface[]
+): SelectOption[] => {
+	// ToDo: ISSUE: We don't know which topic is already registered
 	const unregisteredConsultingTypesData =
 		getConsultingTypesForRegistrationStatus(
 			userData,
-			consultingTypes,
-			REGISTRATION_STATUS_KEYS.UNREGISTERED
+			REGISTRATION_STATUS_KEYS.UNREGISTERED,
+			consultingTypes
 		);
-	return unregisteredConsultingTypesData.map((value: TopicsDataInterface) => {
-			id: value.id,
-			value,
-			// ToDo: translate missing!
-			label: value.titles.short
-		
-	};
+
+	return unregisteredConsultingTypesData
+		.map((value) => {
+			/**
+			 * ToDo: find topic by topic id when getConsultingTypesForRegistrationStatus is refactored.
+			 * Currently return null to prevent errors from non matching consultingType to topic ids
+			 */
+			const topic = topics.find((t) => t.id === value.consultingTypeId);
+			if (!topic) return null;
+
+			return {
+				value: topic.id.toString(),
+				label: topic.titles.registrationDropdown
+			};
+		})
+		.filter(Boolean);
 };
 
 export const isUniqueLanguage = (value, index, self) => {

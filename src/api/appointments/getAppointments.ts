@@ -1,4 +1,4 @@
-import { AppointmentsDataInterface } from '../../globalState/interfaces/AppointmentsDataInterface';
+import { AppointmentsDataInterface } from '../../globalState';
 import { endpoints } from '../../resources/scripts/endpoints';
 import { FETCH_ERRORS, FETCH_METHODS, fetchData } from '../fetchData';
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import '../booking.styles.scss';
 import { useAppConfig } from '../../../../hooks/useAppConfig';
 

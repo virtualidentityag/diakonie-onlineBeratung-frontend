@@ -2,8 +2,8 @@ import { getValueFromCookie } from '../components/sessionCookie/accessSessionCoo
 import {
 	hasUserAuthority,
 	AUTHORITIES,
-	ConsultingTypeBasicInterface,
-	UserDataInterface
+	UserDataInterface,
+	TopicsDataInterface
 } from '../globalState';
 import { appConfig } from './appConfig';
 import { getTenantSettings } from './tenantSettingsHelper';
@@ -86,42 +86,38 @@ const supportsInsertableStreams = () => {
 
 export const hasVideoCallFeature = (
 	userData: UserDataInterface,
-	consultingTypes: ConsultingTypeBasicInterface[]
+	topics: TopicsDataInterface[]
 ) =>
 	userData &&
 	hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
 	userData.agencies.some(
 		(agency) =>
-			!!(consultingTypes || []).find(
-				(consultingType) =>
-					consultingType.id === agency.consultingType &&
+			!!(topics || []).find(
+				(topic) =>
+					agency.topicIds.includes(topic.id) &&
 					getTenantSettings().isVideoCallAllowed
 			)
 	);
 
 export const hasVideoCallAbility = (
 	userData: UserDataInterface,
-	consultingTypes: ConsultingTypeBasicInterface[]
+	topics: TopicsDataInterface[]
 ) => {
 	// check if User can be called by any of his registered agencies
 	if (hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData)) {
-		const registeredConsultingTypes = Object.values(
-			userData.consultingTypes
-		)
+		// ToDo: Replace consultingTypes with registered topics
+		const registeredTopicIds = Object.values(userData.consultingTypes)
 			.filter((el) => el.isRegistered)
 			.map((el) => el.agency.consultingType);
-		const userCanBeCalled = registeredConsultingTypes.some((el) =>
-			Object.values(consultingTypes).some(
-				(consultingType) =>
-					consultingType.id === el &&
-					getTenantSettings().isVideoCallAllowed
+		const userCanBeCalled = registeredTopicIds.some((el) =>
+			topics.some(
+				(topic) =>
+					topic.id === el && getTenantSettings().isVideoCallAllowed
 			)
 		);
 		if (userCanBeCalled) {
 			return true;
 		}
-	} else if (hasVideoCallFeature(userData, consultingTypes)) {
-		return true;
 	}
-	return false;
+	return hasVideoCallFeature(userData, topics);
 };

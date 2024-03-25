@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as CallOffIcon } from '../../resources/img/icons/call-off.svg';
 import { ReactComponent as InfoIcon } from '../../resources/img/icons/i.svg';

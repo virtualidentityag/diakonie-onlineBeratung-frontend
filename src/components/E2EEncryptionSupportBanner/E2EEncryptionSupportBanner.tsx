@@ -1,32 +1,31 @@
-import { useState, useContext, useEffect } from 'react';
-import * as React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Banner } from '../banner/Banner';
 import './E2EEncryptionSupportBanner.styles.scss';
 import {
 	hasVideoCallAbility,
 	supportsE2EEncryptionVideoCall
 } from '../../utils/videoCallHelpers';
-import { useTranslation } from 'react-i18next';
 import {
 	AUTHORITIES,
-	ConsultingTypesContext,
 	hasUserAuthority,
 	SessionsDataContext,
 	STATUS_EMPTY,
-	UserDataContext
+	UserDataContext,
+	TopicsContext
 } from '../../globalState';
-import { Link } from 'react-router-dom';
 
 export const E2EEncryptionSupportBanner = () => {
 	const [showBanner, setShowBanner] = useState<boolean>(false);
 	const { t: translate } = useTranslation();
-	const { consultingTypes } = useContext(ConsultingTypesContext);
+	const { topics } = useContext(TopicsContext);
 	const { userData } = useContext(UserDataContext);
 	const { sessions } = useContext(SessionsDataContext);
 
 	useEffect(() => {
 		if (
-			hasVideoCallAbility(userData, consultingTypes) &&
+			hasVideoCallAbility(userData, topics) &&
 			// don't show banner when user enters first message
 			!(
 				hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
@@ -40,7 +39,7 @@ export const E2EEncryptionSupportBanner = () => {
 					!sessionStorage.getItem('hideEncryptionBanner')
 			);
 		}
-	}, [userData, consultingTypes, sessions]);
+	}, [userData, topics, sessions]);
 
 	useEffect(() => {
 		const fn = showBanner ? 'add' : 'remove';

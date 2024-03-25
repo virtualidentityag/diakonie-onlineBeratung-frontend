@@ -1,21 +1,23 @@
-import {
+import React, {
 	createContext,
 	Dispatch,
 	SetStateAction,
+	useContext,
 	useEffect,
 	useMemo,
 	useState
 } from 'react';
-import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { apiGetAgencyById } from '../../api';
 import { apiGetTopicsData } from '../../api/apiGetTopicsData';
 import { apiGetConsultant } from '../../api/apiGetConsultant';
 import {
 	AgencyDataInterface,
-	ConsultantDataInterface
-} from '../interfaces/UserDataInterface';
-import { TopicsDataInterface } from '../interfaces/TopicsDataInterface';
+	ConsultantDataInterface,
+	TopicsDataInterface
+} from '../interfaces';
+import { ConsultingTypesContext } from './ConsultingTypesProvider';
+import { TopicsContext } from './TopicsProvider';
 
 interface RegistrationContextInterface {
 	disabledNextButton?: boolean;
@@ -59,6 +61,9 @@ interface RegistrationSessionStorageData {
 export const registrationSessionStorageKey = 'registrationData';
 
 export function RegistrationProvider(props) {
+	const { consultingTypes } = useContext(ConsultingTypesContext);
+	const { topics } = useContext(TopicsContext);
+
 	const getSessionStorageData = () =>
 		JSON.parse(
 			sessionStorage.getItem(registrationSessionStorageKey) || '{}'
@@ -91,7 +96,7 @@ export function RegistrationProvider(props) {
 	const defaultSteps = [
 		{ component: 'welcome', urlSuffix: '' },
 		{
-			component: 'topicSelection',
+			component: 'topicAgencySelection',
 			urlSuffix: '/topic-selection',
 			mandatoryFields: ['mainTopicId'],
 			urlParams: ['tid']
@@ -188,8 +193,8 @@ export function RegistrationProvider(props) {
 				try {
 					const consultantResponse = await apiGetConsultant(
 						urlQuery.get('cid'),
-						true,
-						'basic',
+						consultingTypes,
+						topics,
 						true
 					);
 					setConsultant(consultantResponse);

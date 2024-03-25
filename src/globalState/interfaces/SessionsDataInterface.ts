@@ -70,6 +70,7 @@ export interface SessionItemInterface {
 	agencyId: number;
 	askerRcId: string;
 	attachment: UserService.Schemas.SessionAttachmentDTO;
+	/** @deprecated consultingType will be replaced with topic */
 	consultingType: number;
 	feedbackGroupId?: string;
 	feedbackRead?: boolean;
@@ -104,6 +105,7 @@ export interface SessionItemInterface {
 export interface GroupChatItemInterface {
 	active: boolean;
 	attachment: UserService.Schemas.SessionAttachmentDTO;
+	/** @deprecated consultingType will be replaced with topic */
 	consultingType: number;
 	duration: number;
 	groupId: string;

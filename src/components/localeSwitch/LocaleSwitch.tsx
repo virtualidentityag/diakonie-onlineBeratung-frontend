@@ -1,13 +1,12 @@
-import * as React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import LanguageIcon from '@mui/icons-material/Language';
 import './localeSwitch.styles';
 import { ReactComponent as LanguageIconOutline } from '../../resources/img/icons/language_outline.svg';
-import { useTranslation } from 'react-i18next';
-import { useContext, useEffect, useState } from 'react';
 import { LocaleContext, UserDataContext } from '../../globalState';
 import { apiPatchUserData } from '../../api/apiPatchUserData';
 import { SelectDropdown, SelectDropdownItem } from '../select/SelectDropdown';
 import { setValueInCookie } from '../sessionCookie/accessSessionCookie';
-import LanguageIcon from '@mui/icons-material/Language';
 
 export interface LocaleSwitchProp {
 	updateUserData?: boolean;

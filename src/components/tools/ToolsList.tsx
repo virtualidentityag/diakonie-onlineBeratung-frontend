@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
-import { apiGetTools } from '../../api/apiGetTools';
-import { UserDataContext } from '../../globalState';
-import { APIToolsInterface } from '../../globalState/interfaces/ToolsInterface';
+import { useContext } from 'react';
+import { ToolsContext } from '../../globalState';
 import { Box } from '../box/Box';
 import { Headline } from '../headline/Headline';
 import { Tool } from './Tool';
@@ -11,14 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 export const ToolsList = () => {
 	const { t: translate } = useTranslation();
-	const [toolList, setToolsList] = useState<APIToolsInterface[]>([]);
-	const { userData } = useContext(UserDataContext);
-
-	useEffect(() => {
-		apiGetTools(userData.userId).then((resp: APIToolsInterface[]) =>
-			setToolsList(resp)
-		);
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	const { tools } = useContext(ToolsContext);
 
 	return (
 		<div className="toolsList__wrapper">
@@ -31,8 +22,8 @@ export const ToolsList = () => {
 			</div>
 			<div className="toolsList__innerWrapper">
 				<div className="toolsList__content">
-					{toolList &&
-						toolList
+					{tools &&
+						tools
 							.filter((tool) => tool.sharedWithAdviceSeeker)
 							.map((tool) => (
 								<div

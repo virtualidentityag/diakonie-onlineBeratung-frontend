@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Headline } from '../../../../components/headline/Headline';
 import { Text } from '../../../../components/text/Text';
 import { Box } from '../../../../components/box/Box';
 import { useAppConfig } from '../../../../hooks/useAppConfig';
-import { useEffect, useState } from 'react';
 import { apiHasCalDavAccount } from '../../../../api/apiGetCalDavAccount';
 import { MyCalendar } from '../MyCalendar/myCalendar';
 

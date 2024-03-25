@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { Headline } from '../headline/Headline';
-import { Text } from '../text/Text';
+import React, { useContext } from 'react';
 import Switch from 'react-switch';
 import { useTranslation } from 'react-i18next';
+import { Headline } from '../headline/Headline';
+import { Text } from '../text/Text';
 import { apiPatchUserData } from '../../api/apiPatchUserData';
-import { useContext } from 'react';
 import { RocketChatUserStatusContext } from '../../globalState/provider/RocketChatUserStatusProvider';
 import { UserDataContext } from '../../globalState';
 import { STATUS_ONLINE } from '../app/RocketChat';

@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Headline } from '../headline/Headline';
 import { Text } from '../text/Text';
 import './waitingRoom.styles';
-import { useTranslation } from 'react-i18next';
 
 export interface WaitingRoomContentProps {
 	showRegistrationInfo?: boolean;

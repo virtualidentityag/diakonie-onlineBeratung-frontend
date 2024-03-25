@@ -1,12 +1,11 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
+import Switch from 'react-switch';
+import { useTranslation } from 'react-i18next';
 import { Headline } from '../headline/Headline';
 import { Text } from '../text/Text';
-import Switch from 'react-switch';
-import { useContext } from 'react';
-import { UserDataContext } from '../../globalState';
 
+import { UserDataContext } from '../../globalState';
 import { apiPatchConsultantData } from '../../api';
-import { useTranslation } from 'react-i18next';
 
 export const EnableWalkthrough = () => {
 	const { t: translate } = useTranslation();

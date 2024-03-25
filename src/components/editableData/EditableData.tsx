@@ -1,13 +1,12 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import './editableData.styles';
-import { Text } from '../text/Text';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import { Text } from '../text/Text';
 import { ReactComponent as CrossMarkIcon } from '../../resources/img/icons/x.svg';
 import { ReactComponent as TrashIcon } from '../../resources/img/icons/trash.svg';
 import { ReactComponent as PenIcon } from '../../resources/img/icons/pen.svg';
-import { useEffect, useState } from 'react';
 import { isStringValidEmail } from '../registration/registrationHelpers';
-import { useTranslation } from 'react-i18next';
 
 export interface EditableDataProps {
 	label: string;

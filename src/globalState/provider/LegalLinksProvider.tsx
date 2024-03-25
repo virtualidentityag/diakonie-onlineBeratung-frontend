@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from 'react';
-import { LegalLinkInterface } from '../interfaces/LegalLinkInterface';
+import { LegalLinkInterface } from '../interfaces';
 import * as React from 'react';
 import { useAppConfig } from '../../hooks/useAppConfig';
 

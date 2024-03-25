@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
 	AUTHORITIES,
 	hasUserAuthority,
-	UserDataContext
+	UserDataContext,
+	BookingEventUiInterface
 } from '../../../../globalState';
 import { Loading } from '../../../../components/app/Loading';
-import { BookingEventUiInterface } from '../../../../globalState/interfaces/BookingsInterface';
 import { BookingsStatus } from '../../../../utils/consultant';
 import { apiGetAskerSessionList } from '../../../../api';
 import { NoBookingsBooked } from '../NoBookings/noBookingsBooked';

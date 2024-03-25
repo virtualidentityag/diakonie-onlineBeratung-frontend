@@ -3,7 +3,8 @@ import { SESSION_LIST_TYPES } from '../../../../components/session/sessionHelper
 import { SessionListItemComponent } from '../../../../components/sessionsListItem/SessionListItemComponent';
 import {
 	buildExtendedSession,
-	SessionTypeProvider
+	SessionTypeProvider,
+	TopicsContext
 } from '../../../../globalState';
 import { useConsultantData } from '../../hooks/useConsultantData';
 import { EmptyType } from '../EmptyState';
@@ -27,6 +28,8 @@ export const SessionCard = ({
 	emptyType
 }: SessionCardProps) => {
 	const { fixed: fixedLanguages } = useContext(LanguagesContext);
+	const { topics } = useContext(TopicsContext);
+
 	const { sessions, total, isLoading } = useConsultantData({
 		type,
 		unReadOnly: true
@@ -44,7 +47,7 @@ export const SessionCard = ({
 			<SessionTypeProvider type={type}>
 				{sessions
 					?.slice(0, 9)
-					.map((session) => buildExtendedSession(session, ''))
+					.map((session) => buildExtendedSession(session, topics, ''))
 					.map((activeSession, index) => (
 						<ActiveSessionContext.Provider
 							key={activeSession.item.id}

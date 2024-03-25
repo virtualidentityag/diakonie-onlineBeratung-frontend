@@ -1,15 +1,14 @@
-import * as React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ReactComponent as ErrorIllustration } from '../../resources/img/illustrations/not-found.svg';
 import { ReactComponent as WelcomeIllustration } from '../../resources/img/illustrations/welcome.svg';
 import { ReactComponent as WaitingIllustration } from '../../resources/img/illustrations/waiting.svg';
 import './../waitingRoom/waitingRoom.styles';
-import { useContext, useEffect } from 'react';
 import {
 	STATUS_CREATED,
 	STATUS_PAUSED,
 	STATUS_STARTED
-} from '../../globalState/interfaces/AppointmentsDataInterface';
-import { useTranslation } from 'react-i18next';
+} from '../../globalState';
 import { StageLayout } from '../stageLayout/StageLayout';
 import { WaitingRoomContent } from '../waitingRoom/WaitingRoomContent';
 import { Button, BUTTON_TYPES, ButtonItem } from '../button/Button';

@@ -51,7 +51,7 @@ describe('profile', () => {
 			});
 			cy.contains('Profil').click();
 
-			cy.get('#consultingTypeSelect').click();
+			cy.get('#topicSelect').click();
 			cy.get('.select__input__option:contains("Suchtberatung")').click();
 
 			cy.get('[name="postcode"]').type('00000');
@@ -101,7 +101,7 @@ describe('profile', () => {
 
 			cy.contains('Profil').click();
 
-			cy.get('#consultingTypeSelect').click();
+			cy.get('#topicSelect').click();
 			cy.get('.select__input__option:contains("Suchtberatung")').click();
 
 			cy.get('[name="postcode"]').type('00000');

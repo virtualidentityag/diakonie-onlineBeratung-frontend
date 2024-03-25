@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, ReactNode } from 'react';
 import { isDesktop } from 'react-device-detect';
 import { SessionsListWrapper } from '../sessionsList/SessionsListWrapper';
 import {
@@ -9,7 +9,8 @@ import {
 	SESSION_TYPE_GROUP,
 	SESSION_TYPE_LIVECHAT,
 	SESSION_TYPE_SESSION,
-	SESSION_TYPE_TEAMSESSION
+	SESSION_TYPE_TEAMSESSION,
+	SESSION_TYPES
 } from '../session/sessionHelpers';
 
 import { AskerInfo } from '../askerInfo/AskerInfo';
@@ -22,7 +23,9 @@ import VideoConference from '../videoConference/VideoConference';
 import {
 	AppConfigInterface,
 	AUTHORITIES,
-	hasUserAuthority
+	hasUserAuthority,
+	ListItemInterface,
+	UserDataInterface
 } from '../../globalState';
 
 import { ReactComponent as OverviewIconOutline } from '../../resources/img/icons/overview_outline.svg';
@@ -46,6 +49,7 @@ import { BookingCancellation } from '../../containers/bookings/components/Bookin
 import { BookingEvents } from '../../containers/bookings/components/BookingEvents/bookingEvents';
 import { BookingReschedule } from '../../containers/bookings/components/BookingReschedule/bookingReschedule';
 import { hasVideoCallFeature } from '../../utils/videoCallHelpers';
+import { TopicsDataInterface, APIToolsInterface } from '../../globalState';
 
 const SessionView = lazy(() =>
 	import('../session/SessionView').then((m) => ({ default: m.SessionView }))
@@ -53,6 +57,51 @@ const SessionView = lazy(() =>
 const WriteEnquiry = lazy(() =>
 	import('../enquiry/WriteEnquiry').then((m) => ({ default: m.WriteEnquiry }))
 );
+
+type RouteCondition = (
+	userData: UserDataInterface,
+	topics: TopicsDataInterface[],
+	sessionsData: ListItemInterface[],
+	tools: APIToolsInterface[]
+) => boolean;
+
+export type RouterConfigBase = {
+	path: string;
+	component: ReactNode;
+	exact?: boolean;
+	condition?: RouteCondition;
+};
+
+export type RouterConfigList = RouterConfigBase & {
+	sessionTypes: SESSION_TYPES[];
+	type?: SESSION_LIST_TYPES;
+};
+
+export type RouterConfigDetail = RouterConfigBase & {
+	type?: SESSION_LIST_TYPES;
+};
+
+export type RouterConfigNavigation = {
+	to: string;
+	icon: any;
+	iconFilled: any;
+	titleKeys: {
+		large: string;
+		small?: string;
+	};
+	condition?: RouteCondition;
+};
+
+type RouterConfig = {
+	navigation: RouterConfigNavigation[];
+	plainRoutes?: RouterConfigBase[];
+	listRoutes?: RouterConfigList[];
+	detailRoutes?: RouterConfigDetail[];
+	userProfileRoutes?: RouterConfigDetail[];
+	profileRoutes?: RouterConfigBase[];
+	appointmentRoutes?: RouterConfigBase[];
+	toolsRoutes?: RouterConfigBase[];
+};
 
 const showAppointmentsMenuItem = (userData, hasAssignedConsultant) => {
 	return (
@@ -63,15 +112,18 @@ const showAppointmentsMenuItem = (userData, hasAssignedConsultant) => {
 	);
 };
 
-const showToolsMenuItem = (userData, consultingTypes, sessionsData, hasTools) =>
-	hasTools;
+const showToolsMenuItem: RouteCondition = (
+	userData: UserDataInterface,
+	topics: TopicsDataInterface[],
+	sessionsData,
+	tools
+) => !!tools.find((tool) => tool.sharedWithAdviceSeeker);
 
 const isVideoAppointmentsEnabled = (
-	userData,
-	consultingTypes,
+	userData: UserDataInterface,
+	topics: TopicsDataInterface[],
 	disableVideoAppointments
-) =>
-	!disableVideoAppointments && hasVideoCallFeature(userData, consultingTypes);
+) => !disableVideoAppointments && hasVideoCallFeature(userData, topics);
 
 const appointmentRoutes = [
 	{
@@ -93,14 +145,16 @@ const appointmentRoutes = [
 	}
 ];
 
-const toolsRoutes = [
+const toolsRoutes: RouterConfigBase[] = [
 	{
 		path: '/tools',
 		component: ToolsList
 	}
 ];
 
-const overviewRoute = (settings: AppConfigInterface) => ({
+const overviewRoute = (
+	settings: AppConfigInterface
+): RouterConfigNavigation => ({
 	condition: () => settings.useOverviewPage && isDesktop,
 	to: '/overview',
 	icon: OverviewIconOutline,
@@ -113,7 +167,7 @@ const overviewRoute = (settings: AppConfigInterface) => ({
 export const RouterConfigUser = (
 	_settings: AppConfigInterface,
 	hasAssignedConsultant: boolean
-): any => {
+): RouterConfig => {
 	return {
 		navigation: [
 			{
@@ -210,7 +264,9 @@ export const RouterConfigUser = (
 	};
 };
 
-export const RouterConfigConsultant = (settings: AppConfigInterface): any => {
+export const RouterConfigConsultant = (
+	settings: AppConfigInterface
+): RouterConfig => {
 	return {
 		plainRoutes: [
 			{
@@ -353,10 +409,10 @@ export const RouterConfigConsultant = (settings: AppConfigInterface): any => {
 				component: Profile
 			},
 			{
-				condition: (userData, consultingTypes) =>
+				condition: (userData, topics) =>
 					isVideoAppointmentsEnabled(
 						userData,
-						consultingTypes,
+						topics,
 						settings.disableVideoAppointments
 					),
 				path: '/termine',
@@ -371,7 +427,7 @@ export const RouterConfigConsultant = (settings: AppConfigInterface): any => {
 
 export const RouterConfigTeamConsultant = (
 	settings: AppConfigInterface
-): any => {
+): RouterConfig => {
 	return {
 		plainRoutes: [
 			{
@@ -410,10 +466,10 @@ export const RouterConfigTeamConsultant = (
 				}
 			},
 			{
-				condition: (userData, consultingTypes) =>
+				condition: (userData, topics) =>
 					isVideoAppointmentsEnabled(
 						userData,
-						consultingTypes,
+						topics,
 						settings.disableVideoAppointments
 					),
 				to: '/termine',
@@ -561,10 +617,10 @@ export const RouterConfigTeamConsultant = (
 				component: Profile
 			},
 			{
-				condition: (userData, consultingTypes) =>
+				condition: (userData, topics) =>
 					isVideoAppointmentsEnabled(
 						userData,
-						consultingTypes,
+						topics,
 						settings.disableVideoAppointments
 					),
 				path: '/termine',
@@ -579,13 +635,13 @@ export const RouterConfigTeamConsultant = (
 
 export const RouterConfigPeerConsultant = (
 	settings: AppConfigInterface
-): any => {
+): RouterConfig => {
 	return RouterConfigConsultant(settings);
 };
 
 export const RouterConfigMainConsultant = (
 	settings: AppConfigInterface
-): any => {
+): RouterConfig => {
 	const config = RouterConfigTeamConsultant(settings);
 
 	config.navigation[3].titleKeys = {
@@ -595,7 +651,7 @@ export const RouterConfigMainConsultant = (
 	return config;
 };
 
-export const RouterConfigAnonymousAsker = (): any => {
+export const RouterConfigAnonymousAsker = (): RouterConfig => {
 	return {
 		navigation: [
 			{

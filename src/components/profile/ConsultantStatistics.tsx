@@ -1,5 +1,7 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { CSVLink } from 'react-csv';
+import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 import {
 	apiGetConsultantStatistics,
 	ApiGetConsultantStatisticsInterface,
@@ -11,12 +13,9 @@ import { Text } from '../text/Text';
 import { ReactComponent as PersonsIcon } from '../../resources/img/icons/persons.svg';
 import { ReactComponent as SpeechBubbleIcon } from '../../resources/img/icons/speech-bubble.svg';
 import { ReactComponent as DownloadIcon } from '../../resources/img/icons/download.svg';
-import { CSVLink } from 'react-csv';
 import { formatToDDMMYYYY } from '../../utils/dateHelpers';
-import dayjs from 'dayjs';
 import './statistics.styles';
 import './profile.styles';
-import { useTranslation } from 'react-i18next';
 import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 
 const statisticsPeriodOptionCurrentMonth = 'currentMonth';

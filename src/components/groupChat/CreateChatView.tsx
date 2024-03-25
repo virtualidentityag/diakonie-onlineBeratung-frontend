@@ -45,6 +45,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { apiGetSessionRoomsByGroupIds } from '../../api/apiGetSessionRooms';
 import { useSearchParam } from '../../hooks/useSearchParams';
 import { useTranslation } from 'react-i18next';
+import { TopicsContext } from '../../globalState/provider/TopicsProvider';
 
 registerLocale('de', de);
 
@@ -55,6 +56,7 @@ export const CreateGroupChatView = (props) => {
 
 	const { sessions, ready, dispatch } = useContext(SessionsDataContext);
 	const { path: listPath } = useContext(SessionTypeContext);
+	const { topics } = useContext(TopicsContext);
 	const [selectedChatTopic, setSelectedChatTopic] = useState('');
 	const [selectedDate, setSelectedDate] = useState('');
 	const [selectedTime, setSelectedTime] = useState('');
@@ -156,7 +158,11 @@ export const CreateGroupChatView = (props) => {
 			return;
 		}
 
-		const activeSession = getExtendedSession(groupIdFromParam, sessions);
+		const activeSession = getExtendedSession(
+			topics,
+			groupIdFromParam,
+			sessions
+		);
 		if (!activeSession) {
 			return;
 		}
@@ -169,13 +175,13 @@ export const CreateGroupChatView = (props) => {
 				activeSession.item.startTime
 			);
 			setIsEditGroupChatMode(true);
-			setSelectedChatTopic(activeSession.item.topic as string);
+			setSelectedChatTopic(activeSession.chatTopic);
 			handleDatePicker(new Date(activeSession.item.startDate));
 			handleTimePicker(selectedTime);
 			setSelectedDuration(activeSession.item.duration);
 			setSelectedRepetitive(activeSession.item.repetitive);
 		}
-	}, [groupIdFromParam, props.location.state, ready, sessions]);
+	}, [topics, groupIdFromParam, props.location.state, ready, sessions]);
 
 	const arePrefilledValuesChanged = useCallback(() => {
 		const prefillDate = new Date(activeSession.item.startDate);
@@ -187,7 +193,7 @@ export const CreateGroupChatView = (props) => {
 		const inputTime: Date = new Date(selectedTime);
 
 		return (
-			activeSession.item.topic !== selectedChatTopic ||
+			activeSession.chatTopic !== selectedChatTopic ||
 			prefillDate.getTime() !== inputDate.getTime() ||
 			prefillTime.toLocaleTimeString() !==
 				inputTime.toLocaleTimeString() ||
@@ -199,7 +205,7 @@ export const CreateGroupChatView = (props) => {
 		activeSession?.item.repetitive,
 		activeSession?.item.startDate,
 		activeSession?.item.startTime,
-		activeSession?.item.topic,
+		activeSession?.chatTopic,
 		selectedChatTopic,
 		selectedDate,
 		selectedDuration,
@@ -365,7 +371,11 @@ export const CreateGroupChatView = (props) => {
 							});
 
 							setActiveSession(
-								getExtendedSession(response.groupId, sessions)
+								getExtendedSession(
+									topics,
+									response.groupId,
+									sessions
+								)
 							);
 							setOverlayItem(createChatSuccessOverlayItem);
 							setOverlayActive(true);
@@ -378,6 +388,7 @@ export const CreateGroupChatView = (props) => {
 				});
 		},
 		[
+			topics,
 			createChatErrorOverlayItem,
 			createChatSuccessOverlayItem,
 			dispatch,
@@ -493,7 +504,7 @@ export const CreateGroupChatView = (props) => {
 						</h3>
 					</div>
 					<p className="createChat__header__subtitle createChat__header__subtitle--withBackButton">
-						{activeSession.item.topic}
+						{activeSession.chatTopic}
 					</p>
 				</div>
 			) : (

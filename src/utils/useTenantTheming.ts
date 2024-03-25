@@ -1,7 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { apiGetTenantTheming } from '../api/apiGetTenantTheming';
-import { TenantContext, useLocaleData } from '../globalState';
-import { TenantDataInterface } from '../globalState/interfaces/TenantDataInterface';
+import {
+	TenantContext,
+	useLocaleData,
+	TenantDataInterface
+} from '../globalState';
 import getLocationVariables from './getLocationVariables';
 import decodeHTML from './decodeHTML';
 import contrast from 'get-contrast';

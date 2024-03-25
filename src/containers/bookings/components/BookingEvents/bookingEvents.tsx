@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { useContext } from 'react';
-import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import {
 	Button,
 	BUTTON_TYPES,
@@ -14,9 +13,10 @@ import { Text } from '../../../../components/text/Text';
 import bookingRoutes from '../../booking.routes';
 import {
 	UserDataContext,
-	useConsultingTypes,
 	hasUserAuthority,
-	AUTHORITIES
+	AUTHORITIES,
+	ConsultingTypesContext,
+	TopicsContext
 } from '../../../../globalState';
 import {
 	solveTabConditions,
@@ -30,7 +30,8 @@ export const BookingEvents = () => {
 	const history = useHistory();
 
 	const { userData } = useContext(UserDataContext);
-	const consultingTypes = useConsultingTypes();
+	const { topics } = useContext(TopicsContext);
+	const { consultingTypes } = useContext(ConsultingTypesContext);
 
 	const isConsultant = hasUserAuthority(
 		AUTHORITIES.CONSULTANT_DEFAULT,
@@ -134,7 +135,8 @@ export const BookingEvents = () => {
 											solveCondition(
 												element.condition,
 												userData,
-												consultingTypes
+												consultingTypes ?? [],
+												topics ?? []
 											)
 										)
 										.map((element, i) => (

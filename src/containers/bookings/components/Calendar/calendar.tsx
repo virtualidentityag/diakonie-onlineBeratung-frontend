@@ -1,8 +1,7 @@
-import { Button } from '../../../../components/button/Button';
-import * as React from 'react';
-import { useAppConfig } from '../../../../hooks/useAppConfig';
-import { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../../../../components/button/Button';
+import { useAppConfig } from '../../../../hooks/useAppConfig';
 
 interface AvailableCalendarsProps {
 	buttonLabelKey: string;

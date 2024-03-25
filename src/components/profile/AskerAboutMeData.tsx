@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import {
 	apiDeleteTwoFactorAuth,
 	apiPutEmail,

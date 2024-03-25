@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, JSX } from 'react';
 import { OVERLAY_RESET_TIME } from '../overlay/Overlay';
 import { ReactComponent as ReloadIcon } from '../../resources/img/icons/reload.svg';
 import './button.styles';

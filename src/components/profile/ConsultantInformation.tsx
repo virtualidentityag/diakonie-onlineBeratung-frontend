@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useContext, useState, useEffect } from 'react';
+import React, { useCallback, useContext, useState, useEffect } from 'react';
 import { ReactComponent as CopyIcon } from '../../resources/img/icons/documents.svg';
 import { ReactComponent as InfoIcon } from '../../resources/img/icons/i.svg';
 import {

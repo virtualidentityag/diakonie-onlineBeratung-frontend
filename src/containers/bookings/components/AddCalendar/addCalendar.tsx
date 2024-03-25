@@ -1,10 +1,10 @@
+import React from 'react';
 import {
 	AppleIcon,
 	CalDav,
 	GoogleCalendar,
 	Office365
 } from '../../../../resources/img/icons';
-import * as React from 'react';
 import { Calendar } from '../Calendar/calendar';
 
 const AddCalendar = () => {

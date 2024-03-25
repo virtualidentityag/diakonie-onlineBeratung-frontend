@@ -22,6 +22,9 @@ export type RegistrationWelcomeScreenInterface = {
 	};
 };
 
+/**
+ * @deprecated
+ */
 export interface ConsultingTypeBasicInterface {
 	id: number;
 	isAnonymousConversationAllowed: boolean;
@@ -31,12 +34,16 @@ export interface ConsultingTypeBasicInterface {
 		autoSelectPostcode: boolean;
 		notes: RegistrationNotesInterface;
 	};
+	/** @deprecated should be moved to topic */
 	groupChat: {
 		isGroupChat: boolean;
 		groupChatRules: [string];
 	};
 }
 
+/**
+ * @deprecated
+ */
 export interface ConsultingTypeInterface extends ConsultingTypeBasicInterface {
 	description: string;
 	slug: string;
@@ -49,7 +56,11 @@ export interface ConsultingTypeInterface extends ConsultingTypeBasicInterface {
 	welcomeScreen: RegistrationWelcomeScreenInterface;
 }
 
-export interface ConsultingTypeInterfaceNew extends ConsultingTypeBasicInterface {
+/**
+ * @deprecated
+ */
+export interface ConsultingTypeInterfaceNew
+	extends ConsultingTypeBasicInterface {
 	description: string;
 	furtherInformation?: {
 		label: string;

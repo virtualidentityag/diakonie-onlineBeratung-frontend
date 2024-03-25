@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { Text } from '../../../../components/text/Text';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Text } from '../../../../components/text/Text';
 import { ReactComponent as ArrowUpIcon } from '../../../../resources/img/icons/arrow-up.svg';
 import { ReactComponent as ArrowDownIcon } from '../../../../resources/img/icons/arrow-down.svg';
 

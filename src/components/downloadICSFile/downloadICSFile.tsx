@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Text } from '../text/Text';
 import { ReactComponent as CalendarICSIcon } from '../../resources/img/icons/calendar-ics.svg';
 import { addMissingZero } from '../../utils/dateHelpers';
 import './downloadICSFile.styles';
-import { useTranslation } from 'react-i18next';
 
 export interface AppointmentInfoICS {
 	date: string;

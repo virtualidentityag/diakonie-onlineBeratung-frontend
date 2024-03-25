@@ -1,7 +1,6 @@
-import { LinearProgress, Typography, Box } from '@mui/material';
-import * as React from 'react';
+import React, { VFC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { VFC } from 'react';
+import { LinearProgress, Typography, Box } from '@mui/material';
 
 interface StepBarProps {
 	currentStep: number;

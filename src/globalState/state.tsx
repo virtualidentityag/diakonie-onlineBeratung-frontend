@@ -11,7 +11,10 @@ import {
 	RocketChatGlobalSettingsProvider,
 	AnonymousConversationStartedProvider,
 	SessionsDataProvider,
-	ModalProvider
+	ModalProvider,
+	ToolsProvider,
+	TopicGroupsProvider,
+	TopicsProvider
 } from '.';
 
 function ProviderComposer({ contexts, children }) {
@@ -32,9 +35,12 @@ function ContextProvider({ children }) {
 				<AnonymousConversationStartedProvider />,
 				<ConsultantListProvider />,
 				<ConsultingTypesProvider />,
+				<TopicGroupsProvider />,
+				<TopicsProvider />,
 				<NotificationsProvider />,
 				<UpdateSessionListProvider />,
 				<UserDataProvider />,
+				<ToolsProvider />,
 				<AnonymousConversationFinishedProvider />,
 				<WebsocketConnectionDeactivatedProvider />,
 				<SessionsDataProvider />,

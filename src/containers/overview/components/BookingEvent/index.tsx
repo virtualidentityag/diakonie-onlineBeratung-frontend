@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { generatePath } from 'react-router-dom';
-import { BookingEventsInterface } from '../../../../globalState/interfaces/BookingsInterface';
 import {
 	convertUTCDateToLocalDate,
 	formatToHHMM,
@@ -13,7 +12,8 @@ import { uiUrl } from '../../../../resources/scripts/config';
 import {
 	AUTHORITIES,
 	hasUserAuthority,
-	UserDataContext
+	UserDataContext,
+	BookingEventsInterface
 } from '../../../../globalState';
 import { useAppConfig } from '../../../../hooks/useAppConfig';
 import {

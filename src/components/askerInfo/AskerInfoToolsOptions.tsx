@@ -9,7 +9,7 @@ import { ReactComponent as Info } from '../../resources/img/icons/i.svg';
 import { Text } from '../text/Text';
 import './askerInfoToolsOptions.styles';
 import { apiGetTools } from '../../api/apiGetTools';
-import { APIToolsInterface } from '../../globalState/interfaces/ToolsInterface';
+import { APIToolsInterface } from '../../globalState';
 import { Overlay, OVERLAY_FUNCTIONS } from '../overlay/Overlay';
 import { BUTTON_TYPES } from '../button/Button';
 import { Checkbox } from '../checkbox/Checkbox';
@@ -132,30 +132,27 @@ export const AskerInfoToolsOptions = (
 		[updateTools]
 	);
 
-	const setAvailableToolsOptions = useCallback(
-		(toolsData: APIToolsInterface[]) => {
+	useEffect(() => {
+		if (!props.askerId) return;
+
+		apiGetTools(props.askerId).then((resp: APIToolsInterface[]) => {
 			setAvailableTools(
-				toolsData.map((tool) => {
-					return {
-						value: tool.toolId,
-						label: tool.title
-					};
-				})
+				resp.map((tool) => ({
+					value: tool.toolId,
+					label: tool.title
+				}))
 			);
-			let toolsSelected = [];
-			toolsData.forEach((tool) => {
-				if (tool.sharedWithAdviceSeeker) {
-					toolsSelected.push({
+			setSelectedTools(
+				resp
+					.filter((tool) => tool.sharedWithAdviceSeeker)
+					.map((tool) => ({
 						value: tool.toolId,
 						label: tool.title
-					});
-				}
-			});
-			setSelectedTools(toolsSelected);
-			setInfoAboutToolsModal(toolsData);
-		},
-		[]
-	);
+					}))
+			);
+			setInfoAboutToolsModal(resp);
+		});
+	}, [props.askerId]);
 
 	const resetToolsAfterCloseModal = useCallback(() => {
 		const activeTools = selectedTools.map((tool) => tool.value);
@@ -235,14 +232,6 @@ export const AskerInfoToolsOptions = (
 
 		setOverlayContent(overlayItem);
 	}, [infoAboutToolsModal]); // eslint-disable-line react-hooks/exhaustive-deps
-
-	useEffect(() => {
-		if (props.askerId) {
-			apiGetTools(props.askerId).then((resp: APIToolsInterface[]) => {
-				setAvailableToolsOptions(resp);
-			});
-		}
-	}, [props.askerId]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div className="askerInfoToolsOptions">

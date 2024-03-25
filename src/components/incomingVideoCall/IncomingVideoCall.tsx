@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useHistory } from 'react-router-dom';
 import { Button, ButtonItem, BUTTON_TYPES } from '../button/Button';

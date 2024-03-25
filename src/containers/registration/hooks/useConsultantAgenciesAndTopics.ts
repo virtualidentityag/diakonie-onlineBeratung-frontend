@@ -1,20 +1,26 @@
 import { useState, useEffect, useContext } from 'react';
 import unionBy from 'lodash/unionBy';
-
 import {
 	ConsultingTypeInterface,
-	AgencyDataInterface
+	AgencyDataInterface,
+	TopicsDataInterface
 } from '../../../globalState';
 import { useAppConfig } from '../../../hooks/useAppConfig';
 import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 
-export const useConsultantAgenciesAndConsultingTypes = () => {
+export const useConsultantAgenciesAndTopics = () => {
 	const settings = useAppConfig();
-	const { consultingType, consultant: consultantFromUrl, agency } = useContext(UrlParamsContext);
+	const {
+		consultingType,
+		consultant: consultantFromUrl,
+		agency,
+		topic
+	} = useContext(UrlParamsContext);
 
 	const [consultingTypes, setConsultingTypes] = useState<
 		ConsultingTypeInterface[]
 	>([]);
+	const [topics, setTopics] = useState<TopicsDataInterface[]>([]);
 
 	const [agencies, setAgencies] = useState<AgencyDataInterface[]>([]);
 
@@ -32,30 +38,33 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 		) {
 			setAgencies(consultantFromUrl?.agencies);
 			setConsultingTypes([consultingType]);
+			setTopics([topic]);
 			return;
 		}
 
-		const consultingTypes =
+		const topics =
 			// Remove consultingType duplicates
 			unionBy(
-				consultantFromUrl.agencies.map(
-					({ consultingTypeRel }) => consultingTypeRel
+				consultantFromUrl.agencies.reduce(
+					(acc, { topicRels }) => acc.concat(topicRels),
+					[]
 				),
 				'id'
 			)
 				// If consultingType was preselected by url slug
-				.filter((c) => !consultingType || c.id === consultingType.id);
+				.filter((t) => !topic || t.id === topic.id);
 
 		if (agency) {
-			const consultingTypeIds = consultingTypes.map((c) => c.id);
+			const topicIds = topics.map((t) => t.id);
 			const preselectedAgency = consultantFromUrl.agencies.find(
 				(a) =>
 					a.id === agency.id &&
-					consultingTypeIds.includes(a.consultingType)
+					topicIds.find((topicId) => a.topicIds.includes(topicId))
 			);
 			if (preselectedAgency) {
 				setAgencies([preselectedAgency]);
 				setConsultingTypes([preselectedAgency.consultingTypeRel]);
+				setTopics(preselectedAgency.topicRels);
 				return;
 			}
 		}
@@ -63,17 +72,20 @@ export const useConsultantAgenciesAndConsultingTypes = () => {
 		const possibleAgencies = consultantFromUrl.agencies
 			// If a consultingType is selected filter the agencies
 			.filter((agency) =>
-				consultingTypes.find((ct) => ct.id === agency.consultingType)
+				topics.find((topic) => topic.id === agency.consultingType)
 			);
 
 		setAgencies(possibleAgencies);
 		setConsultingTypes(consultingTypes);
+		setTopics(topics);
 	}, [
 		consultantFromUrl,
 		consultingType,
 		agency,
-		settings.multitenancyWithSingleDomainEnabled
+		settings.multitenancyWithSingleDomainEnabled,
+		consultingTypes,
+		topic
 	]);
 
-	return { agencies, consultingTypes };
+	return { agencies, consultingTypes, topics };
 };

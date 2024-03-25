@@ -5,7 +5,7 @@ import {
 	ConsultingTypeInterface
 } from '..';
 import useUrlParamsLoader from '../../utils/useUrlParamsLoader';
-import { TopicsDataInterface } from '../interfaces/TopicsDataInterface';
+import { TopicsDataInterface } from '../interfaces';
 
 export const UrlParamsContext = createContext<{
 	agency: AgencyDataInterface | null;

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Overlay, OVERLAY_FUNCTIONS } from '../overlay/Overlay';
 import { ReactComponent as ArrowIcon } from '../../resources/img/illustrations/arrow.svg';
 import { BUTTON_TYPES } from '../button/Button';
-import { useTranslation } from 'react-i18next';
-import { TopicsDataInterface } from '../../globalState/interfaces/TopicsDataInterface';
+import { TopicsDataInterface } from '../../globalState';
 
 interface AskerRegistrationExternalAgencyOverlayProps {
 	topic: TopicsDataInterface;

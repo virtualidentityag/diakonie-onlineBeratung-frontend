@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import { mount } from 'cypress/react';
 import { LoginArgs } from './commands/login';
-import { AppointmentsDataInterface } from '../../src/globalState/interfaces/AppointmentsDataInterface';
+import { AppointmentsDataInterface } from '../../src/globalState';
 
 export {};
 

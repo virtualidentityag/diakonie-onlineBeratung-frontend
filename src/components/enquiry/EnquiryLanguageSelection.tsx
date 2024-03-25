@@ -10,6 +10,7 @@ import { LanguagesContext } from '../../globalState/provider/LanguagesProvider';
 import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '../../hooks/useAppConfig';
 import { LocaleContext } from '../../globalState/provider/LocaleProvider';
+import { TopicsContext } from '../../globalState/provider/TopicsProvider';
 
 interface EnquiryLanguageSelectionProps {
 	className?: string;
@@ -22,8 +23,11 @@ export const EnquiryLanguageSelection: React.FC<
 > = ({ className = '', onSelect, value }) => {
 	const { t: translate } = useTranslation();
 	const settings = useAppConfig();
+
 	const { sessions, ready } = useContext(SessionsDataContext);
 	const { fixed: fixedLanguages } = useContext(LanguagesContext);
+	const { topics } = useContext(TopicsContext);
+
 	const { sessionId: sessionIdFromParam } = useParams<{
 		sessionId: string;
 	}>();
@@ -39,6 +43,7 @@ export const EnquiryLanguageSelection: React.FC<
 		// async wrapper
 		const getLanguagesFromApi = new Promise<string[]>((resolve) => {
 			const activeSession = getExtendedSession(
+				topics,
 				sessionIdFromParam,
 				sessions
 			);
@@ -99,6 +104,7 @@ export const EnquiryLanguageSelection: React.FC<
 		});
 	}, [
 		sessions,
+		topics,
 		ready,
 		sessionIdFromParam,
 		fixedLanguages,

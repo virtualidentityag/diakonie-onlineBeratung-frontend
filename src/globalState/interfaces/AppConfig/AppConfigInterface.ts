@@ -26,6 +26,10 @@ export interface AppConfigInterface extends AppSettingsInterface {
 			other?: boolean;
 		};
 	};
+	/**
+	 * Only to make logic more dynamic and not affect other customers
+	 */
+	u25ids?: number[];
 }
 
 interface ReleaseToggles {

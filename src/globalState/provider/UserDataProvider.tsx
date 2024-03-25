@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createContext, useCallback, useState } from 'react';
-import { UserDataInterface } from '../interfaces/UserDataInterface';
+import { UserDataInterface } from '../interfaces';
 import { apiGetUserData } from '../../api';
 
 type TUserDataContext = {

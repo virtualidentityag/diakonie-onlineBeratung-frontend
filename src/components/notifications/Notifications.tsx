@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { isNotificationTypeCall } from '../incomingVideoCall/IncomingVideoCall';
 import './notifications.styles';
 import incomingCallRingtone from '../../resources/audio/incomingCall.mp3';

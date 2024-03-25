@@ -2,6 +2,9 @@ import { ConsultingTypeInterface } from '../globalState';
 import { endpoints } from '../resources/scripts/endpoints';
 import { fetchData, FETCH_ERRORS, FETCH_METHODS } from './fetchData';
 
+/**
+ * @deprecated
+ */
 export const apiGetConsultingType = async (params: {
 	consultingTypeSlug?: string;
 	consultingTypeId?: number;

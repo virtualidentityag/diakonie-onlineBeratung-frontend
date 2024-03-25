@@ -2,9 +2,8 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Textarea } from '../form/textarea';
 import * as React from 'react';
-import { AppointmentsDataInterface } from '../../globalState/interfaces/AppointmentsDataInterface';
+import { AppointmentsDataInterface, LocaleContext } from '../../globalState';
 import { useTranslation } from 'react-i18next';
-import { LocaleContext } from '../../globalState';
 
 type OnlineMeetingFormProps = {
 	onChange: (appointment: AppointmentsDataInterface) => void;

@@ -409,8 +409,7 @@ export const SessionStream = ({
 		const agencyId = activeSession.item.agencyId.toString();
 		apiGetAgencyConsultantList(agencyId)
 			.then((response) => {
-				const consultants = prepareConsultantDataForSelect(response);
-				setConsultantList(consultants);
+				setConsultantList(prepareConsultantDataForSelect(response));
 			})
 			.catch((error) => {
 				console.log(error);

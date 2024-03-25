@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { InputField, InputFieldItem } from '../inputField/InputField';
 import { apiUpdatePassword } from '../../api';
 import { Overlay, OVERLAY_FUNCTIONS, OverlayItem } from '../overlay/Overlay';

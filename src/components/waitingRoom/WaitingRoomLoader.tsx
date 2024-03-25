@@ -1,8 +1,15 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { apiGetConsultingType } from '../../api';
+import { apiAgencySelection, apiGetConsultingType } from '../../api';
 import { WaitingRoom } from '../waitingRoom/WaitingRoom';
+import { apiGetTopicById } from '../../api/apiGetTopicId';
+import {
+	ConsultingTypeInterface,
+	ConsultingTypesContext,
+	TopicsContext,
+	TopicsDataInterface
+} from '../../globalState';
+import { DEFAULT_POSTCODE } from '../registration/prefillPostcode';
 
 export interface WaitingRoomLoaderProps {
 	handleUnmatch: () => void;
@@ -13,33 +20,41 @@ export const WaitingRoomLoader = ({
 	handleUnmatch,
 	onAnonymousRegistration
 }: WaitingRoomLoaderProps) => {
-	const [isAnonymousConversationAllowed, setIsAnonymousConversationAllowed] =
-		useState<boolean>();
-	const { consultingTypeSlug } = useParams<{
-		consultingTypeSlug: string;
-	}>();
-	const [consultingTypeId, setConsultingTypeId] = useState<number>();
+	const { topicSlug } = useParams<{ topicSlug: string }>();
+
+	const { getConsultingTypeFull } = useContext(ConsultingTypesContext);
+	const { getTopicBySlugNameOrId } = useContext(TopicsContext);
+
+	const [topic, setTopic] = useState<TopicsDataInterface>();
+	const [consultingType, setConsultingType] =
+		useState<ConsultingTypeInterface>();
 
 	useEffect(() => {
-		apiGetConsultingType({ consultingTypeSlug }).then((result) => {
-			if (result?.isAnonymousConversationAllowed) {
-				setConsultingTypeId(result.id);
-				setIsAnonymousConversationAllowed(true);
+		(async () => {
+			const topic = await getTopicBySlugNameOrId(topicSlug);
+			const consultingType = await getConsultingTypeFull(topic.id);
+			if (consultingType?.isAnonymousConversationAllowed) {
+				setTopic(topic);
+				setConsultingType(consultingType);
 			} else {
 				handleUnmatch();
 			}
-		});
-	}, [consultingTypeSlug, handleUnmatch]);
+		})();
+	}, [
+		topicSlug,
+		handleUnmatch,
+		getTopicBySlugNameOrId,
+		getConsultingTypeFull
+	]);
 
-	if (isAnonymousConversationAllowed) {
-		return (
-			<WaitingRoom
-				consultingTypeSlug={consultingTypeSlug}
-				consultingTypeId={consultingTypeId}
-				onAnonymousRegistration={onAnonymousRegistration}
-			/>
-		);
-	} else {
+	if (!consultingType?.isAnonymousConversationAllowed) {
 		return null;
 	}
+
+	return (
+		<WaitingRoom
+			topic={topic}
+			onAnonymousRegistration={onAnonymousRegistration}
+		/>
+	);
 };

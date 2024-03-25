@@ -23,7 +23,6 @@ import {
 	AnonymousConversationStartedContext,
 	AUTHORITIES,
 	buildExtendedSession,
-	ConsultingTypesContext,
 	ExtendedSessionInterface,
 	getExtendedSession,
 	hasUserAuthority,
@@ -80,6 +79,7 @@ import { RocketChatUserStatusContext } from '../../globalState/provider/RocketCh
 import { ActiveSessionContext } from '../../globalState/provider/ActiveSessionProvider';
 import { RocketChatUsersOfRoomProvider } from '../../globalState/provider/RocketChatUsersOfRoomProvider';
 import { EmptyListItem } from './EmptyListItem';
+import { TopicsContext } from '../../globalState/provider/TopicsProvider';
 
 interface SessionsListProps {
 	defaultLanguage: string;
@@ -91,10 +91,6 @@ export const SessionsList = ({
 	sessionTypes
 }: SessionsListProps) => {
 	const { t: translate } = useTranslation();
-	const { consultingTypes } = useContext(ConsultingTypesContext);
-	const { anonymousConversationFinished } = useContext(
-		AnonymousConversationFinishedContext
-	);
 
 	const { rcGroupId: groupIdFromParam, sessionId: sessionIdFromParam } =
 		useParams<{ rcGroupId: string; sessionId: string }>();
@@ -105,9 +101,16 @@ export const SessionsList = ({
 	const rcUid = useRef(getValueFromCookie('rc_uid'));
 	const listRef = createRef<HTMLDivElement>();
 
+	const { anonymousConversationFinished } = useContext(
+		AnonymousConversationFinishedContext
+	);
 	const { sessions, dispatch } = useContext(SessionsDataContext);
 	const { type, path: listPath } = useContext(SessionTypeContext);
-
+	const { userData, reloadUserData } = useContext(UserDataContext);
+	const { status } = useContext(RocketChatUserStatusContext);
+	const { topics } = useContext(TopicsContext);
+	const { anonymousConversationStarted, setAnonymousConversationStarted } =
+		useContext(AnonymousConversationStartedContext);
 	const {
 		subscribe,
 		unsubscribe,
@@ -119,16 +122,11 @@ export const SessionsList = ({
 
 	const sessionListTab = useSearchParam<SESSION_LIST_TAB>('sessionListTab');
 
-	const { userData, reloadUserData } = useContext(UserDataContext);
-	const { status } = useContext(RocketChatUserStatusContext);
-
 	const [isLoading, setIsLoading] = useState(true);
 	const [currentOffset, setCurrentOffset] = useState(0);
 	const [totalItems, setTotalItems] = useState(0);
 	const [isReloadButtonVisible, setIsReloadButtonVisible] = useState(false);
 	const [isRequestInProgress, setIsRequestInProgress] = useState(false);
-	const { anonymousConversationStarted, setAnonymousConversationStarted } =
-		useContext(AnonymousConversationStartedContext);
 
 	const abortController = useRef<AbortController>(null);
 
@@ -146,7 +144,7 @@ export const SessionsList = ({
 	const isCreateChatActive = groupIdFromParam === 'createGroupChat';
 
 	const getConsultantSessionList = useCallback(
-		(
+		async (
 			offset: number,
 			initialID?: string,
 			count?: number
@@ -174,13 +172,10 @@ export const SessionsList = ({
 
 					// Check if selected room already loaded
 					if (
-						getExtendedSession(initialID, sessions) ||
+						getExtendedSession(topics, initialID, sessions) ||
 						total <= offset + SESSION_COUNT
 					) {
-						return {
-							sessions,
-							total
-						};
+						return { sessions, total };
 					}
 
 					return getConsultantSessionList(
@@ -200,7 +195,7 @@ export const SessionsList = ({
 					return { sessions, total };
 				});
 		},
-		[filter, sessionListTab, type]
+		[topics, filter, sessionListTab, type]
 	);
 
 	useLiveChatWatcher(
@@ -271,7 +266,8 @@ export const SessionsList = ({
 						)
 					) {
 						const extendedSession = buildExtendedSession(
-							sessions[0]
+							sessions[0],
+							topics
 						);
 						history.push(
 							`/sessions/user/view/${extendedSession?.rid}/${extendedSession?.item?.id}`
@@ -676,20 +672,22 @@ export const SessionsList = ({
 		defaultValue: preSelectedOption
 	};
 
-	const showEnquiryTabs = useMemo(() => {
-		return (
+	const showEnquiryTabs = useMemo(
+		() =>
 			hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
 			userData.hasAnonymousConversations &&
 			type === SESSION_LIST_TYPES.ENQUIRY &&
-			userData.agencies.some(
-				(agency) =>
-					(consultingTypes ?? []).find(
-						(consultingType) =>
-							consultingType.id === agency.consultingType
-					)?.isAnonymousConversationAllowed
-			)
-		);
-	}, [consultingTypes, type, userData]);
+			userData.agencies.some((agency) =>
+				topics
+					.filter((topic) => agency.topicIds.includes(topic.id))
+					.some(
+						(topic) =>
+							topic?.consultingType
+								?.isAnonymousConversationAllowed
+					)
+			),
+		[topics, type, userData]
+	);
 
 	const showSessionListTabs =
 		userData.hasArchive &&
@@ -971,7 +969,11 @@ export const SessionsList = ({
 							sessionListTab !== SESSION_LIST_TAB_ANONYMOUS) &&
 						finalSessionsList
 							.map((session) =>
-								buildExtendedSession(session, groupIdFromParam)
+								buildExtendedSession(
+									session,
+									topics,
+									groupIdFromParam
+								)
 							)
 							.sort(sortSessions)
 							.map(

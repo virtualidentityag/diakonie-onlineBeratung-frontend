@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { SendMessageButton } from './SendMessageButton';
 import { ReactComponent as EmojiIcon } from '../../resources/img/icons/smiley-positive.svg';
 import { ReactComponent as RichtextToggleIcon } from '../../resources/img/icons/richtext-toggle.svg';
 import './messageSubmitInterface.styles';
-import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
 import { Loading } from '../app/Loading';
 
 export interface MessageSubmitInterfaceComponentProps {

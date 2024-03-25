@@ -6,7 +6,8 @@ import {
 import {
 	AnonymousConversationFinishedContext,
 	buildExtendedSession,
-	ExtendedSessionInterface
+	ExtendedSessionInterface,
+	TopicsContext
 } from '../globalState';
 import { apiSetSessionRead, FETCH_ERRORS } from '../api';
 import { apiGetChatRoomById } from '../api/apiGetChatRoomById';
@@ -21,11 +22,14 @@ export const useSession = (
 	read: () => void;
 	ready: boolean;
 } => {
-	const [ready, setReady] = useState(false);
-	const [session, setSession] = useState<ExtendedSessionInterface>(null);
+	const { topics } = useContext(TopicsContext);
 	const { anonymousConversationFinished } = useContext(
 		AnonymousConversationFinishedContext
 	);
+
+	const [ready, setReady] = useState(false);
+	const [session, setSession] = useState<ExtendedSessionInterface>(null);
+
 	const repetitiveId = useRef(null);
 	const abortController = useRef<AbortController>(null);
 
@@ -72,7 +76,9 @@ export const useSession = (
 		return promise
 			.then(({ sessions: [activeSession] }) => {
 				if (activeSession) {
-					setSession(buildExtendedSession(activeSession, rid));
+					setSession(
+						buildExtendedSession(activeSession, topics, rid)
+					);
 				}
 				setReady(true);
 			})
@@ -84,7 +90,9 @@ export const useSession = (
 				if (repetitiveId.current) {
 					return apiGetChatRoomById(repetitiveId.current).then(
 						({ sessions: [session] }) => {
-							setSession(buildExtendedSession(session, rid));
+							setSession(
+								buildExtendedSession(session, topics, rid)
+							);
 							setReady(true);
 						}
 					);

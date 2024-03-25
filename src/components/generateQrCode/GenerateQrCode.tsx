@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, JSX } from 'react';
 import QRCode from 'qrcode';
 import { Overlay } from '../overlay/Overlay';
 import { ReactComponent as QRCodeIcon } from '../../resources/img/icons/qr-code.svg';

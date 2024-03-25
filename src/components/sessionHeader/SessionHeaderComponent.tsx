@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { handleNumericTranslation } from '../../utils/translate';
 import { mobileListView } from '../app/navigationHandler';
 import {
 	AUTHORITIES,
+	ConsultingTypesContext,
 	getContact,
 	hasUserAuthority,
 	SessionConsultantInterface,
 	SessionTypeContext,
 	TopicSessionInterface,
-	useConsultingType,
 	UserDataContext
 } from '../../globalState';
 import {
@@ -26,7 +26,6 @@ import { ActiveSessionContext } from '../../globalState/provider/ActiveSessionPr
 import './sessionHeader.styles';
 import './sessionHeader.yellowTheme.styles';
 import { useSearchParam } from '../../hooks/useSearchParams';
-import { useTranslation } from 'react-i18next';
 import { GroupChatHeader } from './GroupChatHeader';
 import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 
@@ -40,14 +39,12 @@ export interface SessionHeaderProps {
 export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 	const { t: translate } = useTranslation([
 		'common',
+		'topics',
 		'consultingTypes',
 		'agencies'
 	]);
 	const { activeSession } = useContext(ActiveSessionContext);
 	const { userData } = useContext(UserDataContext);
-	const consultingType = useConsultingType(activeSession.item.consultingType);
-
-	const topic = activeSession.item.topic as TopicSessionInterface;
 
 	const username = getContact(
 		activeSession,
@@ -180,15 +177,14 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 					{hasUserAuthority(
 						AUTHORITIES.CONSULTANT_DEFAULT,
 						userData
-					) ? (
-						isAskerInfoAvailable() ? (
+					) &&
+						(isAskerInfoAvailable() ? (
 							<Link to={userProfileLink}>
 								<h3>{username}</h3>
 							</Link>
 						) : (
 							<h3>{username}</h3>
-						)
-					) : null}
+						))}
 					{hasUserAuthority(
 						AUTHORITIES.ANONYMOUS_DEFAULT,
 						userData
@@ -206,18 +202,19 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 			{(hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
 				hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData)) && (
 				<div className="sessionInfo__metaInfo">
-					{!activeSession.agency ? (
+					{!activeSession.agency && (
 						<div className="sessionInfo__metaInfo__content">
-							{consultingType
-								? translate(
-										[
-											topic.name
-										],
-										{ ns: 'consultingTypes' }
-								  )
-								: ''}
+							{activeSession.topic &&
+								translate(
+									[
+										`topic.${activeSession.topic.id}.titles.default`,
+										`consultingType.${activeSession.topic.id}.titles.default`,
+										activeSession.topic.name
+									],
+									{ ns: ['topics', 'consultingTypes'] }
+								)}
 						</div>
-					) : null}
+					)}
 					{preparedUserSessionData
 						? preparedUserSessionData.map((item, index) =>
 								item.value &&

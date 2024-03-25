@@ -107,6 +107,7 @@ export const endpoints = {
 		apiUrl + '/service/conversations/askers/anonymous/new',
 	registerAsker: apiUrl + '/service/users/askers/new',
 	baseUserService: apiUrl + '/service/users',
+	/** @deprecated */
 	registerAskerNewConsultingType:
 		apiUrl + '/service/users/askers/consultingType/new',
 	rejectVideoCall: apiUrl + '/service/videocalls/reject',

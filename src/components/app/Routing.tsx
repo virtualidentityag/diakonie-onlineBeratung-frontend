@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useMemo, Suspense } from 'react';
+import { useContext, useMemo, Suspense, JSX } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import {
 	RouterConfigUser,
@@ -14,7 +14,6 @@ import {
 	UserDataContext,
 	hasUserAuthority,
 	AUTHORITIES,
-	ConsultingTypesContext,
 	E2EEProvider,
 	SessionTypeProvider
 } from '../../globalState';
@@ -29,6 +28,7 @@ import { useAppConfig } from '../../hooks/useAppConfig';
 import { useAskerHasAssignedConsultant } from '../../containers/bookings/hooks/useAskerHasAssignedConsultant';
 import { TermsAndConditions } from '../termsandconditions/TermsAndConditions';
 import { Loading } from './Loading';
+import { TopicsContext } from '../../globalState/provider/TopicsProvider';
 
 interface RoutingProps {
 	logout?: Function;
@@ -37,7 +37,7 @@ interface RoutingProps {
 export const Routing = (props: RoutingProps) => {
 	const settings = useAppConfig();
 	const { userData } = useContext(UserDataContext);
-	const { consultingTypes } = useContext(ConsultingTypesContext);
+	const { topics } = useContext(TopicsContext);
 	const hasAssignedConsultant = useAskerHasAssignedConsultant();
 
 	const routerConfig = useMemo(() => {
@@ -77,8 +77,7 @@ export const Routing = (props: RoutingProps) => {
 			{routerConfig.plainRoutes
 				?.filter(
 					(route: any) =>
-						!route.condition ||
-						route.condition(userData, consultingTypes)
+						!route.condition || route.condition(userData, topics)
 				)
 				.map(
 					(route: any): JSX.Element => (
@@ -97,7 +96,7 @@ export const Routing = (props: RoutingProps) => {
 					<NonPlainRoutesWrapper logoutHandler={() => props.logout()}>
 						<div className="app__wrapper">
 							<NavigationBar
-								routerConfig={routerConfig}
+								routerConfig={routerConfig.navigation}
 								onLogout={() => props.logout()}
 							/>
 							<section className="contentWrapper">
@@ -245,7 +244,7 @@ export const Routing = (props: RoutingProps) => {
 																!route.condition ||
 																route.condition(
 																	userData,
-																	consultingTypes
+																	topics
 																)
 														)
 														.map(

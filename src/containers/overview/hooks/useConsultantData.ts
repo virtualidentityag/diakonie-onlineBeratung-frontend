@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { apiGetConsultantSessionList } from '../../../api';
 import { SESSION_LIST_TYPES } from '../../../components/session/sessionHelpers';
-import { ListItemsResponseInterface } from '../../../globalState/interfaces/SessionsDataInterface';
+import { ListItemsResponseInterface } from '../../../globalState';
 
 interface ConsultantDataProps {
 	type: SESSION_LIST_TYPES;

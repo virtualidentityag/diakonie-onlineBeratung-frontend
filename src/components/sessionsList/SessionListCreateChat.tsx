@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as SpeechBubblePlusIcon } from '../../resources/img/icons/speech-bubble-plus.svg';
 import './sessionsList.styles';

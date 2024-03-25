@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams, generatePath } from 'react-router-dom';
 import { JitsiMeeting } from '@jitsi/react-sdk';
 import IJitsiMeetExternalApi from '@jitsi/react-sdk/lib/types/IJitsiMeetExternalApi';
@@ -14,9 +13,9 @@ import * as videocallsService from '../../api/videocalls';
 import {
 	AppointmentsDataInterface,
 	STATUS_PAUSED,
-	STATUS_STARTED
-} from '../../globalState/interfaces/AppointmentsDataInterface';
-import { VideoCallJwtDataInterface } from '../../globalState/interfaces/VideoCallDataInterface';
+	STATUS_STARTED,
+	VideoCallJwtDataInterface
+} from '../../globalState';
 import { Loading } from '../app/Loading';
 import { WaitingRoom } from './WaitingRoom';
 import { useWatcher } from '../../hooks/useWatcher';

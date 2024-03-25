@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
+import Switch from 'react-switch';
+import { useTranslation } from 'react-i18next';
 import { Headline } from '../headline/Headline';
 import { Text } from '../text/Text';
-import Switch from 'react-switch';
 import { UserDataContext } from '../../globalState';
 import { apiPatchUserData } from '../../api/apiPatchUserData';
-import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '../../hooks/useAppConfig';
 
 export const ConsultantNotifications = () => {

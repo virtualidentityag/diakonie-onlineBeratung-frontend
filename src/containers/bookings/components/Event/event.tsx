@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { generatePath, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import '../booking.styles';
@@ -11,7 +10,6 @@ import {
 } from '../../../../components/button/Button';
 import { Headline } from '../../../../components/headline/Headline';
 import { Text } from '../../../../components/text/Text';
-import { BookingEventUiInterface } from '../../../../globalState/interfaces/BookingsInterface';
 import { BookingsStatus } from '../../../../utils/consultant';
 import { BookingEventTableColumnAttendee } from '../BookingEventTableColumnAttendee/bookingEventTableColumnAttendee';
 import { DownloadICSFile } from '../../../../components/downloadICSFile/downloadICSFile';
@@ -23,7 +21,8 @@ import {
 	hasUserAuthority,
 	NotificationsContext,
 	NOTIFICATION_TYPE_SUCCESS,
-	UserDataContext
+	UserDataContext,
+	BookingEventUiInterface
 } from '../../../../globalState';
 import { copyTextToClipboard } from '../../../../utils/clipboardHelpers';
 import { ReactComponent as CalendarRescheduleIcon } from '../../../../resources/img/icons/calendar-reschedule.svg';

@@ -1,4 +1,4 @@
-import { TenantDataSettingsInterface } from '../../globalState/interfaces/TenantDataInterface';
+import { TenantDataSettingsInterface } from '../../globalState';
 import { appConfig } from '../../utils/appConfig';
 
 (window as any).defaultTimeout = 10000;

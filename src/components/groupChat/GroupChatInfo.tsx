@@ -183,7 +183,7 @@ export const GroupChatInfo = () => {
 	const preparedSettings: Array<{ label; value }> = [
 		{
 			label: translate('groupChat.info.settings.topic'),
-			value: activeSession.item.topic
+			value: activeSession.chatTopic
 		},
 		{
 			label: translate('groupChat.info.settings.startDate'),
@@ -243,7 +243,7 @@ export const GroupChatInfo = () => {
 				</div>
 				<div className="groupChatInfo__header__metaInfo">
 					<p className="groupChatInfo__header__username">
-						{activeSession.item.topic}
+						{activeSession.chatTopic}
 					</p>
 				</div>
 			</div>
@@ -255,7 +255,7 @@ export const GroupChatInfo = () => {
 							<span className="groupChatInfo__icon--active"></span>
 						) : null}
 					</div>
-					<h2>{activeSession.item.topic}</h2>
+					<h2>{activeSession.chatTopic}</h2>
 				</div>
 				{activeSession.item.active && activeSession.item.subscribed ? (
 					<div className="groupChatInfo__innerWrapper__stopButton">

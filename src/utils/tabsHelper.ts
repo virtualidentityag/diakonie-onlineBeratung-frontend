@@ -1,3 +1,9 @@
+import {
+	ConsultingTypeBasicInterface,
+	UserDataInterface,
+	TopicsDataInterface
+} from '../globalState';
+
 export interface TabType {
 	title: string;
 	url: string;
@@ -19,7 +25,11 @@ export const COLUMN_LEFT = 0;
 export const COLUMN_RIGHT = 1;
 
 export type SingleComponentType = {
-	condition?: (userData, consultingTypes) => boolean;
+	condition?: (
+		userData: UserDataInterface,
+		consultingTypes: ConsultingTypeBasicInterface[],
+		topics: TopicsDataInterface[]
+	) => boolean;
 	component: any;
 	boxed?: boolean;
 	order?: number;

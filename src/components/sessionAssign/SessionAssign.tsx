@@ -1,6 +1,12 @@
-import * as React from 'react';
-import { useState, useEffect, useContext, useCallback, useMemo } from 'react';
+import React, {
+	useState,
+	useEffect,
+	useContext,
+	useCallback,
+	useMemo
+} from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Overlay, OverlayItem, OVERLAY_FUNCTIONS } from '../overlay/Overlay';
 import { BUTTON_TYPES } from '../button/Button';
 import {
@@ -25,7 +31,6 @@ import {
 	prepareConsultantDataForSelect,
 	prepareSelectDropdown
 } from './sessionAssignHelper';
-import { useTranslation } from 'react-i18next';
 import { useE2EEViewElements } from '../../hooks/useE2EEViewElements';
 import { useTimeoutOverlay } from '../../hooks/useTimeoutOverlay';
 import {

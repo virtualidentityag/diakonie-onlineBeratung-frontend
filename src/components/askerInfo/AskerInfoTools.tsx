@@ -29,10 +29,10 @@ export const AskerInfoTools = () => {
 	};
 
 	useEffect(() => {
-		apiGetUserDataBySessionId(activeSession.item.id).then((resp) => {
-			setAskerId(resp.askerId);
-		});
-	}, [activeSession?.item?.id, setAskerId]); // eslint-disable-line react-hooks/exhaustive-deps
+		apiGetUserDataBySessionId(activeSession.item.id).then(({ askerId }) =>
+			setAskerId(askerId)
+		);
+	}, [activeSession?.item?.id]);
 
 	return (
 		<>

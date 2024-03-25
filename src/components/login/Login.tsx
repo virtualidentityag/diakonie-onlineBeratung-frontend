@@ -35,7 +35,7 @@ import '../../resources/styles/styles';
 import './login.styles';
 import useIsFirstVisit from '../../utils/useIsFirstVisit';
 import { getUrlParameter } from '../../utils/getUrlParameter';
-import { ConsultingTypeAgencySelection } from '../consultingTypeSelection/ConsultingTypeAgencySelection';
+import { TopicAgencySelection } from '../topicAgencySelection/TopicAgencySelection';
 import { Overlay, OVERLAY_FUNCTIONS, OverlayItem } from '../overlay/Overlay';
 import { ReactComponent as WelcomeIcon } from '../../resources/img/illustrations/welcome.svg';
 import {
@@ -60,7 +60,7 @@ import { useSearchParam } from '../../hooks/useSearchParams';
 import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 import { budibaseLogout } from '../budibase/budibaseLogout';
 import { GlobalComponentContext } from '../../globalState/provider/GlobalComponentContext';
-import { useConsultantAgenciesAndConsultingTypes } from '../../containers/registration/hooks/useConsultantAgenciesAndConsultingTypes';
+import { useConsultantAgenciesAndTopics } from '../../containers/registration/hooks/useConsultantAgenciesAndTopics';
 import { UrlParamsContext } from '../../globalState/provider/UrlParamsProvider';
 
 const regexAccountDeletedError = /account disabled/i;
@@ -86,7 +86,8 @@ export const Login = () => {
 	const hasTenant = tenant != null;
 
 	const consultantId = getUrlParameter('cid');
-	const { consultant: consultantFromUrl, loaded: isReady } = useContext(UrlParamsContext);
+	const { consultant: consultantFromUrl, loaded: isReady } =
+		useContext(UrlParamsContext);
 
 	const [labelState, setLabelState] = useState<InputFieldLabelState>(null);
 	const [username, setUsername] = useState<string>('');
@@ -108,7 +109,7 @@ export const Login = () => {
 				.then(() => redirectToApp(gcid))
 				.catch(() => null); // do nothing
 		}
-	}, [consultant, gcid, reloadUserData, userData]);
+	}, [gcid, reloadUserData, userData]);
 
 	useEffect(() => {
 		setShowLoginError('');
@@ -189,17 +190,15 @@ export const Login = () => {
 		setOtp(event.target.value);
 	};
 
-	const {
-		agencies: possibleAgencies,
-		consultingTypes: possibleConsultingTypes
-	} = useConsultantAgenciesAndConsultingTypes();
+	const { agencies: possibleAgencies, topics: possibleTopics } =
+		useConsultantAgenciesAndTopics();
 
 	const registerOverlay = useMemo(
 		(): OverlayItem => ({
 			svg: WelcomeIcon,
 			headline: translate('login.consultant.overlay.success.headline'),
 			nestedComponent: (
-				<ConsultingTypeAgencySelection
+				<TopicAgencySelection
 					agency={agency}
 					onChange={setAgency}
 					onValidityChange={(validity) => setValidity(validity)}
@@ -289,14 +288,11 @@ export const Login = () => {
 	);
 
 	useEffect(() => {
-		if (
-			possibleAgencies.length === 1 &&
-			possibleConsultingTypes.length === 1
-		) {
+		if (possibleAgencies.length === 1 && possibleTopics.length === 1) {
 			setAgency(possibleAgencies[0]);
 			setValidity(VALIDITY_VALID);
 		}
-	}, [possibleAgencies, possibleConsultingTypes]);
+	}, [possibleAgencies, possibleTopics]);
 
 	useEffect(() => {
 		deleteCookieByName('tenantId');
@@ -338,7 +334,7 @@ export const Login = () => {
 				// If the user can only have one consulting type and agency
 				if (
 					possibleAgencies.length === 1 &&
-					possibleConsultingTypes.length === 1
+					possibleTopics.length === 1
 				) {
 					handleRegistration(possibleAgencies[0]);
 				} else {
@@ -350,7 +346,7 @@ export const Login = () => {
 			initLocale,
 			consultantFromUrl,
 			possibleAgencies,
-			possibleConsultingTypes.length,
+			possibleTopics.length,
 			reloadUserData,
 			handleRegistration,
 			gcid

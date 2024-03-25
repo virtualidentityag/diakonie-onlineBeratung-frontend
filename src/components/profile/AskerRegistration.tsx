@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
 	UserDataContext,
-	useConsultingTypes,
-	useConsultingType
+	ConsultingTypesContext,
+	AgencyDataInterface
 } from '../../globalState';
 import { Button, ButtonItem, BUTTON_TYPES } from '../button/Button';
 import { SelectDropdown, SelectDropdownItem } from '../select/SelectDropdown';
 import {
-	consultingTypeSelectOptionsSet,
+	topicsSelectOptionsSet,
 	getConsultingTypesForRegistrationStatus,
 	REGISTRATION_STATUS_KEYS
 } from './profileHelpers';
@@ -22,20 +22,33 @@ import './profile.styles';
 import { Text, LABEL_TYPES } from '../text/Text';
 import { Headline } from '../headline/Headline';
 import { AskerRegistrationExternalAgencyOverlay } from './AskerRegistrationExternalAgencyOverlay';
-import { useTranslation } from 'react-i18next';
 import { ReactComponent as CheckIcon } from '../../resources/img/illustrations/check.svg';
 import { ReactComponent as XIcon } from '../../resources/img/illustrations/x.svg';
+import { TopicsContext } from '../../globalState';
+import { TopicsDataInterface } from '../../globalState';
 
 export const AskerRegistration: React.FC = () => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 	const history = useHistory();
 
 	const { userData, reloadUserData } = useContext(UserDataContext);
+	const { topics } = useContext(TopicsContext);
+	const { consultingTypes, getConsultingType } = useContext(
+		ConsultingTypesContext
+	);
+	//const consultingTypes = useConsultingTypes();
+	//const selectedConsultingType = useConsultingType(selectedConsultingTypeId);
+
+	const [selectedTopicOption, setSelectedTopicOption] = useState();
+	const [topic, setTopic] = useState<TopicsDataInterface>();
+	const [agency, setAgency] = useState<AgencyDataInterface>();
+	const consultingType = useMemo(
+		() => (topic ? getConsultingType(topic.id) : undefined),
+		[getConsultingType, topic]
+	);
+
+	//const [selectedConsultingTypeId, setSelectedConsultingTypeId] = useState<number>(null);
 	const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-	const [selectedConsultingTypeId, setSelectedConsultingTypeId] =
-		useState<number>(null);
-	const [selectedAgency, setSelectedAgency] = useState<any>({});
-	const [selectedTopic, setSelectedTopic] = useState<any>({});
 	const [successOverlayActive, setSuccessOverlayActive] = useState(false);
 	const [successOverlayItem, setSuccessOverlayItem] =
 		useState<OverlayItem>(null);
@@ -43,8 +56,6 @@ export const AskerRegistration: React.FC = () => {
 		useState(false);
 	const [sessionId, setSessionId] = useState(null);
 	const [isRequestInProgress, setIsRequestInProgress] = useState(false);
-	const consultingTypes = useConsultingTypes();
-	const selectedConsultingType = useConsultingType(selectedConsultingTypeId);
 
 	const buttonSetRegistration: ButtonItem = {
 		label: translate('profile.data.register.button.label'),
@@ -87,82 +98,79 @@ export const AskerRegistration: React.FC = () => {
 		]
 	};
 
-	const isAllRequiredDataSet = () =>
-		selectedConsultingTypeId != null && selectedAgency;
+	const isAllRequiredDataSet = useMemo(
+		() => topic && agency,
+		[agency, topic]
+	);
 
 	useEffect(() => {
-		if (isAllRequiredDataSet()) {
-			setIsButtonDisabled(false);
-		} else {
-			setIsButtonDisabled(true);
-		}
-	}, [selectedAgency]); // eslint-disable-line react-hooks/exhaustive-deps
+		setIsButtonDisabled(!isAllRequiredDataSet);
+	}, [isAllRequiredDataSet]);
 
-	const handleConsultingTypeSelect = (selectedOption) => {
-		setSelectedConsultingTypeId(parseInt(selectedOption.value));
-	};
+	const translatedTopics = useMemo(
+		() =>
+			userData
+				? topicsSelectOptionsSet(userData, consultingTypes, topics).map(
+						(option) => ({
+							...option,
+							label: translate(
+								[
+									`topic.${option.value}.titles.registrationDropdown`,
+									// ToDo: Fallback for old translations of consultingTypes
+									`selectedTopicOption.${option.value}.titles.registrationDropdown`,
+									option.label as string
+								],
+								{ ns: ['topics', 'consultingTypes'] }
+							)
+						})
+				  )
+				: [],
+		[consultingTypes, topics, translate, userData]
+	);
 
-	const getOptionOfSelectedConsultingType = () => {
-		return translateConsultingType(userData, consultingTypes).filter(
-			(option) => parseInt(option.value) === selectedConsultingTypeId
-		)[0];
-	};
-
-	const translateConsultingType = (userData, consultingTypes) => {
-		return consultingTypeSelectOptionsSet(userData, consultingTypes).map(
-			(option) => ({
-				...option,
-				label: translate(
-					[
-						`consultingType.${option.id}.titles.registrationDropdown`,
-						option.label
-					],
-					{ ns: 'consultingTypes' }
-				)
-			})
-		);
-	};
-
-	const consultingTypesDropdown: SelectDropdownItem = {
-		id: 'consultingTypeSelect',
-		selectedOptions: translateConsultingType(userData, consultingTypes),
-		handleDropdownSelect: handleConsultingTypeSelect,
-		selectInputLabel: translate(
-			'profile.data.register.consultingTypeSelect.label'
-		),
-		useIconOption: false,
-		isSearchable: false,
-		menuPlacement: 'bottom',
-		defaultValue: getOptionOfSelectedConsultingType()
-	};
+	const topicsDropdown: SelectDropdownItem = useMemo(
+		() => ({
+			id: 'topicSelect',
+			selectedOptions: translatedTopics,
+			handleDropdownSelect: setSelectedTopicOption,
+			selectInputLabel: translate(
+				'profile.data.register.consultingTypeSelect.label'
+			),
+			useIconOption: false,
+			isSearchable: false,
+			menuPlacement: 'bottom',
+			defaultValue: selectedTopicOption
+		}),
+		[selectedTopicOption, translate, translatedTopics]
+	);
 
 	const handleRegistration = () => {
 		if (isRequestInProgress) {
 			return null;
 		}
 
-		if (isAllRequiredDataSet()) {
-			if (selectedAgency.external) {
-				if (selectedAgency.url) {
-					setExternalAgencyOverlayActive(true);
-				} else {
+		if (isAllRequiredDataSet) {
+			if (agency.external) {
+				if (!agency.url) {
 					console.error(
-						`External agency with id ${selectedAgency.id} doesn't have a url set.`
+						`External agency with id ${agency.id} doesn't have a url set.`
 					);
+					return;
 				}
+				setExternalAgencyOverlayActive(true);
 				return;
 			}
 
 			setIsRequestInProgress(true);
 
 			apiRegistrationNewConsultingTypes(
-				selectedConsultingTypeId,
-				selectedAgency.id,
-				selectedAgency.postcode
+				topic.id,
+				agency.id,
+				agency.postcode
 			)
 				.then((response) => {
 					let overlayItem = overlayItemNewRegistrationSuccess;
-					if (selectedConsultingType?.groupChat.isGroupChat) {
+					if (consultingType?.groupChat.isGroupChat) {
 						overlayItem.buttonSet[0].label = translate(
 							'profile.data.registerSuccess.overlay.groupChats.button.label.'
 						);
@@ -199,7 +207,7 @@ export const AskerRegistration: React.FC = () => {
 		} else if (buttonFunction === OVERLAY_FUNCTIONS.CLOSE) {
 			setSuccessOverlayItem({});
 			setSuccessOverlayActive(false);
-			setSelectedConsultingTypeId(null);
+			setTopic(undefined);
 		} else {
 			logout();
 		}
@@ -209,21 +217,29 @@ export const AskerRegistration: React.FC = () => {
 		setExternalAgencyOverlayActive(false);
 	};
 
-	const registeredConsultingTypes = userData
-		? getConsultingTypesForRegistrationStatus(
+	/**
+	 * @deprecated This function is deprecated and should be replaced with topic logic.
+	 * Currently it works because it consultingTypeId equals topics
+	 */
+	const isOnlyRegisteredForGroupChats = useMemo(() => {
+		const registeredTopicIds =
+			userData &&
+			getConsultingTypesForRegistrationStatus(
 				userData,
-				consultingTypes,
 				REGISTRATION_STATUS_KEYS.REGISTERED
-		  )
-		: null;
-	const isOnlyRegisteredForGroupChats =
-		registeredConsultingTypes?.length === 1 &&
-		consultingTypes.find(
-			(cur) =>
-				cur.id === parseInt(registeredConsultingTypes[0].consultingType)
-		)?.groupChat.isGroupChat &&
-		selectedConsultingType &&
-		!selectedConsultingType.groupChat.isGroupChat;
+			);
+
+		return (
+			registeredTopicIds &&
+			consultingTypes.find((cur) =>
+				registeredTopicIds
+					.map((ct) => ct.consultingTypeId)
+					.includes(cur.id)
+			)?.groupChat.isGroupChat &&
+			consultingType &&
+			!consultingType.groupChat.isGroupChat
+		);
+	}, [consultingTypes, consultingType, userData]);
 
 	return (
 		<div className="profile__data__itemWrapper askerRegistration">
@@ -233,9 +249,9 @@ export const AskerRegistration: React.FC = () => {
 					semanticLevel="5"
 				/>
 			</div>
-			{isOnlyRegisteredForGroupChats ? (
-				<div className="askerRegistration__consultingTypeWrapper">
-					<SelectDropdown {...consultingTypesDropdown} />
+			<div className="askerRegistration__consultingTypeWrapper">
+				<SelectDropdown {...topicsDropdown} />
+				{isOnlyRegisteredForGroupChats && (
 					<Text
 						className="askerRegistration__consultingModeInfo"
 						labelType={LABEL_TYPES.NOTICE}
@@ -244,28 +260,16 @@ export const AskerRegistration: React.FC = () => {
 						)}
 						type="infoSmall"
 					/>
-				</div>
-			) : (
-				<div className="askerRegistration__consultingTypeWrapper">
-					<SelectDropdown {...consultingTypesDropdown} />
-					<Text
-						className="askerRegistration__consultingModeInfo"
-						labelType={LABEL_TYPES.NOTICE}
-						text={translate(
-							'profile.data.register.consultingModeInfo.singleChats'
-						)}
-						type="infoSmall"
-					/>
-				</div>
-			)}
-			{selectedConsultingType && (
+				)}
+			</div>
+
+			{topic && (
 				<AgencySelection
-					consultingType={selectedConsultingType}
-					onAgencyChange={(agency) => setSelectedAgency(agency)}
+					topic={topic}
+					onAgencyChange={setAgency}
 					isProfileView={true}
 					agencySelectionNote={
-						selectedConsultingType?.registration?.notes
-							?.agencySelection
+						consultingType?.registration?.notes?.agencySelection
 					}
 				/>
 			)}
@@ -282,9 +286,9 @@ export const AskerRegistration: React.FC = () => {
 			)}
 			{externalAgencyOverlayActive && (
 				<AskerRegistrationExternalAgencyOverlay
-					selectedAgency={selectedAgency}
+					selectedAgency={agency}
+					topic={topic}
 					handleOverlayAction={handleExternalAgencyOverlayAction}
-					topic={selectedTopic}
 				/>
 			)}
 		</div>

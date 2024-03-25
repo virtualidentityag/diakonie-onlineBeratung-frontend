@@ -5,7 +5,7 @@ import { Text } from '../text/Text';
 import { ReactComponent as NewWindowIcon } from '../../resources/img/icons/new-window.svg';
 import { ReactComponent as PersonsTwoIcon } from '../../resources/img/icons/persons-two-google.svg';
 import './tools.styles';
-import { ToolsListInterface } from '../../globalState/interfaces/ToolsInterface';
+import { ToolsListInterface } from '../../globalState';
 import { useTranslation } from 'react-i18next';
 
 export const Tool = (params: ToolsListInterface) => {

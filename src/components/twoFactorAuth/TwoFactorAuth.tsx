@@ -1,5 +1,11 @@
-import * as React from 'react';
-import { useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import React, {
+	useContext,
+	useEffect,
+	useState,
+	useCallback,
+	useMemo,
+	JSX
+} from 'react';
 import { useLocation } from 'react-router-dom';
 import { encode } from 'hi-base32';
 import {

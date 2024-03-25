@@ -1,51 +1,85 @@
 import * as React from 'react';
-import { createContext, useState, useContext } from 'react';
-import { ConsultingTypeBasicInterface } from '../interfaces/ConsultingTypeInterface';
+import { createContext, useState, useEffect, useCallback } from 'react';
+import {
+	ConsultingTypeBasicInterface,
+	ConsultingTypeInterface
+} from '../interfaces';
+import { apiGetConsultingType, apiGetConsultingTypes } from '../../api';
 
+/**
+ * @deprecated
+ */
 export const ConsultingTypesContext = createContext<{
-	consultingTypes: Array<ConsultingTypeBasicInterface>;
+	consultingTypes: ConsultingTypeBasicInterface[];
 	setConsultingTypes: (
-		consultingTypes: Array<ConsultingTypeBasicInterface>
+		consultingTypes: ConsultingTypeBasicInterface[]
 	) => void;
+	getConsultingType: (id: number) => ConsultingTypeBasicInterface;
+	getConsultingTypeFull: (id: number) => Promise<ConsultingTypeInterface>;
 }>(null);
 
 export function ConsultingTypesProvider(props) {
-	const [consultingTypes, setConsultingTypes] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [consultingTypesBasic, setConsultingTypesBasic] =
+		useState<ConsultingTypeBasicInterface[]>();
+	const [consultingTypesFull, setConsultingTypesFull] =
+		useState<ConsultingTypeInterface[]>();
+
+	useEffect(() => {
+		apiGetConsultingTypes()
+			.then(setConsultingTypesBasic)
+			.finally(() => setLoading(false));
+	}, []);
+
+	const getConsultingTypeFull = useCallback(
+		async (id: number) => {
+			let consultingTypeFull = consultingTypesFull.find(
+				(cur) => cur.id === id
+			);
+			if (consultingTypeFull) return consultingTypeFull;
+
+			consultingTypeFull = await apiGetConsultingType({
+				consultingTypeId: id
+			});
+
+			setConsultingTypesFull((consultingTypesFull) =>
+				consultingTypesFull.concat(consultingTypeFull)
+			);
+			return consultingTypeFull;
+		},
+		[consultingTypesFull]
+	);
+
+	const getConsultingType = useCallback(
+		(id: number) => {
+			if (!consultingTypesBasic) {
+				return undefined;
+			}
+
+			const consultingType = consultingTypesBasic.find(
+				(cur) => cur.id === id
+			);
+			if (!consultingType) {
+				throw new Error(`No consulting type found for id "${id}".`);
+			}
+
+			return consultingType;
+		},
+		[consultingTypesBasic]
+	);
+
+	if (loading) return null;
 
 	return (
 		<ConsultingTypesContext.Provider
-			value={{ consultingTypes, setConsultingTypes }}
+			value={{
+				consultingTypes: consultingTypesBasic,
+				setConsultingTypes: setConsultingTypesBasic,
+				getConsultingType,
+				getConsultingTypeFull
+			}}
 		>
 			{props.children}
 		</ConsultingTypesContext.Provider>
 	);
-}
-
-export function getConsultingType(
-	consultingTypes: Array<ConsultingTypeBasicInterface>,
-	id?: number
-) {
-	if (id == null) {
-		return undefined;
-	}
-
-	const consultingType = consultingTypes.find((cur) => cur.id === id);
-	if (!consultingType) {
-		throw new Error(`No consulting type found for id "${id}".`);
-	}
-
-	return consultingType;
-}
-
-export function useConsultingTypes() {
-	const { consultingTypes } = useContext(ConsultingTypesContext);
-	if (!consultingTypes) {
-		throw new Error('`ConsultingTypesProvider` was not initialized.');
-	}
-
-	return consultingTypes;
-}
-
-export function useConsultingType(id?: number) {
-	return getConsultingType(useConsultingTypes(), id);
 }

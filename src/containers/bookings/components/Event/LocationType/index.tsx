@@ -5,9 +5,9 @@ import { Tooltip } from '../../../../../components/tooltip/Tooltip';
 import {
 	AUTHORITIES,
 	hasUserAuthority,
-	UserDataContext
+	UserDataContext,
+	BookingEventUiInterface
 } from '../../../../../globalState';
-import { BookingEventUiInterface } from '../../../../../globalState/interfaces/BookingsInterface';
 import { InfoIcon } from '../../../../../resources/img/icons';
 import { ReactComponent as VideoCalIcon } from '../../../../../resources/img/icons/video-booking.svg';
 import { ReactComponent as CallIcon } from '../../../../../resources/img/icons/call.svg';

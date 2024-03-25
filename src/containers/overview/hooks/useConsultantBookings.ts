@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { apiGetConsultantAppointments } from '../../../api/apiGetConsultantAppointments';
-import { UserDataContext } from '../../../globalState';
-import { BookingEventsInterface } from '../../../globalState/interfaces/BookingsInterface';
+import { UserDataContext, BookingEventsInterface } from '../../../globalState';
 import { BookingsStatus } from '../../../utils/consultant';
 
 export const useConsultantBookings = () => {

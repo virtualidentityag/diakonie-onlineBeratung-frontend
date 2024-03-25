@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
 	SESSION_LIST_TAB,
 	SESSION_LIST_TYPES,
@@ -17,7 +17,6 @@ import { ReactComponent as CreateGroupChatIcon } from '../../resources/img/icons
 import './sessionsList.styles';
 import { LanguagesContext } from '../../globalState/provider/LanguagesProvider';
 import { useSearchParam } from '../../hooks/useSearchParams';
-import { useTranslation } from 'react-i18next';
 
 interface SessionsListWrapperProps {
 	sessionTypes: SESSION_TYPES;

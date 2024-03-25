@@ -5,27 +5,35 @@ import {
 	AgencyDataInterface,
 	ConsultantDataInterface,
 	ConsultingTypeInterface,
-	LocaleContext
+	ConsultingTypesContext,
+	LocaleContext,
+	TopicsDataInterface,
+	TopicsContext
 } from '../globalState';
-import { apiGetAgencyById, apiGetConsultingType } from '../api';
+import { apiGetAgencyById } from '../api';
 import { apiGetConsultant } from '../api/apiGetConsultant';
 import { isNumber } from './isNumber';
-import { TopicsDataInterface } from '../globalState/interfaces/TopicsDataInterface';
 import { apiGetTopicById } from '../api/apiGetTopicId';
 import { useAppConfig } from '../hooks/useAppConfig';
 import { isString } from 'lodash';
 import { apiGetTopicsData } from '../api/apiGetTopicsData';
 
+/**
+ * ToDo: Needs more cleanup of consultingType logic
+ */
 export default function useUrlParamsLoader() {
-	const { setLocale } = useContext(LocaleContext);
-	const { consultingTypeSlug } = useParams<{
-		consultingTypeSlug: string;
-	}>();
+	const { topicSlug } = useParams<{ topicSlug: string }>();
 	const settings = useAppConfig();
 	const agencyId = getUrlParameter('aid');
 	const consultantId = getUrlParameter('cid');
-	const topicIdOrName = getUrlParameter('tid');
+	const topicIdOrName = getUrlParameter('tid', topicSlug);
 	const language = getUrlParameter('lang');
+
+	const { setLocale } = useContext(LocaleContext);
+	const { consultingTypes, getConsultingTypeFull } = useContext(
+		ConsultingTypesContext
+	);
+	const { topics } = useContext(TopicsContext);
 
 	const [consultingType, setConsultingType] =
 		useState<ConsultingTypeInterface | null>(null);
@@ -39,24 +47,44 @@ export default function useUrlParamsLoader() {
 		(async () => {
 			try {
 				let agency,
-					consultingType = null;
+					consultingType = null,
+					topic = null;
 
 				if (isNumber(agencyId)) {
 					agency = await apiGetAgencyById(agencyId).catch(() => null);
 				}
 
-				if (consultingTypeSlug || agency) {
-					consultingType = await apiGetConsultingType({
-						consultingTypeSlug,
-						consultingTypeId: agency?.consultingType
-					});
+				if (isNumber(topicIdOrName) && topicIdOrName !== '') {
+					await apiGetTopicById(topicIdOrName)
+						.then((t) => (topic = t))
+						.catch(() => null);
+				} else if (isString(topicIdOrName) && topicIdOrName !== '') {
+					await apiGetTopicsData()
+						.then((allTopics) => {
+							topic = allTopics.find(
+								(topic) =>
+									topic.name?.toLowerCase() ===
+									decodeURIComponent(
+										(
+											topicIdOrName ?? topicSlug
+										).toLowerCase()
+									)
+							);
+						})
+						.catch(() => null);
+				}
+
+				if (topic || agency) {
+					consultingType = await getConsultingTypeFull(
+						topic.id || agency?.consultingType
+					);
 				}
 
 				if (consultantId) {
 					const consultant = await apiGetConsultant(
 						consultantId,
-						true,
-						'basic'
+						consultingTypes,
+						topics
 					).catch(() => {
 						// consultant not found -> go to registration
 						document.location.href = settings.urls.toRegistration;
@@ -99,25 +127,7 @@ export default function useUrlParamsLoader() {
 					agency = null;
 				}
 
-				if (isNumber(topicIdOrName) && topicIdOrName !== '') {
-					await apiGetTopicById(topicIdOrName)
-						.then(setTopic)
-						.catch(() => null);
-				} else if (isString(topicIdOrName) && topicIdOrName !== '') {
-					await apiGetTopicsData()
-						.then((allTopics) => {
-							const topic = allTopics.find(
-								(topic) =>
-									topic.name?.toLowerCase() ===
-									decodeURIComponent(
-										topicIdOrName.toLowerCase()
-									)
-							);
-							setTopic(topic);
-						})
-						.catch(() => null);
-				}
-
+				setTopic(topic);
 				setConsultingType(consultingType);
 				setAgency(agency);
 				setLoaded(true);
@@ -126,12 +136,15 @@ export default function useUrlParamsLoader() {
 			}
 		})();
 	}, [
-		consultingTypeSlug,
 		agencyId,
 		consultantId,
 		topicIdOrName,
 		settings.multitenancyWithSingleDomainEnabled,
-		settings.urls.toRegistration
+		settings.urls.toRegistration,
+		topicSlug,
+		consultingTypes,
+		getConsultingTypeFull,
+		topics
 	]);
 
 	useEffect(() => {

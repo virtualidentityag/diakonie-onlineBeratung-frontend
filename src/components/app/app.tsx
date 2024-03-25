@@ -187,7 +187,7 @@ const RouterWrapper = ({ extraRoutes, entryPoint }: RouterWrapperProps) => {
 									</RegistrationProvider>
 								</Route>
 
-								<Route path="/:consultingTypeSlug/warteraum">
+								<Route path="/:topicSlug/warteraum">
 									<WaitingRoomLoader
 										handleUnmatch={() =>
 											history.push('/login')

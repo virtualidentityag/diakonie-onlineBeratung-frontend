@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../booking.styles';
 import {
 	AUTHORITIES,
@@ -9,7 +8,7 @@ import {
 import {
 	BookingEventsInterface,
 	BookingEventUiInterface
-} from '../../../../globalState/interfaces/BookingsInterface';
+} from '../../../../globalState';
 import { apiGetConsultantAppointments } from '../../../../api/apiGetConsultantAppointments';
 import { apiAppointmentsServiceBookingEventsByAskerId } from '../../../../api';
 import { BookingsStatus } from '../../../../utils/consultant';

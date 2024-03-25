@@ -2,10 +2,10 @@ import * as React from 'react';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
 	AUTHORITIES,
+	ConsultingTypesContext,
 	E2EEContext,
 	hasUserAuthority,
 	SessionTypeContext,
-	useConsultingType,
 	UserDataContext
 } from '../../globalState';
 import { mobileListView } from '../app/navigationHandler';
@@ -58,10 +58,14 @@ export const JoinGroupChatView = ({
 	const { activeSession, reloadActiveSession } =
 		useContext(ActiveSessionContext);
 	const { userData } = useContext(UserDataContext);
+	const { getConsultingType } = useContext(ConsultingTypesContext);
 	const [overlayItem, setOverlayItem] = useState<OverlayItem>(null);
 	const [overlayActive, setOverlayActive] = useState(false);
 	const [redirectToSessionsList, setRedirectToSessionsList] = useState(false);
-	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const consultingType = useMemo(
+		() => getConsultingType(activeSession.item.consultingType),
+		[activeSession.item.consultingType, getConsultingType]
+	);
 
 	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 	const [isRequestInProgress, setIsRequestInProgress] = useState(false);

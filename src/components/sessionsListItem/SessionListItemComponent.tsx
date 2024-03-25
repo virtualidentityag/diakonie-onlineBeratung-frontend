@@ -1,6 +1,15 @@
-import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import React, {
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+	KeyboardEvent
+} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { markdownToDraft } from 'markdown-draft-js';
+import { convertFromRaw } from 'draft-js';
+import clsx from 'clsx';
 import { getSessionsListItemIcon, LIST_ICONS } from './sessionsListItemHelpers';
 import {
 	convertISO8601ToMSSinceEpoch,
@@ -14,23 +23,19 @@ import {
 } from '../session/sessionHelpers';
 import {
 	AUTHORITIES,
+	ConsultingTypesContext,
 	E2EEContext,
 	hasUserAuthority,
 	SessionTypeContext,
 	STATUS_FINISHED,
-	TopicSessionInterface,
-	useConsultingType,
 	UserDataContext,
 	useTenant
 } from '../../globalState';
 import { getGroupChatDate } from '../session/sessionDateHelpers';
-import { markdownToDraft } from 'markdown-draft-js';
-import { convertFromRaw } from 'draft-js';
 import './sessionsListItem.styles';
 import { Tag } from '../tag/Tag';
 import { SessionListItemVideoCall } from './SessionListItemVideoCall';
 import { SessionListItemAttachment } from './SessionListItemAttachment';
-import clsx from 'clsx';
 import {
 	decryptText,
 	MissingKeyError,
@@ -40,8 +45,8 @@ import { useE2EE } from '../../hooks/useE2EE';
 import { useSearchParam } from '../../hooks/useSearchParams';
 import { SessionListItemLastMessage } from './SessionListItemLastMessage';
 import { ALIAS_MESSAGE_TYPES } from '../../api/apiSendAliasMessage';
-import { useTranslation } from 'react-i18next';
 import { ActiveSessionContext } from '../../globalState/provider/ActiveSessionProvider';
+import { useAppConfig } from '../../hooks/useAppConfig';
 
 interface SessionListItemProps {
 	defaultLanguage: string;
@@ -56,8 +61,11 @@ export const SessionListItemComponent = ({
 	handleKeyDownLisItemContent,
 	index
 }: SessionListItemProps) => {
-	const { t: translate } = useTranslation(['common', 'consultingTypes']);
-	const tenantData = useTenant();
+	const { t: translate } = useTranslation([
+		'common',
+		'topics',
+		'consultingTypes'
+	]);
 	const { sessionId, rcGroupId: groupIdFromParam } = useParams<{
 		rcGroupId: string;
 		sessionId: string;
@@ -69,18 +77,20 @@ export const SessionListItemComponent = ({
 	const getSessionListTab = () =>
 		`${sessionListTab ? `?sessionListTab=${sessionListTab}` : ''}`;
 	const { userData } = useContext(UserDataContext);
-	const { type, path: listPath } = useContext(SessionTypeContext);
 	const { isE2eeEnabled } = useContext(E2EEContext);
 	const { activeSession } = useContext(ActiveSessionContext);
+	const { getConsultingType } = useContext(ConsultingTypesContext);
+	const { path: listPath } = useContext(SessionTypeContext);
 
 	// Is List Item active
 	const isChatActive =
 		activeSession.rid === groupIdFromParam ||
 		activeSession.item.id === sessionIdFromParam;
 
-	const language = activeSession.item.language || defaultLanguage;
-	const consultingType = useConsultingType(activeSession.item.consultingType);
-	const topic = activeSession.item.topic as TopicSessionInterface;
+	const consultingType = useMemo(
+		() => getConsultingType(activeSession.item.consultingType),
+		[activeSession.item.consultingType, getConsultingType]
+	);
 
 	const { key, keyID, encrypted, ready } = useE2EE(
 		activeSession.item.groupId,
@@ -88,7 +98,6 @@ export const SessionListItemComponent = ({
 			ALIAS_MESSAGE_TYPES.MASTER_KEY_LOST
 	);
 	const [plainTextLastMessage, setPlainTextLastMessage] = useState(null);
-	const topicSession = activeSession.item?.topic as TopicSessionInterface;
 
 	useEffect(() => {
 		if (!ready) {
@@ -146,12 +155,6 @@ export const SessionListItemComponent = ({
 		ready
 	]);
 
-	const isAsker = hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData);
-	const isAnonymous = hasUserAuthority(
-		AUTHORITIES.ANONYMOUS_DEFAULT,
-		userData
-	);
-
 	if (!activeSession) {
 		return null;
 	}
@@ -177,6 +180,189 @@ export const SessionListItemComponent = ({
 			handleOnClick();
 		}
 	};
+
+	// Hide sessions if consultingType has been switched to group chat.
+	// ToDo: What is with vice versa?
+	if (activeSession.isSession && consultingType?.groupChat.isGroupChat) {
+		return null;
+	}
+
+	if (activeSession.isGroup) {
+		return (
+			<ChatListItem
+				handleOnClick={handleOnClick}
+				handleKeyDownListItem={handleKeyDownListItem}
+				isChatActive={isChatActive}
+				index={index}
+				itemRef={itemRef}
+				plainTextLastMessage={plainTextLastMessage}
+			/>
+		);
+	}
+
+	return (
+		<SessionListItem
+			handleOnClick={handleOnClick}
+			handleKeyDownListItem={handleKeyDownListItem}
+			isChatActive={isChatActive}
+			index={index}
+			itemRef={itemRef}
+			plainTextLastMessage={plainTextLastMessage}
+			defaultLanguage={defaultLanguage}
+		/>
+	);
+};
+
+const ChatListItem = ({
+	handleOnClick,
+	handleKeyDownListItem,
+	isChatActive,
+	index,
+	itemRef,
+	plainTextLastMessage
+}: {
+	handleOnClick: () => void;
+	handleKeyDownListItem: (e: KeyboardEvent<HTMLDivElement>) => void;
+	isChatActive: boolean;
+	index: number;
+	itemRef?: any;
+	plainTextLastMessage: string | null;
+}) => {
+	const { t: translate } = useTranslation([
+		'common',
+		'topics',
+		'consultingTypes'
+	]);
+
+	const { activeSession } = useContext(ActiveSessionContext);
+	const { userData } = useContext(UserDataContext);
+
+	const Icon = getSessionsListItemIcon(LIST_ICONS.IS_GROUP_CHAT);
+
+	const isMyChat = () =>
+		activeSession.consultant &&
+		userData.userId === activeSession.consultant.id;
+
+	const defaultSubjectText = isMyChat()
+		? translate('groupChat.listItem.subjectEmpty.self')
+		: translate('groupChat.listItem.subjectEmpty.other');
+
+	return (
+		<div
+			onClick={handleOnClick}
+			className={clsx(
+				'sessionsListItem',
+				isChatActive && 'sessionsListItem--active'
+			)}
+			data-group-id={activeSession.rid ? activeSession.rid : ''}
+			data-cy="session-list-item"
+		>
+			<div
+				className={clsx(
+					'sessionsListItem__content',
+					isChatActive && 'sessionsListItem__content--active'
+				)}
+				onKeyDown={(e) => handleKeyDownListItem(e)}
+				ref={itemRef}
+				tabIndex={index === 0 ? 0 : -1}
+				role="tab"
+			>
+				<div className="sessionsListItem__row">
+					<div className="sessionsListItem__consultingType">
+						{activeSession.topic &&
+							translate(
+								[
+									`topic.${activeSession.topic.id}.titles.default`,
+									`consultingType.${activeSession.topic.id}.titles.default`,
+									activeSession.topic.name
+								],
+								{ ns: ['topics', 'consultingTypes'] }
+							)}
+					</div>
+					<div className="sessionsListItem__date">
+						{getGroupChatDate(
+							activeSession.item,
+							translate('sessionList.time.label.postfix')
+						)}
+					</div>
+				</div>
+				<div className="sessionsListItem__row">
+					<div className="sessionsListItem__icon">
+						<Icon
+							title={translate('message.groupChat')}
+							aria-label={translate('message.groupChat')}
+						/>
+					</div>
+					<div
+						className={clsx(
+							'sessionsListItem__username',
+							activeSession.item.messagesRead &&
+								'sessionsListItem__username--readLabel'
+						)}
+					>
+						{activeSession.topic}
+					</div>
+				</div>
+				<div className="sessionsListItem__row">
+					<SessionListItemLastMessage
+						lastMessage={
+							plainTextLastMessage
+								? plainTextLastMessage
+								: defaultSubjectText
+						}
+					/>
+					{activeSession.item.attachment && (
+						<SessionListItemAttachment
+							attachment={activeSession.item.attachment}
+						/>
+					)}
+					{activeSession.item.active && (
+						<Tag
+							text={translate('groupChat.listItem.activeLabel')}
+							color="green"
+						/>
+					)}
+				</div>
+			</div>
+		</div>
+	);
+};
+
+const SessionListItem = ({
+	handleOnClick,
+	handleKeyDownListItem,
+	isChatActive,
+	index,
+	itemRef,
+	plainTextLastMessage,
+	defaultLanguage
+}: {
+	handleOnClick: () => void;
+	handleKeyDownListItem: (e: KeyboardEvent<HTMLDivElement>) => void;
+	isChatActive: boolean;
+	index: number;
+	itemRef?: any;
+	plainTextLastMessage: string | null;
+	defaultLanguage: string;
+}) => {
+	const settings = useAppConfig();
+	const tenantData = useTenant();
+
+	const sessionListTab = useSearchParam<SESSION_LIST_TAB>('sessionListTab');
+	const { t: translate } = useTranslation([
+		'common',
+		'topics',
+		'consultingTypes'
+	]);
+
+	const { activeSession } = useContext(ActiveSessionContext);
+	const { userData } = useContext(UserDataContext);
+	const { type, path: listPath } = useContext(SessionTypeContext);
+
+	const language = activeSession.item.language || defaultLanguage;
+	//const topic = activeSession?.topic;
+	const getSessionListTab = () =>
+		`${sessionListTab ? `?sessionListTab=${sessionListTab}` : ''}`;
 
 	const iconVariant = () => {
 		if (activeSession.isGroup) {
@@ -231,97 +417,11 @@ export const SessionListItemComponent = ({
 			: prettyDate.date;
 	};
 
-	// Hide sessions if consultingType has been switched to group chat.
-	// ToDo: What is with vice versa?
-	if (activeSession.isSession && consultingType?.groupChat.isGroupChat) {
-		return null;
-	}
-
-	if (activeSession.isGroup) {
-		const isMyChat = () =>
-			activeSession.consultant &&
-			userData.userId === activeSession.consultant.id;
-		const defaultSubjectText = isMyChat()
-			? translate('groupChat.listItem.subjectEmpty.self')
-			: translate('groupChat.listItem.subjectEmpty.other');
-		return (
-			<div
-				onClick={handleOnClick}
-				className={clsx(
-					'sessionsListItem',
-					isChatActive && 'sessionsListItem--active'
-				)}
-				data-group-id={activeSession.rid ? activeSession.rid : ''}
-				data-cy="session-list-item"
-			>
-				<div
-					className={clsx(
-						'sessionsListItem__content',
-						isChatActive && 'sessionsListItem__content--active'
-					)}
-					onKeyDown={(e) => handleKeyDownListItem(e)}
-					ref={itemRef}
-					tabIndex={index === 0 ? 0 : -1}
-					role="tab"
-				>
-					<div className="sessionsListItem__row">
-						<div className="sessionsListItem__consultingType">
-							{consultingType
-								? translate(
-										[
-											topic.name
-										],
-										{ ns: 'consultingTypes' }
-								  )
-								: ''}
-						</div>
-						<div className="sessionsListItem__date">
-							{getGroupChatDate(
-								activeSession.item,
-								translate('sessionList.time.label.postfix')
-							)}
-						</div>
-					</div>
-					<div className="sessionsListItem__row">
-						<div className="sessionsListItem__icon">
-							<Icon title={iconTitle} aria-label={iconTitle} />
-						</div>
-						<div
-							className={clsx(
-								'sessionsListItem__username',
-								activeSession.item.messagesRead &&
-									'sessionsListItem__username--readLabel'
-							)}
-						>
-							{activeSession.item.topic}
-						</div>
-					</div>
-					<div className="sessionsListItem__row">
-						<SessionListItemLastMessage
-							lastMessage={
-								plainTextLastMessage
-									? plainTextLastMessage
-									: defaultSubjectText
-							}
-						/>
-						{activeSession.item.attachment && (
-							<SessionListItemAttachment
-								attachment={activeSession.item.attachment}
-							/>
-						)}
-						{activeSession.item.active && (
-							<Tag
-								text={translate(
-									'groupChat.listItem.activeLabel'
-								)}
-								color="green"
-							/>
-						)}
-					</div>
-				</div>
-			</div>
-		);
-	}
+	const isAsker = hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData);
+	const isAnonymous = hasUserAuthority(
+		AUTHORITIES.ANONYMOUS_DEFAULT,
+		userData
+	);
 
 	const feedbackPath = `${listPath}/${activeSession.item.feedbackGroupId}/${
 		activeSession.item.id
@@ -343,10 +443,6 @@ export const SessionListItemComponent = ({
 	} else {
 		sessionTopic = activeSession.user.username;
 	}
-
-	const showConsultingType =
-		consultingType && !tenantData?.settings?.featureTopicsEnabled;
-	const zipCodeSlash = showConsultingType ? '/ ' : '';
 
 	return (
 		<div
@@ -380,25 +476,18 @@ export const SessionListItemComponent = ({
 						</div>
 					) : (
 						<div className="sessionsListItem__consultingType">
-							{showConsultingType &&
-							consultingType?.id &&
-							topic.name
-								? translate(
-										[
-											topic.name
-										],
-										{ ns: 'consultingTypes' }
-								  ) + ' '
-								: ''}
-							{activeSession.item.consultingType !== 1 &&
+							{!(settings.u25ids || []).includes(
+								activeSession.topic.id
+							) &&
 							!isAsker &&
 							!activeSession.isLive &&
-							!consultingType.registration.autoSelectPostcode
-								? zipCodeSlash + activeSession.item.postcode
+							!activeSession.topic.consultingType.registration
+								.autoSelectPostcode
+								? activeSession.item.postcode
 								: null}
 						</div>
 					)}
-					{topicSession?.id !== undefined && topicSession.name && (
+					{activeSession.topic && (
 						<div
 							className="sessionsListItem__topic"
 							style={{
@@ -406,7 +495,15 @@ export const SessionListItemComponent = ({
 									tenantData?.theming?.primaryColor
 							}}
 						>
-							{topicSession?.name}
+							{activeSession.topic &&
+								translate(
+									[
+										`topic.${activeSession.topic.id}.titles.default`,
+										`consultingType.${activeSession.topic.id}.titles.default`,
+										activeSession.topic.name
+									],
+									{ ns: ['topics', 'consultingTypes'] }
+								)}
 						</div>
 					)}
 					<div className="sessionsListItem__date">

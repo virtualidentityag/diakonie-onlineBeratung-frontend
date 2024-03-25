@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
-import { UserDataContext } from '../../../../globalState';
+import React, { useContext, useEffect, useState } from 'react';
 import {
 	BookingEventsInterface,
-	BookingEventUiInterface
-} from '../../../../globalState/interfaces/BookingsInterface';
+	BookingEventUiInterface,
+	UserDataContext
+} from '../../../../globalState';
 import { apiGetConsultantAppointments } from '../../../../api/apiGetConsultantAppointments';
 import { BookingsStatus } from '../../../../utils/consultant';
 import { BookingsComponent } from '../BookingsComponent/bookingsComponent';

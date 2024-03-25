@@ -1,12 +1,12 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 import { App } from '../components/app/app';
 import { Stage } from './components/stage/stage';
 import { Imprint } from './components/legalInformationLinks/Imprint';
 import { DataProtection } from './components/legalInformationLinks/DataProtection';
 import { config, legalLinks } from './resources/scripts/config';
 
-ReactDOM.render(
+render(
 	<App
 		config={config}
 		extraRoutes={[

@@ -1,5 +1,6 @@
 import { ConsultingTypeInterface } from './ConsultingTypeInterface';
 import { TWO_FACTOR_TYPES } from '../../components/twoFactorAuth/TwoFactorAuth';
+import { TopicsDataInterface } from './TopicsDataInterface';
 
 export interface UserDataInterface {
 	absenceMessage?: string;
@@ -35,12 +36,17 @@ export interface ConsultantDataInterface
 	extends Omit<UserDataInterface, 'userId'> {
 	consultantId: string;
 	agencies: (AgencyDataInterface & {
+		/**
+		 * @deprecated use topicRels
+		 */
 		consultingTypeRel?: ConsultingTypeInterface;
+		topicRels?: TopicsDataInterface[];
 	})[];
 }
 
 export interface AgencyDataInterface {
 	city: string;
+	/** @deprecated use topicIds instead */
 	consultingType: number;
 	description: string;
 	id: number;

@@ -1,5 +1,13 @@
-import * as React from 'react';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from 'react';
+import Switch from 'react-switch';
+import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'react-i18next';
 import { apiSetAbsence } from '../../api';
 import { BUTTON_TYPES } from '../button/Button';
 import { OverlayItem, OVERLAY_FUNCTIONS, Overlay } from '../overlay/Overlay';
@@ -7,11 +15,8 @@ import { UserDataContext } from '../../globalState';
 import { ReactComponent as CheckIcon } from '../../resources/img/illustrations/check.svg';
 import './absenceFormular.styles';
 import { Headline } from '../headline/Headline';
-import Switch from 'react-switch';
 import { Text } from '../text/Text';
 import { Textarea } from '../form/textarea';
-import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
 
 export const AbsenceFormular = () => {
 	const { t: translate } = useTranslation();

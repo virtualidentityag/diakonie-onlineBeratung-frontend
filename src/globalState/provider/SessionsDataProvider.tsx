@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createContext, Dispatch, useReducer } from 'react';
-import { ListItemInterface } from '../interfaces/SessionsDataInterface';
+import { ListItemInterface } from '../interfaces';
 import { getChatItemForSession } from '../../components/session/sessionHelpers';
 
 type SessionsDataContextInterface = {

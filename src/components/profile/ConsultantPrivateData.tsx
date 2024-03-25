@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { UserDataContext } from '../../globalState';
 import { Button, ButtonItem, BUTTON_TYPES } from '../button/Button';
 import { Headline } from '../headline/Headline';
@@ -14,9 +15,7 @@ import {
 } from '../../api';
 import { TWO_FACTOR_TYPES } from '../twoFactorAuth/TwoFactorAuth';
 import { Overlay, OVERLAY_FUNCTIONS } from '../overlay/Overlay';
-import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '../../hooks/useAppConfig';
-import { useHistory } from 'react-router-dom';
 
 export const ConsultantPrivateData = () => {
 	const history = useHistory();

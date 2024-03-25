@@ -1,8 +1,6 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState, JSX } from 'react';
 import {
 	AgencyDataInterface,
-	ConsultingTypeBasicInterface,
 	useLocaleData,
 	useTenant
 } from '../../globalState';
@@ -16,7 +14,6 @@ import { RadioButton } from '../radioButton/RadioButton';
 import { Loading } from '../app/Loading';
 import { Text, LABEL_TYPES } from '../text/Text';
 import { AgencyInfo } from './AgencyInfo';
-import { PreselectedAgency } from '../../containers/registration/components/PreSelectedAgency/PreselectedAgency';
 import { Headline } from '../headline/Headline';
 import { parsePlaceholderString } from '../../utils/parsePlaceholderString';
 import { Notice } from '../notice/Notice';
@@ -28,100 +25,124 @@ import {
 } from '../registration/registrationHelpers';
 import { useTranslation } from 'react-i18next';
 import { useAppConfig } from '../../hooks/useAppConfig';
+import { TopicsDataInterface } from '../../globalState';
+//import { PreselectedAgency } from '../../containers/registration/components/PreSelectedAgency/PreselectedAgency';
 
 export interface AgencySelectionProps {
-	consultingType: ConsultingTypeBasicInterface;
 	icon?: JSX.Element;
 	onAgencyChange: Function;
 	onValidityChange?: Function;
 	preselectedAgency?: AgencyDataInterface;
 	isProfileView?: boolean;
-	mainTopicId?: number;
+	topic?: TopicsDataInterface;
 	agencySelectionNote?: string;
 	initialPostcode?: string;
 	hideExternalAgencies?: boolean;
 	onKeyDown?: Function;
 }
 
-export const AgencySelection = (props: AgencySelectionProps) => {
+export const AgencySelection = ({
+	icon,
+	onAgencyChange,
+	onValidityChange,
+	preselectedAgency: propsAgency,
+	isProfileView,
+	topic,
+	agencySelectionNote,
+	initialPostcode,
+	hideExternalAgencies,
+	onKeyDown
+}: AgencySelectionProps) => {
 	const { t: translate } = useTranslation(['common', 'agencies']);
 	const { locale } = useLocaleData();
 	const tenantData = useTenant();
 	const settings = useAppConfig();
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [postcodeFallbackLink, setPostcodeFallbackLink] = useState('');
 	const [proposedAgencies, setProposedAgencies] = useState<
 		AgencyDataInterface[] | null
 	>(null);
 	const [selectedPostcode, setSelectedPostcode] = useState('');
+	const { autoSelectAgency, autoSelectPostcode } =
+		topic.consultingType.registration;
+
 	const [selectedAgency, setSelectedAgency] =
 		useState<AgencyDataInterface | null>(null);
-	const autoSelectAgency = props.consultingType.registration.autoSelectAgency;
-	const autoSelectPostcode =
-		props.consultingType.registration.autoSelectPostcode;
 	const [preselectedAgency, setPreselectedAgency] =
-		useState<AgencyDataInterface>(props.preselectedAgency);
+		useState<AgencyDataInterface>(propsAgency);
 
-	const validPostcode = () =>
-		selectedPostcode?.length === VALID_POSTCODE_LENGTH;
-
-	const isSelectedAgencyValidated = () =>
-		validPostcode() && typeof selectedAgency?.id === 'number';
-	const topicsAreRequired =
-		tenantData?.settings?.topicsInRegistrationEnabled &&
-		tenantData?.settings?.featureTopicsEnabled;
+	const validPostcode = useMemo(
+		() => selectedPostcode?.length === VALID_POSTCODE_LENGTH,
+		[selectedPostcode?.length]
+	);
+	const isSelectedAgencyValidated = useMemo(
+		() => validPostcode && typeof selectedAgency?.id === 'number',
+		[selectedAgency?.id, validPostcode]
+	);
+	const topicsAreRequired = useMemo(
+		() => tenantData?.settings?.topicsInRegistrationEnabled,
+		[tenantData?.settings?.topicsInRegistrationEnabled]
+	);
 
 	useEffect(() => {
-		setSelectedPostcode(props.initialPostcode || '');
+		setSelectedPostcode(initialPostcode || '');
 		setPostcodeFallbackLink('');
-		setSelectedAgency(null);
 		setProposedAgencies(null);
-		setPreselectedAgency(props.preselectedAgency);
-	}, [props.preselectedAgency, props.consultingType, props.initialPostcode]);
+		setSelectedAgency(null);
+		setPreselectedAgency(propsAgency);
+	}, [propsAgency, initialPostcode]);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				if (autoSelectAgency) {
-					const response = await apiAgencySelection({
-						postcode: DEFAULT_POSTCODE,
-						consultingType: props.consultingType.id,
-						topicId: props?.mainTopicId
-					});
-
-					const defaultAgency = response[0];
-					if (autoSelectPostcode) {
-						setSelectedPostcode(defaultAgency.postcode);
-					}
-					setSelectedAgency(defaultAgency);
-					setPreselectedAgency(defaultAgency);
+				if (!autoSelectAgency) {
+					return;
 				}
+
+				const response = await apiAgencySelection({
+					postcode: DEFAULT_POSTCODE,
+					consultingType: topic.consultingType.id,
+					topicId: topic?.id
+				});
+
+				const defaultAgency = response[0];
+				if (autoSelectPostcode) {
+					setSelectedPostcode(defaultAgency.postcode);
+				}
+				setSelectedAgency(defaultAgency);
+				setPreselectedAgency(defaultAgency);
 			} catch (err) {
 				return null;
 			}
 		})();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [autoSelectAgency, props.consultingType.id, props?.mainTopicId, locale]);
+	}, [
+		autoSelectAgency,
+		topic.consultingType.id,
+		topic,
+		locale,
+		autoSelectPostcode
+	]);
 
 	useEffect(() => {
-		if (isSelectedAgencyValidated()) {
+		if (isSelectedAgencyValidated) {
 			const agency = {
 				...selectedAgency,
 				postcode: selectedPostcode
 			};
-			props.onAgencyChange(agency);
-			if (props.onValidityChange) {
-				props.onValidityChange(VALIDITY_VALID);
+			onAgencyChange(agency);
+			if (onValidityChange) {
+				onValidityChange(VALIDITY_VALID);
 			}
 		} else if (preselectedAgency && !selectedAgency?.id) {
 			setSelectedAgency(preselectedAgency);
-			if (props.consultingType.registration.autoSelectPostcode) {
+			if (topic.consultingType.registration.autoSelectPostcode) {
 				setSelectedPostcode(preselectedAgency.postcode);
 			}
 		} else {
-			props.onAgencyChange(null);
-			if (props.onValidityChange) {
-				props.onValidityChange(
+			onAgencyChange(null);
+			if (onValidityChange) {
+				onValidityChange(
 					selectedPostcode ? VALIDITY_INVALID : VALIDITY_INITIAL
 				);
 			}
@@ -138,23 +159,20 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 					setPostcodeFallbackLink('');
 					// When we have the topics in in registration enabled to prevent for us doing the request
 					// we need to ensure that we've the mainTopicId is set
-					const isValidWhenTopicInRegistrationIsActive =
-						(topicsAreRequired && props.mainTopicId) ||
-						!tenantData?.settings?.topicsInRegistrationEnabled;
-
 					if (
-						validPostcode() &&
-						isValidWhenTopicInRegistrationIsActive
+						validPostcode &&
+						(!tenantData?.settings?.topicsInRegistrationEnabled ||
+							topic)
 					) {
 						const agencies = (
 							await apiAgencySelection({
 								postcode: selectedPostcode,
-								consultingType: props.consultingType.id,
-								topicId: props?.mainTopicId
+								consultingType: topic.consultingType.id,
+								topicId: topic.id
 							}).finally(() => setIsLoading(false))
 						).filter(
 							(agency) =>
-								!props.hideExternalAgencies || !agency.external
+								!hideExternalAgencies || !agency.external
 						);
 
 						setProposedAgencies(agencies);
@@ -165,15 +183,14 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 				} catch (err: any) {
 					if (
 						err.message === FETCH_ERRORS.EMPTY &&
-						props.consultingType.id !== null
+						topic.consultingType.id !== null
 					) {
 						setProposedAgencies(null);
 						setPostcodeFallbackLink(
 							parsePlaceholderString(
 								settings.postcodeFallbackUrl,
 								{
-									url: props.consultingType.urls
-										.registrationPostcodeFallbackUrl,
+									//url: consultingType.urls.registrationPostcodeFallbackUrl,
 									postcode: selectedPostcode
 								}
 							)
@@ -182,19 +199,16 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 					return;
 				}
 			})();
-		} else if (
-			(autoSelectAgency || preselectedAgency) &&
-			!validPostcode()
-		) {
-			props.onAgencyChange(null);
-			if (props.onValidityChange) {
-				props.onValidityChange(
+		} else if ((autoSelectAgency || preselectedAgency) && !validPostcode) {
+			onAgencyChange(null);
+			if (onValidityChange) {
+				onValidityChange(
 					selectedPostcode ? VALIDITY_INVALID : VALIDITY_INITIAL
 				);
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedPostcode, props.consultingType.id, props?.mainTopicId]);
+	}, [selectedPostcode, topic.consultingType.id, topic]);
 
 	const postcodeInputItem: InputFieldItem = {
 		name: 'postcode',
@@ -205,7 +219,7 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 		content: selectedPostcode,
 		maxLength: VALID_POSTCODE_LENGTH,
 		pattern: '^[0-9]+$',
-		icon: props.icon
+		icon: icon
 	};
 
 	const handlePostcodeInput = (e) => {
@@ -237,7 +251,7 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 				/>
 			) : (
 				<>
-					{props.isProfileView && (
+					{isProfileView && (
 						<Headline
 							semanticLevel="5"
 							text={
@@ -297,20 +311,20 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 						item={postcodeInputItem}
 						inputHandle={(e) => handlePostcodeInput(e)}
 						onKeyDown={(e) =>
-							props.onKeyDown ? props.onKeyDown(e, false) : null
+							onKeyDown ? onKeyDown(e, false) : null
 						}
 					></InputField>
-					{props.agencySelectionNote && (
+					{agencySelectionNote && (
 						<div data-cy="registration-agency-selection-note">
 							<Text
 								className="agencySelection__note"
-								text={props.agencySelectionNote}
+								text={agencySelectionNote}
 								type="infoLargeAlternative"
 								labelType={LABEL_TYPES.NOTICE}
 							/>
 						</div>
 					)}
-					{validPostcode() && !preselectedAgency && (
+					{validPostcode && !preselectedAgency && (
 						<div className="agencySelection__proposedAgencies">
 							<h3>
 								{translate(
@@ -385,7 +399,7 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 												<AgencyInfo
 													agency={agency}
 													isProfileView={
-														props.isProfileView
+														isProfileView
 													}
 												/>
 											</div>
@@ -400,13 +414,13 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 					)}
 				</>
 			)}
-			{showPreselectedAgency && (
+			{/*showPreselectedAgency && (
 				<PreselectedAgency
 					prefix={translate('registration.agency.preselected.prefix')}
 					agencyData={preselectedAgency}
-					isProfileView={props.isProfileView}
+					isProfileView={isProfileView}
 				/>
-			)}
+			)*/}
 		</div>
 	);
 };

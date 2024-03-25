@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Stage } from '../stage/stage';
 import useDocumentTitle from '../../resources/utils/useDocumentTitle';
 import './legalPage.styles';
-import { useTranslation } from 'react-i18next';
 import { legalLinks } from '../../resources/scripts/config';
 import { Headline } from '../../../components/headline/Headline';
 import { Text } from '../../../components/text/Text';

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { generatePath, useHistory } from 'react-router-dom';
 import { Button, BUTTON_TYPES, ButtonItem } from '../button/Button';
 import { Box } from '../box/Box';
@@ -16,7 +15,7 @@ import { GenerateQrCode } from '../generateQrCode/GenerateQrCode';
 import './appointment.styles.scss';
 import { Overlay, OVERLAY_FUNCTIONS, OverlayItem } from '../overlay/Overlay';
 import { uiUrl } from '../../resources/scripts/config';
-import { AppointmentsDataInterface } from '../../globalState/interfaces/AppointmentsDataInterface';
+import { AppointmentsDataInterface } from '../../globalState';
 import { supportsE2EEncryptionVideoCall } from '../../utils/videoCallHelpers';
 import { videoCallErrorOverlayItem } from '../sessionMenu/sessionMenuHelpers';
 import { useTranslation } from 'react-i18next';

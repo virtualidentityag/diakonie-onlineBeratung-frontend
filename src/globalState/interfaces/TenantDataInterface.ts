@@ -26,6 +26,7 @@ export interface TenantDataSettingsInterface {
 	featureStatisticsEnabled: boolean;
 	featureToolsEnabled: boolean;
 	featureToolsOICDToken: string;
+	/** @deprecated */
 	featureTopicsEnabled: boolean;
 	topicsInRegistrationEnabled: boolean;
 	featureAttachmentUploadDisabled: boolean;

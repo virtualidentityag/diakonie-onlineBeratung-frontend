@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+	JSX
+} from 'react';
 import sanitizeHtml from 'sanitize-html';
 import { PrettyDate } from '../../utils/dateHelpers';
 import {

@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Overlay, OVERLAY_FUNCTIONS, OverlayItem } from '../overlay/Overlay';
 import { Button, BUTTON_TYPES, ButtonItem } from '../button/Button';
 import './appointments.styles.scss';
 import {
 	NOTIFICATION_TYPE_SUCCESS,
-	NotificationsContext
+	NotificationsContext,
+	AppointmentsDataInterface
 } from '../../globalState';
 import { ScrollableSection } from '../scrollableSection/ScrollableSection';
 import { ScrollableSectionHeader } from '../scrollableSection/ScrollableSectionHeader';
@@ -21,7 +21,6 @@ import { ReactComponent as CameraPlusIcon } from '../../resources/img/icons/came
 import { ReactComponent as WaitingIllustration } from '../../resources/img/illustrations/chat-waiting.svg';
 import { Loading } from '../app/Loading';
 import { useResponsive } from '../../hooks/useResponsive';
-import { AppointmentsDataInterface } from '../../globalState/interfaces/AppointmentsDataInterface';
 import * as appointmentService from '../../api/appointments';
 import { Text } from '../text/Text';
 import { useTranslation } from 'react-i18next';

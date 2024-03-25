@@ -1,13 +1,15 @@
 import { endpoints } from '../resources/scripts/endpoints';
 import { fetchData, FETCH_METHODS, FETCH_ERRORS } from './fetchData';
-import { ConsultantDataInterface } from '../globalState';
-import { apiGetConsultingType } from './apiGetConsultingType';
-import { apiGetConsultingTypes } from './apiGetConsultingTypes';
+import {
+	ConsultantDataInterface,
+	ConsultingTypeBasicInterface
+} from '../globalState';
+import { TopicsDataInterface } from '../globalState';
 
 export const apiGetConsultant = async (
 	consultantId: any,
-	fetchConsultingTypes?: boolean,
-	consultingTypeDetail: 'full' | 'basic' = 'full',
+	consultingTypes?: ConsultingTypeBasicInterface[],
+	topics?: TopicsDataInterface[],
 	catchAllErrors?: boolean
 ): Promise<ConsultantDataInterface> => {
 	const url = endpoints.agencyConsultants + '/' + consultantId;
@@ -22,43 +24,23 @@ export const apiGetConsultant = async (
 			catchAllErrors && FETCH_ERRORS.CATCH_ALL
 		]
 	}).then((user) => {
-		if (!fetchConsultingTypes) {
+		if (!consultingTypes) {
 			return user;
 		}
 
-		if (consultingTypeDetail === 'full') {
-			return Promise.all(
-				user.agencies.map(async (agency) => ({
-					...agency,
-					consultingTypeRel: await apiGetConsultingType({
-						consultingTypeId: agency?.consultingType
-					})
-				}))
-			).then((agencies): ConsultantDataInterface => {
-				return {
-					...user,
-					agencies
-				};
-			});
-		}
+		const mappedUserAgencies = user.agencies.map((agency) => ({
+			...agency,
+			consultingTypeRel: consultingTypes.find(
+				(type) => type.id === agency.consultingType
+			),
+			topicRels: topics.filter((topic) =>
+				agency.topicIds.includes(topic.id)
+			)
+		}));
 
-		if (consultingTypeDetail === 'basic') {
-			return apiGetConsultingTypes().then((consultingTypes) => {
-				const mappedUserAgencies = user.agencies.map((agency) => {
-					const consultingTypeRel = consultingTypes.filter(
-						(type) => type.id === agency.consultingType
-					)[0];
-					return {
-						...agency,
-						consultingTypeRel: { ...consultingTypeRel }
-					};
-				});
-
-				return {
-					...user,
-					agencies: mappedUserAgencies
-				};
-			});
-		}
+		return {
+			...user,
+			agencies: mappedUserAgencies
+		};
 	});
 };

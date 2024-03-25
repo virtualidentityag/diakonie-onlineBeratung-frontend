@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useCalcomLogin } from '../../hooks/useCalcomLogin';
 import { AvailabilityContainer } from '../AvailabilityContainer/availabilityContainer';
 import { CalendarIntegration } from '../CalendarIntegration/calendarIntegration';

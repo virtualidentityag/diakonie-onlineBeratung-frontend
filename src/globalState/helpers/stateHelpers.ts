@@ -1,4 +1,3 @@
-import { UserDataInterface } from '../interfaces/UserDataInterface';
 import {
 	GroupChatItemInterface,
 	ListItemInterface,
@@ -10,8 +9,9 @@ import {
 	STATUS_ARCHIVED,
 	STATUS_EMPTY,
 	STATUS_ENQUIRY,
-	TopicSessionInterface
-} from '../interfaces/SessionsDataInterface';
+	TopicsDataInterface,
+	UserDataInterface
+} from '../interfaces';
 import {
 	CHAT_TYPE_GROUP_CHAT,
 	CHAT_TYPE_SINGLE_CHAT,
@@ -26,9 +26,9 @@ export type ExtendedSessionInterface = Omit<
 	'session' | 'chat'
 > & {
 	item?: Partial<Omit<SessionItemInterface, 'topic'>> &
-		Partial<Omit<GroupChatItemInterface, 'topic'>> & {
-			topic: string | TopicSessionInterface;
-		};
+		Partial<Omit<GroupChatItemInterface, 'topic'>>;
+	chatTopic: GroupChatItemInterface['topic'];
+	topic: TopicsDataInterface;
 	rid: string;
 	type: typeof CHAT_TYPE_GROUP_CHAT | typeof CHAT_TYPE_SINGLE_CHAT;
 	isGroup?: boolean;
@@ -43,10 +43,17 @@ export type ExtendedSessionInterface = Omit<
 
 export const buildExtendedSession = (
 	session: ListItemInterface,
+	topics: TopicsDataInterface[],
 	sessionGroupId?: string
 ): ExtendedSessionInterface => {
 	const { chat: groupChat, session: sessionChat, ...sessionProps } = session;
 	let rid = sessionChat?.groupId ?? null;
+
+	/**
+	 * ToDo: Temporary fix to convert the consultingType from group chat to topic as long group does not return a topic
+	 */
+	const topicId = sessionChat?.topic?.id ?? groupChat?.consultingType;
+	const topic = topics.find((topic) => topic?.id === topicId);
 
 	if (groupChat) {
 		rid = groupChat.groupId;
@@ -56,10 +63,13 @@ export const buildExtendedSession = (
 	) {
 		rid = sessionChat.feedbackGroupId;
 	}
+
 	return {
 		...sessionProps,
 		item: groupChat ?? sessionChat,
 		type: groupChat ? CHAT_TYPE_GROUP_CHAT : CHAT_TYPE_SINGLE_CHAT,
+		chatTopic: groupChat?.topic,
+		topic,
 		isGroup: !!groupChat,
 		isSession:
 			sessionChat &&
@@ -78,6 +88,7 @@ export const buildExtendedSession = (
 };
 
 export const getExtendedSession = (
+	topics: TopicsDataInterface[],
 	sessionGroupId?: string,
 	sessions?: ListItemInterface[]
 ): ExtendedSessionInterface | null => {
@@ -100,7 +111,7 @@ export const getExtendedSession = (
 		return null;
 	}
 
-	return buildExtendedSession(session, sessionGroupId);
+	return buildExtendedSession(session, topics, sessionGroupId);
 };
 
 export const getContact = (

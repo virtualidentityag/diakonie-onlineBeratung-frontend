@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {
+import React, {
 	MouseEventHandler,
 	useCallback,
 	useContext,
@@ -7,6 +6,7 @@ import {
 	useState
 } from 'react';
 import { generatePath, Link, Redirect, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
 	AnonymousConversationFinishedContext,
 	AUTHORITIES,
@@ -63,7 +63,6 @@ import { ActiveSessionContext } from '../../globalState/provider/ActiveSessionPr
 import { Text } from '../text/Text';
 import { useSearchParam } from '../../hooks/useSearchParams';
 import { useAppConfig } from '../../hooks/useAppConfig';
-import { useTranslation } from 'react-i18next';
 import { LegalLinksContext } from '../../globalState/provider/LegalLinksProvider';
 import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 
