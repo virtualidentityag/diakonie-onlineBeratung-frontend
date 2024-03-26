@@ -106,7 +106,8 @@ export const AuthenticatedApp = ({
 		setInformal,
 		setLocale,
 		reloadUserData,
-		userDataRequested
+		userDataRequested,
+		setTopics
 	]);
 
 	useEffect(() => {
