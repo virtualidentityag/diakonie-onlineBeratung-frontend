@@ -13,7 +13,10 @@ import {
 	UserDataContext,
 	ActiveSessionContext
 } from '../../globalState';
-import { SessionConsultantInterface } from '../../globalState/interfaces';
+import {
+	SessionConsultantInterface,
+	TopicSessionInterface
+} from '../../globalState/interfaces';
 import {
 	getViewPathForType,
 	SESSION_LIST_TAB,
@@ -31,6 +34,7 @@ import { useSearchParam } from '../../hooks/useSearchParams';
 import { useTranslation } from 'react-i18next';
 import { GroupChatHeader } from './GroupChatHeader';
 import { useAppConfig } from '../../hooks/useAppConfig';
+import { useTopic } from '../../globalState/provider/TopicsProvider';
 
 export interface SessionHeaderProps {
 	consultantAbsent?: SessionConsultantInterface;
@@ -48,6 +52,9 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 	const { activeSession } = useContext(ActiveSessionContext);
 	const { userData } = useContext(UserDataContext);
 	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = useTopic(
+		(activeSession.item.topic as TopicSessionInterface).id
+	);
 	const settings = useAppConfig();
 
 	const contact = getContact(activeSession);
@@ -217,16 +224,7 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 				<div className="sessionInfo__metaInfo">
 					{!activeSession.agency ? (
 						<div className="sessionInfo__metaInfo__content">
-							{consultingType
-								? translate(
-										[
-											`consultingType.${consultingType.id}.titles.short`,
-											`consultingType.fallback.titles.short`,
-											consultingType.titles.short
-										],
-										{ ns: 'consultingTypes' }
-									)
-								: ''}
+							{topic.titles?.short ? topic.titles.short : ''}
 						</div>
 					) : null}
 					{preparedUserSessionData
