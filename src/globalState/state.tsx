@@ -12,7 +12,8 @@ import {
 	AnonymousConversationStartedProvider,
 	SessionsDataProvider,
 	ModalProvider,
-	AgencySpecificProvider
+	AgencySpecificProvider,
+	TopicsProvider
 } from '.';
 
 function ProviderComposer({ contexts, children }) {
@@ -33,6 +34,7 @@ function ContextProvider({ children }) {
 				<AnonymousConversationStartedProvider />,
 				<ConsultantListProvider />,
 				<ConsultingTypesProvider />,
+				<TopicsProvider />,
 				<NotificationsProvider />,
 				<UpdateSessionListProvider />,
 				<UserDataProvider />,

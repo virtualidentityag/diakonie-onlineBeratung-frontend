@@ -7,4 +7,10 @@ export interface TopicsDataInterface {
 	status: string;
 	createDate: string;
 	updateDate: string;
+	titles: {
+		short: string;
+		long: string;
+		registrationDropdown: string;
+		welcome: string;
+	};
 }

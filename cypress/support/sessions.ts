@@ -1,6 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import { SESSION_LIST_TYPES } from '../../src/components/session/sessionHelpers';
-import { SessionUserDataInterface } from '../../src/globalState/interfaces';
+import {
+	ListItemInterface,
+	SessionItemInterface,
+	SessionUserDataInterface
+} from '../../src/globalState/interfaces';
 
 export const generateConsultantSession = ({
 	type,
@@ -8,7 +12,7 @@ export const generateConsultantSession = ({
 }: {
 	type?: SESSION_LIST_TYPES;
 	messagesRead?: boolean;
-} = {}): UserService.Schemas.ConsultantSessionResponseDTO => {
+} = {}): ListItemInterface => {
 	let status;
 	if (type === SESSION_LIST_TYPES.ENQUIRY) {
 		status = 1;
@@ -31,8 +35,13 @@ export const generateConsultantSession = ({
 			id: sessionId,
 			agencyId: 1,
 			consultingType: 0,
+			topic: {
+				id: 1,
+				name: 'topic',
+				description: 'description'
+			},
 			status,
-			postcode: '12345',
+			postcode: 12345,
 			groupId: rcGroupId,
 			feedbackGroupId: null,
 			askerRcId: 'askerRcId',
@@ -41,19 +50,34 @@ export const generateConsultantSession = ({
 			messagesRead: messagesRead === undefined ? true : messagesRead,
 			feedbackRead: true,
 			isTeamSession: true,
+			isFeedbackSession: false,
+			isPeerChat: false,
 			attachment: null,
-			registrationType: 'REGISTERED'
+			registrationType: 'REGISTERED',
+			e2eLastMessage: {
+				t: '1606900238',
+				msg: 'lastMessage'
+			},
+			createDate: '2024-03-28',
+			videoCallMessageDTO: {
+				eventType: '',
+				initiatorRcUserId: '',
+				initiatorUserName: ''
+			}
 		},
 		chat: null,
 		user: {
 			username: 'sucht-asker-3',
-			// TODO: why does userservice's openapi spec specify this as string?
-			sessionData: sessionData as string
+			sessionData: sessionData
 		},
 		consultant: {
 			id: 'consultant',
 			firstName: 'firstName',
-			lastName: 'lastName'
+			lastName: 'lastName',
+			consultantId: '',
+			absent: false,
+			absenceMessage: '',
+			username: 'consultant'
 		},
 		latestMessage: '2020-12-02T10:10:38.986+01:00'
 	};
@@ -71,7 +95,7 @@ export const generateAskerSession = ({
 }: {
 	messagesRead?: boolean;
 	isTeamSession?: boolean;
-} = {}): UserService.Schemas.UserSessionResponseDTO => {
+} = {}): ListItemInterface => {
 	const sessionId = Math.random();
 	const rcGroupId = uuid();
 
@@ -80,8 +104,13 @@ export const generateAskerSession = ({
 			id: sessionId,
 			agencyId: 1,
 			consultingType: 1,
+			topic: {
+				id: 1,
+				name: 'topic',
+				description: 'description'
+			},
 			status: 2,
-			postcode: '12345',
+			postcode: 12345,
 			groupId: rcGroupId,
 			feedbackGroupId: 'feedbackGroupId1',
 			askerRcId: 'askerRcId1',
@@ -90,8 +119,20 @@ export const generateAskerSession = ({
 			messagesRead: messagesRead === undefined ? true : messagesRead,
 			feedbackRead: null,
 			isTeamSession: isTeamSession === undefined ? true : isTeamSession,
+			isFeedbackSession: false,
+			isPeerChat: false,
 			attachment: null,
-			registrationType: 'REGISTERED'
+			registrationType: 'REGISTERED',
+			e2eLastMessage: {
+				t: '1606900238',
+				msg: 'lastMessage'
+			},
+			createDate: '2024-03-28',
+			videoCallMessageDTO: {
+				eventType: '',
+				initiatorRcUserId: '',
+				initiatorUserName: ''
+			}
 		},
 		chat: null,
 		agency: {
@@ -106,6 +147,8 @@ export const generateAskerSession = ({
 		},
 		consultant: {
 			username: 'consultant',
+			consultantId: '',
+			absent: false,
 			absenceMessage: null
 		}
 	};
