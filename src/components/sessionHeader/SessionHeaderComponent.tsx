@@ -34,7 +34,7 @@ import { useSearchParam } from '../../hooks/useSearchParams';
 import { useTranslation } from 'react-i18next';
 import { GroupChatHeader } from './GroupChatHeader';
 import { useAppConfig } from '../../hooks/useAppConfig';
-import { useTopic } from '../../globalState/provider/TopicsProvider';
+import { useTopic } from '../../globalState';
 
 export interface SessionHeaderProps {
 	consultantAbsent?: SessionConsultantInterface;

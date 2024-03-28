@@ -17,6 +17,9 @@ beforeEach(() => {
 	cy.fixture('service.tenant.public.json').then((content) => {
 		cy.willReturn('service.tenant.public', content);
 	});
+	cy.fixture('service.topics.json').then((content) => {
+		cy.willReturn('topics', content);
+	});
 });
 
 afterEach(() => {

@@ -16,16 +16,20 @@ export const TopicsContext = createContext<{
 }>(null);
 
 export function TopicsProvider(props) {
-	const [topics, setTopics] = useState<Array<TopicsDataInterface>>(null);
+	const [topics, setTopics] = useState<Array<TopicsDataInterface>>();
 	const { locale } = useContext(LocaleContext);
 
 	const refreshTopics = useCallback(() => {
-		apiGetTopicsData().then((topics) => setTopics(topics));
+		apiGetTopicsData()
+			.then((topics) => setTopics(topics))
+			.catch(() => setTopics([]));
 	}, []);
 
 	useEffect(() => {
 		refreshTopics();
 	}, [refreshTopics, locale]);
+
+	if (topics === undefined) return null;
 
 	return (
 		<TopicsContext.Provider value={{ topics, refreshTopics }}>
