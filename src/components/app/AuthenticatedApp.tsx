@@ -26,8 +26,6 @@ import { useJoinGroupChat } from '../../hooks/useJoinGroupChat';
 import { RocketChatUserStatusProvider } from '../../globalState/provider/RocketChatUserStatusProvider';
 import { useAppConfig } from '../../hooks/useAppConfig';
 import { E2EEncryptionSupportBanner } from '../E2EEncryptionSupportBanner/E2EEncryptionSupportBanner';
-import { apiGetTopicsData } from '../../api/apiGetTopicsData';
-import { TopicsContext } from '../../globalState/provider/TopicsProvider';
 
 interface AuthenticatedAppProps {
 	onAppReady: Function;
@@ -40,7 +38,6 @@ export const AuthenticatedApp = ({
 }: AuthenticatedAppProps) => {
 	const { releaseToggles } = useAppConfig();
 	const { setConsultingTypes } = useContext(ConsultingTypesContext);
-	const { setTopics } = useContext(TopicsContext);
 	const { userData, reloadUserData } = useContext(UserDataContext);
 	const { locale, setLocale } = useContext(LocaleContext);
 	const { setInformal } = useContext(InformalContext);
@@ -72,16 +69,11 @@ export const AuthenticatedApp = ({
 
 			handleTokenRefresh(false)
 				.then(() => {
-					Promise.all([
-						reloadUserData(),
-						apiGetConsultingTypes(),
-						apiGetTopicsData()
-					])
-						.then(([userProfileData, consultingTypes, topics]) => {
+					Promise.all([reloadUserData(), apiGetConsultingTypes()])
+						.then(([userProfileData, consultingTypes]) => {
 							// set informal / formal cookie depending on the given userdata
 							setInformal(!userProfileData.formalLanguage);
 							setConsultingTypes(consultingTypes);
-							setTopics(topics);
 
 							if (userProfileData.preferredLanguage) {
 								setLocale(userProfileData.preferredLanguage);
@@ -106,8 +98,7 @@ export const AuthenticatedApp = ({
 		setInformal,
 		setLocale,
 		reloadUserData,
-		userDataRequested,
-		setTopics
+		userDataRequested
 	]);
 
 	useEffect(() => {

@@ -1,17 +1,34 @@
 import * as React from 'react';
-import { createContext, useState, useContext } from 'react';
+import {
+	createContext,
+	useState,
+	useContext,
+	useEffect,
+	useCallback
+} from 'react';
 import { TopicsDataInterface } from '../interfaces';
+import { apiGetTopicsData } from '../../api/apiGetTopicsData';
+import { LocaleContext } from '../context/LocaleContext';
 
 export const TopicsContext = createContext<{
 	topics: Array<TopicsDataInterface>;
-	setTopics: (topics: Array<TopicsDataInterface>) => void;
+	refreshTopics: () => void;
 }>(null);
 
 export function TopicsProvider(props) {
-	const [topics, setTopics] = useState(null);
+	const [topics, setTopics] = useState<Array<TopicsDataInterface>>(null);
+	const { locale } = useContext(LocaleContext);
+
+	const refreshTopics = useCallback(() => {
+		apiGetTopicsData().then((topics) => setTopics(topics));
+	}, []);
+
+	useEffect(() => {
+		refreshTopics();
+	}, [refreshTopics, locale]);
 
 	return (
-		<TopicsContext.Provider value={{ topics, setTopics }}>
+		<TopicsContext.Provider value={{ topics, refreshTopics }}>
 			{props.children}
 		</TopicsContext.Provider>
 	);
