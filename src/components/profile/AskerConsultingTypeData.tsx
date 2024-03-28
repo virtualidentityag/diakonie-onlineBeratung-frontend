@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { UserDataContext, useTopics } from '../../globalState';
+import { useConsultingTypes, UserDataContext } from '../../globalState';
 import { handleNumericTranslation } from '../../utils/translate';
 import { getUserDataTranslateBase } from './profileHelpers';
 import { Headline } from '../headline/Headline';
@@ -8,9 +8,13 @@ import { Box } from '../box/Box';
 import { useTranslation } from 'react-i18next';
 
 export const AskerConsultingTypeData = () => {
-	const { t: translate } = useTranslation(['common', 'agencies']);
+	const { t: translate } = useTranslation([
+		'common',
+		'consultingTypes',
+		'agencies'
+	]);
 	const { userData } = useContext(UserDataContext);
-	const topics = useTopics();
+	const consultingTypes = useConsultingTypes();
 
 	return (
 		<>
@@ -26,13 +30,19 @@ export const AskerConsultingTypeData = () => {
 								<div className="profile__content__title">
 									<Headline
 										className="pr--3"
-										text={
-											topics.find(
-												({ id }) =>
-													id ===
-													resort.agency.consultingType
-											)?.titles.short || ''
-										}
+										text={translate(
+											[
+												`consultingType.${resort.agency.consultingType}.titles.default`,
+												`consultingType.fallback.titles.default`,
+												consultingTypes.find(
+													(cur) =>
+														cur.id ===
+														resort.agency
+															.consultingType
+												)?.titles.default
+											],
+											{ ns: 'consultingTypes' }
+										)}
 										semanticLevel="5"
 									/>
 								</div>
