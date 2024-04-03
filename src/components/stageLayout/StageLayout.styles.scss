@@ -1,5 +1,7 @@
 .stageLayout {
 	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
 	min-height: 100%;
 
 	&__header,
@@ -10,10 +12,6 @@
 		@include breakpoint($fromLarge) {
 			padding: 0 $grid-base-three $grid-base-four;
 		}
-	}
-
-	.stageLayout__header > * {
-		padding: 0 8px;
 	}
 
 	&__content {
