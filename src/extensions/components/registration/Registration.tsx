@@ -232,7 +232,6 @@ export const Registration = () => {
 			>
 				<Box
 					sx={{
-						pb: '96px',
 						maxWidth: '560px !important',
 						width: '100%'
 					}}

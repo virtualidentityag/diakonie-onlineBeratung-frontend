@@ -101,41 +101,73 @@ export const StageLayout = ({
 					></Divider>
 				</AppBar>
 			</Slide>
+
 			{showRegistrationInfoDrawer && (
 				<InfoDrawer trigger={trigger}></InfoDrawer>
 			)}
+
 			{React.cloneElement(Children.only(stage as ReactElement), {
 				className: 'stageLayout__stage'
 			})}
-			<Box
-				className={`stageLayout__header`}
-				sx={{
-					display: {
-						xs: 'none',
-						md: 'flex'
-					}
-				}}
-			>
-				{selectableLocales.length > 1 && (
-					<div>
-						<LocaleSwitch
-							menuPlacement={MENUPLACEMENT_BOTTOM_LEFT}
-						/>
-					</div>
-				)}
-				{showLoginLink && (
-					<div className="stageLayout__toLogin">
-						<div className="stageLayout__toLogin__button">
+
+			<Box className="stageLayout__contentWrapper">
+				<Box
+					className={`stageLayout__header`}
+					sx={{
+						display: {
+							xs: 'none',
+							md: 'flex'
+						}
+					}}
+				>
+					{selectableLocales.length > 1 && (
+						<div>
+							<LocaleSwitch
+								menuPlacement={MENUPLACEMENT_BOTTOM_LEFT}
+							/>
+						</div>
+					)}
+					{showLoginLink && (
+						<div className="stageLayout__toLogin">
+							<div className="stageLayout__toLogin__button">
+								<a
+									href={`${settings.urls.toLogin}${
+										loginParams ? `?${loginParams}` : ''
+									}`}
+									tabIndex={-1}
+								>
+									<Button
+										item={{
+											label: translate(
+												'registration.login.label'
+											),
+											type: 'TERTIARY'
+										}}
+										isLink
+									/>
+								</a>
+							</div>
+						</div>
+					)}
+
+					{showRegistrationLink && (
+						<div className="login__tenantRegistration">
+							<Text
+								text={translate(
+									'login.register.infoText.title'
+								)}
+								type={'infoSmall'}
+							/>
 							<a
-								href={`${settings.urls.toLogin}${
-									loginParams ? `?${loginParams}` : ''
-								}`}
+								className="login__tenantRegistrationLink"
+								href={settings.urls.toRegistration}
+								target="_self"
 								tabIndex={-1}
 							>
 								<Button
 									item={{
 										label: translate(
-											'registration.login.label'
+											'login.register.linkLabel'
 										),
 										type: 'TERTIARY'
 									}}
@@ -143,79 +175,56 @@ export const StageLayout = ({
 								/>
 							</a>
 						</div>
-					</div>
-				)}
+					)}
+				</Box>
 
-				{showRegistrationLink && (
-					<div className="login__tenantRegistration">
-						<Text
-							text={translate('login.register.infoText.title')}
-							type={'infoSmall'}
-						/>
-						<a
-							className="login__tenantRegistrationLink"
-							href={settings.urls.toRegistration}
-							target="_self"
-							tabIndex={-1}
-						>
-							<Button
-								item={{
-									label: translate(
-										'login.register.linkLabel'
-									),
-									type: 'TERTIARY'
-								}}
-								isLink
-							/>
-						</a>
-					</div>
-				)}
-			</Box>
+				<Box
+					sx={{
+						mt: {
+							xs: showRegistrationInfoDrawer ? '96px' : '48px',
+							md: '0'
+						}
+					}}
+					className="stageLayout__content"
+				>
+					{children}
+				</Box>
 
-			<Box
-				sx={{
-					mt: {
-						xs: showRegistrationInfoDrawer ? '96px' : '48px',
-						md: '0'
-					}
-				}}
-				className="stageLayout__content"
-			>
-				{children}
-			</Box>
-
-			<div className="stageLayout__footer">
 				{showLegalLinks && (
-					<div className={`stageLayout__legalLinks`}>
-						<LegalLinks
-							delimiter={
-								<Text
-									type="infoSmall"
-									className="stageLayout__legalLinksSeparator"
-									text=" | "
-								/>
-							}
-							params={{ aid: specificAgency?.id }}
-							legalLinks={legalLinks}
-						>
-							{(label, url) => (
-								<button
-									type="button"
-									className="button-as-link"
-									data-cy-link={url}
-									onClick={() => window.open(url, '_blank')}
-								>
+					<div className="stageLayout__footer">
+						<div className={`stageLayout__legalLinks`}>
+							<LegalLinks
+								delimiter={
 									<Text
-										className="stageLayout__legalLinksItem"
 										type="infoSmall"
-										text={label}
+										className="stageLayout__legalLinksSeparator"
+										text=" | "
 									/>
-								</button>
-							)}
-						</LegalLinks>
+								}
+								params={{ aid: specificAgency?.id }}
+								legalLinks={legalLinks}
+							>
+								{(label, url) => (
+									<button
+										type="button"
+										className="button-as-link"
+										data-cy-link={url}
+										onClick={() =>
+											window.open(url, '_blank')
+										}
+									>
+										<Text
+											className="stageLayout__legalLinksItem"
+											type="infoSmall"
+											text={label}
+										/>
+									</button>
+								)}
+							</LegalLinks>
+						</div>
 					</div>
 				)}
-			</div>
+			</Box>
 		</div>
 	);
 };
