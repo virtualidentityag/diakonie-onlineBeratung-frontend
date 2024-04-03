@@ -39,7 +39,7 @@ export const AskerConsultingTypeData = () => {
 														cur.id ===
 														resort.agency
 															.consultingType
-												)?.titles.default
+												)?.titles?.default || ''
 											],
 											{ ns: 'consultingTypes' }
 										)}
