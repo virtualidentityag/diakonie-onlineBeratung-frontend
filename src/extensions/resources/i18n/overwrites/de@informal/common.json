@@ -97,6 +97,15 @@
 			},
 			"summary": "Deine Beratungsstelle"
 		},
+		"errors": {
+			"unknown": {
+				"text": "Es tut uns leid, da ist wohl etwas schiefgelaufen. Lade die Seite neu und versuche es erneut.",
+				"title": "Ups!"
+			},
+			"aid": "Die von Dir gewählte Beratungsstelle konnte leider nicht gefunden werden. Bitte wähle bei der Registrierung erneut eine Beratungsstelle aus.",
+			"cid": "Leider konnten wir Deine Beraterin oder Deinen Berater nicht finden. Bitte wende Dich an Deine beratende Person, um einen neuen Link zu erhalten oder registriere Dich hier bei Deiner gewünschten Beratungsstelle.",
+			"tid": "Das von Dir gewählte Thema konnte leider nicht gefunden werden. Bitte wähle bei der Registrierung erneut ein passendes Thema aus."
+		},
 		"topic": {
 			"headline": "Zu welchem Thema suchst Du Beratung?",
 			"subline": "Wähle ein Thema aus unserem Beratungsangebot aus.",
