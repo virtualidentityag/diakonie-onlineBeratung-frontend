@@ -249,39 +249,48 @@ export const Registration = () => {
 									.map(({ name }) => name)
 									.join(',')}
 							>
-								<Typography
-									sx={{ mb: '24px' }}
-									component="h1"
-									variant="h2"
-								>
-									{t('registration.headline')}
-								</Typography>
+								<Box sx={{ marginBottom: '96px' }}>
+									<Typography
+										sx={{ mb: '24px' }}
+										component="h1"
+										variant="h2"
+									>
+										{t('registration.headline')}
+									</Typography>
 
-								<PreselectionBox hasDrawer={false} />
-								<StepBar
-									maxNumberOfSteps={availableSteps.length}
-									currentStep={currStepIndex + 1}
-								/>
+									<PreselectionBox hasDrawer={false} />
+									<StepBar
+										maxNumberOfSteps={availableSteps.length}
+										currentStep={currStepIndex + 1}
+									/>
 
-								<Switch>
-									{availableSteps.map(
-										({ name, component: Component }) => (
-											<Route
-												path={generatePath(path, {
-													topicSlug,
-													step: name
-												})}
-												key={name}
-											>
-												<Component
-													onChange={setStepData}
-													onNextClick={onNextClick}
-													nextStepUrl={nextStepUrl}
-												/>
-											</Route>
-										)
-									)}
-								</Switch>
+									<Switch>
+										{availableSteps.map(
+											({
+												name,
+												component: Component
+											}) => (
+												<Route
+													path={generatePath(path, {
+														topicSlug,
+														step: name
+													})}
+													key={name}
+												>
+													<Component
+														onChange={setStepData}
+														onNextClick={
+															onNextClick
+														}
+														nextStepUrl={
+															nextStepUrl
+														}
+													/>
+												</Route>
+											)
+										)}
+									</Switch>
+								</Box>
 								<Box
 									sx={{
 										height: '96px',
