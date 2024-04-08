@@ -30,7 +30,9 @@ import {
 	RegistrationContext,
 	TenantContext,
 	registrationSessionStorageKey,
-	RegistrationData
+	RegistrationData,
+	NotificationsContext,
+	NOTIFICATION_TYPE_ERROR
 } from '../../../globalState';
 import { GlobalComponentContext } from '../../../globalState/provider/GlobalComponentContext';
 import {
@@ -72,6 +74,7 @@ export const Registration = () => {
 	}>();
 
 	const { Stage } = useContext(GlobalComponentContext);
+	const { addNotification } = useContext(NotificationsContext);
 	const {
 		disabledNextButton,
 		updateRegistrationData,
@@ -179,6 +182,8 @@ export const Registration = () => {
 		const data = {
 			...registrationData,
 			...stepData,
+			mainTopicId: registrationData.mainTopic.id.toString(),
+			topicId: registrationData.topic?.id?.toString(),
 			agencyId: registrationData.agency.id.toString(),
 			postcode: registrationData.zipcode,
 			termsAccepted: 'true',
@@ -203,13 +208,23 @@ export const Registration = () => {
 				sessionStorage.removeItem(registrationSessionStorageKey);
 				setRedirectOverlayActive(true);
 			});
+		} else {
+			addNotification({
+				notificationType: NOTIFICATION_TYPE_ERROR,
+				title: t('registration.errors.ups.title'),
+				text: t('registration.errors.ups.text'),
+				closeable: true,
+				timeout: 3000
+			});
 		}
 	}, [
 		registrationData,
 		stepData,
 		preselectedConsultant,
 		settings.multitenancyWithSingleDomainEnabled,
-		tenant
+		tenant,
+		addNotification,
+		t
 	]);
 
 	const stepPaths = useMemo(

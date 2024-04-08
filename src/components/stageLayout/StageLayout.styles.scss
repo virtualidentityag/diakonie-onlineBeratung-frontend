@@ -1,5 +1,7 @@
 .stageLayout {
 	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
 	min-height: 100%;
 
 	&__header,
@@ -21,7 +23,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 		min-height: 100%;
-	}
+  }
 
 	&__stage {
 		position: fixed;

@@ -264,6 +264,10 @@
 			}
 		},
 		"errors": {
+			"ups": {
+				"text": "Es tut uns leid, da ist wohl etwas schiefgelaufen. Laden Sie die Seite neu und versuchen Sie es erneut.",
+				"title": "Ups!"
+			},
 			"aid": "Die von Ihnen gewählte Beratungsstelle konnte leider nicht gefunden werden. Bitte wählen Sie bei der Registrierung erneut eine Beratungsstelle aus.",
 			"cid": "Leider konnten wir Ihre Beraterin oder Ihren Berater nicht finden. Bitte wenden Sie sich an Ihre beratende Person, um einen neuen Link zu erhalten oder registrieren Sie sich hier bei Ihrer gewünschten Beratungsstelle.",
 			"tid": "Das von Ihnen gewählte Thema konnte leider nicht gefunden werden. Bitte wählen Sie bei der Registrierung erneut ein passendes Thema aus."
