@@ -6,7 +6,9 @@ export const loadConsultingTypesForAgencies = async (
 ): Promise<AgencyDataInterface[]> => {
 	// Get unique consultingTypes to prevent multiple requests to api
 	const uniqueConsultingTypeIds = [
-		...new Set(agencies.map((a) => a?.consultingType).filter(Boolean))
+		...new Set(
+			agencies.map((a) => a?.consultingType).filter((ct) => ct !== null)
+		)
 	];
 
 	return Promise.all(
