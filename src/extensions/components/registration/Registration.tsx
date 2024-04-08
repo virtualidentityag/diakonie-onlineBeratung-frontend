@@ -240,13 +240,17 @@ export const Registration = () => {
 	return (
 		<>
 			<StageLayout
-				showLegalLinks={false}
+				showLegalLinks={true}
 				showLoginLink={true}
 				stage={<Stage hasAnimation={isFirstVisit} />}
 				showRegistrationInfoDrawer={true}
 			>
 				<Box
 					sx={{
+						pb: {
+							xs: '30px',
+							lg: '96px'
+						},
 						maxWidth: '560px !important',
 						width: '100%'
 					}}

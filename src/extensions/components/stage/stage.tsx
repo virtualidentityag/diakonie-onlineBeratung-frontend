@@ -1,12 +1,22 @@
 import clsx from 'clsx';
 import * as React from 'react';
 import { useTranslation, Trans } from 'react-i18next';
-import { useState, useEffect, useRef, useCallback, MouseEvent } from 'react';
+import {
+	useState,
+	useEffect,
+	useRef,
+	useCallback,
+	MouseEvent,
+	useContext
+} from 'react';
 import { ReactComponent as Logo } from './logo.svg';
 import { ReactComponent as Loader } from './loader.svg';
+import { Text } from '../../../components/text/Text';
+import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvider';
 import './stage.styles';
 import { Banner } from '../../../components/banner/Banner';
 import { Headline } from '../../../components/headline/Headline';
+import LegalLinks from '../../../components/legalLinks/LegalLinks';
 
 export interface StageProps {
 	className?: string;
@@ -19,10 +29,14 @@ export const Stage = ({
 	hasAnimation,
 	isReady = true
 }: StageProps) => {
+	const { t: translate } = useTranslation();
+
+	const legalLinks = useContext(LegalLinksContext);
+
 	const rootNodeRef = useRef(null);
+
 	const [isOpen, setIsOpen] = useState(!hasAnimation);
 	const [hasAnimationFinished, setHasAnimationFinished] = useState(false);
-	const { t: translate } = useTranslation();
 
 	useEffect(() => {
 		if (hasAnimation && isReady) {
@@ -92,6 +106,34 @@ export const Stage = ({
 						semanticLevel="4"
 						text={translate('app.claim')}
 					/>
+					<div className={`stage__legalLinks`}>
+						<LegalLinks
+							legalLinks={legalLinks}
+							params={{ aid: null }}
+							delimiter={
+								<Text
+									type="infoSmall"
+									className="stage__legalLinksSeparator"
+									text=" | "
+								/>
+							}
+						>
+							{(label, url) => (
+								<button
+									type="button"
+									className="button-as-link"
+									data-cy-link={url}
+									onClick={() => window.open(url, '_blank')}
+								>
+									<Text
+										className="stage__legalLinksItem"
+										type="infoSmall"
+										text={translate(label)}
+									/>
+								</button>
+							)}
+						</LegalLinks>
+					</div>
 				</div>
 			</div>
 			<div className="stage__loader">
