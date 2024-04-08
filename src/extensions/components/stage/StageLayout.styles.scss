@@ -1,4 +1,14 @@
 .stageLayout {
+	@media (min-width: $fromXLarge) {
+		&__legalLinks {
+			display: none;
+		}
+	}
+
+	&__legalLinks {
+		justify-content: center;
+	}
+
 	&__legalLinksItem {
 		color: $tertiary;
 		text-transform: none;

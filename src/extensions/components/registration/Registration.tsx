@@ -240,7 +240,7 @@ export const Registration = () => {
 	return (
 		<>
 			<StageLayout
-				showLegalLinks={false}
+				showLegalLinks={true}
 				showLoginLink={true}
 				stage={<Stage hasAnimation={isFirstVisit} />}
 				showRegistrationInfoDrawer={true}
