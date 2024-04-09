@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { useConsultingTypes, UserDataContext } from '../../globalState';
+import { UserDataContext, useTopics } from '../../globalState';
 import { handleNumericTranslation } from '../../utils/translate';
 import { getUserDataTranslateBase } from './profileHelpers';
 import { Headline } from '../headline/Headline';
@@ -14,7 +14,7 @@ export const AskerConsultingTypeData = () => {
 		'agencies'
 	]);
 	const { userData } = useContext(UserDataContext);
-	const consultingTypes = useConsultingTypes();
+	const topics = useTopics();
 
 	return (
 		<>
@@ -34,12 +34,12 @@ export const AskerConsultingTypeData = () => {
 											[
 												`consultingType.${resort.agency.consultingType}.titles.default`,
 												`consultingType.fallback.titles.default`,
-												consultingTypes.find(
+												topics.find(
 													(cur) =>
 														cur.id ===
 														resort.agency
 															.consultingType
-												)?.titles?.default || ''
+												)?.name || ''
 											],
 											{ ns: 'consultingTypes' }
 										)}

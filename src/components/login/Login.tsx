@@ -200,6 +200,9 @@ export const Login = () => {
 		topicIds: possibleTopicIds
 	} = useConsultantRegistrationData({});
 
+	/**
+	 * ToDo: Needs to be reworked to work with topic selection instead of consultingType
+	 */
 	const registerOverlay = useMemo(
 		(): OverlayItem => ({
 			svg: WelcomeIcon,

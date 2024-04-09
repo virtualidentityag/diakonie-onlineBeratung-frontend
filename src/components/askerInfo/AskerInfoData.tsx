@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { handleNumericTranslation } from '../../utils/translate';
-import {
-	getContact,
-	useConsultingType,
-	ActiveSessionContext
-} from '../../globalState';
+import { getContact, ActiveSessionContext, useTopic } from '../../globalState';
 import {
 	convertUserDataObjectToArray,
 	getUserDataTranslateBase
@@ -17,7 +13,7 @@ export const AskerInfoData = () => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 	const { activeSession } = useContext(ActiveSessionContext);
 
-	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = useTopic(activeSession.item.consultingType);
 
 	const userSessionData = getContact(activeSession).sessionData;
 	const preparedUserSessionData =
@@ -31,12 +27,12 @@ export const AskerInfoData = () => {
 					{translate('userProfile.data.resort')}
 				</p>
 				<p className="askerInfo__data__content">
-					{consultingType
+					{topic
 						? translate(
 								[
-									`consultingType.${consultingType.id}.titles.default`,
+									`consultingType.${topic.id}.titles.default`,
 									`consultingType.fallback.titles.default`,
-									consultingType.titles.default
+									topic.name
 								],
 								{ ns: 'consultingTypes' }
 							)

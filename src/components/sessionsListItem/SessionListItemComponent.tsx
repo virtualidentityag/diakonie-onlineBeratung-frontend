@@ -20,7 +20,8 @@ import {
 	useConsultingType,
 	UserDataContext,
 	useTenant,
-	ActiveSessionContext
+	ActiveSessionContext,
+	useTopic
 } from '../../globalState';
 import {
 	STATUS_FINISHED,
@@ -82,6 +83,7 @@ export const SessionListItemComponent = ({
 
 	const language = activeSession.item.language || defaultLanguage;
 	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = useTopic(activeSession.item.consultingType);
 
 	const { key, keyID, encrypted, ready } = useE2EE(
 		activeSession.item.groupId,
@@ -267,12 +269,12 @@ export const SessionListItemComponent = ({
 				>
 					<div className="sessionsListItem__row">
 						<div className="sessionsListItem__consultingType">
-							{consultingType
+							{topic
 								? translate(
 										[
-											`consultingType.${consultingType.id}.titles.default`,
+											`consultingType.${topic.id}.titles.default`,
 											`consultingType.fallback.titles.default`,
-											consultingType.titles?.default
+											topic.name
 										],
 										{ ns: 'consultingTypes' }
 									)
@@ -347,10 +349,6 @@ export const SessionListItemComponent = ({
 		sessionTopic = activeSession.user.username;
 	}
 
-	const showConsultingType =
-		consultingType && !tenantData?.settings?.featureTopicsEnabled;
-	const zipCodeSlash = showConsultingType ? '/ ' : '';
-
 	return (
 		<div
 			onClick={handleOnClick}
@@ -383,23 +381,10 @@ export const SessionListItemComponent = ({
 						</div>
 					) : (
 						<div className="sessionsListItem__consultingType">
-							{showConsultingType &&
-							consultingType?.id &&
-							consultingType.titles?.default
-								? translate(
-										[
-											`consultingType.${consultingType.id}.titles.default`,
-											`consultingType.fallback.titles.default`,
-											consultingType.titles.default
-										],
-										{ ns: 'consultingTypes' }
-									) + ' '
-								: ''}
-							{activeSession.item.consultingType !== 1 &&
-							!isAsker &&
+							{!isAsker &&
 							!activeSession.isLive &&
 							!consultingType.registration.autoSelectPostcode
-								? zipCodeSlash + activeSession.item.postcode
+								? activeSession.item.postcode
 								: null}
 						</div>
 					)}
