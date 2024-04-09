@@ -3,8 +3,6 @@ import { ConsultantInformation } from './ConsultantInformation';
 import { ConsultantSpokenLanguages } from './ConsultantSpokenLanguages';
 import { ConsultantAgencies } from './ConsultantAgencies';
 import { AskerConsultingTypeData } from './AskerConsultingTypeData';
-import { consultingTypeSelectOptionsSet } from './profileHelpers';
-import { AskerRegistration } from './AskerRegistration';
 import { ConsultantPrivateData } from './ConsultantPrivateData';
 import { AskerAboutMeData } from './AskerAboutMeData';
 import { ConsultantStatistics } from './ConsultantStatistics';
@@ -116,20 +114,6 @@ const profileRoutes = (
 							component: AskerConsultingTypeData,
 							boxed: false,
 							order: 2,
-							column: COLUMN_RIGHT
-						},
-						{
-							condition: (userData, consultingTypes) =>
-								!hasUserAuthority(
-									AUTHORITIES.CONSULTANT_DEFAULT,
-									userData
-								) &&
-								consultingTypeSelectOptionsSet(
-									userData,
-									consultingTypes
-								).length > 0,
-							component: AskerRegistration,
-							order: 3,
 							column: COLUMN_RIGHT
 						}
 					]
