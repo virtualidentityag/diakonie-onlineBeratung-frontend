@@ -30,7 +30,6 @@ import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 import { budibaseLogout } from '../budibase/budibaseLogout';
 import { getUrlParameter } from '../../utils/getUrlParameter';
 import { UrlParamsContext } from '../../globalState/provider/UrlParamsProvider';
-import { ConsultingTypeRegistrationDefaults } from '../../containers/registration/components/ProposedAgencies/ProposedAgencies';
 import { apiPostError, ERROR_LEVEL_ERROR } from '../../api/apiPostError';
 
 export interface FormAccordionData {
@@ -46,11 +45,13 @@ export interface FormAccordionData {
 
 export const RegistrationForm = () => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
-	const legalLinks = useContext(LegalLinksContext);
-	const { addNotification } = useContext(NotificationsContext);
 	const { locale } = useLocaleData();
 	const settings = useAppConfig();
 	const postcode = getUrlParameter('postcode');
+
+	const legalLinks = useContext(LegalLinksContext);
+	const { addNotification } = useContext(NotificationsContext);
+
 	const { agency, consultingType, consultant, topic, slugFallback } =
 		useContext(UrlParamsContext);
 
@@ -65,7 +66,7 @@ export const RegistrationForm = () => {
 
 			const { autoSelectPostcode } =
 				consultingType?.registration ||
-				ConsultingTypeRegistrationDefaults;
+				settings.registration.consultingTypeDefaults;
 			if (
 				consultingType &&
 				agency &&
@@ -127,7 +128,7 @@ export const RegistrationForm = () => {
 
 		const { autoSelectPostcode } =
 			formAccordionData.consultingType?.registration ||
-			ConsultingTypeRegistrationDefaults;
+			settings.registration.consultingTypeDefaults;
 
 		const registrationData = {
 			username: formAccordionData.username,

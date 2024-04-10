@@ -89,6 +89,12 @@ export const config: AppConfigInterface = {
 			hidden: false
 		}
 	},
+	registration: {
+		consultingTypeDefaults: {
+			autoSelectPostcode: true,
+			autoSelectAgency: false
+		}
+	},
 	emails: {
 		notifications: [
 			{

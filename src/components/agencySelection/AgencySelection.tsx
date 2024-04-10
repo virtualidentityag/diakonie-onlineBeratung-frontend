@@ -53,9 +53,9 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 	const [selectedPostcode, setSelectedPostcode] = useState('');
 	const [selectedAgency, setSelectedAgency] =
 		useState<AgencyDataInterface | null>(null);
-	const autoSelectAgency = props.consultingType.registration.autoSelectAgency;
-	const autoSelectPostcode =
-		props.consultingType.registration.autoSelectPostcode;
+	const { autoSelectPostcode, autoSelectAgency } =
+		props.consultingType?.registration ||
+		settings.registration.consultingTypeDefaults;
 	const [preselectedAgency, setPreselectedAgency] =
 		useState<AgencyDataInterface>(props.preselectedAgency);
 
@@ -120,7 +120,7 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 			}
 		} else if (preselectedAgency && !selectedAgency?.id) {
 			setSelectedAgency(preselectedAgency);
-			if (props.consultingType.registration.autoSelectPostcode) {
+			if (autoSelectPostcode) {
 				setSelectedPostcode(preselectedAgency.postcode);
 			}
 		} else {
@@ -132,7 +132,12 @@ export const AgencySelection = (props: AgencySelectionProps) => {
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedAgency, selectedPostcode, preselectedAgency]);
+	}, [
+		selectedAgency,
+		selectedPostcode,
+		preselectedAgency,
+		autoSelectPostcode
+	]);
 
 	useEffect(() => {
 		if (!autoSelectAgency && !preselectedAgency) {

@@ -8,9 +8,9 @@ import {
 	TopicsDataInterface
 } from '../../../globalState/interfaces';
 import { useConsultantRegistrationData } from './useConsultantRegistrationData';
-import { ConsultingTypeRegistrationDefaults } from '../components/ProposedAgencies/ProposedAgencies';
 import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 import { VALID_POSTCODE_LENGTH } from '../../../components/agencySelection/agencySelectionHelpers';
+import { useAppConfig } from '../../../hooks/useAppConfig';
 
 interface AgenciesForRegistrationArgs {
 	consultingType?: ConsultingTypeInterface;
@@ -27,6 +27,7 @@ export const useAgenciesForRegistration = ({
 	consultingTypes: ConsultingTypeInterface[];
 } => {
 	const tenantData = useTenant();
+	const settings = useAppConfig();
 
 	const {
 		consultant,
@@ -47,7 +48,8 @@ export const useAgenciesForRegistration = ({
 	const [agencies, setAgencies] = useState<AgencyDataInterface[]>([]);
 
 	const { autoSelectPostcode, autoSelectAgency } =
-		consultingType?.registration || ConsultingTypeRegistrationDefaults;
+		consultingType?.registration ||
+		settings.registration.consultingTypeDefaults;
 
 	const topicsEnabledAndUnSelected = useMemo(
 		() =>

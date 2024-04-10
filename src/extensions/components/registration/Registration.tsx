@@ -132,9 +132,7 @@ export const Registration = () => {
 
 	const [prevStepUrl, nextStepUrl] = useMemo(
 		() => [
-			availableSteps[currStepIndex - 1]
-				? `${generatePath(path, { topicSlug, step: availableSteps[currStepIndex - 1]?.name || 'welcome' })}${location.search}`
-				: null,
+			`${generatePath(path, { topicSlug, step: availableSteps[currStepIndex - 1]?.name || 'welcome' })}${location.search}`,
 			availableSteps[currStepIndex + 1]
 				? `${generatePath(path, { topicSlug, step: availableSteps[currStepIndex + 1]?.name || 'welcome' })}${location.search}`
 				: null

@@ -40,6 +40,11 @@ export const config: AppConfigInterface = {
 		twofactor: {
 			startObligatoryHint: new Date('2098-07-31'),
 			dateTwoFactorObligatory: new Date('2099-02-01')
+		},
+		registration: {
+			consultingTypeDefaults: {
+				autoSelectPostcode: false
+			}
 		}
 	}),
 	legalLinks: [
