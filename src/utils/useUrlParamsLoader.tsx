@@ -40,6 +40,11 @@ export default function useUrlParamsLoader(handleBadRequest?: () => void) {
 	const [slugFallback, setSlugFallback] = useState<string>();
 	const [zipcode, setZipcode] = useState<string>();
 
+	const { autoSelectPostcode } = consultingType?.registration ||
+		settings?.registration?.consultingTypeDefaults || {
+			autoSelectPostcode: false
+		};
+
 	const loadTopic = useCallback(
 		async (agency) => {
 			let topic = null;
@@ -175,8 +180,7 @@ export default function useUrlParamsLoader(handleBadRequest?: () => void) {
 						setSlugFallback(consultingType.slug);
 					} else if (
 						agency?.consultingType !== consultingType?.id ||
-						(agency?.external &&
-							!consultingType?.registration?.autoSelectPostcode)
+						(agency?.external && !autoSelectPostcode)
 					) {
 						agency = null;
 					}
@@ -233,7 +237,8 @@ export default function useUrlParamsLoader(handleBadRequest?: () => void) {
 		settings?.registration?.useConsultingTypeSlug,
 		handleConsultant,
 		loadTopic,
-		handleBadRequest
+		handleBadRequest,
+		autoSelectPostcode
 	]);
 
 	useEffect(() => {

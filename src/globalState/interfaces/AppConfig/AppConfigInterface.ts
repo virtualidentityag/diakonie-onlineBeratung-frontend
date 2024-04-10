@@ -31,8 +31,12 @@ export interface AppConfigInterface extends AppSettingsInterface {
 		};
 	};
 	groupChat?: GroupChatConfig;
-	registration?: {
+	registration: {
 		useConsultingTypeSlug?: boolean;
+		consultingTypeDefaults: {
+			autoSelectPostcode: boolean;
+			autoSelectAgency: boolean;
+		};
 	};
 	user?: {
 		profile?: {

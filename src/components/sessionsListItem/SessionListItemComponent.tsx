@@ -44,6 +44,7 @@ import { useSearchParam } from '../../hooks/useSearchParams';
 import { SessionListItemLastMessage } from './SessionListItemLastMessage';
 import { ALIAS_MESSAGE_TYPES } from '../../api/apiSendAliasMessage';
 import { useTranslation } from 'react-i18next';
+import { useAppConfig } from '../../hooks/useAppConfig';
 
 interface SessionListItemProps {
 	defaultLanguage: string;
@@ -60,6 +61,7 @@ export const SessionListItemComponent = ({
 }: SessionListItemProps) => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 	const tenantData = useTenant();
+	const settings = useAppConfig();
 	const { sessionId, rcGroupId: groupIdFromParam } = useParams<{
 		rcGroupId: string;
 		sessionId: string;
@@ -90,6 +92,10 @@ export const SessionListItemComponent = ({
 	);
 	const [plainTextLastMessage, setPlainTextLastMessage] = useState(null);
 	const topicSession = activeSession.item?.topic as TopicSessionInterface;
+
+	const { autoSelectPostcode } =
+		consultingType?.registration ||
+		settings.registration.consultingTypeDefaults;
 
 	useEffect(() => {
 		if (!ready) {
@@ -398,7 +404,7 @@ export const SessionListItemComponent = ({
 							{activeSession.item.consultingType !== 1 &&
 							!isAsker &&
 							!activeSession.isLive &&
-							!consultingType.registration.autoSelectPostcode
+							!autoSelectPostcode
 								? zipCodeSlash + activeSession.item.postcode
 								: null}
 						</div>

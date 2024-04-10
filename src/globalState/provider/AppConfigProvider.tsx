@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import _ from 'lodash';
 import { apiServerSettings } from '../../api/apiServerSettings';
 import { AppConfigInterface } from '../interfaces';
 import { setAppConfig as setAppConfigGlobal } from '../../utils/appConfig';
@@ -33,10 +34,7 @@ export const AppConfigProvider = ({
 
 	useEffect(() => {
 		apiFrontendSettings()
-			.then((frontendSettings) => ({
-				...config,
-				...frontendSettings
-			}))
+			.then((frontendSettings) => _.merge(config, frontendSettings))
 			.catch(() => config)
 			.then((config) =>
 				config.useApiClusterSettings

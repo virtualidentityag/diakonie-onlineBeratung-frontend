@@ -36,6 +36,7 @@ import { FormAccordionData } from '../registration/RegistrationForm';
 import { UrlParamsContext } from '../../globalState/provider/UrlParamsProvider';
 import { TProvidedLegalLink } from '../../globalState/provider/LegalLinksProvider';
 import LegalLinks from '../legalLinks/LegalLinks';
+import { useAppConfig } from '../../hooks/useAppConfig';
 
 interface FormAccordionProps {
 	formAccordionData: FormAccordionData;
@@ -66,8 +67,12 @@ export const FormAccordion = ({
 }: FormAccordionProps) => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 	const tenantData = useTenant();
+	const settings = useAppConfig();
 
 	const { consultingType, consultant } = useContext(UrlParamsContext);
+	const { autoSelectPostcode, autoSelectAgency } =
+		consultingType?.registration ||
+		settings.registration.consultingTypeDefaults;
 	const { setSpecificAgency, specificAgency } = useContext(
 		AgencySpecificContext
 	);
@@ -218,13 +223,16 @@ export const FormAccordion = ({
 				consultingTypes.length > 1
 					? 'consultingTypeAgencySelection.consultingType'
 					: 'consultingTypeAgencySelection.agency';
-		} else if (!consultingType?.registration?.autoSelectPostcode) {
-			key = consultingType?.registration?.autoSelectAgency
-				? 'agencyPreselected'
-				: 'agencySelection';
+		} else if (!autoSelectPostcode) {
+			key = autoSelectAgency ? 'agencyPreselected' : 'agencySelection';
 		}
 		return `registration.${key}.headline`;
-	}, [consultant, consultingType, consultingTypes.length]);
+	}, [
+		autoSelectPostcode,
+		consultant,
+		autoSelectAgency,
+		consultingTypes.length
+	]);
 
 	if (additionalStepsData?.age?.isEnabled) {
 		accordionItemData.push({

@@ -20,6 +20,7 @@ import clsx from 'clsx';
 import { AgencyRadioSelect } from '../../../../components/agencyRadioSelect/AgencyRadioSelect';
 
 import './proposedAgencies.styles.scss';
+import { useAppConfig } from '../../../../hooks/useAppConfig';
 
 interface ProposedAgenciesProps {
 	formAccordionData: FormAccordionData;
@@ -32,11 +33,6 @@ interface ProposedAgenciesProps {
 	onChange: (data: Partial<FormAccordionData>) => void;
 }
 
-export const ConsultingTypeRegistrationDefaults = {
-	autoSelectPostcode: true,
-	autoSelectAgency: false
-};
-
 export const ProposedAgencies = ({
 	formAccordionData,
 	agencySelectionNote,
@@ -45,6 +41,7 @@ export const ProposedAgencies = ({
 	onChange
 }: ProposedAgenciesProps) => {
 	const { t } = useTranslation();
+	const settings = useAppConfig();
 
 	const { agency: preSelectedAgency, slugFallback } =
 		useContext(UrlParamsContext);
@@ -53,7 +50,7 @@ export const ProposedAgencies = ({
 
 	const { autoSelectPostcode, autoSelectAgency } =
 		formAccordionData.consultingType?.registration ||
-		ConsultingTypeRegistrationDefaults;
+		settings.registration.consultingTypeDefaults;
 
 	const isPostcodeValid = useCallback(
 		(postcode) => postcode?.length === VALID_POSTCODE_LENGTH,
