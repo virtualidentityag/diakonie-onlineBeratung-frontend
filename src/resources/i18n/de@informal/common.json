@@ -22,7 +22,7 @@
 					"copy": "Möchtest Du diesen Video-Call wirklich löschen?"
 				},
 				"start": {
-					"copy": "Du startest jetzt den Video-Call. Eingeladene Teilnehmer_innen können ab sofort mit dem Einladungslink beitreten."
+					"copy": "Du startest jetzt den Video-Call. Eingeladene Teilnehmerinnen oder Teilnehmer können ab sofort mit dem Einladungslink beitreten."
 				}
 			}
 		},
@@ -118,7 +118,7 @@
 			}
 		},
 		"successOverlay": {
-			"headline": "Du hast Deinen Account bei der Caritas Beratung & Hilfe erfolgreich gelöscht."
+			"headline": "Du hast Deinen Account bei der Diakonie Beratung erfolgreich gelöscht."
 		}
 	},
 	"deleteSession": {
@@ -183,7 +183,7 @@
 				}
 			},
 			"overlay": {
-				"copy": "Innerhalb von 2 Werktagen erhältst Du eine Antwort von uns.",
+				"copy": "Innerhalb von 2 Arbeitstagen erhältst Du eine Antwort von uns.",
 				"headline": "Vielen Dank für Deine Nachricht!"
 			}
 		}
@@ -216,16 +216,16 @@
 			}
 		},
 		"emailNotification": {
-			"infoText": "Wenn Du Deine E-Mail-Adresse angibst (freiwillig)<br><ul><li>erhältst Du eine E-Mail-Benachrichtigung, wenn Dein_e Berater_in Dir geschrieben hat</li><li>kannst Du Dein Passwort zurücksetzen, falls Du es vergessen hast.</li></ul>Deine E-Mail-Adresse kann von den Berater_innen nicht eingesehen werden."
+			"infoText": "Wenn Du Deine E-Mail-Adresse angibst (freiwillig)<br><ul><li>erhälst Du eine E-Mail-Benachrichtigung, wenn Deine Beraterin oder Dein Berater Dir geschrieben hat</li><li>kannst Du Dein Passwort zurücksetzen, falls Du es vergessen hast.</li></ul>Deine E-Mail-Adresse kann von den Beraterinnen und Beratern nicht eingesehen werden."
 		},
 		"step1": {
 			"info": "Wir haben Deine Nachricht erhalten."
 		},
 		"step2": {
-			"info": "Jetzt finden wir eine_n passende_n Berater_in für Dich."
+			"info": "Jetzt finden wir eine Beraterin oder einen Berater für Dich."
 		},
 		"step3": {
-			"info": "Dein_e Berater_in antwortet innerhalb von 2 Werktagen."
+			"info": "Deine Beraterin oder Dein Berater antwortet innerhalb von 2 Arbeitstagen."
 		},
 		"twoFactorAuth": {
 			"headline": "Der Schutz Deiner Daten ist uns wichtig",
@@ -251,7 +251,7 @@
 				"consultant": {
 					"message": "Dein_e Moderator_in hat den Chat noch nicht gestartet. Sobald Dein_e Moderator_in den Chat gestartet hat, kannst Du mit uns chatten. Bitte habe noch etwas Geduld."
 				},
-				"message": "Dein_e Berater_in/Moderator_in hat den Chat noch nicht gestartet. Sobald Dein_e Berater_in/Moderator_in den Chat gestartet hat, kannst Du mit uns chatten. Bitte habe noch etwas Geduld."
+				"message": "Deine Beraterin/Moderatorin oder Dein Berater/Moderator hat den Chat noch nicht gestartet. Sobald Deine Beraterin/Moderatorin oder Dein Berater/Moderator den Chat gestartet hat kannst du mit uns chatten. Bitte habe noch etwas Geduld."
 			}
 		},
 		"joinError": {
@@ -417,7 +417,7 @@
 			}
 		},
 		"data": {
-			"emailInfo": "Die Angabe Deiner E-Mail ist freiwillig und wird ausschließlich verwendet, um Dich über neue Antworten Deine_r Berater_in zu informieren. Deine E-Mail-Adresse ist für Berater_innen nicht sichtbar.",
+			"emailInfo": "Die Angabe deiner E-Mail ist freiwillig und wird ausschließlich verwendet, um dich über neue Antworten deiner Beraterin oder deines Beraters zu informieren. Deine E-mail-Adresse ist für Beraterinnen und Berater nicht sichtbar.",
 			"info": {
 				"public": "Mit dem Anzeigenamen erscheinst Du bei den Ratsuchenden."
 			},
@@ -498,7 +498,7 @@
 			"follow": {
 				"up": {
 					"email": {
-						"label": "eine Nachricht von angenommenen Ratsuchenden erhalten hast."
+						"label": "eine Nachricht von einem oder einer angenommenen Ratsuchenden erhalten hast."
 					}
 				}
 			},
@@ -580,7 +580,19 @@
 			"preselected": {
 				"isTeam": "Du wirst von einem Team beraten.",
 				"prefix": "Deine vorausgewählte Beratungsstelle: "
-			}
+			},
+			"consultantheadline": "Deine Beratungsstelle",
+			"headline": "Deine Beratungsstelle wählen",
+			"noresult": {
+				"subline": "Bitte versuche es mit einer anderen Postleitzahl oder besuche unsere Website, um eine Beratungsstelle in Deiner Nähe zu finden."
+			},
+			"result": {
+				"external": {
+					"subline": "Bitte versuche es mit einer anderen Postleitzahl oder besuche unsere Website, um eine Beratungsstelle in Deiner Nähe zu finden."
+				},
+				"languages": "Diese Beratungsstelle berät Dich auf:"
+			},
+			"summary": "Deine Beratungsstelle"
 		},
 		"agencyPreselected": {
 			"headline": "Bitte gib Deine Postleitzahl an",
@@ -613,11 +625,11 @@
 		"consultingTypeAgencySelection": {
 			"agency": {
 				"headline": "Bitte wähle eine Beratungsstelle",
-				"infoText": "Dein_e Berater_in ist in mehreren Beratungsstellen tätig. Bitte wähle Deine gewünschte Beratungsstelle."
+				"infoText": "Deine Beraterin oder Dein Berater ist in mehreren Beratungsstellen tätig. Bitte wähle Deine gewünschte Beratungsstelle."
 			},
 			"consultingType": {
 				"headline": "Bitte wähle ein Themenfeld",
-				"infoText": "Dein_e Berater_in ist in mehreren Themenfeldern tätig. Bitte wähle Dein gewünschtes Themenfeld."
+				"infoText": "Deine Beraterin oder Dein Berater ist in mehreren Themenfeldern tätig. Bitte wähle Dein gewünschtes Themenfeld."
 			},
 			"topic": {
 				"headline": "Bitte wähle ein Themenfeld",
@@ -653,14 +665,47 @@
 				"text": "Schicke Deine Nachricht an eine lokale Beratungsstelle"
 			},
 			"info3": {
-				"text": "Innerhalb von 2 Werktagen bekommst Du eine Antwort"
+				"text": "Innerhalb von 2 Arbeitstagen bekommst Du eine Antwort"
 			}
+		},
+		"account": {
+			"repeatPassword": {
+				"error": "Dein Passwort ist nicht identisch",
+				"success": "Dein Passwort ist identisch"
+			},
+			"subline": "Um Deine Anonymität zu schützen, raten wir Dir, nicht Deinen tatsächlichen Namen oder Initialen zu verwenden.",
+			"username": {
+				"error": {
+					"available": "Dein Benutzername ist zu kurz."
+				},
+				"success": "Dein Benutzername ist geeignet."
+			}
+		},
+		"errors": {
+			"unknown": {
+				"text": "Es tut uns leid, da ist wohl etwas schiefgelaufen. Lade die Seite neu und versuche es erneut.",
+				"title": "Ups!"
+			},
+			"aid": "Die von Dir gewählte Beratungsstelle konnte leider nicht gefunden werden. Bitte wähle bei der Registrierung erneut eine Beratungsstelle aus.",
+			"cid": "Leider konnten wir Deine Beraterin oder Deinen Berater nicht finden. Bitte wende Dich an Deine beratende Person, um einen neuen Link zu erhalten oder registriere Dich hier bei Deiner gewünschten Beratungsstelle.",
+			"tid": "Das von Dir gewählte Thema konnte leider nicht gefunden werden. Bitte wähle bei der Registrierung erneut ein passendes Thema aus."
+		},
+		"topic": {
+			"headline": "Zu welchem Thema suchst Du Beratung?",
+			"subline": "Wähle ein Thema aus unserem Beratungsangebot aus.",
+			"summary": "Dein Thema:"
+		},
+		"zipcode": {
+			"bullet1": "• die Hilfen rund um Deinen Wohnort kennen",
+			"bullet2": "• die Gesetze Deines Bundeslandes kennen",
+			"headline": "Um Dich bestmöglich beraten zu können benötigen wir Deine Postleitzahl",
+			"label": "Deine Postleitzahl"
 		}
 	},
 	"session": {
 		"acceptance": {
 			"overlay": {
-				"headline": "Du hast die Erstanfrage erfolgreich angenommen und findest diese nun unter „Meine Beratungen“."
+				"headline": "Du hast die Erstanfrage erfolgreich angenommen und findest diese nun unter „Meine Beratungen."
 			}
 		},
 		"alreadyAssigned": {
@@ -675,10 +720,10 @@
 					"2": "Du hast die Beratung erfolgreich zugewiesen."
 				},
 				"subtitle": {
-					"noTeam": "{{newConsultant}} ist somit für die_den Ratsuchende_n verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Du hast keinen Zugriff mehr auf die Nachrichten.",
+					"noTeam": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Du hast keinen Zugiff mehr auf die Nachrichten.",
 					"team": {
-						"other": "{{newConsultant}} ist somit für die_den Ratsuchende_n verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf unter Teamberatung und nicht mehr in Deinen Nachrichten.",
-						"self": "{{newConsultant}} ist somit für die_den Ratsuchende_n verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf in Deinen Nachrichten und nicht mehr unter Teamberatung."
+						"other": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf unter Teamberatung und nicht mehr in Deinen Nachrichten.",
+						"self": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf in Deinen Nachrichten und nicht mehr unter Teamberatung."
 					}
 				}
 			}
@@ -795,7 +840,7 @@
 						"qrCode": "Öffne die App und scanne den folgenden QR-Code:"
 					},
 					"copy": "Du hast zwei Möglichkeiten, die Online-Beratung zur App hinzuzufügen:",
-					"title": "Füge die Online-Beratung zur App hinzu"
+					"title": "Verknüpfe die App mit Deinem Account"
 				},
 				"step4": {
 					"copy": "Gib den Einmal-Code ein, der von der App generiert wird und klicke auf „Speichern“, um die Einrichtung abzuschließen."
@@ -875,7 +920,7 @@
 	},
 	"userProfile": {
 		"reassign": {
-			"description": "Du kannst die Unterhaltung einem anderen Teammitglied zuweisen. Diese Person ist dann für die_den Ratsuchende_n verantwortlich."
+			"description": "Du kannst die Unterhaltung einem anderen Teammitglied zuweisen. Diese Person ist dann für die Ratsuchende oder den Ratsuchenden verantwortlich."
 		},
 		"tools": {
 			"description": "Schalte Tools für die_den Ratsuchende_n frei. ",
@@ -921,24 +966,24 @@
 	"videoConference": {
 		"waitingroom": {
 			"dataProtection": {
-				"description": "Danach dürfen unsere Berater_innen einen Video-Call mit Dir starten.",
+				"description": "Danach dürfen unsere Beraterinnen oder Berater einen Video-Call mit Dir starten.",
 				"subline": "Bitte bestätige unsere Datenschutzbestimmungen."
 			},
 			"errorPage": {
 				"consultant": {
 					"description": "Zu Deinem Link können wir keinen Video-Call finden, da der Video-Call entweder gelöscht oder bereits beendet wurde."
 				},
-				"description": "Zu Deinem Link können wir keinen Video-Call finden, da der Video-Call entweder gelöscht oder bereits beendet wurde. Solltest Du weiterhin Probleme haben frage bitte Deine_n Berater_in.",
+				"description": "Zu Deinem Link können wir keinen Video-Call finden da der Video-Call entweder gelöscht oder bereits beendet wurde. Solltest Du weiterhin Probleme haben frage bitte Deinen Beraterin oder Dein Berater.",
 				"rejected": {
-					"description": "Du wurdest nicht zugelassen. Leider kannst Du an diesem Video-Call nicht teilnehmen, da Dein_e Berater_in Dich nicht zugelassen hat.",
+					"description": "Leider kannst Du an diesem Video-Call nicht teilnehmen, da Deine Beraterin oder Dein Berater Dich abgelehnt hat.",
 					"headline": "Du wurdest nicht zugelassen"
 				}
 			},
 			"headline": "Bitte habe etwas Geduld",
 			"paused": {
-				"subline": "Der Video-Call wurde beendet. Sollte Dein_e Berater_in nur abwesend sein wirst Du in den Video-Call weitergeleitet, sobald Dein_e Berater_in den Video-Call fortsetzt."
+				"subline": "Der Video-Call wurde beendet. Sollte Deine Beraterin oder Dein Berater nur abwesend sein wirst Du in den Video-Call weitergeleitet sobald Deine Beraterin oder Dein Berater den Video-Call fortsetzt."
 			},
-			"subline": "Der Video-Call hat noch nicht begonnen. Du wirst weitergeleitet, sobald Dein_e Berater_in den Video-Call startet."
+			"subline": "Der Video-Call hat noch nicht begonnen. Sie werden weitergeleitet sobald Deine Beraterin oder Dein Berater den Video-Call startet."
 		}
 	},
 	"walkthrough": {
