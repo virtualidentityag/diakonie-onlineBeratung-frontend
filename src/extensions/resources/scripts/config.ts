@@ -13,9 +13,8 @@ import enLanguages from '../i18n/en/languages.json';
 import en from '../../../resources/i18n/en/common.json';
 
 // Files which extends the original languages
-import de from '../i18n/overwrites/de/common.json';
-import deInformal from '../i18n/overwrites/de@informal/common.json';
-import enOverwrite from '../i18n/overwrites/en/common.json';
+// import deInformal from '../i18n/overwrites/de@informal/common.json';
+// import enOverwrite from '../i18n/overwrites/en/common.json';
 
 import { config as baseConfig, uiUrl } from '../../../resources/scripts/config';
 
@@ -65,9 +64,6 @@ export const config: AppConfigInterface = {
 				languages: {
 					...deLanguages
 				},
-				common: {
-					...de
-				},
 				consultingTypes: {
 					...deConsultingTypes
 				},
@@ -75,13 +71,8 @@ export const config: AppConfigInterface = {
 					...deAgency
 				}
 			},
-			de_informal: {
-				common: {
-					...deInformal
-				}
-			},
 			en: {
-				common: [en, enOverwrite],
+				common: [en],
 				consultingTypes: {
 					...enConsultingTypes
 				},
