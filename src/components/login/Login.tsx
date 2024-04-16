@@ -1,7 +1,6 @@
 import '../../polyfill';
 import * as React from 'react';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { generatePath, useHistory } from 'react-router-dom';
 import {
 	InputField,
 	InputFieldItem,
@@ -15,11 +14,7 @@ import { ReactComponent as PersonIcon } from '../../resources/img/icons/person.s
 import { ReactComponent as LockIcon } from '../../resources/img/icons/lock.svg';
 import { ReactComponent as VerifiedIcon } from '../../resources/img/icons/verified.svg';
 import { StageLayout } from '../stageLayout/StageLayout';
-import {
-	apiGetUserData,
-	apiRegistrationNewConsultingTypes,
-	FETCH_ERRORS
-} from '../../api';
+import { apiGetUserData, FETCH_ERRORS } from '../../api';
 import { OTP_LENGTH, TWO_FACTOR_TYPES } from '../twoFactorAuth/TwoFactorAuth';
 import clsx from 'clsx';
 import {
@@ -28,25 +23,14 @@ import {
 	RocketChatGlobalSettingsContext,
 	TenantContext,
 	UserDataContext,
-	LocaleContext,
-	useTenant
+	LocaleContext
 } from '../../globalState';
-import {
-	AgencyDataInterface,
-	UserDataInterface
-} from '../../globalState/interfaces';
+import { UserDataInterface } from '../../globalState/interfaces';
 import '../../resources/styles/styles';
 import './login.styles';
 import useIsFirstVisit from '../../utils/useIsFirstVisit';
-import { getUrlParameter } from '../../utils/getUrlParameter';
-import { ConsultingTypeAgencySelection } from '../consultingTypeSelection/ConsultingTypeAgencySelection';
 import { Overlay, OVERLAY_FUNCTIONS, OverlayItem } from '../overlay/Overlay';
-import { ReactComponent as WelcomeIcon } from '../../resources/img/illustrations/welcome.svg';
-import {
-	VALIDITY_INITIAL,
-	VALIDITY_INVALID,
-	VALIDITY_VALID
-} from '../registration/registrationHelpers';
+import { VALIDITY_INVALID } from '../registration/registrationHelpers';
 import { TwoFactorAuthResendMail } from '../twoFactorAuth/TwoFactorAuthResendMail';
 import {
 	IBooleanSetting,
@@ -64,7 +48,6 @@ import { useSearchParam } from '../../hooks/useSearchParams';
 import { getTenantSettings } from '../../utils/tenantSettingsHelper';
 import { budibaseLogout } from '../budibase/budibaseLogout';
 import { GlobalComponentContext } from '../../globalState/provider/GlobalComponentContext';
-import { useConsultantRegistrationData } from '../../containers/registration/hooks/useConsultantRegistrationData';
 import { UrlParamsContext } from '../../globalState/provider/UrlParamsProvider';
 
 const regexAccountDeletedError = /account disabled/i;
@@ -72,8 +55,6 @@ const regexAccountDeletedError = /account disabled/i;
 export const Login = () => {
 	const settings = useAppConfig();
 	const { t: translate } = useTranslation();
-	const history = useHistory();
-	const tenantData = useTenant();
 
 	const { locale, initLocale } = useContext(LocaleContext);
 	const { tenant } = useContext(TenantContext);
@@ -90,9 +71,7 @@ export const Login = () => {
 
 	const hasTenant = tenant != null;
 
-	const consultantId = getUrlParameter('cid');
 	const { consultant, loaded: isReady } = useContext(UrlParamsContext);
-
 	const [labelState, setLabelState] = useState<InputFieldLabelState>(null);
 	const [username, setUsername] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -139,11 +118,7 @@ export const Login = () => {
 		}
 	}, [featureToolsEnabled, gcid]);
 
-	const [agency, setAgency] = useState<AgencyDataInterface>(null);
-	const [validity, setValidity] = useState(VALIDITY_INITIAL);
-	const [registerOverlayActive, setRegisterOverlayActive] = useState(false);
 	const [pwResetOverlayActive, setPwResetOverlayActive] = useState(false);
-
 	const [twoFactorType, setTwoFactorType] = useState(TWO_FACTOR_TYPES.NONE);
 
 	const inputItemUsername: InputFieldItem = {
@@ -194,84 +169,6 @@ export const Login = () => {
 		setOtp(event.target.value);
 	};
 
-	const {
-		agencies: possibleAgencies,
-		consultingTypes: possibleConsultingTypes,
-		topicIds: possibleTopicIds
-	} = useConsultantRegistrationData({});
-
-	const registerOverlay = useMemo(
-		(): OverlayItem => ({
-			svg: WelcomeIcon,
-			headline: translate('login.consultant.overlay.success.headline'),
-			nestedComponent: (
-				<ConsultingTypeAgencySelection
-					agency={agency}
-					onChange={setAgency}
-					onValidityChange={(validity) => setValidity(validity)}
-				/>
-			),
-			buttonSet: [
-				{
-					label: translate('login.consultant.overlay.cancel.button'),
-					function: OVERLAY_FUNCTIONS.CLOSE,
-					type: BUTTON_TYPES.SECONDARY
-				},
-				{
-					label: translate('login.consultant.overlay.success.button'),
-					function: OVERLAY_FUNCTIONS.REDIRECT_WITH_BLUR,
-					type: BUTTON_TYPES.PRIMARY,
-					disabled: validity !== VALIDITY_VALID
-				}
-			]
-		}),
-		[agency, validity, translate]
-	);
-
-	const handleRegistration = useCallback(
-		(agency) => {
-			if (validity === VALIDITY_VALID) {
-				apiRegistrationNewConsultingTypes(
-					agency.consultingTypeRel.id,
-					agency.id,
-					agency.postcode,
-					consultantId,
-					agency.topicIds
-				)
-					.catch((response) => response.json())
-					.then((response) => {
-						if (response instanceof Error) {
-							return redirectToApp();
-						}
-
-						if (!response.rcGroupId || !response.sessionId) {
-							history.push(endpoints.userSessionsListView);
-							return;
-						}
-
-						history.push(
-							generatePath(
-								`${endpoints.userSessionsListView}/:rcGroupId/:sessionId`,
-								response
-							)
-						);
-					});
-			}
-		},
-		[consultantId, history, validity]
-	);
-
-	const handleOverlayAction = useCallback(
-		(buttonFunction: string) => {
-			if (buttonFunction === OVERLAY_FUNCTIONS.REDIRECT_WITH_BLUR) {
-				handleRegistration(agency);
-			} else if (buttonFunction === OVERLAY_FUNCTIONS.CLOSE) {
-				redirectToApp();
-			}
-		},
-		[agency, handleRegistration]
-	);
-
 	const handlePwOverlayReset = useCallback(
 		(buttonFunction: string) => {
 			if (buttonFunction === OVERLAY_FUNCTIONS.REDIRECT) {
@@ -294,32 +191,6 @@ export const Login = () => {
 		},
 		[locale]
 	);
-
-	const topicsAreRequired = useMemo(
-		() =>
-			tenantData?.settings?.topicsInRegistrationEnabled &&
-			tenantData?.settings?.featureTopicsEnabled,
-		[
-			tenantData?.settings?.topicsInRegistrationEnabled,
-			tenantData?.settings?.featureTopicsEnabled
-		]
-	);
-
-	useEffect(() => {
-		if (
-			possibleAgencies.length === 1 &&
-			possibleConsultingTypes.length === 1 &&
-			(!topicsAreRequired || possibleTopicIds.length === 1)
-		) {
-			setAgency(possibleAgencies[0]);
-			setValidity(VALIDITY_VALID);
-		}
-	}, [
-		possibleAgencies,
-		possibleConsultingTypes,
-		possibleTopicIds.length,
-		topicsAreRequired
-	]);
 
 	useEffect(() => {
 		deleteCookieByName('tenantId');
@@ -354,32 +225,8 @@ export const Login = () => {
 				) {
 					return redirectToApp(gcid);
 				}
-
-				if (
-					possibleAgencies.length === 1 &&
-					possibleConsultingTypes.length === 1 &&
-					(!topicsAreRequired || possibleTopicIds.length === 1)
-				) {
-					handleRegistration({
-						...possibleAgencies[0],
-						topicIds: possibleTopicIds
-					});
-				} else {
-					setRegisterOverlayActive(true);
-				}
 			}),
-		[
-			reloadUserData,
-			locale,
-			initLocale,
-			consultant,
-			possibleAgencies,
-			possibleConsultingTypes.length,
-			topicsAreRequired,
-			possibleTopicIds,
-			gcid,
-			handleRegistration
-		]
+		[reloadUserData, locale, initLocale, consultant, gcid]
 	);
 
 	const tryLogin = (otp?: string) => {
@@ -581,12 +428,6 @@ export const Login = () => {
 						)}
 					</div>
 				</div>
-				{registerOverlayActive && (
-					<Overlay
-						item={registerOverlay}
-						handleOverlay={handleOverlayAction}
-					/>
-				)}
 			</StageLayout>
 			{pwResetOverlayActive && (
 				<Overlay
