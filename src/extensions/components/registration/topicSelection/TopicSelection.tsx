@@ -21,7 +21,11 @@ import {
 } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
-import { RegistrationContext, RegistrationData } from '../../../../globalState';
+import {
+	LocaleContext,
+	RegistrationContext,
+	RegistrationData
+} from '../../../../globalState';
 import { apiGetTopicGroups } from '../../../../api/apiGetTopicGroups';
 import { apiGetTopicsData } from '../../../../api/apiGetTopicsData';
 import {
@@ -47,6 +51,7 @@ export const TopicSelection: VFC<{
 		consultant: preselectedConsultant
 	} = useContext(UrlParamsContext);
 	const { t } = useTranslation();
+	const { locale } = useContext(LocaleContext);
 	const [value, setValue] = useState<number>(
 		registrationData.mainTopicId || undefined
 	);
@@ -139,7 +144,7 @@ export const TopicSelection: VFC<{
 
 			setTopics(topics);
 		})();
-	}, [preselectedConsultant, preselectedAgency, preselectedTopic]);
+	}, [preselectedConsultant, preselectedAgency, preselectedTopic, locale]);
 
 	return (
 		<>
@@ -342,8 +347,6 @@ const TopicSelect = ({
 	checked
 }) => {
 	const { t } = useTranslation();
-
-	console.log({ topics });
 
 	return (
 		<Box
