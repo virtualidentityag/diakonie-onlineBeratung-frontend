@@ -4,6 +4,7 @@ import { ReactComponent as ArrowIcon } from '../../resources/img/illustrations/a
 import { BUTTON_TYPES } from '../button/Button';
 import { ConsultingTypeBasicInterface } from '../../globalState/interfaces';
 import { useTranslation } from 'react-i18next';
+import { useTopic } from '../../globalState';
 
 interface AskerRegistrationExternalAgencyOverlayProps {
 	consultingType: ConsultingTypeBasicInterface;
@@ -16,7 +17,8 @@ export const AskerRegistrationExternalAgencyOverlay = ({
 	handleOverlayAction,
 	selectedAgency
 }: AskerRegistrationExternalAgencyOverlayProps) => {
-	const { t: translate } = useTranslation(['common', 'consultingTypes']);
+	const { t: translate } = useTranslation(['common']);
+	const topic = useTopic(consultingType.id);
 	const handleOverlay = (action) => {
 		if (action === OVERLAY_FUNCTIONS.REDIRECT) {
 			window.open(selectedAgency.url, '_blank')?.focus();
@@ -32,15 +34,8 @@ export const AskerRegistrationExternalAgencyOverlay = ({
 				headline: translate('profile.externalRegistration.headline'),
 				copy:
 					translate('profile.externalRegistration.copy.start') +
-					translate(
-						[
-							`consultingType.${consultingType.id}.titles.default`,
-							`consultingType.fallback.titles.default`,
-							consultingType.titles.default
-						],
-						{ ns: 'consultingTypes' }
-					) +
-					translate('profile.externalRegistration.copy.end'),
+						topic?.name ||
+					'' + translate('profile.externalRegistration.copy.end'),
 				buttonSet: [
 					{
 						label: translate('profile.externalRegistration.submit'),

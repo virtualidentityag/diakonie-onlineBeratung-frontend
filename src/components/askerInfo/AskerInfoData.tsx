@@ -1,23 +1,22 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { handleNumericTranslation } from '../../utils/translate';
-import {
-	getContact,
-	useConsultingType,
-	ActiveSessionContext
-} from '../../globalState';
+import { getContact, ActiveSessionContext, useTopic } from '../../globalState';
 import {
 	convertUserDataObjectToArray,
 	getUserDataTranslateBase
 } from '../profile/profileHelpers';
 import { Text } from '../text/Text';
 import { useTranslation } from 'react-i18next';
+import { TopicSessionInterface } from '../../globalState/interfaces';
 
 export const AskerInfoData = () => {
 	const { t: translate } = useTranslation(['common', 'consultingTypes']);
 	const { activeSession } = useContext(ActiveSessionContext);
 
-	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = useTopic(
+		(activeSession.item.topic as TopicSessionInterface).id
+	);
 
 	const userSessionData = getContact(activeSession).sessionData;
 	const preparedUserSessionData =
@@ -30,18 +29,7 @@ export const AskerInfoData = () => {
 				<p className="askerInfo__data__label">
 					{translate('userProfile.data.resort')}
 				</p>
-				<p className="askerInfo__data__content">
-					{consultingType
-						? translate(
-								[
-									`consultingType.${consultingType.id}.titles.default`,
-									`consultingType.fallback.titles.default`,
-									consultingType.titles.default
-								],
-								{ ns: 'consultingTypes' }
-							)
-						: ''}
-				</p>
+				<p className="askerInfo__data__content">{topic?.name || ''}</p>
 			</div>
 			{activeSession.item.consultingType === 0 &&
 				!activeSession.isLive && (

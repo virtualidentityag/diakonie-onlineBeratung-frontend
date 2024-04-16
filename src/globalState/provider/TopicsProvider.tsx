@@ -61,5 +61,13 @@ export function useTopics() {
 }
 
 export function useTopic(id?: number) {
-	return getTopics(useTopics(), id);
+	const topics = useTopics();
+
+	try {
+		return getTopics(topics, id);
+	} catch (e) {
+		console.error(e);
+	}
+
+	return null;
 }

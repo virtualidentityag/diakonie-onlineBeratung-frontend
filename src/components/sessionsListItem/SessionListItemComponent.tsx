@@ -20,7 +20,8 @@ import {
 	useConsultingType,
 	UserDataContext,
 	useTenant,
-	ActiveSessionContext
+	ActiveSessionContext,
+	useTopic
 } from '../../globalState';
 import {
 	STATUS_FINISHED,
@@ -59,7 +60,7 @@ export const SessionListItemComponent = ({
 	handleKeyDownLisItemContent,
 	index
 }: SessionListItemProps) => {
-	const { t: translate } = useTranslation(['common', 'consultingTypes']);
+	const { t: translate } = useTranslation(['common']);
 	const tenantData = useTenant();
 	const settings = useAppConfig();
 	const { sessionId, rcGroupId: groupIdFromParam } = useParams<{
@@ -84,6 +85,9 @@ export const SessionListItemComponent = ({
 
 	const language = activeSession.item.language || defaultLanguage;
 	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = useTopic(
+		(activeSession.item.topic as TopicSessionInterface).id
+	);
 
 	const { key, keyID, encrypted, ready } = useE2EE(
 		activeSession.item.groupId,
@@ -273,16 +277,7 @@ export const SessionListItemComponent = ({
 				>
 					<div className="sessionsListItem__row">
 						<div className="sessionsListItem__consultingType">
-							{consultingType
-								? translate(
-										[
-											`consultingType.${consultingType.id}.titles.default`,
-											`consultingType.fallback.titles.default`,
-											consultingType.titles?.default
-										],
-										{ ns: 'consultingTypes' }
-									)
-								: ''}
+							{topic?.name || ''}
 						</div>
 						<div className="sessionsListItem__date">
 							{getGroupChatDate(
@@ -389,18 +384,7 @@ export const SessionListItemComponent = ({
 						</div>
 					) : (
 						<div className="sessionsListItem__consultingType">
-							{showConsultingType &&
-							consultingType?.id &&
-							consultingType.titles?.default
-								? translate(
-										[
-											`consultingType.${consultingType.id}.titles.default`,
-											`consultingType.fallback.titles.default`,
-											consultingType.titles.default
-										],
-										{ ns: 'consultingTypes' }
-									) + ' '
-								: ''}
+							{topic?.name ? `${topic.name} ` : ''}
 							{activeSession.item.consultingType !== 1 &&
 							!isAsker &&
 							!activeSession.isLive &&
