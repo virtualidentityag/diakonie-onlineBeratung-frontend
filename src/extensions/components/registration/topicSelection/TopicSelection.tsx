@@ -343,6 +343,8 @@ const TopicSelect = ({
 }) => {
 	const { t } = useTranslation();
 
+	console.log({ topics });
+
 	return (
 		<Box
 			key={topic.id}
@@ -383,7 +385,9 @@ const TopicSelect = ({
 							ml: '10px'
 						}}
 					>
-						<Typography variant="body1">{topic?.name}</Typography>
+						<Typography variant="body1">
+							{topic?.titles?.long || topic?.name}
+						</Typography>
 					</Box>
 				}
 			/>
