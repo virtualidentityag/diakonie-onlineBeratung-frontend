@@ -24,7 +24,6 @@ import { useTranslation } from 'react-i18next';
 import { RegistrationContext, RegistrationData } from '../../../../globalState';
 import { AgencyDataInterface } from '../../../../globalState/interfaces';
 import { AgencyLanguages } from './AgencyLanguages';
-import { useAppConfig } from '../../../../hooks/useAppConfig';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
@@ -48,7 +47,6 @@ export const AgencySelectionResults = ({
 	onNextClick
 }: AgencySelectionResultsProps) => {
 	const { t } = useTranslation();
-	const settings = useAppConfig();
 	const { setDisabledNextButton, registrationData } =
 		useContext(RegistrationContext);
 	const { consultant: preselectedConsultant } = useContext(UrlParamsContext);
