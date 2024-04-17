@@ -6,13 +6,30 @@
 	}
 
 	.template {
-		h2 + p,
-		h3 + p,
-		h4 + p {
-			margin-top: 0.3rem;
+		max-width: 700px;
+
+		h2,
+		h3,
+		h4,
+		p {
+			margin: 0;
 		}
+
+		h2 + *,
+		h3 + *,
+		h4 + * {
+			margin-top: 20px;
+		}
+
+		ul {
+			list-style: inside;
+			padding-left: 10px;
+		}
+
 		ol {
 			counter-reset: item;
+			padding-left: 10px;
+
 			li {
 				display: block;
 			}
@@ -30,13 +47,8 @@
 	}
 
 	.stageLayout__content {
-		align-items: flex-start;
+		align-items: center;
 		justify-content: flex-start;
-		padding-top: 120px;
-
-		@include breakpoint($fromLarge) {
-			width: calc(60vw - 160px);
-			left: calc(40vw + 80px);
-		}
+		padding-top: 48px;
 	}
 }
