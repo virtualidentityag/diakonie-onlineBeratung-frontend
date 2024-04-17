@@ -42,6 +42,9 @@ export const TermsAndConditions = () => {
 		buttons: []
 	});
 
+	// The Terms and Conditions are currently not used in this project.
+	// To prevent the app from showing a popup, the following code is commented out.
+
 	// const transformText2Link = (text: string) => {
 	// 	let termsLabel = translate(
 	// 		'termsAndConditionOverlay.labels.termsAndCondition'
