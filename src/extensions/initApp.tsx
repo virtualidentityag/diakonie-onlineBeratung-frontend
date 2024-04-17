@@ -10,7 +10,6 @@ import { lazy } from 'react';
 import '../resources/styles/mui-variables-mapping.scss';
 import theme from './theme';
 import { Redirect } from 'react-router-dom';
-import { TermsAndConditions } from './components/legalInformationLinks/TermsAndConditions';
 import { Privacy } from './components/legalInformationLinks/Privacy';
 import { Imprint } from './components/legalInformationLinks/Imprint';
 
