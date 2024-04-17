@@ -7,6 +7,7 @@ export interface TopicsDataInterface {
 	status: string;
 	createDate: string;
 	updateDate: string;
+	fallbackUrl: string;
 	titles: {
 		short: string;
 		long: string;
