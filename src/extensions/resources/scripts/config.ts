@@ -58,12 +58,12 @@ export const config: AppConfigInterface = {
 			url: uiUrl + routePathNames.privacy,
 			label: 'login.legal.infoText.dataprotection',
 			registration: true
-		},
-		{
-			url: routePathNames.termsAndConditions,
-			label: 'login.legal.infoText.termsAndConditions',
-			registration: true
 		}
+		// {
+		// 	url: routePathNames.termsAndConditions,
+		// 	label: 'login.legal.infoText.termsAndConditions',
+		// 	registration: true
+		// }
 	],
 	i18n: {
 		supportedLngs: ['en', 'de'],
