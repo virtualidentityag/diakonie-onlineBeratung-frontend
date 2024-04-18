@@ -24,8 +24,6 @@ import { useTranslation } from 'react-i18next';
 import { RegistrationContext, RegistrationData } from '../../../../globalState';
 import { AgencyDataInterface } from '../../../../globalState/interfaces';
 import { AgencyLanguages } from './AgencyLanguages';
-import { parsePlaceholderString } from '../../../../utils/parsePlaceholderString';
-import { useAppConfig } from '../../../../hooks/useAppConfig';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
@@ -36,6 +34,7 @@ interface AgencySelectionResultsProps {
 	zipcode?: string;
 	results?: AgencyDataInterface[];
 	nextStepUrl: string;
+	fallbackUrl: string;
 	onNextClick(): void;
 }
 
@@ -44,10 +43,10 @@ export const AgencySelectionResults = ({
 	zipcode,
 	results,
 	nextStepUrl,
+	fallbackUrl,
 	onNextClick
 }: AgencySelectionResultsProps) => {
 	const { t } = useTranslation();
-	const settings = useAppConfig();
 	const { setDisabledNextButton, registrationData } =
 		useContext(RegistrationContext);
 	const { consultant: preselectedConsultant } = useContext(UrlParamsContext);
@@ -145,17 +144,10 @@ export const AgencySelectionResults = ({
 							startIcon={<OpenInNewIcon />}
 							target="_blank"
 							component={Link}
-							// TODO: Add fallback URL from Tenant
 							href={
-								settings?.postcodeFallbackUrl
-									? parsePlaceholderString(
-											settings.postcodeFallbackUrl,
-											{
-												url: 'https://fallbackURL.de',
-												postcode: zipcode
-											}
-										)
-									: 'https://fallbackURL.de'
+								fallbackUrl
+									? `${fallbackUrl}${zipcode}/`
+									: 'https://www.diakonie.de'
 							}
 						>
 							{t('registration.agency.noresult.label')}

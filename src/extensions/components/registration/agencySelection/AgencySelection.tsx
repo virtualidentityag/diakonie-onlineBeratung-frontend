@@ -66,6 +66,7 @@ export const AgencySelection: VFC<{
 				onNextClick={onNextClick}
 				zipcode={headlineZipcode}
 				results={agencies}
+				fallbackUrl={registrationData?.mainTopic?.fallbackUrl}
 			/>
 		</>
 	);
