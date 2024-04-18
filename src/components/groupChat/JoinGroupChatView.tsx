@@ -7,7 +7,8 @@ import {
 	SessionTypeContext,
 	useConsultingType,
 	UserDataContext,
-	ActiveSessionContext
+	ActiveSessionContext,
+	useTopic
 } from '../../globalState';
 import { mobileListView } from '../app/navigationHandler';
 import { SessionHeaderComponent } from '../sessionHeader/SessionHeaderComponent';
@@ -60,6 +61,7 @@ export const JoinGroupChatView = ({
 	const [overlayActive, setOverlayActive] = useState(false);
 	const [redirectToSessionsList, setRedirectToSessionsList] = useState(false);
 	const consultingType = useConsultingType(activeSession.item.consultingType);
+	const topic = useTopic(activeSession.item.consultingType);
 
 	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 	const [isRequestInProgress, setIsRequestInProgress] = useState(false);
@@ -308,7 +310,7 @@ export const JoinGroupChatView = ({
 
 	const groupChatRules = useMemo(() => {
 		const transKeys = [
-			`consultingType.${consultingType?.id ?? 'noConsultingType'}.groupChatRules`,
+			`consultingType.${topic?.id ?? 'noConsultingType'}.groupChatRules`,
 			`consultingType.fallback.groupChatRules`
 		];
 
@@ -330,11 +332,7 @@ export const JoinGroupChatView = ({
 				{ ns: 'consultingTypes' }
 			)
 		);
-	}, [
-		consultingType?.groupChat?.groupChatRules,
-		consultingType?.id,
-		translate
-	]);
+	}, [consultingType?.groupChat?.groupChatRules, topic?.id, translate]);
 
 	if (redirectToSessionsList) {
 		mobileListView();

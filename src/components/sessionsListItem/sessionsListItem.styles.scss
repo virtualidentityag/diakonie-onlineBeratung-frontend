@@ -142,8 +142,6 @@ $icon-size-small: 16px;
 		white-space: nowrap;
 		text-align: right;
 		align-self: flex-end;
-		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 
 	&__topic {
@@ -153,6 +151,9 @@ $icon-size-small: 16px;
 		text-align: center;
 		color: #fff;
 		background-color: var(--skin-color-primary, #cc1e1c);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	&__feedbackLabel {

@@ -224,7 +224,7 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 				<div className="sessionInfo__metaInfo">
 					{!activeSession.agency ? (
 						<div className="sessionInfo__metaInfo__content">
-							{topic.titles?.short ? topic.titles.short : ''}
+							{topic?.name || ''}
 						</div>
 					) : null}
 					{preparedUserSessionData

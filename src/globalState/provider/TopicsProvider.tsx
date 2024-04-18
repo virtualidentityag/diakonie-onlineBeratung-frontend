@@ -9,6 +9,7 @@ import {
 import { TopicsDataInterface } from '../interfaces';
 import { apiGetTopicsData } from '../../api/apiGetTopicsData';
 import { LocaleContext } from '../context/LocaleContext';
+import { ERROR_LEVEL_WARN, apiPostError } from '../../api/apiPostError';
 
 export const TopicsContext = createContext<{
 	topics: Array<TopicsDataInterface>;
@@ -61,5 +62,18 @@ export function useTopics() {
 }
 
 export function useTopic(id?: number) {
-	return getTopics(useTopics(), id);
+	const topics = useTopics();
+
+	try {
+		return getTopics(topics, id);
+	} catch (e: any) {
+		apiPostError({
+			name: e.name,
+			message: e.message,
+			stack: e.stack,
+			level: ERROR_LEVEL_WARN
+		}).then();
+	}
+
+	return null;
 }
