@@ -20,7 +20,10 @@ import { config as baseConfig, uiUrl } from '../../../resources/scripts/config';
 
 export { uiUrl, APP_PATH } from '../../../resources/scripts/config';
 
-export const legalLinks = {
+export const routePathNames = {
+	root: '/',
+	login: '/login',
+	termsAndConditions: '/nutzungsbedingungen',
 	imprint: '/impressum',
 	privacy: '/datenschutz'
 };
@@ -33,8 +36,7 @@ export const config: AppConfigInterface = {
 			home: uiUrl + '/registration',
 			landingpage: '/registration',
 			toEntry: uiUrl + '/registration',
-			toRegistration: uiUrl + '/registration',
-			...legalLinks
+			toRegistration: uiUrl + '/registration'
 		},
 		postcodeFallbackUrl: '{url}{postcode}/',
 		twofactor: {
@@ -49,14 +51,19 @@ export const config: AppConfigInterface = {
 	}),
 	legalLinks: [
 		{
-			url: legalLinks.imprint,
+			url: uiUrl + routePathNames.imprint,
 			label: 'login.legal.infoText.impressum'
 		},
 		{
-			url: legalLinks.privacy,
+			url: uiUrl + routePathNames.privacy,
 			label: 'login.legal.infoText.dataprotection',
 			registration: true
 		}
+		// {
+		// 	url: routePathNames.termsAndConditions,
+		// 	label: 'login.legal.infoText.termsAndConditions',
+		// 	registration: true
+		// }
 	],
 	i18n: {
 		supportedLngs: ['en', 'de'],
