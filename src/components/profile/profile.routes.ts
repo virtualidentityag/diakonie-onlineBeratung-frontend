@@ -106,13 +106,11 @@ const profileRoutes = (
 							column: COLUMN_RIGHT
 						},
 						{
-							condition: (userData) => {
-								console.log({ userData });
-								return !hasUserAuthority(
+							condition: (userData) =>
+								!hasUserAuthority(
 									AUTHORITIES.CONSULTANT_DEFAULT,
 									userData
-								);
-							},
+								),
 							component: AskerConsultingTypeData,
 							boxed: false,
 							order: 2,
