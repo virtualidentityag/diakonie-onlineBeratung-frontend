@@ -14,8 +14,7 @@ import {
 	SetStateAction,
 	useContext,
 	useEffect,
-	useState,
-	useRef
+	useState
 } from 'react';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import NoResultsIllustration from '../../../../resources/img/illustrations/no-results.svg';
