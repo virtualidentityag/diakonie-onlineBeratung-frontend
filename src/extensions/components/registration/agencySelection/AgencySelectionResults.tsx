@@ -59,23 +59,6 @@ export const AgencySelectionResults = ({
 		results?.length === 1 && !onlyExternalAgencies;
 
 	useEffect(() => {
-		if (!isSingleResultAndNotOnlyExternal) return;
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === 'Enter') {
-				event.preventDefault();
-				onNextClick();
-			}
-		};
-
-		document.addEventListener('keydown', handleKeyDown);
-
-		return () => {
-			document.removeEventListener('keydown', handleKeyDown);
-		};
-	}, [isSingleResultAndNotOnlyExternal, onNextClick]);
-
-	useEffect(() => {
 		if (
 			// only external agencies
 			results?.length > 0 &&
