@@ -356,6 +356,11 @@ export const Registration = () => {
 												disabled={disabledNextButton}
 												variant="contained"
 												onClick={onRegisterClick}
+												type={
+													disabledNextButton
+														? 'button'
+														: 'submit'
+												}
 											>
 												{t('registration.register')}
 											</Button>
@@ -366,6 +371,11 @@ export const Registration = () => {
 												variant="contained"
 												onClick={onNextClick}
 												sx={{ width: 'unset' }}
+												type={
+													disabledNextButton
+														? 'button'
+														: 'submit'
+												}
 											>
 												{t('registration.next')}
 											</Button>

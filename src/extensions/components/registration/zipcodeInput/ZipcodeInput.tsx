@@ -25,7 +25,11 @@ export const ZipcodeInput: VFC<{
 	useEffect(() => {
 		if (REGISTRATION_DATA_VALIDATION.zipcode.validation(value)) {
 			setDisabledNextButton(false);
-			onChange({ zipcode: value });
+			onChange({
+				zipcode: value,
+				agencyId: undefined,
+				agency: undefined
+			});
 		} else {
 			setDisabledNextButton(true);
 		}

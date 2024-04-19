@@ -14,7 +14,8 @@ import {
 	SetStateAction,
 	useContext,
 	useEffect,
-	useState
+	useState,
+	useRef
 } from 'react';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import NoResultsIllustration from '../../../../resources/img/illustrations/no-results.svg';
@@ -50,10 +51,30 @@ export const AgencySelectionResults = ({
 	const { setDisabledNextButton, registrationData } =
 		useContext(RegistrationContext);
 	const { consultant: preselectedConsultant } = useContext(UrlParamsContext);
-
 	const [selectedAgency, setSelectedAgency] = useState<AgencyDataInterface>(
 		registrationData?.agency
 	);
+
+	const onlyExternalAgencies = results?.every((agency) => agency.external);
+	const isSingleResultAndNotOnlyExternal =
+		results?.length === 1 && !onlyExternalAgencies;
+
+	useEffect(() => {
+		if (!isSingleResultAndNotOnlyExternal) return;
+
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Enter') {
+				event.preventDefault();
+				onNextClick();
+			}
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isSingleResultAndNotOnlyExternal, onNextClick]);
 
 	useEffect(() => {
 		if (
@@ -103,8 +124,6 @@ export const AgencySelectionResults = ({
 			onChange({ agency: selectedAgency });
 		}
 	}, [selectedAgency, results, onChange, setDisabledNextButton, zipcode]);
-
-	const onlyExternalAgencies = results?.every((agency) => agency.external);
 
 	return (
 		<>
@@ -217,7 +236,7 @@ export const AgencySelectionResults = ({
 			)}
 
 			{/* one Result */}
-			{results?.length === 1 && !onlyExternalAgencies && (
+			{isSingleResultAndNotOnlyExternal && (
 				<FormControl sx={{ width: '100%' }}>
 					<RadioGroup
 						data-cy="agency-selection-radio-group"
