@@ -347,10 +347,6 @@ export const SessionListItemComponent = ({
 		sessionTopic = activeSession.user.username;
 	}
 
-	const showConsultingType =
-		consultingType && !tenantData?.settings?.featureTopicsEnabled;
-	const zipCodeSlash = showConsultingType ? '/ ' : '';
-
 	return (
 		<div
 			onClick={handleOnClick}
@@ -383,11 +379,10 @@ export const SessionListItemComponent = ({
 						</div>
 					) : (
 						<div className="sessionsListItem__consultingType">
-							{activeSession.item.consultingType !== 1 &&
-							!isAsker &&
+							{!isAsker &&
 							!activeSession.isLive &&
 							!autoSelectPostcode
-								? zipCodeSlash + activeSession.item.postcode
+								? activeSession.item.postcode
 								: null}
 						</div>
 					)}
