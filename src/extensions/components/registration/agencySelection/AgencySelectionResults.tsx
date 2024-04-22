@@ -102,6 +102,10 @@ export const AgencySelectionResults = ({
 			setDisabledNextButton(false);
 			onChange({ agency: selectedAgency });
 		}
+
+		if (results?.length === 0) {
+			setDisabledNextButton(true);
+		}
 	}, [selectedAgency, results, onChange, setDisabledNextButton, zipcode]);
 
 	const onlyExternalAgencies = results?.every((agency) => agency.external);
