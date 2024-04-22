@@ -95,7 +95,6 @@ export const SessionListItemComponent = ({
 			ALIAS_MESSAGE_TYPES.MASTER_KEY_LOST
 	);
 	const [plainTextLastMessage, setPlainTextLastMessage] = useState(null);
-	const topicSession = activeSession.item?.topic as TopicSessionInterface;
 
 	const { autoSelectPostcode } =
 		consultingType?.registration ||
@@ -384,7 +383,6 @@ export const SessionListItemComponent = ({
 						</div>
 					) : (
 						<div className="sessionsListItem__consultingType">
-							{topic?.name ? `${topic.name} ` : ''}
 							{activeSession.item.consultingType !== 1 &&
 							!isAsker &&
 							!activeSession.isLive &&
@@ -393,7 +391,7 @@ export const SessionListItemComponent = ({
 								: null}
 						</div>
 					)}
-					{topicSession?.id !== undefined && topicSession.name && (
+					{topic?.name && (
 						<div
 							className="sessionsListItem__topic"
 							style={{
@@ -401,7 +399,7 @@ export const SessionListItemComponent = ({
 									tenantData?.theming?.primaryColor
 							}}
 						>
-							{topicSession?.name}
+							{topic.name}
 						</div>
 					)}
 					<div className="sessionsListItem__date">
