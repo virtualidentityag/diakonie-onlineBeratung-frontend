@@ -57,6 +57,7 @@ interface RegistrationContextInterface {
 	hasConsultantError?: boolean;
 	hasAgencyError?: boolean;
 	hasTopicError?: boolean;
+	loading?: boolean;
 }
 
 export const registrationSessionStorageKey = 'registrationData';
@@ -74,6 +75,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 
 	const { url } = useRouteMatch();
 
+	const [loading, setLoading] = useState<boolean>(true);
 	const [disabledNextButton, setDisabledNextButton] = useState<boolean>(true);
 	const [hasTopicError, setHasTopicError] = useState<boolean>(false);
 	const [hasAgencyError, setHasAgencyError] = useState<boolean>(false);
@@ -144,6 +146,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 		(async () => {
 			const registrationData =
 				getSessionStorageData() as RegistrationData;
+
 			if (registrationData.mainTopicId) {
 				registrationData.mainTopic = await apiGetTopicById(
 					registrationData.mainTopicId
@@ -161,6 +164,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 				);
 			}
 			setRegistrationData(registrationData);
+			setLoading(false);
 		})();
 	}, []);
 
@@ -237,7 +241,8 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 			availableSteps,
 			hasConsultantError,
 			hasAgencyError,
-			hasTopicError
+			hasTopicError,
+			loading
 		}),
 		[
 			availableSteps,
@@ -246,7 +251,8 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 			hasConsultantError,
 			hasTopicError,
 			registrationData,
-			updateRegistrationData
+			updateRegistrationData,
+			loading
 		]
 	);
 
