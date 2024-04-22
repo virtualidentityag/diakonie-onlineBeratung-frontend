@@ -81,11 +81,7 @@ export const AgencySelectionResults = ({
 			return;
 		}
 
-		if (
-			// invalid agencyId, needs to be removed
-			selectedAgency &&
-			results?.length === 0
-		) {
+		if (results?.length === 0) {
 			setDisabledNextButton(true);
 			onChange({
 				agency: undefined
@@ -101,10 +97,6 @@ export const AgencySelectionResults = ({
 		) {
 			setDisabledNextButton(false);
 			onChange({ agency: selectedAgency });
-		}
-
-		if (results?.length === 0) {
-			setDisabledNextButton(true);
 		}
 	}, [selectedAgency, results, onChange, setDisabledNextButton, zipcode]);
 

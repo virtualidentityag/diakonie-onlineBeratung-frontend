@@ -57,7 +57,6 @@ interface RegistrationContextInterface {
 	hasConsultantError?: boolean;
 	hasAgencyError?: boolean;
 	hasTopicError?: boolean;
-	loading?: boolean;
 }
 
 export const registrationSessionStorageKey = 'registrationData';
@@ -241,8 +240,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 			availableSteps,
 			hasConsultantError,
 			hasAgencyError,
-			hasTopicError,
-			loading
+			hasTopicError
 		}),
 		[
 			availableSteps,
@@ -251,12 +249,11 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 			hasConsultantError,
 			hasTopicError,
 			registrationData,
-			updateRegistrationData,
-			loading
+			updateRegistrationData
 		]
 	);
 
-	if (!loaded) return null;
+	if (!loaded || loading) return null;
 
 	return (
 		<RegistrationContext.Provider value={context}>

@@ -79,8 +79,7 @@ export const Registration = () => {
 		disabledNextButton,
 		updateRegistrationData,
 		registrationData,
-		availableSteps,
-		loading
+		availableSteps
 	} = useContext(RegistrationContext);
 	const { consultant: preselectedConsultant } = useContext(UrlParamsContext);
 	const { tenant } = useContext(TenantContext);
@@ -235,8 +234,6 @@ export const Registration = () => {
 			),
 		[availableSteps, path, topicSlug]
 	);
-
-	if (loading) return null;
 
 	return (
 		<>
