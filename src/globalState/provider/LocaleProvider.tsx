@@ -3,10 +3,7 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import i18n, { FALLBACK_LNG, init } from '../../i18n';
 import { InformalContext } from './InformalProvider';
 import { useAppConfig } from '../../hooks/useAppConfig';
-import {
-	getValueFromCookie,
-	setValueInCookie
-} from '../../components/sessionCookie/accessSessionCookie';
+import { setValueInCookie } from '../../components/sessionCookie/accessSessionCookie';
 import { useTenant } from './TenantProvider';
 import useTenantTheming from '../../utils/useTenantTheming';
 import { LocaleContext, TLocaleContext } from '../context/LocaleContext';
@@ -22,9 +19,7 @@ export function LocaleProvider(props) {
 	const { informal } = useContext(InformalContext);
 	const [locales, setLocales] = useState([]);
 	const [locale, setLocale] = useState(
-		getValueFromCookie('lang') ||
-			localStorage.getItem(STORAGE_KEY_LOCALE) ||
-			null
+		localStorage.getItem(STORAGE_KEY_LOCALE) || null
 	);
 
 	useEffect(() => {
