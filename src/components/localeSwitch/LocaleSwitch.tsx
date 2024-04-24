@@ -113,6 +113,7 @@ export const LocaleSwitch: React.FC<LocaleSwitchProp> = ({
 								height={iconSize}
 								className="navigation__icon__filled"
 								color="inherit"
+								style={{ width: 'auto', height: 'auto' }}
 							/>
 						</>
 					)}{' '}

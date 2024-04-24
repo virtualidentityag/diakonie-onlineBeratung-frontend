@@ -27,4 +27,8 @@
 			font-weight: $font-weight-medium;
 		}
 	}
+
+	.select__input__menu-portal {
+		z-index: 1000;
+	}
 }
