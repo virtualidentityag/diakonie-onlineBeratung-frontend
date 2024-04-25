@@ -18,7 +18,9 @@ export function LocaleProvider(props) {
 	const [initLocale, setInitLocale] = useState(null);
 	const { informal } = useContext(InformalContext);
 	const [locales, setLocales] = useState([]);
-	const [locale, setLocale] = useState(null);
+	const [locale, setLocale] = useState(
+		localStorage.getItem(STORAGE_KEY_LOCALE) || null
+	);
 
 	useEffect(() => {
 		// If using the tenant service we should load first the tenant because we need the

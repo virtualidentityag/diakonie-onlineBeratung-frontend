@@ -367,6 +367,7 @@ const TopicSelect = ({
 				value={topic?.id}
 				control={
 					<Radio
+						tabIndex={0}
 						onClick={onChange}
 						checked={checked}
 						checkedIcon={

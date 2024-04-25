@@ -32,7 +32,8 @@ import {
 	registrationSessionStorageKey,
 	RegistrationData,
 	NotificationsContext,
-	NOTIFICATION_TYPE_ERROR
+	NOTIFICATION_TYPE_ERROR,
+	LocaleContext
 } from '../../../globalState';
 import { GlobalComponentContext } from '../../../globalState/provider/GlobalComponentContext';
 import {
@@ -83,6 +84,7 @@ export const Registration = () => {
 	} = useContext(RegistrationContext);
 	const { consultant: preselectedConsultant } = useContext(UrlParamsContext);
 	const { tenant } = useContext(TenantContext);
+	const { locale } = useContext(LocaleContext);
 
 	const [stepData, setStepData] = useState<Partial<RegistrationData>>({});
 	const [redirectOverlayActive, setRedirectOverlayActive] =
@@ -185,7 +187,7 @@ export const Registration = () => {
 			agencyId: registrationData.agency.id.toString(),
 			postcode: registrationData.zipcode,
 			termsAccepted: 'true',
-			preferredLanguage: 'de',
+			preferredLanguage: locale || 'de',
 			consultingType: registrationData.agency.consultingType,
 			...(preselectedConsultant
 				? { consultantId: preselectedConsultant?.consultantId }
@@ -222,7 +224,8 @@ export const Registration = () => {
 		settings.multitenancyWithSingleDomainEnabled,
 		tenant,
 		addNotification,
-		t
+		t,
+		locale
 	]);
 
 	const stepPaths = useMemo(
@@ -356,6 +359,11 @@ export const Registration = () => {
 												disabled={disabledNextButton}
 												variant="contained"
 												onClick={onRegisterClick}
+												type={
+													disabledNextButton
+														? 'button'
+														: 'submit'
+												}
 											>
 												{t('registration.register')}
 											</Button>
@@ -366,6 +374,11 @@ export const Registration = () => {
 												variant="contained"
 												onClick={onNextClick}
 												sx={{ width: 'unset' }}
+												type={
+													disabledNextButton
+														? 'button'
+														: 'submit'
+												}
 											>
 												{t('registration.next')}
 											</Button>

@@ -74,6 +74,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 
 	const { url } = useRouteMatch();
 
+	const [loading, setLoading] = useState<boolean>(true);
 	const [disabledNextButton, setDisabledNextButton] = useState<boolean>(true);
 	const [hasTopicError, setHasTopicError] = useState<boolean>(false);
 	const [hasAgencyError, setHasAgencyError] = useState<boolean>(false);
@@ -144,6 +145,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 		(async () => {
 			const registrationData =
 				getSessionStorageData() as RegistrationData;
+
 			if (registrationData.mainTopicId) {
 				registrationData.mainTopic = await apiGetTopicById(
 					registrationData.mainTopicId
@@ -161,6 +163,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 				);
 			}
 			setRegistrationData(registrationData);
+			setLoading(false);
 		})();
 	}, []);
 
@@ -250,7 +253,7 @@ export function RegistrationProvider({ children }: PropsWithChildren<{}>) {
 		]
 	);
 
-	if (!loaded) return null;
+	if (!loaded || loading) return null;
 
 	return (
 		<RegistrationContext.Provider value={context}>

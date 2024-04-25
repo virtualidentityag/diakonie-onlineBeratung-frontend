@@ -200,6 +200,7 @@ export const AccountData: VFC<{
 				}
 				onInputChange={setRepeatPassword}
 				value={repeatPassword}
+				info="&nbsp;"
 				label={t('registration.account.repeatPassword.label')}
 				isValueValid={async (val) =>
 					val === password && password.length > 0
@@ -209,7 +210,7 @@ export const AccountData: VFC<{
 					'registration.account.repeatPassword.success'
 				)}
 			/>
-			<FormGroup sx={{ mt: '40px' }}>
+			<FormGroup sx={{ mt: '20px' }}>
 				<FormControlLabel
 					onClick={() => {
 						setDataProtectionChecked(!dataProtectionChecked);

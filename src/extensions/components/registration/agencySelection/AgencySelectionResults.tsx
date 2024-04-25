@@ -50,10 +50,13 @@ export const AgencySelectionResults = ({
 	const { setDisabledNextButton, registrationData } =
 		useContext(RegistrationContext);
 	const { consultant: preselectedConsultant } = useContext(UrlParamsContext);
-
 	const [selectedAgency, setSelectedAgency] = useState<AgencyDataInterface>(
 		registrationData?.agency
 	);
+
+	const onlyExternalAgencies = results?.every((agency) => agency.external);
+	const isSingleResultAndNotOnlyExternal =
+		results?.length === 1 && !onlyExternalAgencies;
 
 	useEffect(() => {
 		if (
@@ -81,11 +84,7 @@ export const AgencySelectionResults = ({
 			return;
 		}
 
-		if (
-			// invalid agencyId, needs to be removed
-			selectedAgency &&
-			results?.length === 0
-		) {
+		if (results?.length === 0) {
 			setDisabledNextButton(true);
 			onChange({
 				agency: undefined
@@ -103,8 +102,6 @@ export const AgencySelectionResults = ({
 			onChange({ agency: selectedAgency });
 		}
 	}, [selectedAgency, results, onChange, setDisabledNextButton, zipcode]);
-
-	const onlyExternalAgencies = results?.every((agency) => agency.external);
 
 	return (
 		<>
@@ -217,7 +214,7 @@ export const AgencySelectionResults = ({
 			)}
 
 			{/* one Result */}
-			{results?.length === 1 && !onlyExternalAgencies && (
+			{isSingleResultAndNotOnlyExternal && (
 				<FormControl sx={{ width: '100%' }}>
 					<RadioGroup
 						data-cy="agency-selection-radio-group"
