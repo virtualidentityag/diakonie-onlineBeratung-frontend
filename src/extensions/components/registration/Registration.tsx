@@ -150,12 +150,11 @@ export const Registration = () => {
 
 	const onPrevClick = useCallback(() => {
 		if (stepData.zipcode) {
-			stepData.zipcode = '';
+			registrationData.zipcode = '';
 		}
-		updateRegistrationData(stepData);
 		setStepData({});
 		history.push(prevStepUrl);
-	}, [updateRegistrationData, stepData, history, prevStepUrl]);
+	}, [registrationData, stepData, history, prevStepUrl]);
 
 	const handleSubmit = useCallback(
 		(e: FormEvent<HTMLFormElement>) => {
