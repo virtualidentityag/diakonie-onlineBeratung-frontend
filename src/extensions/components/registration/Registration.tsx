@@ -148,6 +148,14 @@ export const Registration = () => {
 		history.push(nextStepUrl);
 	}, [updateRegistrationData, stepData, history, nextStepUrl]);
 
+	const onPrevClick = useCallback(() => {
+		if (stepData.zipcode) {
+			registrationData.zipcode = '';
+		}
+		setStepData({});
+		history.push(prevStepUrl);
+	}, [registrationData, stepData, history, prevStepUrl]);
+
 	const handleSubmit = useCallback(
 		(e: FormEvent<HTMLFormElement>) => {
 			e.preventDefault();
@@ -348,6 +356,7 @@ export const Registration = () => {
 												color: 'info.light'
 											}}
 											component={RouterLink}
+											onClick={onPrevClick}
 											to={prevStepUrl}
 										>
 											{t('registration.back')}
