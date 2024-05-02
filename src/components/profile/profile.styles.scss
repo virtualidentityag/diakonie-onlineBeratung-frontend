@@ -478,6 +478,10 @@ $profile-footer-justify-content: center !default;
 		}
 	}
 
+	&__propagation-info {
+		margin-top: $grid-base-two;
+	}
+
 	&__footer {
 		flex: 0;
 		display: flex;

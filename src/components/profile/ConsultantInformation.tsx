@@ -30,6 +30,8 @@ export const ConsultantInformation = () => {
 	const [isSaveDisabled, setIsSaveDisabled] = useState(false);
 	const [editedDisplayName, setEditedDisplayName] = useState('');
 	const [initialDisplayName, setInitialDisplayName] = useState('');
+	const [showNameChangePropagationInfo, setShowNameChangePropagationInfo] =
+		useState(false);
 
 	const cancelEditButton: ButtonItem = {
 		label: translate('profile.data.edit.button.cancel'),
@@ -55,6 +57,7 @@ export const ConsultantInformation = () => {
 			.then(() => {
 				reloadUserData().catch(console.log);
 				setInitialDisplayName(editedDisplayName);
+				setShowNameChangePropagationInfo(true);
 			})
 			.catch((error) => {
 				addNotification({
@@ -128,6 +131,17 @@ export const ConsultantInformation = () => {
 				isDisabled={!isDisplayNameFeatureEnabled || !isEditEnabled}
 				onValueIsValid={handleValidDisplayName}
 			/>
+			{showNameChangePropagationInfo && (
+				<div className="profile__propagation-info">
+					<Text
+						text={translate(
+							'profile.data.info.nameChangePropagation'
+						)}
+						type="standard"
+						className="tertiary"
+					/>
+				</div>
+			)}
 			{isDisplayNameFeatureEnabled && isEditEnabled && (
 				<div className="editableData__buttonSet editableData__buttonSet--edit">
 					<Button
