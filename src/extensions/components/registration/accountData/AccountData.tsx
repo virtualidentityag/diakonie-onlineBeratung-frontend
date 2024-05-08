@@ -59,7 +59,7 @@ export const AccountData: VFC<{
 	const [repeatPassword, setRepeatPassword] = useState<string>('');
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>();
 	const [dataProtectionChecked, setDataProtectionChecked] =
-		useState<boolean>();
+		useState<boolean>(false);
 	const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] =
 		useState<boolean>();
 	const [username, setUsername] = useState<string>('');
@@ -212,13 +212,15 @@ export const AccountData: VFC<{
 			/>
 			<FormGroup sx={{ mt: '20px' }}>
 				<FormControlLabel
-					onClick={() => {
-						setDataProtectionChecked(!dataProtectionChecked);
-					}}
 					sx={{ alignItems: 'flex-start' }}
 					control={
 						<Checkbox
 							checked={dataProtectionChecked}
+							onClick={() => {
+								setDataProtectionChecked(
+									!dataProtectionChecked
+								);
+							}}
 							sx={{ mt: '-9px' }}
 						/>
 					}
