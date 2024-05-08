@@ -15,10 +15,7 @@ export const Header = () => {
 
 	return (
 		<header className="header">
-			<Headline
-				semanticLevel="2"
-				text={tenant?.name || translate('app.title')}
-			/>
+			<Headline semanticLevel="2" text={translate('app.title')} />
 			<div className="header__right">
 				{agencyLogo ? (
 					<img src={agencyLogo} className="header__logo" alt="Logo" />
