@@ -41,7 +41,9 @@ const PreselectedTopic = ({
 					</>
 				</Typography>
 			) : (
-				<Typography sx={sx}>{topic.name}</Typography>
+				<Typography sx={sx}>
+					{topic.titles?.long || topic.name}
+				</Typography>
 			)}
 		</>
 	);
