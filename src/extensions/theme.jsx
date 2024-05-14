@@ -35,7 +35,7 @@ const theme = createTheme({
 	},
 
 	typography: {
-		fontFamily: ['Roboto', 'cursive', 'sans-serif'].join(','),
+		fontFamily: ['Arial', 'sans-serif'].join(','),
 		h1: {
 			color: getCssVarValue('--black'),
 			letterSpacing: 'normal',

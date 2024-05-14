@@ -183,7 +183,8 @@ const getOrCreateHeadNode = (
 
 const applyTheming = (tenant: TenantDataInterface) => {
 	if (tenant.theming) {
-		injectCss(tenant.theming);
+		// Currently not compatible with latest customer theming
+		// injectCss(tenant.theming);
 
 		getOrCreateHeadNode('meta', { name: 'theme-color' }).setAttribute(
 			'content',
