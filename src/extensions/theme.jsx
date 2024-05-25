@@ -123,7 +123,9 @@ const theme = createTheme({
 		MuiButton: {
 			styleOverrides: {
 				root: {
+					fontFamily: getCssVarValue('--font-family-sans-serif'),
 					fontSize: getCssVarValue('--font-size-primary'),
+					fontWeight: getCssVarValue('--font-weight-bold'),
 					lineHeight: '20px',
 					borderRadius: getCssVarValue('--button-border-radius')
 				},
@@ -135,12 +137,11 @@ const theme = createTheme({
 					'textTransform': 'none',
 					'outline': 'none',
 					'color': getCssVarValue('--white'),
-					'fontWeight': getCssVarValue('--font-weight-regular'),
-					'fontFamily': getCssVarValue('--font-family-sans-serif'),
 					'boxShadow': 'none',
 					'&:hover': {
 						boxShadow: 'none',
-						color: getCssVarValue('--white')
+						color: getCssVarValue('--white'),
+						backgroundColor: getCssVarValue('--hover-primary')
 					}
 				},
 				outlined: {
