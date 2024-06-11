@@ -47,7 +47,7 @@ export const AskerConsultingTypeData = () => {
 									Object.keys(resort.sessionData).map(
 										(item, itemIndex) =>
 											item === 'age' &&
-												resort.sessionData[item] ===
+											resort.sessionData[item] ===
 												'null' ? null : (
 												<div
 													className="profile__data__item"
@@ -56,7 +56,7 @@ export const AskerConsultingTypeData = () => {
 													<p className="profile__data__label">
 														{translate(
 															'userProfile.data.' +
-															item
+																item
 														)}
 													</p>
 													<p
@@ -72,24 +72,24 @@ export const AskerConsultingTypeData = () => {
 															item
 														]
 															? translate(
-																handleNumericTranslation(
-																	getUserDataTranslateBase(
-																		parseInt(
-																			resort
-																				.agency
-																				.consultingType
-																		)
-																	),
-																	item,
-																	resort
-																		.sessionData[
-																	item
-																	]
+																	handleNumericTranslation(
+																		getUserDataTranslateBase(
+																			parseInt(
+																				resort
+																					.agency
+																					.consultingType
+																			)
+																		),
+																		item,
+																		resort
+																			.sessionData[
+																			item
+																		]
+																	)
 																)
-															)
 															: translate(
-																'profile.noContent'
-															)}
+																	'profile.noContent'
+																)}
 													</p>
 												</div>
 											)
