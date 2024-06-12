@@ -33,7 +33,11 @@ export const AskerConsultingTypeData = () => {
 										text={
 											topics.find(
 												(topic) =>
-													topic.id === resort.topic
+													userData.sessions.find(
+														(session) =>
+															session.agencyId ===
+															resort.agency.id
+													)?.topic.id === topic.id
 											)?.name || ''
 										}
 										semanticLevel="5"
