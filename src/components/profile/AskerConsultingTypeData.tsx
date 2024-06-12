@@ -37,7 +37,7 @@ export const AskerConsultingTypeData = () => {
 														(session) =>
 															session.agencyId ===
 															resort.agency.id
-													).topic.id === topic.id
+													)?.topic.id === topic.id
 											)?.name || ''
 										}
 										semanticLevel="5"
