@@ -353,7 +353,8 @@ export const Registration = () => {
 										<Link
 											sx={{
 												textDecoration: 'none',
-												color: 'info.light'
+												color: 'info.light',
+												fontWeight: '600'
 											}}
 											component={RouterLink}
 											onClick={onPrevClick}
