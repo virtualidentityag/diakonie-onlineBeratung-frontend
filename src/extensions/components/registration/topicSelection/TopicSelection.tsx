@@ -274,13 +274,11 @@ export const TopicSelection: VFC<{
 											{topicGroup.topicIds
 												.map((t) => getTopic(t))
 												.filter(Boolean)
-												.sort((a, b) => {
-													if (a.name === b.name)
-														return 0;
-													return a.name < b.name
-														? -1
-														: 1;
-												})
+												.sort((a, b) =>
+													a.titles.long.localeCompare(
+														b.titles.long
+													)
+												)
 												.map((topic, index) => (
 													<TopicSelect
 														key={`${topicGroup.id}-${topic.id}`}
