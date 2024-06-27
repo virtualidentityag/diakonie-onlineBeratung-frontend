@@ -42,7 +42,12 @@ export const AgencyLanguages = ({ agencyId }: AgencyLanguagesProps) => {
 					.join(' | ')
 			);
 		})();
-	}, [agencyId, fixedLanguages, t]);
+	}, [
+		agencyId,
+		fixedLanguages,
+		settings?.multitenancyWithSingleDomainEnabled,
+		t
+	]);
 
 	return (
 		<Typography variant="body2" sx={{ color: 'info.light' }}>
