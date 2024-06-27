@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiAgencyLanguages } from '../../../../api/apiAgencyLanguages';
 import { LanguagesContext } from '../../../../globalState/provider/LanguagesProvider';
+import { useAppConfig } from '../../../../hooks/useAppConfig';
 
 interface AgencyLanguagesProps {
 	agencyId?: number;
@@ -11,6 +12,7 @@ interface AgencyLanguagesProps {
 
 export const AgencyLanguages = ({ agencyId }: AgencyLanguagesProps) => {
 	const { t } = useTranslation();
+	const settings = useAppConfig();
 	const [languagesString, setLanguagesString] = useState<string>('');
 	const { fixed: fixedLanguages } = useContext(LanguagesContext);
 
@@ -18,7 +20,10 @@ export const AgencyLanguages = ({ agencyId }: AgencyLanguagesProps) => {
 		(async () => {
 			let languages = ['de'];
 			if (agencyId !== undefined) {
-				languages = await apiAgencyLanguages(agencyId, false).then(
+				languages = await apiAgencyLanguages(
+					agencyId,
+					settings?.multitenancyWithSingleDomainEnabled
+				).then(
 					(res) => (languages = [...fixedLanguages, ...res.languages])
 				);
 			}
