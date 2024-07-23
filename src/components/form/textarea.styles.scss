@@ -49,8 +49,8 @@
 			color: transparent;
 		}
 
-		&:focus + label,
-		&:not(:placeholder-shown) + label {
+		&:focus+label,
+		&:not(:placeholder-shown)+label {
 			font-size: 12px;
 			top: 2px;
 			transition:
@@ -60,13 +60,13 @@
 			padding-top: $grid-base;
 		}
 
-		&:placeholder-shown + label {
+		&:placeholder-shown+label {
 			top: 4px;
 		}
 	}
 
 	/* stylelint-disable */
-	label:not(.requestFeedbackLabel) {
+	label {
 		width: calc(100% - #{$grid-base-three * 2});
 		position: absolute;
 		left: $grid-base-three;
@@ -77,5 +77,6 @@
 		text-align: left;
 		background-color: white;
 	}
+
 	/* stylelint-enable */
 }

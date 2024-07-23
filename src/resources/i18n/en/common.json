@@ -362,7 +362,6 @@
 		"dataProtection": "Data protection",
 		"dearchive": "Dearchive",
 		"editGroupChat": "Chat settings",
-		"feedback": "Feedback",
 		"groupChatInfo": "Chat info",
 		"imprint": "Imprint",
 		"leaveGroupChat": "Leave chat",
@@ -583,10 +582,6 @@
 				"placeholder": {
 					"asker": "Write us what moves you.",
 					"consultant": "Write a message to client",
-					"feedback": {
-						"main": "Send a message to Peer",
-						"peer": "Send a message to Teamleader"
-					},
 					"groupChat": "Write message"
 				}
 			},
@@ -1269,13 +1264,6 @@
 		"today": "Today",
 		"tomorrow": "Tomorrow",
 		"unread": "unread",
-		"write": {
-			"peer": {
-				"checkbox": {
-					"label": "Request feedback"
-				}
-			}
-		},
 		"yesterday": "Yesterday"
 	},
 	"navigation": {
@@ -2001,9 +1989,6 @@
 			"restrictions": ".jpg, .png, .pdf, .docx, .xlsx up to a maximum of {{attachment_filesize}}MB"
 		},
 		"empty": "Please select a message",
-		"feedback": {
-			"label": "Feedback"
-		},
 		"groupChat": {
 			"consultant": {
 				"prefix": "Moderator - "

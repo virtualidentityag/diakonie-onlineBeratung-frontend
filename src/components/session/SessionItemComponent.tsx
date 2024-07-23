@@ -30,7 +30,6 @@ import {
 } from '../../globalState';
 import { ConsultingTypeInterface } from '../../globalState/interfaces';
 import './session.styles';
-import './session.yellowTheme.styles';
 import { useDebouncedCallback } from 'use-debounce';
 import { ReactComponent as ArrowDoubleDownIcon } from '../../resources/img/icons/arrow-double-down.svg';
 import smoothScroll from './smoothScrollHelper';
@@ -85,7 +84,7 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 	useEffect(() => {
 		setCanWriteMessage(
 			type !== SESSION_LIST_TYPES.ENQUIRY ||
-				hasUserAuthority(AUTHORITIES.VIEW_ALL_PEER_SESSIONS, userData)
+			hasUserAuthority(AUTHORITIES.VIEW_ALL_PEER_SESSIONS, userData)
 		);
 	}, [type, userData]);
 
@@ -322,7 +321,7 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 						if (
 							trackedErrorIndex >= 0 &&
 							acc[trackedErrorIndex][1].message ===
-								collectedError.message
+							collectedError.message
 						) {
 							if (timestamp > acc[trackedErrorIndex][0]) {
 								acc.splice(
@@ -356,17 +355,13 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 
 	return (
 		<div
-			className={
-				activeSession.isFeedback
-					? `session session--yellowTheme`
-					: `session`
-			}
+			className="session"
 		>
 			<div ref={headerRef}>
 				<SessionHeaderComponent
 					consultantAbsent={
 						activeSession.consultant &&
-						activeSession.consultant.absent
+							activeSession.consultant.absent
 							? activeSession.consultant
 							: null
 					}
@@ -425,11 +420,10 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 							</React.Fragment>
 						))}
 					<div
-						className={`session__scrollToBottom ${
-							isScrolledToBottom
-								? 'session__scrollToBottom--disabled'
-								: ''
-						}`}
+						className={`session__scrollToBottom ${isScrolledToBottom
+							? 'session__scrollToBottom--disabled'
+							: ''
+							}`}
 					>
 						{newMessages > 0 && (
 							<span className="session__unreadCount">
@@ -476,7 +470,7 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 							className={clsx(
 								'session__submit-interface',
 								!isScrolledToBottom &&
-									'session__submit-interface--scrolled-up'
+								'session__submit-interface--scrolled-up'
 							)}
 							placeholder={getPlaceholder()}
 							typingUsers={props.typingUsers}

@@ -374,7 +374,6 @@
 		"dataProtection": "Datenschutz",
 		"dearchive": "Dearchivieren",
 		"editGroupChat": "Chat-Einstellungen",
-		"feedback": "Feedback",
 		"groupChatInfo": "Chat-Info",
 		"imprint": "Impressum",
 		"leaveGroupChat": "Chat verlassen",
@@ -595,10 +594,6 @@
 				"placeholder": {
 					"asker": "Schreiben Sie uns, was Sie bewegt.",
 					"consultant": "Nachricht an Klient:in schreiben",
-					"feedback": {
-						"main": "Nachricht an Peer schreiben",
-						"peer": "Nachricht an Teamleiter:in schreiben"
-					},
 					"groupChat": "Nachricht schreiben"
 				}
 			},
@@ -1290,13 +1285,6 @@
 			"join": "Beitreten",
 			"moderatorEndedTitle": "Videokonferenz wurde beendet: {{time}}",
 			"moderatorStartedTitle": "Moderator:in {{name}} hat eine Videokonferenz gestartet"
-		},
-		"write": {
-			"peer": {
-				"checkbox": {
-					"label": "Feedback anfordern"
-				}
-			}
 		},
 		"yesterday": "Gestern"
 	},
@@ -2120,9 +2108,6 @@
 			"restrictions": ".jpg, .png, .pdf, .docx, .xlsx bis maximal {{attachment_filesize}} MB"
 		},
 		"empty": "Bitte wählen Sie eine Nachricht aus",
-		"feedback": {
-			"label": "Feedback"
-		},
 		"groupChat": {
 			"consultant": {
 				"prefix": "Moderatorin oder Moderator - "
