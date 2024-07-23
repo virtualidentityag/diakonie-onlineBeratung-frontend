@@ -448,11 +448,6 @@ declare namespace UserService {
 			messagesRead?: boolean;
 			/**
 			 * example:
-			 * true
-			 */
-			feedbackRead?: boolean;
-			/**
-			 * example:
 			 * false
 			 */
 			isTeamSession?: boolean;

@@ -72,7 +72,6 @@ export interface SessionItemInterface {
 	attachment: UserService.Schemas.SessionAttachmentDTO;
 	consultingType: number;
 	feedbackGroupId?: string;
-	feedbackRead?: boolean;
 	groupId: string;
 	id: number;
 	e2eLastMessage: {
@@ -88,11 +87,11 @@ export interface SessionItemInterface {
 	postcode: number;
 	registrationType: registrationTypeAnonymous | registrationTypeRegistered;
 	status:
-		| statusEmpty
-		| statusEnquiry
-		| statusActive
-		| statusFinished
-		| statusArchived;
+	| statusEmpty
+	| statusEnquiry
+	| statusActive
+	| statusFinished
+	| statusArchived;
 	isPeerChat: boolean;
 	isTeamSession: boolean;
 	videoCallMessageDTO: VideoCallMessageDTO;
