@@ -29,7 +29,6 @@ import {
 } from '../profile/profileHelpers';
 import { ReactComponent as BackIcon } from '../../resources/img/icons/arrow-left.svg';
 import './sessionHeader.styles';
-import './sessionHeader.yellowTheme.styles';
 import { useSearchParam } from '../../hooks/useSearchParams';
 import { useTranslation } from 'react-i18next';
 import { GroupChatHeader } from './GroupChatHeader';
@@ -62,8 +61,8 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 
 	const preparedUserSessionData =
 		hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
-		userSessionData &&
-		!activeSession.isLive
+			userSessionData &&
+			!activeSession.isLive
 			? convertUserDataObjectToArray(userSessionData)
 			: null;
 	const translateBase = getUserDataTranslateBase(
@@ -85,9 +84,8 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 	}, [isSubscriberFlyoutOpen]);
 
 	const sessionView = getViewPathForType(type);
-	const userProfileLink = `/sessions/consultant/${sessionView}/${
-		activeSession.item.groupId
-	}/${activeSession.item.id}/userProfile${getSessionListTab()}`;
+	const userProfileLink = `/sessions/consultant/${sessionView}/${activeSession.item.groupId
+		}/${activeSession.item.id}/userProfile${getSessionListTab()}`;
 
 	const handleBackButton = () => {
 		mobileListView();
@@ -131,35 +129,6 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 		);
 	}
 
-	if (activeSession.isFeedback) {
-		return (
-			<div className="sessionInfo">
-				<div className="sessionInfo__feedbackHeaderWrapper">
-					<Link
-						to={{
-							pathname: `${listPath}/${activeSession.item.groupId}
-							/${activeSession.item.id}`,
-							search: getSessionListTab()
-						}}
-						className="sessionInfo__feedbackBackButton"
-					>
-						<BackIcon />
-					</Link>
-					<div className="sessionInfo__username">
-						<h3>{translate('session.feedback.label')}</h3>
-					</div>
-				</div>
-				<div className="sessionInfo__feedbackMetaInfo">
-					{activeSession.user.username ? (
-						<div className="sessionInfo__metaInfo__content">
-							{activeSession.user.username}
-						</div>
-					) : null}
-				</div>
-			</div>
-		);
-	}
-
 	return (
 		<div className="sessionInfo">
 			<div className="sessionInfo__headerWrapper">
@@ -181,12 +150,12 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 							AUTHORITIES.ANONYMOUS_DEFAULT,
 							userData
 						)) && (
-						<h3>
-							{contact?.displayName ||
-								contact?.username ||
-								translate('sessionList.user.consultantUnknown')}
-						</h3>
-					)}
+							<h3>
+								{contact?.displayName ||
+									contact?.username ||
+									translate('sessionList.user.consultantUnknown')}
+							</h3>
+						)}
 					{hasUserAuthority(
 						AUTHORITIES.CONSULTANT_DEFAULT,
 						userData
@@ -221,18 +190,18 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 
 			{(hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
 				hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData)) && (
-				<div className="sessionInfo__metaInfo">
-					{!activeSession.agency ? (
-						<div className="sessionInfo__metaInfo__content">
-							{topic?.name || ''}
-						</div>
-					) : null}
-					{preparedUserSessionData
-						? preparedUserSessionData.map((item, index) =>
+					<div className="sessionInfo__metaInfo">
+						{!activeSession.agency ? (
+							<div className="sessionInfo__metaInfo__content">
+								{topic?.name || ''}
+							</div>
+						) : null}
+						{preparedUserSessionData
+							? preparedUserSessionData.map((item, index) =>
 								item.value &&
-								!(
-									item.type === 'age' && item.value === 'null'
-								) ? (
+									!(
+										item.type === 'age' && item.value === 'null'
+									) ? (
 									<div
 										className="sessionInfo__metaInfo__content"
 										key={index}
@@ -247,26 +216,26 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 									</div>
 								) : null
 							)
-						: null}
-					{activeSession.agency?.name && (
-						<div className="sessionInfo__metaInfo__content">
-							{' '}
-							{translate(
-								[
-									`agency.${activeSession.agency.id}.name`,
-									activeSession.agency.name
-								],
-								{ ns: 'agencies' }
-							)}{' '}
-						</div>
-					)}
-					{activeSession.agency && (
-						<div className="sessionInfo__metaInfo__content">
-							{translate('consultant.jobTitle')}
-						</div>
-					)}
-				</div>
-			)}
+							: null}
+						{activeSession.agency?.name && (
+							<div className="sessionInfo__metaInfo__content">
+								{' '}
+								{translate(
+									[
+										`agency.${activeSession.agency.id}.name`,
+										activeSession.agency.name
+									],
+									{ ns: 'agencies' }
+								)}{' '}
+							</div>
+						)}
+						{activeSession.agency && (
+							<div className="sessionInfo__metaInfo__content">
+								{translate('consultant.jobTitle')}
+							</div>
+						)}
+					</div>
+				)}
 		</div>
 	);
 };

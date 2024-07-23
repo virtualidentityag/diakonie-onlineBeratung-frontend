@@ -26,15 +26,14 @@ export type ExtendedSessionInterface = Omit<
 	'session' | 'chat'
 > & {
 	item?: Partial<Omit<SessionItemInterface, 'topic'>> &
-		Partial<Omit<GroupChatItemInterface, 'topic'>> & {
-			topic: string | TopicSessionInterface;
-		};
+	Partial<Omit<GroupChatItemInterface, 'topic'>> & {
+		topic: string | TopicSessionInterface;
+	};
 	rid: string;
 	type: typeof CHAT_TYPE_GROUP_CHAT | typeof CHAT_TYPE_SINGLE_CHAT;
 	isGroup?: boolean;
 	isSession?: boolean;
 	isLive?: boolean;
-	isFeedback?: boolean;
 	isEnquiry?: boolean;
 	isEmptyEnquiry?: boolean;
 	isNonEmptyEnquiry?: boolean;
@@ -64,8 +63,6 @@ export const buildExtendedSession = (
 		isSession:
 			sessionChat &&
 			sessionChat?.registrationType !== REGISTRATION_TYPE_ANONYMOUS,
-		isFeedback:
-			sessionGroupId && sessionChat?.feedbackGroupId === sessionGroupId,
 		isLive: sessionChat?.registrationType === REGISTRATION_TYPE_ANONYMOUS,
 		isEnquiry:
 			sessionChat &&

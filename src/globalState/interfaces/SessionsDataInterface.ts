@@ -96,7 +96,6 @@ export interface SessionItemInterface {
 	isTeamSession: boolean;
 	videoCallMessageDTO: VideoCallMessageDTO;
 	language?: string;
-	isFeedbackSession: boolean;
 	topic: TopicSessionInterface;
 }
 

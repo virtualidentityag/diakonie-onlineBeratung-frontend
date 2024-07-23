@@ -214,7 +214,6 @@ export const MessageSubmitInterfaceComponent = ({
 	// This loads the keys for current activeSession.rid which is already set:
 	// to groupChat.groupId on group chats
 	// to session.groupId on session chats
-	// to session.feebackGroupId on feedback chats
 	const {
 		keyID,
 		key,
@@ -610,7 +609,6 @@ export const MessageSubmitInterfaceComponent = ({
 		[
 			activeSession.isGroup,
 			activeSession.isLive,
-			activeSession.item.feedbackGroupId,
 			activeSession.item.id,
 			activeSession.rid,
 			cleanupAttachment,
@@ -673,7 +671,6 @@ export const MessageSubmitInterfaceComponent = ({
 			isEncrypted
 		);
 	}, [
-		activeSession.isFeedback,
 		encrypted,
 		getTypedMarkdownMessage,
 		isE2eeEnabled,

@@ -325,9 +325,6 @@ export const SessionListItemComponent = ({
 		);
 	}
 
-	const feedbackPath = `${listPath}/${activeSession.item.feedbackGroupId}/${activeSession.item.id
-		}${getSessionListTab()}`;
-
 	const hasConsultantData = !!activeSession.consultant;
 	let sessionTopic = '';
 
@@ -350,8 +347,7 @@ export const SessionListItemComponent = ({
 			onClick={handleOnClick}
 			className={clsx(
 				`sessionsListItem`,
-				isChatActive && `sessionsListItem--active`,
-				activeSession.isFeedback && 'sessionsListItem--yellowTheme'
+				isChatActive && `sessionsListItem--active`
 			)}
 			data-group-id={activeSession.item.groupId}
 			data-cy="session-list-item"
@@ -448,16 +444,6 @@ export const SessionListItemComponent = ({
 							listItemAskerRcId={activeSession.item.askerRcId}
 						/>
 					)}
-					{!isAsker &&
-						type !== SESSION_LIST_TYPES.ENQUIRY &&
-						!activeSession.isLive &&
-						!activeSession.isFeedback && (
-							<Tag
-								color="yellow"
-								text={translate('chatFlyout.feedback')}
-								link={feedbackPath}
-							/>
-						)}
 					{activeSession.isLive &&
 						activeSession.item.status !== STATUS_FINISHED &&
 						type !== SESSION_LIST_TYPES.ENQUIRY && (

@@ -162,12 +162,6 @@ declare namespace UserService {
 			 */
 			groupId?: string;
 			/**
-			 * Rocket.Chat feedback room ID
-			 * example:
-			 * 8ertjlasdKJA
-			 */
-			feedbackGroupId?: string;
-			/**
 			 * keycloak id of assigned consultant
 			 * example:
 			 * 926b9777-4eef-443d-925a-4aa534797bd7
@@ -419,12 +413,6 @@ declare namespace UserService {
 			 * xGklslk2JJKK
 			 */
 			groupId?: string;
-			/**
-			 * Rocket.Chat feedback room ID
-			 * example:
-			 * 8ertjlasdKJA
-			 */
-			feedbackGroupId?: string;
 			/**
 			 * asker Rocket.Chat ID
 			 * example:

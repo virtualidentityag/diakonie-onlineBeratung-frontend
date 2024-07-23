@@ -17,7 +17,6 @@ import {
 } from '../../globalState/interfaces';
 import { isUserModerator, SESSION_LIST_TYPES } from '../session/sessionHelpers';
 import { MessageMetaData } from './MessageMetaData';
-import { CopyMessage } from './CopyMessage';
 import { MessageDisplayName } from './MessageDisplayName';
 import { markdownToDraft } from 'markdown-draft-js';
 import { stateToHTML } from 'draft-js-export-html';
@@ -484,12 +483,6 @@ export const MessageItemComponent = ({
 										hasRenderedMessage={hasRenderedMessage}
 									/>
 								))}
-							{activeSession.isFeedback && (
-								<CopyMessage
-									right={isMyMessage}
-									message={renderedMessage}
-								/>
-							)}
 						</div>
 					</>
 				);
