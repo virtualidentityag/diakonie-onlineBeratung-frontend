@@ -71,7 +71,6 @@ export interface SessionItemInterface {
 	askerRcId: string;
 	attachment: UserService.Schemas.SessionAttachmentDTO;
 	consultingType: number;
-	feedbackGroupId?: string;
 	groupId: string;
 	id: number;
 	e2eLastMessage: {

@@ -32,7 +32,6 @@ export type ChatTypes =
 export const SESSION_TYPE_ENQUIRY = 'enquiry';
 export const SESSION_TYPE_LIVECHAT = 'livechat';
 export const SESSION_TYPE_ARCHIVED = 'archived';
-export const SESSION_TYPE_FEEDBACK = 'feedback';
 export const SESSION_TYPE_GROUP = 'group';
 export const SESSION_TYPE_SESSION = 'session';
 export const SESSION_TYPE_TEAMSESSION = 'teamsession';
@@ -42,7 +41,6 @@ export type SESSION_TYPES =
 	| typeof SESSION_TYPE_LIVECHAT
 	| typeof SESSION_TYPE_ENQUIRY
 	| typeof SESSION_TYPE_ARCHIVED
-	| typeof SESSION_TYPE_FEEDBACK
 	| typeof SESSION_TYPE_GROUP
 	| typeof SESSION_TYPE_SESSION
 	| typeof SESSION_TYPE_TEAMSESSION
@@ -50,7 +48,6 @@ export type SESSION_TYPES =
 
 export const getSessionType = (
 	session: ListItemInterface,
-	rid: string,
 	uid: string
 ): SESSION_TYPES => {
 	const chatItem = getChatItemForSession(session);
@@ -65,9 +62,7 @@ export const getSessionType = (
 			return SESSION_TYPE_ARCHIVED;
 	}
 
-	if (!isGroupChat(chatItem) && chatItem?.feedbackGroupId === rid) {
-		return SESSION_TYPE_FEEDBACK;
-	} else if (isGroupChat(chatItem)) {
+	if (isGroupChat(chatItem)) {
 		return SESSION_TYPE_GROUP;
 	}
 
@@ -86,7 +81,7 @@ export const getChatTypeForListItem = (
 export const isSessionChat = (
 	chatItem: SessionItemInterface | GroupChatItemInterface
 ): chatItem is SessionItemInterface => {
-	return chatItem && 'feedbackGroupId' in chatItem;
+	return chatItem && 'askerRcId' in chatItem;
 };
 
 export const isLiveChat = (
@@ -102,7 +97,7 @@ export const isGroupChat = (
 	chatItem: SessionItemInterface | GroupChatItemInterface
 ): chatItem is GroupChatItemInterface => {
 	return (
-		(chatItem as GroupChatItemInterface) && !('feedbackGroupId' in chatItem)
+		(chatItem as GroupChatItemInterface) && 'moderators' in chatItem
 	);
 };
 
@@ -181,7 +176,7 @@ const findLastVideoCallIndex = (messagesData) =>
 			message?.alias?.messageType === 'VIDEOCALL' &&
 			(!message?.alias?.videoCallMessageDTO ||
 				message?.alias?.videoCallMessageDTO?.eventType !==
-					'IGNORED_CALL')
+				'IGNORED_CALL')
 	);
 
 export const prepareMessages = (messagesData): MessageItem[] => {

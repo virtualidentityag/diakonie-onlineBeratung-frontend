@@ -173,26 +173,6 @@ declare namespace MessageService {
 	}
 }
 declare namespace Paths {
-	namespace CreateFeedbackMessage {
-		export interface HeaderParameters {
-			rcToken: Parameters.RcToken;
-			rcUserId: Parameters.RcUserId;
-			rcFeedbackGroupId: Parameters.RcFeedbackGroupId;
-		}
-		namespace Parameters {
-			export type RcFeedbackGroupId = string;
-			export type RcToken = string;
-			export type RcUserId = string;
-		}
-		export type RequestBody = MessageService.Schemas.MessageDTO;
-		namespace Responses {
-			export interface $201 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
-		}
-	}
 	namespace CreateMessage {
 		export interface HeaderParameters {
 			rcToken: Parameters.RcToken;

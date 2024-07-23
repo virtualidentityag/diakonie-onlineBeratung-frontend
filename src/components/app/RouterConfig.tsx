@@ -5,7 +5,6 @@ import {
 	SESSION_LIST_TYPES,
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
-	SESSION_TYPE_FEEDBACK,
 	SESSION_TYPE_GROUP,
 	SESSION_TYPE_LIVECHAT,
 	SESSION_TYPE_SESSION,
@@ -283,7 +282,6 @@ export const RouterConfigConsultant = (settings: AppConfigInterface): any => {
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_FEEDBACK,
 					SESSION_TYPE_TEAMSESSION
 				],
 				type: SESSION_LIST_TYPES.MY_SESSION,
@@ -453,7 +451,6 @@ export const RouterConfigTeamConsultant = (
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_FEEDBACK,
 					SESSION_TYPE_TEAMSESSION
 				],
 				type: SESSION_LIST_TYPES.MY_SESSION,
@@ -466,7 +463,6 @@ export const RouterConfigTeamConsultant = (
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_FEEDBACK,
 					SESSION_TYPE_TEAMSESSION
 				],
 				type: SESSION_LIST_TYPES.TEAMSESSION,
@@ -572,24 +568,6 @@ export const RouterConfigTeamConsultant = (
 		appointmentRoutes,
 		toolsRoutes
 	};
-};
-
-export const RouterConfigPeerConsultant = (
-	settings: AppConfigInterface
-): any => {
-	return RouterConfigConsultant(settings);
-};
-
-export const RouterConfigMainConsultant = (
-	settings: AppConfigInterface
-): any => {
-	const config = RouterConfigTeamConsultant(settings);
-
-	config.navigation[3].titleKeys = {
-		large: 'navigation.consultant.peersessions.large',
-		small: 'navigation.consultant.peersessions.small'
-	};
-	return config;
 };
 
 export const RouterConfigAnonymousAsker = (): any => {

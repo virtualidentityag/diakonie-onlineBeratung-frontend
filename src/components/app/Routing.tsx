@@ -5,8 +5,6 @@ import {
 	RouterConfigUser,
 	RouterConfigConsultant,
 	RouterConfigTeamConsultant,
-	RouterConfigMainConsultant,
-	RouterConfigPeerConsultant,
 	RouterConfigAnonymousAsker
 } from './RouterConfig';
 import { AbsenceHandler } from './AbsenceHandler';
@@ -41,12 +39,6 @@ export const Routing = (props: RoutingProps) => {
 	const hasAssignedConsultant = useAskerHasAssignedConsultant();
 
 	const routerConfig = useMemo(() => {
-		if (hasUserAuthority(AUTHORITIES.VIEW_ALL_PEER_SESSIONS, userData)) {
-			return RouterConfigMainConsultant(settings);
-		}
-		if (hasUserAuthority(AUTHORITIES.USE_FEEDBACK, userData)) {
-			return RouterConfigPeerConsultant(settings);
-		}
 		if (
 			hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
 			userData.inTeamAgency

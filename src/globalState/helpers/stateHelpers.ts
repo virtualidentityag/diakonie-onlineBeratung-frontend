@@ -49,11 +49,6 @@ export const buildExtendedSession = (
 
 	if (groupChat) {
 		rid = groupChat.groupId;
-	} else if (
-		sessionGroupId &&
-		sessionChat?.feedbackGroupId === sessionGroupId
-	) {
-		rid = sessionChat.feedbackGroupId;
 	}
 	return {
 		...sessionProps,
@@ -86,8 +81,6 @@ export const getExtendedSession = (
 		const chatItem = getChatItemForSession(sessionItem);
 		return (
 			(chatItem.groupId && chatItem.groupId === sessionGroupId) ||
-			(isSessionChat(chatItem) &&
-				chatItem?.feedbackGroupId === sessionGroupId) ||
 			chatItem?.id?.toString() === sessionGroupId
 		);
 	});
@@ -152,11 +145,8 @@ export const AUTHORITIES = {
 	ASSIGN_CONSULTANT_TO_SESSION: 'AUTHORIZATION_ASSIGN_CONSULTANT_TO_SESSION',
 	CONSULTANT_DEFAULT: 'AUTHORIZATION_CONSULTANT_DEFAULT',
 	CREATE_NEW_CHAT: 'AUTHORIZATION_CREATE_NEW_CHAT',
-	USE_FEEDBACK: 'AUTHORIZATION_USE_FEEDBACK',
 	ASKER_DEFAULT: 'AUTHORIZATION_USER_DEFAULT',
 	VIEW_AGENCY_CONSULTANTS: 'AUTHORIZATION_VIEW_AGENCY_CONSULTANTS',
-	VIEW_ALL_FEEDBACK_SESSIONS: 'AUTHORIZATION_VIEW_ALL_FEEDBACK_SESSIONS',
-	VIEW_ALL_PEER_SESSIONS: 'AUTHORIZATION_VIEW_ALL_PEER_SESSIONS'
 };
 
 export const isAnonymousSession = (

@@ -1080,16 +1080,7 @@ declare namespace Paths {
 			export interface $500 { }
 		}
 	}
-	namespace SendNewFeedbackMessageNotification {
-		export type RequestBody = UserService.Schemas.NewMessageNotificationDTO;
-		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $409 { }
-			export interface $500 { }
-		}
-	}
+
 	namespace SendNewMessageNotification {
 		export type RequestBody = UserService.Schemas.NewMessageNotificationDTO;
 		namespace Responses {

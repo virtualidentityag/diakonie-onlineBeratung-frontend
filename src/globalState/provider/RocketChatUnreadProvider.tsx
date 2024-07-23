@@ -15,7 +15,6 @@ import {
 	isGroupChat,
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
-	SESSION_TYPE_FEEDBACK,
 	SESSION_TYPE_GROUP,
 	SESSION_TYPE_LIVECHAT,
 	SESSION_TYPE_SESSION,
@@ -28,7 +27,6 @@ import { useBrowserNotification } from '../../hooks/useBrowserNotification';
 type UnreadStatusContextProps = {
 	sessions: string[];
 	teamsessions: string[];
-	feedback: string[];
 	enquiry: string[];
 	livechat: string[];
 	group: string[];
@@ -40,7 +38,6 @@ const initialData = {
 	livechat: [],
 	enquiry: [],
 	archiv: [],
-	feedback: [],
 	sessions: [],
 	teamsessions: [],
 	group: [],
@@ -97,9 +94,7 @@ export function RocketChatUnreadProvider({
 						const chatItem = getChatItemForSession(s);
 
 						return (
-							chatItem.groupId === subscription.rid ||
-							(!isGroupChat(chatItem) &&
-								chatItem?.feedbackGroupId === subscription.rid)
+							chatItem.groupId === subscription.rid
 						);
 					});
 
@@ -110,7 +105,6 @@ export function RocketChatUnreadProvider({
 
 					const sessionType = getSessionType(
 						session,
-						subscription.rid,
 						userData.userId
 					);
 
@@ -130,9 +124,6 @@ export function RocketChatUnreadProvider({
 							break;
 						case SESSION_TYPE_ARCHIVED:
 							newUnreadStatus.archiv.push(subscription.rid);
-							break;
-						case SESSION_TYPE_FEEDBACK:
-							newUnreadStatus.feedback.push(subscription.rid);
 							break;
 						case SESSION_TYPE_GROUP:
 							newUnreadStatus.group.push(subscription.rid);

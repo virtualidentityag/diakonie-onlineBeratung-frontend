@@ -47,7 +47,6 @@ import {
 import { logout } from '../logout/logout';
 import { mobileListView } from '../app/navigationHandler';
 import { isGroupChatOwner } from '../groupChat/groupChatHelpers';
-import { ReactComponent as FeedbackIcon } from '../../resources/img/icons/pen-paper.svg';
 import { ReactComponent as LeaveChatIcon } from '../../resources/img/icons/out.svg';
 import { ReactComponent as GroupChatInfoIcon } from '../../resources/img/icons/i.svg';
 import { ReactComponent as StopGroupChatIcon } from '../../resources/img/icons/x.svg';
@@ -305,7 +304,7 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 	//TODO:
 	//enquiries: only RS profil
-	//sessions/peer/team: feedback (if u25), rs, docu
+	//sessions/peer/team: rs, docu
 	//imprint/dataschutz all users all devices
 
 	//dynamicly menut items in flyout:
