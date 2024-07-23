@@ -1264,10 +1264,6 @@
 				"headline": "Nachricht löschen"
 			}
 		},
-		"forward": {
-			"label": "Weitergeleitete Nachricht von {{username}}, {{date}} um {{time}}",
-			"title": "Textnachricht an\nFeedback weiterleiten"
-		},
 		"groupChat": "Gruppenchat",
 		"isMyMessage": {
 			"name": "Ich"

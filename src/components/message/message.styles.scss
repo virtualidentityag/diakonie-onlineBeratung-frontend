@@ -19,6 +19,7 @@ $message-attachment-color: $secondary !default;
 			opacity: 0;
 			transform: translate(0, 0) scale(0.98);
 		}
+
 		100% {
 			opacity: 1;
 			transform: translate(0, 0) scale(1);
@@ -50,6 +51,7 @@ $message-attachment-color: $secondary !default;
 		line-height: 13px;
 		text-align: center;
 	}
+
 	&__username {
 		text-align: left;
 		display: flex;
@@ -69,21 +71,6 @@ $message-attachment-color: $secondary !default;
 
 		&--consultant {
 			color: $message-name-consultant;
-		}
-
-		&--forwarded {
-			font-size: $font-size-secondary;
-			line-height: $line-height-secondary;
-			color: $message-name-forwarded;
-
-			svg {
-				display: inline-block;
-				margin-right: 8px;
-				padding-bottom: 4px;
-				path {
-					fill: $text-low-emphasis;
-				}
-			}
 		}
 
 		.flyoutMenu {
@@ -131,8 +118,7 @@ $message-attachment-color: $secondary !default;
 		&::after {
 			content: '';
 			display: inline-block;
-			border-top: 1px solid
-				var(--skin-color-secondary-contrast-safe, $text-divider-color);
+			border-top: 1px solid var(--skin-color-secondary-contrast-safe, $text-divider-color);
 			width: $grid-base-three;
 			vertical-align: middle;
 			margin: 0 $grid-base;
@@ -148,7 +134,7 @@ $message-attachment-color: $secondary !default;
 			}
 		}
 
-		& + .messageItem__divider {
+		&+.messageItem__divider {
 			margin-top: 12px;
 		}
 	}
@@ -203,11 +189,11 @@ $message-attachment-color: $secondary !default;
 			display: flex;
 			flex-direction: column;
 
-			& > * {
+			&>* {
 				margin-top: $grid-base;
 			}
 
-			& > *:first-child {
+			&>*:first-child {
 				margin-top: 0;
 			}
 		}
@@ -316,10 +302,6 @@ $message-attachment-color: $secondary !default;
 				color: var(--text-color-contrast-switch, $white);
 			}
 		}
-
-		&--forwarded {
-			background-color: $yellow-4;
-		}
 	}
 
 	&__action {
@@ -334,12 +316,6 @@ $message-attachment-color: $secondary !default;
 
 			path {
 				fill: var(--skin-color-secondary, $secondary);
-			}
-
-			&.forward {
-				&--active {
-					animation: successReverse 2.5s ease forwards;
-				}
 			}
 
 			&.copy {
@@ -520,11 +496,13 @@ $message-attachment-color: $secondary !default;
 }
 
 @keyframes success {
+
 	100%,
 	0% {
 		transform: translate(-50%, 0) scale(0);
 		opacity: 0;
 	}
+
 	33%,
 	66% {
 		transform: translate(-50%, 0) scale(1);
@@ -532,25 +510,14 @@ $message-attachment-color: $secondary !default;
 	}
 }
 
-@keyframes successReverse {
-	100%,
-	0% {
-		transform: scale(1);
-		opacity: 1;
-	}
-	15%,
-	80% {
-		transform: scale(0) rotate(45deg);
-		opacity: 0;
-	}
-}
-
 @keyframes successCopyReverse {
+
 	100%,
 	0% {
 		transform: scale(1);
 		opacity: 1;
 	}
+
 	15%,
 	80% {
 		transform: scale(0);

@@ -1249,10 +1249,6 @@
 				"headline": "Delete message"
 			}
 		},
-		"forward": {
-			"label": "Forwarded message from {{username}}, {{date}} at {{time}}",
-			"title": "Forward text message to\nFeedback"
-		},
 		"groupChat": "Group chat",
 		"isMyMessage": {
 			"name": "Me"

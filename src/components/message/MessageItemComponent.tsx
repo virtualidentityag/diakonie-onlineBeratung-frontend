@@ -16,7 +16,6 @@ import {
 	STATUS_ARCHIVED
 } from '../../globalState/interfaces';
 import { isUserModerator, SESSION_LIST_TYPES } from '../session/sessionHelpers';
-import { ForwardMessage } from './ForwardMessage';
 import { MessageMetaData } from './MessageMetaData';
 import { CopyMessage } from './CopyMessage';
 import { MessageDisplayName } from './MessageDisplayName';
@@ -70,14 +69,6 @@ import { BanUser, BanUserOverlay } from '../banUser/BanUser';
 import { getValueFromCookie } from '../sessionCookie/accessSessionCookie';
 import { VideoChatDetails, VideoChatDetailsAlias } from './VideoChatDetails';
 
-export interface ForwardMessageDTO {
-	message: string;
-	rcUserId: string;
-	timestamp: any;
-	username: string;
-	displayName: string;
-}
-
 export interface VideoCallMessageDTO {
 	eventType: 'IGNORED_CALL';
 	initiatorRcUserId: string;
@@ -99,7 +90,6 @@ export interface MessageItem {
 	groupId?: string;
 	isNotRead: boolean;
 	alias?: {
-		forwardMessageDTO?: ForwardMessageDTO;
 		videoCallMessageDTO?: VideoCallMessageDTO;
 		content?: string;
 		messageType: ALIAS_MESSAGE_TYPES;
@@ -213,9 +203,9 @@ export const MessageItemComponent = ({
 		setRenderedMessage(
 			contentStateMessage.hasText()
 				? sanitizeHtml(
-						urlifyLinksInText(stateToHTML(contentStateMessage)),
-						sanitizeHtmlDefaultOptions
-					)
+					urlifyLinksInText(stateToHTML(contentStateMessage)),
+					sanitizeHtmlDefaultOptions
+				)
 				: ''
 		);
 	}, [decryptedMessage]);
@@ -241,9 +231,6 @@ export const MessageItemComponent = ({
 	const getUsernameType = () => {
 		if (isMyMessage) {
 			return 'self';
-		}
-		if (alias?.forwardMessageDTO) {
-			return 'forwarded';
 		}
 		if (displayName === 'system') {
 			return 'system';
@@ -456,7 +443,6 @@ export const MessageItemComponent = ({
 					<>
 						<div className="flex flex--jc-sb">
 							<MessageDisplayName
-								alias={alias?.forwardMessageDTO}
 								isMyMessage={isMyMessage}
 								isUser={isUserMessage()}
 								type={getUsernameType()}
@@ -479,11 +465,7 @@ export const MessageItemComponent = ({
 
 						<div
 							className={
-								isMyMessage && !alias
-									? `messageItem__message messageItem__message--myMessage`
-									: alias
-										? `messageItem__message messageItem__message--forwarded`
-										: `messageItem__message`
+								isMyMessage ? `messageItem__message messageItem__message--myMessage` : `messageItem__message`
 							}
 						>
 							<span
@@ -508,28 +490,6 @@ export const MessageItemComponent = ({
 									message={renderedMessage}
 								/>
 							)}
-							{hasRenderedMessage &&
-								hasUserAuthority(
-									AUTHORITIES.USE_FEEDBACK,
-									userData
-								) &&
-								type !== SESSION_LIST_TYPES.ENQUIRY &&
-								activeSession.isSession &&
-								activeSession.item.feedbackGroupId &&
-								!activeSession.isFeedback &&
-								activeSession.item.status !==
-									STATUS_ARCHIVED && (
-									<ForwardMessage
-										right={isMyMessage}
-										message={decryptedMessage}
-										messageTime={messageTime}
-										askerRcId={askerRcId}
-										groupId={
-											activeSession.item.feedbackGroupId
-										}
-										displayName={displayName}
-									/>
-								)}
 						</div>
 					</>
 				);
@@ -550,12 +510,10 @@ export const MessageItemComponent = ({
 
 	return (
 		<div
-			className={`messageItem ${
-				isMyMessage ? 'messageItem--right' : ''
-			} ${isFullWidthMessage ? 'messageItem--full' : ''} ${
-				alias?.messageType &&
+			className={`messageItem ${isMyMessage ? 'messageItem--right' : ''
+				} ${isFullWidthMessage ? 'messageItem--full' : ''} ${alias?.messageType &&
 				`${alias?.messageType.toLowerCase()} systemMessage`
-			}`}
+				}`}
 		>
 			{getMessageDate()}
 			<div
@@ -563,10 +521,9 @@ export const MessageItemComponent = ({
 					messageItem__messageWrap
 					${isMyMessage ? 'messageItem__messageWrap--right' : ''}
 					${isFurtherStepsMessage ? 'messageItem__messageWrap--furtherSteps' : ''}
-					${
-						isE2EEActivatedMessage
-							? 'messageItem__messageWrap--e2eeActivatedMessage'
-							: ''
+					${isE2EEActivatedMessage
+						? 'messageItem__messageWrap--e2eeActivatedMessage'
+						: ''
 					}
 				`}
 			>
