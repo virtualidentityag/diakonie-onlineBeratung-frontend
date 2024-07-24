@@ -48,7 +48,6 @@ export const generateConsultantSession = ({
 			messageDate: 1606900238,
 			messagesRead: messagesRead === undefined ? true : messagesRead,
 			isTeamSession: true,
-			isPeerChat: false,
 			attachment: null,
 			registrationType: 'REGISTERED',
 			e2eLastMessage: {
@@ -114,7 +113,6 @@ export const generateAskerSession = ({
 			messageDate: null,
 			messagesRead: messagesRead === undefined ? true : messagesRead,
 			isTeamSession: isTeamSession === undefined ? true : isTeamSession,
-			isPeerChat: false,
 			attachment: null,
 			registrationType: 'REGISTERED',
 			e2eLastMessage: {

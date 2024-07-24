@@ -67,34 +67,22 @@ export const SessionsListWrapper = ({
 					{type === SESSION_LIST_TYPES.MY_SESSION
 						? translate('sessionList.view.headline')
 						: null}
-					{type === SESSION_LIST_TYPES.TEAMSESSION &&
-					!hasUserAuthority(
-						AUTHORITIES.VIEW_ALL_PEER_SESSIONS,
-						userData
-					)
+					{type === SESSION_LIST_TYPES.TEAMSESSION
 						? translate('navigation.consultant.teamsessions.large')
-						: null}
-					{type === SESSION_LIST_TYPES.TEAMSESSION &&
-					hasUserAuthority(
-						AUTHORITIES.VIEW_ALL_PEER_SESSIONS,
-						userData
-					)
-						? translate('sessionList.peersessions.headline')
 						: null}
 					{type === SESSION_LIST_TYPES.ENQUIRY
 						? translate('sessionList.preview.headline')
 						: null}
 				</h2>
 				{type === SESSION_LIST_TYPES.MY_SESSION &&
-				hasUserAuthority(AUTHORITIES.CREATE_NEW_CHAT, userData) ? (
+					hasUserAuthority(AUTHORITIES.CREATE_NEW_CHAT, userData) ? (
 					<Link
 						className="sessionsList__createChatLink"
 						to={{
-							pathname: `/sessions/consultant/sessionView/createGroupChat${
-								sessionListTab
+							pathname: `/sessions/consultant/sessionView/createGroupChat${sessionListTab
 									? `?sessionListTab=${sessionListTab}`
 									: ''
-							}`
+								}`
 						}}
 					>
 						<span

@@ -25,7 +25,6 @@
 	"slug": "suchtberatung",
 	"languageFormal": true,
 	"lockedAgencies": false,
-	"excludeNonMainConsultantsFromTeamSessions": false,
 	"whiteSpot": {
 		"whiteSpotAgencyAssigned": true,
 		"whiteSpotAgencyId": 100

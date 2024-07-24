@@ -26,7 +26,6 @@
 	"slug": "rw-auswanderung",
 	"languageFormal": true,
 	"lockedAgencies": false,
-	"excludeNonMainConsultantsFromTeamSessions": false,
 	"whiteSpot": {
 		"whiteSpotAgencyAssigned": true,
 		"whiteSpotAgencyId": 1731

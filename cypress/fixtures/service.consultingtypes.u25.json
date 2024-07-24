@@ -28,7 +28,6 @@
 	"slug": "u25",
 	"languageFormal": false,
 	"lockedAgencies": false,
-	"excludeNonMainConsultantsFromTeamSessions": false,
 	"whiteSpot": {
 		"whiteSpotAgencyAssigned": false
 	},

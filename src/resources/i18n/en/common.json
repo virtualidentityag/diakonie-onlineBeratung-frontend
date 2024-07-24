@@ -1279,10 +1279,6 @@
 		},
 		"consultant": {
 			"enquiries": "Initial inquiries",
-			"peersessions": {
-				"large": "Peer consultations",
-				"small": "Peer Con."
-			},
 			"sessions": {
 				"large": "My consultations",
 				"small": "Messages"
@@ -2076,7 +2072,6 @@
 			"archived": "There are no consultations in the archive yet",
 			"known": "There are no requests at the moment",
 			"mySessions": "You currently have no active consultations",
-			"peersessions": "You currently have no active peer counselling",
 			"teamSessions": "Your team has no active consultations"
 		},
 		"filter": {
@@ -2086,9 +2081,6 @@
 				"feedbackPeer": "Feedback available"
 			},
 			"placeholder": "Filter"
-		},
-		"peersessions": {
-			"headline": "Peer consultations"
 		},
 		"preview": {
 			"anonymous": {

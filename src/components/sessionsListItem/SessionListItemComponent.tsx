@@ -360,26 +360,13 @@ export const SessionListItemComponent = ({
 				role="tab"
 			>
 				<div className="sessionsListItem__row">
-					{type === SESSION_LIST_TYPES.TEAMSESSION &&
-						hasUserAuthority(
-							AUTHORITIES.VIEW_ALL_PEER_SESSIONS,
-							userData
-						) &&
-						activeSession.consultant ? (
-						<div className="sessionsListItem__consultingType">
-							{translate('sessionList.user.peer')}:{' '}
-							{activeSession.consultant.firstName}{' '}
-							{activeSession.consultant.lastName}
-						</div>
-					) : (
-						<div className="sessionsListItem__consultingType">
-							{!isAsker &&
-								!activeSession.isLive &&
-								!autoSelectPostcode
-								? activeSession.item.postcode
-								: null}
-						</div>
-					)}
+					<div className="sessionsListItem__consultingType">
+						{!isAsker &&
+							!activeSession.isLive &&
+							!autoSelectPostcode
+							? activeSession.item.postcode
+							: null}
+					</div>
 					{topic?.name && (
 						<div
 							className="sessionsListItem__topic"

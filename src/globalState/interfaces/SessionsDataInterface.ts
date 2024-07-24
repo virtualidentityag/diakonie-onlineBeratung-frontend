@@ -91,7 +91,6 @@ export interface SessionItemInterface {
 	| statusActive
 	| statusFinished
 	| statusArchived;
-	isPeerChat: boolean;
 	isTeamSession: boolean;
 	videoCallMessageDTO: VideoCallMessageDTO;
 	language?: string;

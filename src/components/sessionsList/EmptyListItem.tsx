@@ -31,13 +31,7 @@ export const EmptyListItem = ({ type, sessionListTab }: EmptyListItemProps) => {
 
 		switch (type) {
 			case SESSION_LIST_TYPES.TEAMSESSION:
-				const emptyKey = hasUserAuthority(
-					AUTHORITIES.VIEW_ALL_PEER_SESSIONS,
-					userData
-				)
-					? 'peerSessions'
-					: 'teamSessions';
-				return t(`sessionList.empty.${emptyKey}`);
+				return t(`sessionList.empty.teamSessions`);
 			case SESSION_LIST_TYPES.ENQUIRY:
 				return t('sessionList.empty.known');
 			case SESSION_LIST_TYPES.MY_SESSION:

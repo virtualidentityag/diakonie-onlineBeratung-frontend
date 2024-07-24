@@ -1301,10 +1301,6 @@
 		},
 		"consultant": {
 			"enquiries": "Erstanfragen",
-			"peersessions": {
-				"large": "Peer Beratungen",
-				"small": "Peer Ber."
-			},
 			"sessions": {
 				"large": "Meine Beratungen",
 				"small": "Nachrichten"
@@ -2195,9 +2191,7 @@
 			"archived": "Es sind noch keine Beratungen archiviert",
 			"known": "Aktuell liegen keine Erstanfragen vor",
 			"mySessions": "Sie haben zurzeit keine aktiven Beratungen",
-			"peerSessions": "Sie haben zurzeit keine aktiven Peer-Beratungen",
 			"teamSessions": "Ihr Team hat keine aktiven Beratungen",
-			"peersessions": "Sie haben zur Zeit keine aktiven Peer-Beratungen"
 		},
 		"filter": {
 			"option": {
@@ -2206,9 +2200,6 @@
 				"feedbackPeer": "Feedback vorhanden"
 			},
 			"placeholder": "Filter"
-		},
-		"peersessions": {
-			"headline": "Peer-Beratungen"
 		},
 		"preview": {
 			"anonymous": {

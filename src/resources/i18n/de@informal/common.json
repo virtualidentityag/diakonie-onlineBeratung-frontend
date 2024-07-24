@@ -799,7 +799,6 @@
 	"sessionList": {
 		"empty": {
 			"mySessions": "Du hast zurzeit keine aktiven Beratungen",
-			"peerSessions": "Du hast zurzeit keine aktiven Peer-Beratungen",
 			"teamSessions": "Dein Team hat keine aktiven Beratungen"
 		},
 		"unavailable": {

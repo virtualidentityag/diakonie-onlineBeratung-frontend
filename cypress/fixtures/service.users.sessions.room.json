@@ -7,7 +7,6 @@
 		"postcode": "12345",
 		"language": "de",
 		"groupId": "someGroupId",
-		"isPeerChat": false,
 		"askerRcId": "askerRcId",
 		"e2eLastMessage": null,
 		"lastMessage": null,
