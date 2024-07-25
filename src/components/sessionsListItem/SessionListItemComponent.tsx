@@ -92,7 +92,7 @@ export const SessionListItemComponent = ({
 	const { key, keyID, encrypted, ready } = useE2EE(
 		activeSession.item.groupId,
 		activeSession.item.lastMessageType ===
-		ALIAS_MESSAGE_TYPES.MASTER_KEY_LOST
+			ALIAS_MESSAGE_TYPES.MASTER_KEY_LOST
 	);
 	const [plainTextLastMessage, setPlainTextLastMessage] = useState(null);
 
@@ -169,7 +169,8 @@ export const SessionListItemComponent = ({
 	const handleOnClick = () => {
 		if (activeSession.item.groupId && activeSession.item.id !== undefined) {
 			history.push(
-				`${listPath}/${activeSession.item.groupId}/${activeSession.item.id
+				`${listPath}/${activeSession.item.groupId}/${
+					activeSession.item.id
 				}${getSessionListTab()}`
 			);
 		} else if (
@@ -292,7 +293,7 @@ export const SessionListItemComponent = ({
 							className={clsx(
 								'sessionsListItem__username',
 								activeSession.item.messagesRead &&
-								'sessionsListItem__username--readLabel'
+									'sessionsListItem__username--readLabel'
 							)}
 						>
 							{activeSession.item.topic}
@@ -362,8 +363,8 @@ export const SessionListItemComponent = ({
 				<div className="sessionsListItem__row">
 					<div className="sessionsListItem__consultingType">
 						{!isAsker &&
-							!activeSession.isLive &&
-							!autoSelectPostcode
+						!activeSession.isLive &&
+						!autoSelectPostcode
 							? activeSession.item.postcode
 							: null}
 					</div>
@@ -394,7 +395,7 @@ export const SessionListItemComponent = ({
 						className={clsx(
 							'sessionsListItem__username',
 							activeSession.item.messagesRead &&
-							'sessionsListItem__username--readLabel'
+								'sessionsListItem__username--readLabel'
 						)}
 					>
 						{sessionTopic}

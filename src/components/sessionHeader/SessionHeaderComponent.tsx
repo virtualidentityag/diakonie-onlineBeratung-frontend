@@ -61,8 +61,8 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 
 	const preparedUserSessionData =
 		hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
-			userSessionData &&
-			!activeSession.isLive
+		userSessionData &&
+		!activeSession.isLive
 			? convertUserDataObjectToArray(userSessionData)
 			: null;
 	const translateBase = getUserDataTranslateBase(
@@ -84,8 +84,9 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 	}, [isSubscriberFlyoutOpen]);
 
 	const sessionView = getViewPathForType(type);
-	const userProfileLink = `/sessions/consultant/${sessionView}/${activeSession.item.groupId
-		}/${activeSession.item.id}/userProfile${getSessionListTab()}`;
+	const userProfileLink = `/sessions/consultant/${sessionView}/${
+		activeSession.item.groupId
+	}/${activeSession.item.id}/userProfile${getSessionListTab()}`;
 
 	const handleBackButton = () => {
 		mobileListView();
@@ -150,12 +151,12 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 							AUTHORITIES.ANONYMOUS_DEFAULT,
 							userData
 						)) && (
-							<h3>
-								{contact?.displayName ||
-									contact?.username ||
-									translate('sessionList.user.consultantUnknown')}
-							</h3>
-						)}
+						<h3>
+							{contact?.displayName ||
+								contact?.username ||
+								translate('sessionList.user.consultantUnknown')}
+						</h3>
+					)}
 					{hasUserAuthority(
 						AUTHORITIES.CONSULTANT_DEFAULT,
 						userData
@@ -190,18 +191,18 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 
 			{(hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
 				hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData)) && (
-					<div className="sessionInfo__metaInfo">
-						{!activeSession.agency ? (
-							<div className="sessionInfo__metaInfo__content">
-								{topic?.name || ''}
-							</div>
-						) : null}
-						{preparedUserSessionData
-							? preparedUserSessionData.map((item, index) =>
+				<div className="sessionInfo__metaInfo">
+					{!activeSession.agency ? (
+						<div className="sessionInfo__metaInfo__content">
+							{topic?.name || ''}
+						</div>
+					) : null}
+					{preparedUserSessionData
+						? preparedUserSessionData.map((item, index) =>
 								item.value &&
-									!(
-										item.type === 'age' && item.value === 'null'
-									) ? (
+								!(
+									item.type === 'age' && item.value === 'null'
+								) ? (
 									<div
 										className="sessionInfo__metaInfo__content"
 										key={index}
@@ -216,26 +217,26 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 									</div>
 								) : null
 							)
-							: null}
-						{activeSession.agency?.name && (
-							<div className="sessionInfo__metaInfo__content">
-								{' '}
-								{translate(
-									[
-										`agency.${activeSession.agency.id}.name`,
-										activeSession.agency.name
-									],
-									{ ns: 'agencies' }
-								)}{' '}
-							</div>
-						)}
-						{activeSession.agency && (
-							<div className="sessionInfo__metaInfo__content">
-								{translate('consultant.jobTitle')}
-							</div>
-						)}
-					</div>
-				)}
+						: null}
+					{activeSession.agency?.name && (
+						<div className="sessionInfo__metaInfo__content">
+							{' '}
+							{translate(
+								[
+									`agency.${activeSession.agency.id}.name`,
+									activeSession.agency.name
+								],
+								{ ns: 'agencies' }
+							)}{' '}
+						</div>
+					)}
+					{activeSession.agency && (
+						<div className="sessionInfo__metaInfo__content">
+							{translate('consultant.jobTitle')}
+						</div>
+					)}
+				</div>
+			)}
 		</div>
 	);
 };

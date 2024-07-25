@@ -99,9 +99,7 @@ export const config: AppConfigInterface = {
 		notifications: [
 			{
 				label: 'profile.notifications.follow.up.email.label',
-				types: [
-					'NEW_CHAT_MESSAGE_FROM_ADVICE_SEEKER'
-				]
+				types: ['NEW_CHAT_MESSAGE_FROM_ADVICE_SEEKER']
 			}
 		]
 	},

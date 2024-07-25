@@ -75,14 +75,15 @@ export const SessionsListWrapper = ({
 						: null}
 				</h2>
 				{type === SESSION_LIST_TYPES.MY_SESSION &&
-					hasUserAuthority(AUTHORITIES.CREATE_NEW_CHAT, userData) ? (
+				hasUserAuthority(AUTHORITIES.CREATE_NEW_CHAT, userData) ? (
 					<Link
 						className="sessionsList__createChatLink"
 						to={{
-							pathname: `/sessions/consultant/sessionView/createGroupChat${sessionListTab
+							pathname: `/sessions/consultant/sessionView/createGroupChat${
+								sessionListTab
 									? `?sessionListTab=${sessionListTab}`
 									: ''
-								}`
+							}`
 						}}
 					>
 						<span

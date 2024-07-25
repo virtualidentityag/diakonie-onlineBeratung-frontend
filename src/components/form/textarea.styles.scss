@@ -49,8 +49,8 @@
 			color: transparent;
 		}
 
-		&:focus+label,
-		&:not(:placeholder-shown)+label {
+		&:focus + label,
+		&:not(:placeholder-shown) + label {
 			font-size: 12px;
 			top: 2px;
 			transition:
@@ -60,7 +60,7 @@
 			padding-top: $grid-base;
 		}
 
-		&:placeholder-shown+label {
+		&:placeholder-shown + label {
 			top: 4px;
 		}
 	}

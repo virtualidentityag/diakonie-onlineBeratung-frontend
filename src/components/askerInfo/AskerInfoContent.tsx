@@ -34,11 +34,9 @@ export const AskerInfoContent = () => {
 		}
 
 		if (isEnquiryListView) {
-			return (
-				hasUserAuthority(
-					AUTHORITIES.ASSIGN_CONSULTANT_TO_ENQUIRY,
-					userData
-				)
+			return hasUserAuthority(
+				AUTHORITIES.ASSIGN_CONSULTANT_TO_ENQUIRY,
+				userData
 			);
 		}
 

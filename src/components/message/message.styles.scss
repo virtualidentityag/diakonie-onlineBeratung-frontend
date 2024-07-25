@@ -118,7 +118,8 @@ $message-attachment-color: $secondary !default;
 		&::after {
 			content: '';
 			display: inline-block;
-			border-top: 1px solid var(--skin-color-secondary-contrast-safe, $text-divider-color);
+			border-top: 1px solid
+				var(--skin-color-secondary-contrast-safe, $text-divider-color);
 			width: $grid-base-three;
 			vertical-align: middle;
 			margin: 0 $grid-base;
@@ -134,7 +135,7 @@ $message-attachment-color: $secondary !default;
 			}
 		}
 
-		&+.messageItem__divider {
+		& + .messageItem__divider {
 			margin-top: 12px;
 		}
 	}
@@ -189,11 +190,11 @@ $message-attachment-color: $secondary !default;
 			display: flex;
 			flex-direction: column;
 
-			&>* {
+			& > * {
 				margin-top: $grid-base;
 			}
 
-			&>*:first-child {
+			& > *:first-child {
 				margin-top: 0;
 			}
 		}
@@ -496,7 +497,6 @@ $message-attachment-color: $secondary !default;
 }
 
 @keyframes success {
-
 	100%,
 	0% {
 		transform: translate(-50%, 0) scale(0);
@@ -511,7 +511,6 @@ $message-attachment-color: $secondary !default;
 }
 
 @keyframes successCopyReverse {
-
 	100%,
 	0% {
 		transform: scale(1);

@@ -96,9 +96,7 @@ export const isLiveChat = (
 export const isGroupChat = (
 	chatItem: SessionItemInterface | GroupChatItemInterface
 ): chatItem is GroupChatItemInterface => {
-	return (
-		(chatItem as GroupChatItemInterface) && 'moderators' in chatItem
-	);
+	return (chatItem as GroupChatItemInterface) && 'moderators' in chatItem;
 };
 
 export const isTeamSession = (
@@ -176,7 +174,7 @@ const findLastVideoCallIndex = (messagesData) =>
 			message?.alias?.messageType === 'VIDEOCALL' &&
 			(!message?.alias?.videoCallMessageDTO ||
 				message?.alias?.videoCallMessageDTO?.eventType !==
-				'IGNORED_CALL')
+					'IGNORED_CALL')
 	);
 
 export const prepareMessages = (messagesData): MessageItem[] => {

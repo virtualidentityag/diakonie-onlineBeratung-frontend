@@ -232,9 +232,11 @@ $max-input-width: 320px;
 $message-background-primary: $primary;
 $message-background-secondary: black;
 $message-background-rate: 0%;
-$message-background: mix($message-background-secondary,
-		$primary,
-		$message-background-rate);
+$message-background: mix(
+	$message-background-secondary,
+	$primary,
+	$message-background-rate
+);
 $message-submit-interface-textarea-background-color: $dark-grey;
 $message-submit-interface-textarea-background-color-yellow: $yellow-3;
 $message-submit-interface-textarea-placeholder-color: $light-grey;

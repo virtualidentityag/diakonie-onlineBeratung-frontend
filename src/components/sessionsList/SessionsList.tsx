@@ -197,8 +197,8 @@ export const SessionsList = ({
 
 	useLiveChatWatcher(
 		!isLoading &&
-		type === SESSION_LIST_TYPES.ENQUIRY &&
-		sessionListTab === SESSION_LIST_TAB_ANONYMOUS,
+			type === SESSION_LIST_TYPES.ENQUIRY &&
+			sessionListTab === SESSION_LIST_TAB_ANONYMOUS,
 		getConsultantSessionList,
 		currentOffset
 	);
@@ -212,15 +212,15 @@ export const SessionsList = ({
 			);
 			const firstItemId = document.querySelector('.sessionsListItem')
 				? document
-					.querySelector('.sessionsListItem')
-					.getAttribute('data-group-id')
+						.querySelector('.sessionsListItem')
+						.getAttribute('data-group-id')
 				: null;
 			const lastItemId = wrapper.lastElementChild.querySelector(
 				'.sessionsListItem'
 			)
 				? wrapper.lastElementChild
-					.querySelector('.sessionsListItem')
-					.getAttribute('data-group-id')
+						.querySelector('.sessionsListItem')
+						.getAttribute('data-group-id')
 				: null;
 			if (
 				initialId.current !== firstItemId &&
@@ -367,7 +367,7 @@ export const SessionsList = ({
 								sessionTypes.indexOf(sessionType) < 0 ||
 								(sessionType === SESSION_TYPE_ARCHIVED &&
 									sessionListTab !==
-									SESSION_LIST_TAB_ARCHIVE) ||
+										SESSION_LIST_TAB_ARCHIVE) ||
 								(sessionType !== SESSION_TYPE_ARCHIVED &&
 									sessionListTab === SESSION_LIST_TAB_ARCHIVE)
 							) {
@@ -815,10 +815,11 @@ export const SessionsList = ({
 									'sessionsList__tabs--active':
 										!sessionListTab
 								})}
-								to={`/sessions/consultant/${type === SESSION_LIST_TYPES.TEAMSESSION
-									? 'teamSessionView'
-									: 'sessionView'
-									}`}
+								to={`/sessions/consultant/${
+									type === SESSION_LIST_TYPES.TEAMSESSION
+										? 'teamSessionView'
+										: 'sessionView'
+								}`}
 								onKeyDown={(e) => handleKeyDownTabs(e)}
 								ref={(el) => (ref_tab_first.current = el)}
 								tabIndex={0}
@@ -837,10 +838,11 @@ export const SessionsList = ({
 										sessionListTab ===
 										SESSION_LIST_TAB_ARCHIVE
 								})}
-								to={`/sessions/consultant/${type === SESSION_LIST_TYPES.TEAMSESSION
-									? 'teamSessionView'
-									: 'sessionView'
-									}?sessionListTab=${SESSION_LIST_TAB_ARCHIVE}`}
+								to={`/sessions/consultant/${
+									type === SESSION_LIST_TYPES.TEAMSESSION
+										? 'teamSessionView'
+										: 'sessionView'
+								}?sessionListTab=${SESSION_LIST_TAB_ARCHIVE}`}
 								onKeyDown={(e) => handleKeyDownTabs(e)}
 								ref={(el) => (ref_tab_second.current = el)}
 								tabIndex={-1}
@@ -870,17 +872,18 @@ export const SessionsList = ({
 				{hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
 					!isLoading &&
 					finalSessionsList.length <=
-					MAX_ITEMS_TO_SHOW_WELCOME_ILLUSTRATION && (
+						MAX_ITEMS_TO_SHOW_WELCOME_ILLUSTRATION && (
 						<WelcomeIllustration />
 					)}
 
 				<div
-					className={`sessionsList__itemsWrapper ${isCreateChatActive ||
+					className={`sessionsList__itemsWrapper ${
+						isCreateChatActive ||
 						isLoading ||
 						finalSessionsList.length > 0
-						? ''
-						: 'sessionsList__itemsWrapper--centered'
-						}`}
+							? ''
+							: 'sessionsList__itemsWrapper--centered'
+					}`}
 					data-cy="sessions-list-items-wrapper"
 					role="tablist"
 				>
@@ -915,9 +918,9 @@ export const SessionsList = ({
 													defaultLanguage
 												}
 												itemRef={(el) =>
-												(ref_list_array.current[
-													index
-												] = el)
+													(ref_list_array.current[
+														index
+													] = el)
 												}
 												handleKeyDownLisItemContent={(
 													e

@@ -466,8 +466,9 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 			<div
 				id="flyout"
-				className={`sessionMenu__content ${flyoutOpen && 'sessionMenu__content--open'
-					}`}
+				className={`sessionMenu__content ${
+					flyoutOpen && 'sessionMenu__content--open'
+				}`}
 			>
 				{activeSession.isLive &&
 					activeSession.item.status !== STATUS_FINISHED &&

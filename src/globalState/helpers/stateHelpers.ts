@@ -26,9 +26,9 @@ export type ExtendedSessionInterface = Omit<
 	'session' | 'chat'
 > & {
 	item?: Partial<Omit<SessionItemInterface, 'topic'>> &
-	Partial<Omit<GroupChatItemInterface, 'topic'>> & {
-		topic: string | TopicSessionInterface;
-	};
+		Partial<Omit<GroupChatItemInterface, 'topic'>> & {
+			topic: string | TopicSessionInterface;
+		};
 	rid: string;
 	type: typeof CHAT_TYPE_GROUP_CHAT | typeof CHAT_TYPE_SINGLE_CHAT;
 	isGroup?: boolean;
@@ -144,7 +144,7 @@ export const AUTHORITIES = {
 	CONSULTANT_DEFAULT: 'AUTHORIZATION_CONSULTANT_DEFAULT',
 	CREATE_NEW_CHAT: 'AUTHORIZATION_CREATE_NEW_CHAT',
 	ASKER_DEFAULT: 'AUTHORIZATION_USER_DEFAULT',
-	VIEW_AGENCY_CONSULTANTS: 'AUTHORIZATION_VIEW_AGENCY_CONSULTANTS',
+	VIEW_AGENCY_CONSULTANTS: 'AUTHORIZATION_VIEW_AGENCY_CONSULTANTS'
 };
 
 export const isAnonymousSession = (

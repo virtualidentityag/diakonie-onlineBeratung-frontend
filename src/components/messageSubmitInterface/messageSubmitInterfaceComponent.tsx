@@ -180,7 +180,7 @@ export const MessageSubmitInterfaceComponent = ({
 	const [isRichtextActive, setIsRichtextActive] = useState(false);
 	const [isConsultantAbsent, setIsConsultantAbsent] = useState(
 		hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
-		activeSession.consultant?.absent
+			activeSession.consultant?.absent
 	);
 	const [isSessionArchived, setIsSessionArchived] = useState(
 		activeSession.item.status === STATUS_ARCHIVED
@@ -234,7 +234,7 @@ export const MessageSubmitInterfaceComponent = ({
 		useTimeoutOverlay(
 			// Disable the request overlay if upload is in progess because upload progress is shown in the ui already
 			isRequestInProgress &&
-			!(uploadProgress > 0 && uploadProgress < 100),
+				!(uploadProgress > 0 && uploadProgress < 100),
 			null,
 			null,
 			null,
@@ -244,13 +244,13 @@ export const MessageSubmitInterfaceComponent = ({
 	useEffect(() => {
 		setIsConsultantAbsent(
 			hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
-			activeSession.consultant?.absent
+				activeSession.consultant?.absent
 		);
 		setIsSessionArchived(activeSession.item.status === STATUS_ARCHIVED);
 		setIsTypingActive(activeSession.isGroup || activeSession.isLive);
 		setIsLiveChatFinished(
 			activeSession.isLive &&
-			activeSession.item.status === STATUS_FINISHED
+				activeSession.item.status === STATUS_FINISHED
 		);
 	}, [activeSession, activeSession.item.status, userData]);
 
@@ -373,7 +373,7 @@ export const MessageSubmitInterfaceComponent = ({
 			if (
 				draftLoaded &&
 				currentEditorState.getCurrentContent() !==
-				editorState.getCurrentContent() &&
+					editorState.getCurrentContent() &&
 				isTyping
 			) {
 				isTyping(!currentEditorState.getCurrentContent().hasText());
@@ -441,11 +441,11 @@ export const MessageSubmitInterfaceComponent = ({
 		let textInputStyles = `min-height: ${currentInputHeight}px; ${currentOverflow} ${textInputMarginTop} ${textInputMarginBottom}`;
 		textInputStyles = isRichtextActive
 			? textInputStyles +
-			`border-top: none; border-top-right-radius: 0; box-shadow: none;`
+				`border-top: none; border-top-right-radius: 0; box-shadow: none;`
 			: textInputStyles;
 		textInputStyles = attachmentSelected
 			? textInputStyles +
-			`border-bottom: none; border-bottom-right-radius: 0;`
+				`border-bottom: none; border-bottom-right-radius: 0;`
 			: textInputStyles;
 		textInput?.setAttribute('style', textInputStyles);
 
@@ -504,11 +504,7 @@ export const MessageSubmitInterfaceComponent = ({
 	}, [onMessageSendSuccess, resizeTextarea]);
 
 	const sendMessage = useCallback(
-		async (
-			message,
-			attachment: File,
-			isEncrypted
-		) => {
+		async (message, attachment: File, isEncrypted) => {
 			const sendToRoomWithId = activeSession.rid || activeSession.item.id;
 			const getSendMailNotificationStatus = () =>
 				!activeSession.isGroup && !activeSession.isLive;
@@ -665,11 +661,7 @@ export const MessageSubmitInterfaceComponent = ({
 			return;
 		}
 
-		await sendMessage(
-			message,
-			attachment,
-			isEncrypted
-		);
+		await sendMessage(message, attachment, isEncrypted);
 	}, [
 		encrypted,
 		getTypedMarkdownMessage,
@@ -781,10 +773,11 @@ export const MessageSubmitInterfaceComponent = ({
 			const contact = getContact(activeSession);
 			infoData = {
 				isInfo: true,
-				infoHeadline: `${contact?.displayName ||
+				infoHeadline: `${
+					contact?.displayName ||
 					contact?.username ||
 					translate('sessionList.user.consultantUnknown')
-					} ${translate('consultant.absent.message')} `,
+				} ${translate('consultant.absent.message')} `,
 				infoMessage: activeSession.consultant.absenceMessage
 			};
 		} else if (activeInfo === INFO_TYPES.ATTACHMENT_SIZE_ERROR) {
@@ -886,9 +879,7 @@ export const MessageSubmitInterfaceComponent = ({
 			)}
 			{activeInfo && <MessageSubmitInfo {...getMessageSubmitInfo()} />}
 			{!isLiveChatFinished && (
-				<form
-					className="textarea"
-				>
+				<form className="textarea">
 					<div className={'textarea__wrapper'}>
 						<div className="textarea__wrapper-send-message">
 							<span className="textarea__featureWrapper">

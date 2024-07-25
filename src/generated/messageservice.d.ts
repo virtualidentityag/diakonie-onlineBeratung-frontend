@@ -186,11 +186,11 @@ declare namespace Paths {
 		}
 		export type RequestBody = MessageService.Schemas.MessageDTO;
 		namespace Responses {
-			export interface $201 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $201 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace CreateVideoHintMessage {
@@ -202,11 +202,11 @@ declare namespace Paths {
 		}
 		export type RequestBody = MessageService.Schemas.VideoCallMessageDTO;
 		namespace Responses {
-			export interface $201 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $201 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace FindDraftMessage {
@@ -218,11 +218,11 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = string;
-			export interface $204 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $204 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 
@@ -241,11 +241,11 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = MessageService.Schemas.MessageStreamDTO;
-			export interface $204 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $204 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace SaveAliasOnlyMessage {
@@ -257,11 +257,11 @@ declare namespace Paths {
 		}
 		export type RequestBody = MessageService.Schemas.AliasOnlyMessageDTO;
 		namespace Responses {
-			export interface $201 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $201 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace SaveDraftMessage {
@@ -273,22 +273,22 @@ declare namespace Paths {
 		}
 		export type RequestBody = string;
 		namespace Responses {
-			export interface $200 { }
-			export interface $201 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $201 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateKey {
 		export type RequestBody = MessageService.Schemas.MasterKeyDTO;
 		namespace Responses {
-			export interface $202 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $202 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 }

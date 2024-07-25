@@ -86,11 +86,11 @@ export interface SessionItemInterface {
 	postcode: number;
 	registrationType: registrationTypeAnonymous | registrationTypeRegistered;
 	status:
-	| statusEmpty
-	| statusEnquiry
-	| statusActive
-	| statusFinished
-	| statusArchived;
+		| statusEmpty
+		| statusEnquiry
+		| statusActive
+		| statusFinished
+		| statusArchived;
 	isTeamSession: boolean;
 	videoCallMessageDTO: VideoCallMessageDTO;
 	language?: string;

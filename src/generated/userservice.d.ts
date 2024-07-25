@@ -234,7 +234,7 @@ declare namespace UserService {
 			 */
 			groupId: string;
 		}
-		export interface Date { }
+		export interface Date {}
 		export interface DeleteUserAccountDTO {
 			/**
 			 * example:
@@ -250,7 +250,7 @@ declare namespace UserService {
 			message: string;
 		}
 
-		export interface HttpStatus { }
+		export interface HttpStatus {}
 		export interface MandatorySessionDataDTO {
 			/**
 			 * mandatory depending on the consulting type
@@ -754,12 +754,12 @@ declare namespace Paths {
 			sessionId: Parameters.SessionId /* int64 */;
 		}
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace AssignSession {
@@ -772,22 +772,22 @@ declare namespace Paths {
 			consultantId: Parameters.ConsultantId;
 		}
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace CreateChat {
 		export type RequestBody = UserService.Schemas.ChatDTO;
 		namespace Responses {
 			export type $201 = UserService.Schemas.CreateChatResponseDTO;
-			export interface $400 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $400 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace CreateEnquiryMessage {
@@ -805,22 +805,22 @@ declare namespace Paths {
 		}
 		export type RequestBody = UserService.Schemas.EnquiryMessageDTO;
 		namespace Responses {
-			export interface $201 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $201 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace DeactivateAndFlagUserAccountForDeletion {
 		export type RequestBody = UserService.Schemas.DeleteUserAccountDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace FetchSessionForConsultant {
@@ -832,11 +832,11 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = UserService.Schemas.ConsultantSessionDTO;
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $404 { }
-			export interface $500 { }
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $404 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetChat {
@@ -848,11 +848,11 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = UserService.Schemas.ChatInfoResponseDTO;
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $404 { }
-			export interface $500 { }
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $404 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetChatMembers {
@@ -864,12 +864,12 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = UserService.Schemas.ChatMembersResponseDTO;
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $404 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $404 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetConsultants {
@@ -881,11 +881,11 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = UserService.Schemas.ConsultantResponseDTO[];
-			export interface $204 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $204 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetMonitoring {
@@ -897,11 +897,11 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = UserService.Schemas.MonitoringDTO;
-			export interface $204 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $204 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetSessionsForAuthenticatedConsultant {
@@ -924,10 +924,10 @@ declare namespace Paths {
 		namespace Responses {
 			export type $200 =
 				UserService.Schemas.ConsultantSessionListResponseDTO;
-			export interface $204 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $204 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetSessionsForAuthenticatedUser {
@@ -939,11 +939,11 @@ declare namespace Paths {
 		}
 		namespace Responses {
 			export type $200 = UserService.Schemas.UserSessionListResponseDTO;
-			export interface $204 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $204 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetTeamSessionsForAuthenticatedConsultant {
@@ -964,43 +964,43 @@ declare namespace Paths {
 		namespace Responses {
 			export type $200 =
 				UserService.Schemas.ConsultantSessionListResponseDTO;
-			export interface $204 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $204 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace GetUserData {
 		namespace Responses {
 			export type $200 = UserService.Schemas.UserDataResponseDTO;
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace ImportAskers {
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $500 {}
 		}
 	}
 	namespace ImportAskersWithoutSession {
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $500 {}
 		}
 	}
 	namespace ImportConsultants {
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $500 {}
 		}
 	}
 	namespace JoinChat {
@@ -1011,13 +1011,13 @@ declare namespace Paths {
 			chatId: Parameters.ChatId /* int64 */;
 		}
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $404 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $404 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace LeaveChat {
@@ -1028,13 +1028,13 @@ declare namespace Paths {
 			chatId: Parameters.ChatId /* int64 */;
 		}
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $404 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $404 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace RegisterNewConsultingType {
@@ -1049,20 +1049,20 @@ declare namespace Paths {
 		export type RequestBody = UserService.Schemas.NewRegistrationDto;
 		namespace Responses {
 			export type $201 = UserService.Schemas.NewRegistrationResponseDto;
-			export interface $400 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $400 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace RegisterUser {
 		export type RequestBody = UserService.Schemas.UserDTO;
 		namespace Responses {
-			export interface $201 { }
-			export interface $400 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $201 {}
+			export interface $400 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace SendLiveEvent {
@@ -1073,22 +1073,22 @@ declare namespace Paths {
 			rcGroupId: Parameters.RcGroupId;
 		}
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 
 	namespace SendNewMessageNotification {
 		export type RequestBody = UserService.Schemas.NewMessageNotificationDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace StartChat {
@@ -1099,12 +1099,12 @@ declare namespace Paths {
 			chatId: Parameters.ChatId /* int64 */;
 		}
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace StopChat {
@@ -1115,22 +1115,22 @@ declare namespace Paths {
 			chatId: Parameters.ChatId /* int64 */;
 		}
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateAbsence {
 		export type RequestBody = UserService.Schemas.AbsenceDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateChat {
@@ -1143,52 +1143,52 @@ declare namespace Paths {
 		export type RequestBody = UserService.Schemas.ChatDTO;
 		namespace Responses {
 			export type $200 = UserService.Schemas.UpdateChatResponseDTO;
-			export interface $400 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $400 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateConsultantData {
 		export type RequestBody = UserService.Schemas.UpdateConsultantDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateEmailAddress {
 		export type RequestBody = string;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateKey {
 		export type RequestBody = UserService.Schemas.MasterKeyDTO;
 		namespace Responses {
-			export interface $202 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $202 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateMobileToken {
 		export type RequestBody = UserService.Schemas.MobileTokenDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateMonitoring {
@@ -1200,21 +1200,21 @@ declare namespace Paths {
 		}
 		export type RequestBody = UserService.Schemas.MonitoringDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdatePassword {
 		export type RequestBody = UserService.Schemas.PasswordDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $500 {}
 		}
 	}
 	namespace UpdateSessionData {
@@ -1226,12 +1226,12 @@ declare namespace Paths {
 		}
 		export type RequestBody = UserService.Schemas.SessionDataDTO;
 		namespace Responses {
-			export interface $200 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $404 { }
-			export interface $500 { }
+			export interface $200 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $404 {}
+			export interface $500 {}
 		}
 	}
 }

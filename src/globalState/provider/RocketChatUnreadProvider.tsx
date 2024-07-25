@@ -93,9 +93,7 @@ export function RocketChatUnreadProvider({
 					const session = sessions.find((s) => {
 						const chatItem = getChatItemForSession(s);
 
-						return (
-							chatItem.groupId === subscription.rid
-						);
+						return chatItem.groupId === subscription.rid;
 					});
 
 					if (!session) {

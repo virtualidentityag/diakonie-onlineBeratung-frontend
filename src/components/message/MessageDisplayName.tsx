@@ -40,9 +40,9 @@ export const MessageDisplayName = ({
 		} else {
 			return subscriberIsModerator
 				? translate('session.groupChat.consultant.prefix') +
-				(displayName || username)
+						(displayName || username)
 				: translate('session.consultant.prefix') +
-				(displayName || username);
+						(displayName || username);
 		}
 	}, [
 		displayName,

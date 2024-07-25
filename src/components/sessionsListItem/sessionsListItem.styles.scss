@@ -213,7 +213,7 @@ $icon-size-small: 16px;
 			font-style: italic !important;
 		}
 
-		&>span {
+		& > span {
 			display: inline-block;
 			font-style: normal;
 			font-weight: $font-weight-bold;
@@ -267,10 +267,12 @@ $icon-size-small: 16px;
 		background-color: $dark-grey;
 		width: 100%;
 		min-height: 18px;
-		background: linear-gradient(-90deg,
-				$dark-grey 0%,
-				$session-list-item-background-active 50%,
-				$dark-grey 100%);
+		background: linear-gradient(
+			-90deg,
+			$dark-grey 0%,
+			$session-list-item-background-active 50%,
+			$dark-grey 100%
+		);
 		background-size: 400% 400%;
 		animation: pulse 1.2s ease-in-out infinite;
 

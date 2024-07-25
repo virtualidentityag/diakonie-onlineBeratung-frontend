@@ -202,9 +202,9 @@ export const MessageItemComponent = ({
 		setRenderedMessage(
 			contentStateMessage.hasText()
 				? sanitizeHtml(
-					urlifyLinksInText(stateToHTML(contentStateMessage)),
-					sanitizeHtmlDefaultOptions
-				)
+						urlifyLinksInText(stateToHTML(contentStateMessage)),
+						sanitizeHtmlDefaultOptions
+					)
 				: ''
 		);
 	}, [decryptedMessage]);
@@ -464,7 +464,9 @@ export const MessageItemComponent = ({
 
 						<div
 							className={
-								isMyMessage ? `messageItem__message messageItem__message--myMessage` : `messageItem__message`
+								isMyMessage
+									? `messageItem__message messageItem__message--myMessage`
+									: `messageItem__message`
 							}
 						>
 							<span
@@ -503,10 +505,12 @@ export const MessageItemComponent = ({
 
 	return (
 		<div
-			className={`messageItem ${isMyMessage ? 'messageItem--right' : ''
-				} ${isFullWidthMessage ? 'messageItem--full' : ''} ${alias?.messageType &&
+			className={`messageItem ${
+				isMyMessage ? 'messageItem--right' : ''
+			} ${isFullWidthMessage ? 'messageItem--full' : ''} ${
+				alias?.messageType &&
 				`${alias?.messageType.toLowerCase()} systemMessage`
-				}`}
+			}`}
 		>
 			{getMessageDate()}
 			<div
@@ -514,9 +518,10 @@ export const MessageItemComponent = ({
 					messageItem__messageWrap
 					${isMyMessage ? 'messageItem__messageWrap--right' : ''}
 					${isFurtherStepsMessage ? 'messageItem__messageWrap--furtherSteps' : ''}
-					${isE2EEActivatedMessage
-						? 'messageItem__messageWrap--e2eeActivatedMessage'
-						: ''
+					${
+						isE2EEActivatedMessage
+							? 'messageItem__messageWrap--e2eeActivatedMessage'
+							: ''
 					}
 				`}
 			>

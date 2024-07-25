@@ -13,11 +13,11 @@ declare namespace Paths {
 	namespace UpdateKey {
 		export type RequestBody = UploadService.Schemas.MasterKeyDto;
 		namespace Responses {
-			export interface $202 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $409 { }
-			export interface $500 { }
+			export interface $202 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $409 {}
+			export interface $500 {}
 		}
 	}
 
@@ -57,13 +57,13 @@ declare namespace Paths {
 			sendNotification: string;
 		}
 		namespace Responses {
-			export interface $201 { }
-			export interface $400 { }
-			export interface $401 { }
-			export interface $403 { }
-			export interface $413 { }
-			export interface $415 { }
-			export interface $500 { }
+			export interface $201 {}
+			export interface $400 {}
+			export interface $401 {}
+			export interface $403 {}
+			export interface $413 {}
+			export interface $415 {}
+			export interface $500 {}
 		}
 	}
 }

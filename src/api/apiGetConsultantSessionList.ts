@@ -29,20 +29,23 @@ export const apiGetConsultantSessionList = async ({
 	const isTeamSession: boolean = type === SESSION_LIST_TYPES.TEAMSESSION;
 	let url: string;
 	if (isTeamSession) {
-		url = `${sessionListTab === SESSION_LIST_TAB_ARCHIVE
-			? `${endpoints.teamSessionsBase}${SESSION_LIST_TAB_ARCHIVE}?`
-			: `${endpoints.consultantTeamSessions}`
-			}`;
+		url = `${
+			sessionListTab === SESSION_LIST_TAB_ARCHIVE
+				? `${endpoints.teamSessionsBase}${SESSION_LIST_TAB_ARCHIVE}?`
+				: `${endpoints.consultantTeamSessions}`
+		}`;
 	} else if (type === SESSION_LIST_TYPES.MY_SESSION) {
-		url = `${sessionListTab === SESSION_LIST_TAB_ARCHIVE
-			? `${endpoints.myMessagesBase}${SESSION_LIST_TAB_ARCHIVE}?`
-			: `${endpoints.consultantSessions}`
-			}`;
+		url = `${
+			sessionListTab === SESSION_LIST_TAB_ARCHIVE
+				? `${endpoints.myMessagesBase}${SESSION_LIST_TAB_ARCHIVE}?`
+				: `${endpoints.consultantSessions}`
+		}`;
 	} else {
-		url = `${endpoints.consultantEnquiriesBase}${sessionListTab && sessionListTab === SESSION_LIST_TAB_ANONYMOUS
-			? `${SESSION_LIST_TAB_ANONYMOUS}`
-			: 'registered'
-			}?`;
+		url = `${endpoints.consultantEnquiriesBase}${
+			sessionListTab && sessionListTab === SESSION_LIST_TAB_ANONYMOUS
+				? `${SESSION_LIST_TAB_ANONYMOUS}`
+				: 'registered'
+		}?`;
 	}
 	url = url + `count=${count}&filter=all&offset=${offset}`;
 
