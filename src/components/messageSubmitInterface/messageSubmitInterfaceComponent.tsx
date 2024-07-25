@@ -11,7 +11,6 @@ import { useHistory } from 'react-router-dom';
 
 import { SendMessageButton } from './SendMessageButton';
 import { SESSION_LIST_TYPES } from '../session/sessionHelpers';
-import { Checkbox } from '../checkbox/Checkbox';
 import {
 	AUTHORITIES,
 	getContact,
@@ -671,7 +670,6 @@ export const MessageSubmitInterfaceComponent = ({
 		preselectedFile,
 		sendEnquiry,
 		sendMessage,
-		setE2EEState,
 		type,
 		userData
 	]);

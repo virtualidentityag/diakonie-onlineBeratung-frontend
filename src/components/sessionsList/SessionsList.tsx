@@ -102,7 +102,7 @@ export const SessionsList = ({
 	const listRef = createRef<HTMLDivElement>();
 
 	const { sessions, dispatch } = useContext(SessionsDataContext);
-	const { type, path: listPath } = useContext(SessionTypeContext);
+	const { type } = useContext(SessionTypeContext);
 
 	const {
 		subscribe,

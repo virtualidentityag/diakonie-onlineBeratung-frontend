@@ -17,7 +17,6 @@ import {
 	CHAT_TYPE_SINGLE_CHAT,
 	getChatItemForSession,
 	getChatTypeForListItem,
-	isSessionChat,
 	SESSION_LIST_TYPES
 } from '../../components/session/sessionHelpers';
 

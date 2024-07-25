@@ -7,15 +7,11 @@ import {
 	hasUserAuthority,
 	AUTHORITIES,
 	E2EEContext,
-	SessionTypeContext,
 	RocketChatGlobalSettingsContext,
 	ActiveSessionContext
 } from '../../globalState';
-import {
-	ConsultingTypeInterface,
-	STATUS_ARCHIVED
-} from '../../globalState/interfaces';
-import { isUserModerator, SESSION_LIST_TYPES } from '../session/sessionHelpers';
+import { STATUS_ARCHIVED } from '../../globalState/interfaces';
+import { isUserModerator } from '../session/sessionHelpers';
 import { MessageMetaData } from './MessageMetaData';
 import { MessageDisplayName } from './MessageDisplayName';
 import { markdownToDraft } from 'markdown-draft-js';
@@ -104,7 +100,6 @@ interface MessageItemComponentProps extends MessageItem {
 	isOnlyEnquiry?: boolean;
 	isMyMessage: boolean;
 	clientName: string;
-	resortData: ConsultingTypeInterface;
 	isUserBanned: boolean;
 	handleDecryptionErrors: (
 		id: string,
@@ -122,7 +117,6 @@ export const MessageItemComponent = ({
 	message,
 	messageDate,
 	messageTime,
-	resortData,
 	isMyMessage,
 	displayName,
 	username,
@@ -142,7 +136,6 @@ export const MessageItemComponent = ({
 	const { activeSession, reloadActiveSession } =
 		useContext(ActiveSessionContext);
 	const { userData } = useContext(UserDataContext);
-	const { type } = useContext(SessionTypeContext);
 
 	const [renderedMessage, setRenderedMessage] = useState<string | null>(null);
 	const [decryptedMessage, setDecryptedMessage] = useState<

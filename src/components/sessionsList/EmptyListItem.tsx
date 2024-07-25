@@ -9,11 +9,6 @@ import {
 	SESSION_LIST_TYPES,
 	SESSION_LIST_TAB_ANONYMOUS
 } from '../session/sessionHelpers';
-import {
-	AUTHORITIES,
-	hasUserAuthority,
-	UserDataContext
-} from '../../globalState';
 
 interface EmptyListItemProps {
 	type: SESSION_LIST_TYPES;
@@ -22,7 +17,6 @@ interface EmptyListItemProps {
 
 export const EmptyListItem = ({ type, sessionListTab }: EmptyListItemProps) => {
 	const { t } = useTranslation();
-	const { userData } = useContext(UserDataContext);
 
 	const emptyTitle = useMemo(() => {
 		if (sessionListTab === SESSION_LIST_TAB_ARCHIVE) {
@@ -38,7 +32,7 @@ export const EmptyListItem = ({ type, sessionListTab }: EmptyListItemProps) => {
 			default:
 				return t('sessionList.empty.mySessions');
 		}
-	}, [sessionListTab, userData, type, t]);
+	}, [sessionListTab, type, t]);
 	return (
 		<ListInfo
 			headline={emptyTitle}

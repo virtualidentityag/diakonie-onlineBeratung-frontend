@@ -18,7 +18,6 @@ import {
 } from '../message/MessageItemComponent';
 import { SessionHeaderComponent } from '../sessionHeader/SessionHeaderComponent';
 import { Button, BUTTON_TYPES, ButtonItem } from '../button/Button';
-import { apiGetConsultingType } from '../../api';
 import {
 	AUTHORITIES,
 	getContact,
@@ -28,7 +27,6 @@ import {
 	useTenant,
 	ActiveSessionContext
 } from '../../globalState';
-import { ConsultingTypeInterface } from '../../globalState/interfaces';
 import './session.styles';
 import { useDebouncedCallback } from 'use-debounce';
 import { ReactComponent as ArrowDoubleDownIcon } from '../../resources/img/icons/arrow-double-down.svg';
@@ -166,22 +164,6 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 			resetUnreadCount();
 		}
 	}, [isScrolledToBottom]); // eslint-disable-line
-
-	const [resortData, setResortData] = useState<ConsultingTypeInterface>();
-	useEffect(() => {
-		if (activeSession.item.consultingType) {
-			let isCanceled = false;
-			apiGetConsultingType({
-				consultingTypeId: activeSession.item.consultingType
-			}).then((response) => {
-				if (isCanceled) return;
-				setResortData(response);
-			});
-			return () => {
-				isCanceled = true;
-			};
-		}
-	}, [activeSession.item.consultingType]);
 
 	const getPlaceholder = () => {
 		if (activeSession.isGroup) {
@@ -382,7 +364,6 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 									askerRcId={activeSession.item.askerRcId}
 									isOnlyEnquiry={isOnlyEnquiry}
 									isMyMessage={isMyMessage(message.userId)}
-									resortData={resortData}
 									isUserBanned={props.bannedUsers.includes(
 										message.username
 									)}

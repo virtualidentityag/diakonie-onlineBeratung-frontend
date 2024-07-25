@@ -12,7 +12,6 @@ import { apiGetSessionRoomsByGroupIds } from '../../api/apiGetSessionRooms';
 import {
 	getChatItemForSession,
 	getSessionType,
-	isGroupChat,
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
 	SESSION_TYPE_GROUP,
