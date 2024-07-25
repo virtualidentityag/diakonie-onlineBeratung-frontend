@@ -358,7 +358,6 @@ export const SessionsList = ({
 
 							const sessionType = getSessionType(
 								session,
-								rid,
 								userData.userId
 							);
 
