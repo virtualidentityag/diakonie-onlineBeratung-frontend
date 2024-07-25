@@ -76,15 +76,13 @@ export const AcceptLiveChatView = ({
 						semanticLevel="3"
 						text={`${translate(
 							'enquiry.anonymous.infoLabel.start'
-						)}${
-							getContact(activeSession)?.username ||
-							translate('sessionList.user.consultantUnknown')
-						}${translate('enquiry.anonymous.infoLabel.end')}`}
+						)}${getContact(activeSession)?.username ||
+						translate('sessionList.user.consultantUnknown')
+							}${translate('enquiry.anonymous.infoLabel.end')}`}
 					/>
 				</div>
 
 				<AcceptAssign
-					assignable={false}
 					assigned={assigned}
 					isAnonymous={true}
 					btnLabel={'enquiry.acceptButton.anonymous'}
