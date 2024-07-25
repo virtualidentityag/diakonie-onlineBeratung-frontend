@@ -861,7 +861,6 @@ export const SessionsList = ({
 			)}
 			<div
 				className={clsx('sessionsList__scrollContainer', {
-					'sessionsList__scrollContainer--hasFilter': showFilter,
 					'sessionsList__scrollContainer--hasTabs':
 						showEnquiryTabs || showSessionListTabs
 				})}
