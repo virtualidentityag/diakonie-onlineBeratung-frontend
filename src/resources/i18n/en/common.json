@@ -2074,14 +2074,6 @@
 			"mySessions": "You currently have no active consultations",
 			"teamSessions": "Your team has no active consultations"
 		},
-		"filter": {
-			"option": {
-				"all": "All consultations",
-				"feedbackMain": "Feedback needed",
-				"feedbackPeer": "Feedback available"
-			},
-			"placeholder": "Filter"
-		},
 		"preview": {
 			"anonymous": {
 				"tab": "Live chat requests"

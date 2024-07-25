@@ -39,15 +39,12 @@ import {
 } from '../../globalState';
 import { ListItemInterface, STATUS_EMPTY } from '../../globalState/interfaces';
 import { apiPatchUserData } from '../../api/apiPatchUserData';
-import { SelectDropdown, SelectDropdownItem } from '../select/SelectDropdown';
 import { SessionListItemComponent } from '../sessionsListItem/SessionListItemComponent';
 import { SessionsListSkeleton } from '../sessionsListItem/SessionsListItemSkeleton';
 import {
 	apiGetAskerSessionList,
 	apiGetConsultantSessionList,
 	FETCH_ERRORS,
-	FILTER_FEEDBACK,
-	INITIAL_FILTER,
 	SESSION_COUNT
 } from '../../api';
 import { Button } from '../button/Button';
@@ -112,9 +109,6 @@ export const SessionsList = ({
 		unsubscribe,
 		ready: socketReady
 	} = useContext(RocketChatContext);
-	const [filter, setFilter] = useState<
-		typeof INITIAL_FILTER | typeof FILTER_FEEDBACK
-	>(INITIAL_FILTER);
 
 	const sessionListTab = useSearchParam<SESSION_LIST_TAB>('sessionListTab');
 
@@ -160,7 +154,6 @@ export const SessionsList = ({
 
 			return apiGetConsultantSessionList({
 				type,
-				filter,
 				offset,
 				sessionListTab: sessionListTab,
 				count: count ?? SESSION_COUNT,
@@ -199,13 +192,13 @@ export const SessionsList = ({
 					return { sessions, total };
 				});
 		},
-		[filter, sessionListTab, type]
+		[sessionListTab, type]
 	);
 
 	useLiveChatWatcher(
 		!isLoading &&
-			type === SESSION_LIST_TYPES.ENQUIRY &&
-			sessionListTab === SESSION_LIST_TAB_ANONYMOUS,
+		type === SESSION_LIST_TYPES.ENQUIRY &&
+		sessionListTab === SESSION_LIST_TAB_ANONYMOUS,
 		getConsultantSessionList,
 		currentOffset
 	);
@@ -219,15 +212,15 @@ export const SessionsList = ({
 			);
 			const firstItemId = document.querySelector('.sessionsListItem')
 				? document
-						.querySelector('.sessionsListItem')
-						.getAttribute('data-group-id')
+					.querySelector('.sessionsListItem')
+					.getAttribute('data-group-id')
 				: null;
 			const lastItemId = wrapper.lastElementChild.querySelector(
 				'.sessionsListItem'
 			)
 				? wrapper.lastElementChild
-						.querySelector('.sessionsListItem')
-						.getAttribute('data-group-id')
+					.querySelector('.sessionsListItem')
+					.getAttribute('data-group-id')
 				: null;
 			if (
 				initialId.current !== firstItemId &&
@@ -374,7 +367,7 @@ export const SessionsList = ({
 								sessionTypes.indexOf(sessionType) < 0 ||
 								(sessionType === SESSION_TYPE_ARCHIVED &&
 									sessionListTab !==
-										SESSION_LIST_TAB_ARCHIVE) ||
+									SESSION_LIST_TAB_ARCHIVE) ||
 								(sessionType !== SESSION_TYPE_ARCHIVED &&
 									sessionListTab === SESSION_LIST_TAB_ARCHIVE)
 							) {
@@ -568,27 +561,6 @@ export const SessionsList = ({
 		unsubscribe
 	]);
 
-	const [showFilter, setShowFilter] = useState(false);
-
-	useEffect(() => {
-		const showFilter =
-			type !== SESSION_LIST_TYPES.ENQUIRY &&
-			sessionListTab !== SESSION_LIST_TAB_ARCHIVE &&
-			((hasUserAuthority(AUTHORITIES.VIEW_ALL_PEER_SESSIONS, userData) &&
-				type === SESSION_LIST_TYPES.TEAMSESSION) ||
-				(hasUserAuthority(AUTHORITIES.USE_FEEDBACK, userData) &&
-					!hasUserAuthority(
-						AUTHORITIES.VIEW_ALL_PEER_SESSIONS,
-						userData
-					)));
-
-		setShowFilter(showFilter);
-
-		if (!showFilter) {
-			setFilter(INITIAL_FILTER);
-		}
-	}, [sessionListTab, type, userData]);
-
 	const loadMoreSessions = useCallback(() => {
 		setIsLoading(true);
 		getConsultantSessionList(currentOffset + SESSION_COUNT)
@@ -633,47 +605,10 @@ export const SessionsList = ({
 		totalItems
 	]);
 
-	const handleSelect = (selectedOption) => {
-		setCurrentOffset(0);
-		setFilter(selectedOption.value);
-		history.push(listPath);
-	};
-
 	const handleReloadButton = useCallback(() => {
 		setIsReloadButtonVisible(false);
 		loadMoreSessions();
 	}, [loadMoreSessions]);
-
-	const selectedOptionsSet = [
-		{
-			value: FILTER_FEEDBACK,
-			label: hasUserAuthority(
-				AUTHORITIES.VIEW_ALL_PEER_SESSIONS,
-				userData
-			)
-				? translate('sessionList.filter.option.feedbackMain')
-				: translate('sessionList.filter.option.feedbackPeer')
-		},
-		{
-			value: INITIAL_FILTER,
-			label: translate('sessionList.filter.option.all')
-		}
-	];
-
-	const preSelectedOption =
-		selectedOptionsSet.find((option) => option.value === filter) ??
-		selectedOptionsSet[1];
-
-	const selectDropdown: SelectDropdownItem = {
-		id: 'listFilterSelect',
-		selectedOptions: selectedOptionsSet,
-		handleDropdownSelect: handleSelect,
-		selectInputLabel: translate('sessionList.filter.placeholder'),
-		useIconOption: false,
-		isSearchable: false,
-		menuPlacement: 'bottom',
-		defaultValue: preSelectedOption
-	};
 
 	const showEnquiryTabs = useMemo(() => {
 		return (
@@ -829,7 +764,7 @@ export const SessionsList = ({
 
 	return (
 		<div className="sessionsList__innerWrapper">
-			{(showFilter || showEnquiryTabs || showSessionListTabs) && (
+			{(showEnquiryTabs || showSessionListTabs) && (
 				<div className="sessionsList__functionalityWrapper">
 					{showEnquiryTabs && (
 						<div role="tablist" className="sessionsList__tabs">
@@ -880,11 +815,10 @@ export const SessionsList = ({
 									'sessionsList__tabs--active':
 										!sessionListTab
 								})}
-								to={`/sessions/consultant/${
-									type === SESSION_LIST_TYPES.TEAMSESSION
-										? 'teamSessionView'
-										: 'sessionView'
-								}`}
+								to={`/sessions/consultant/${type === SESSION_LIST_TYPES.TEAMSESSION
+									? 'teamSessionView'
+									: 'sessionView'
+									}`}
 								onKeyDown={(e) => handleKeyDownTabs(e)}
 								ref={(el) => (ref_tab_first.current = el)}
 								tabIndex={0}
@@ -903,11 +837,10 @@ export const SessionsList = ({
 										sessionListTab ===
 										SESSION_LIST_TAB_ARCHIVE
 								})}
-								to={`/sessions/consultant/${
-									type === SESSION_LIST_TYPES.TEAMSESSION
-										? 'teamSessionView'
-										: 'sessionView'
-								}?sessionListTab=${SESSION_LIST_TAB_ARCHIVE}`}
+								to={`/sessions/consultant/${type === SESSION_LIST_TYPES.TEAMSESSION
+									? 'teamSessionView'
+									: 'sessionView'
+									}?sessionListTab=${SESSION_LIST_TAB_ARCHIVE}`}
 								onKeyDown={(e) => handleKeyDownTabs(e)}
 								ref={(el) => (ref_tab_second.current = el)}
 								tabIndex={-1}
@@ -921,11 +854,6 @@ export const SessionsList = ({
 									type="standard"
 								/>
 							</Link>
-						</div>
-					)}
-					{showFilter && (
-						<div className="sessionsList__selectWrapper">
-							<SelectDropdown {...selectDropdown} />
 						</div>
 					)}
 				</div>
@@ -942,18 +870,17 @@ export const SessionsList = ({
 				{hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
 					!isLoading &&
 					finalSessionsList.length <=
-						MAX_ITEMS_TO_SHOW_WELCOME_ILLUSTRATION && (
+					MAX_ITEMS_TO_SHOW_WELCOME_ILLUSTRATION && (
 						<WelcomeIllustration />
 					)}
 
 				<div
-					className={`sessionsList__itemsWrapper ${
-						isCreateChatActive ||
+					className={`sessionsList__itemsWrapper ${isCreateChatActive ||
 						isLoading ||
 						finalSessionsList.length > 0
-							? ''
-							: 'sessionsList__itemsWrapper--centered'
-					}`}
+						? ''
+						: 'sessionsList__itemsWrapper--centered'
+						}`}
 					data-cy="sessions-list-items-wrapper"
 					role="tablist"
 				>
@@ -988,9 +915,9 @@ export const SessionsList = ({
 													defaultLanguage
 												}
 												itemRef={(el) =>
-													(ref_list_array.current[
-														index
-													] = el)
+												(ref_list_array.current[
+													index
+												] = el)
 												}
 												handleKeyDownLisItemContent={(
 													e

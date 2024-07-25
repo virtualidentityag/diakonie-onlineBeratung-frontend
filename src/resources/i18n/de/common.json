@@ -2193,14 +2193,6 @@
 			"mySessions": "Sie haben zurzeit keine aktiven Beratungen",
 			"teamSessions": "Ihr Team hat keine aktiven Beratungen",
 		},
-		"filter": {
-			"option": {
-				"all": "Alle Beratungen",
-				"feedbackMain": "Feedback benötigt",
-				"feedbackPeer": "Feedback vorhanden"
-			},
-			"placeholder": "Filter"
-		},
 		"preview": {
 			"anonymous": {
 				"tab": "Live-Chat Anfragen"
