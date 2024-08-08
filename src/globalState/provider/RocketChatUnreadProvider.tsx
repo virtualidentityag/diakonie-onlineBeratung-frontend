@@ -19,7 +19,6 @@ import {
 	SESSION_TYPE_TEAMSESSION
 } from '../../components/session/sessionHelpers';
 import { UserDataContext } from '../context/UserDataContext';
-import { AnonymousConversationFinishedContext } from './AnonymousConversationFinishedProvider';
 import { useBrowserNotification } from '../../hooks/useBrowserNotification';
 
 type UnreadStatusContextProps = {
@@ -54,9 +53,6 @@ export function RocketChatUnreadProvider({
 }: RocketChatUnreadProviderProps) {
 	const { maybeSendNewEnquiryNotification } = useBrowserNotification();
 	const { subscriptions } = useContext(RocketChatSubscriptionsContext);
-	const { anonymousConversationFinished } = useContext(
-		AnonymousConversationFinishedContext
-	);
 	const { userData } = useContext(UserDataContext);
 	const [unreadStatus, setUnreadStatus] =
 		useState<UnreadStatusContextProps>(initialData);
@@ -143,7 +139,7 @@ export function RocketChatUnreadProvider({
 
 	// Initialize all subscriptions with unread status
 	useEffect(() => {
-		if (!subscriptions?.length || anonymousConversationFinished) {
+		if (!subscriptions?.length) {
 			return;
 		}
 
@@ -185,7 +181,6 @@ export function RocketChatUnreadProvider({
 		subscriptions,
 		handleSessions,
 		unreadStatus,
-		anonymousConversationFinished,
 		maybeSendNewEnquiryNotification
 	]);
 

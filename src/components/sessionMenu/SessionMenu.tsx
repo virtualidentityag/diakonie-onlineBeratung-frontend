@@ -8,7 +8,6 @@ import {
 } from 'react';
 import { generatePath, Link, Redirect, useHistory } from 'react-router-dom';
 import {
-	AnonymousConversationFinishedContext,
 	AUTHORITIES,
 	hasUserAuthority,
 	SessionTypeContext,
@@ -16,10 +15,7 @@ import {
 	UserDataContext,
 	ActiveSessionContext
 } from '../../globalState';
-import {
-	SessionItemInterface,
-	STATUS_FINISHED
-} from '../../globalState/interfaces';
+import { SessionItemInterface } from '../../globalState/interfaces';
 import {
 	SESSION_LIST_TAB,
 	SESSION_LIST_TAB_ARCHIVE,
@@ -28,7 +24,6 @@ import {
 import { Overlay, OVERLAY_FUNCTIONS } from '../overlay/Overlay';
 import {
 	archiveSessionSuccessOverlayItem,
-	finishAnonymousChatSecurityOverlayItem,
 	groupChatErrorOverlayItem,
 	leaveGroupChatSecurityOverlayItem,
 	leaveGroupChatSuccessOverlayItem,
@@ -37,7 +32,6 @@ import {
 	videoCallErrorOverlayItem
 } from './sessionMenuHelpers';
 import {
-	apiFinishAnonymousConversation,
 	apiPutArchive,
 	apiPutDearchive,
 	apiPutGroupChat,
@@ -90,9 +84,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 	const { userData } = useContext(UserDataContext);
 	const { type, path: listPath } = useContext(SessionTypeContext);
-	const { setAnonymousConversationFinished } = useContext(
-		AnonymousConversationFinishedContext
-	);
 
 	const { activeSession, reloadActiveSession } =
 		useContext(ActiveSessionContext);
@@ -159,16 +150,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 	const handleLeaveGroupChat = () => {
 		setOverlayItem(leaveGroupChatSecurityOverlayItem);
-		setOverlayActive(true);
-	};
-
-	const handleFinishAnonymousChat = () => {
-		if (hasUserAuthority(AUTHORITIES.ANONYMOUS_DEFAULT, userData)) {
-			finishAnonymousChatSecurityOverlayItem.copy = translate(
-				'anonymous.overlay.finishChat.asker.copy'
-			);
-		}
-		setOverlayItem(finishAnonymousChatSecurityOverlayItem);
 		setOverlayActive(true);
 	};
 
@@ -251,33 +232,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 			setRedirectToSessionsList(true);
 		} else if (buttonFunction === OVERLAY_FUNCTIONS.LOGOUT) {
 			logout();
-		} else if (
-			buttonFunction === OVERLAY_FUNCTIONS.FINISH_ANONYMOUS_CONVERSATION
-		) {
-			apiFinishAnonymousConversation(activeSession.item.id)
-				.then(() => {
-					setIsRequestInProgress(false);
-
-					if (
-						hasUserAuthority(
-							AUTHORITIES.ANONYMOUS_DEFAULT,
-							userData
-						)
-					) {
-						setAnonymousConversationFinished('DONE');
-					} else {
-						setOverlayActive(false);
-						setOverlayItem(null);
-					}
-				})
-				.catch((error) => {
-					console.error(error);
-					setIsRequestInProgress(false);
-					setOverlayActive(false);
-					setOverlayItem(null);
-				});
-		} else if (buttonFunction === OVERLAY_FUNCTIONS.REDIRECT_TO_URL) {
-			window.location.href = settings.urls.finishedAnonymousChatRedirect;
 		} else if (buttonFunction === OVERLAY_FUNCTIONS.ARCHIVE) {
 			apiPutArchive(activeSession.item.id)
 				.then(() => {
@@ -397,20 +351,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 	return (
 		<div className="sessionMenu__wrapper">
-			{activeSession.isLive &&
-				activeSession.item.status !== STATUS_FINISHED &&
-				type !== SESSION_LIST_TYPES.ENQUIRY && (
-					<span
-						onClick={handleFinishAnonymousChat}
-						className="sessionMenu__item--desktop sessionMenu__button"
-					>
-						<span className="sessionMenu__icon">
-							<LeaveChatIcon />
-							{translate('anonymous.session.finishChat')}
-						</span>
-					</span>
-				)}
-
 			{hasVideoCallFeatures() && (
 				<div
 					className="sessionMenu__videoCallButtons"
@@ -470,16 +410,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 					flyoutOpen && 'sessionMenu__content--open'
 				}`}
 			>
-				{activeSession.isLive &&
-					activeSession.item.status !== STATUS_FINISHED &&
-					type !== SESSION_LIST_TYPES.ENQUIRY && (
-						<div
-							className="sessionMenu__item sessionMenu__item--mobile"
-							onClick={handleFinishAnonymousChat}
-						>
-							{translate('anonymous.session.finishChat')}
-						</div>
-					)}
 				{hasVideoCallFeatures() && (
 					<>
 						<div
