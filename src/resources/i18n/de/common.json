@@ -34,42 +34,6 @@
 			"reassign_consultant_reset_last_message": "neu zugewiesen"
 		}
 	},
-	"anonymous": {
-		"listItem": {
-			"activeLabel": "Aktiv"
-		},
-		"overlay": {
-			"chatWasFinished": {
-				"button": "Zu Diakonie.de",
-				"copy": "Sie haben nun keinen Zugriff mehr auf Ihren Chat-Verlauf.",
-				"headline": "Ihre Beraterin oder Ihr Berater hat den Chat beendet."
-			},
-			"finishChat": {
-				"asker": {
-					"copy": "Wenn Sie diesen Chat beenden, haben Sie keinen Zugriff mehr auf Ihren Chat-Verlauf."
-				},
-				"button1": "Chat beenden",
-				"button2": "Abbrechen",
-				"consultant": {
-					"copy": "Der Ratsuchende wird darüber informiert und kann danach nicht mehr auf den Chat-Verlauf zugreifen."
-				},
-				"headline": "Möchten Sie diesen Chat beenden?",
-				"success": {
-					"button": "Zu Diakonie.de",
-					"headline": "Der Chat wurde erfolgreich beendet."
-				}
-			}
-		},
-		"session": {
-			"finishChat": "Chat beenden",
-			"infoMessage": {
-				"chatFinished": "Die Nachrichten werden 48h nach dem Beenden des Chats gelöscht."
-			},
-			"systemMessage": {
-				"chatFinished": "Der Chat wurde beendet."
-			}
-		}
-	},
 	"app": {
 		"back": "Zurück",
 		"claim": "Online. Anonym. Sicher.",
@@ -1217,7 +1181,6 @@
 		"isMyMessage": {
 			"name": "Ich"
 		},
-		"liveChat": "Live Chat",
 		"newEnquiry": "Neue Anfrage",
 		"note": {
 			"title": "Notiz"
@@ -1270,9 +1233,6 @@
 		"tools": "Meine Tools"
 	},
 	"notifications": {
-		"enquiry": {
-			"new": "Sie haben eine neue Livechat Anfrage!"
-		},
 		"error": "Fehlgeschlagen",
 		"info": "Information",
 		"initialRequest": {
@@ -1497,11 +1457,6 @@
 		"header": {
 			"title": "Profil"
 		},
-		"liveChat": {
-			"subtitle": "Aktivieren Sie Ihre Verfügbarkeit und sehen Sie in den Erstanfragen unter „Live-Chat Anfragen“ die wartenden anoymen Ratsuchenden.",
-			"title": "Meine Live-Chat Verfügbarkeit",
-			"toggleLabel": "Bin verfügbar"
-		},
 		"noContent": "Keine Angabe",
 		"notifications": {
 			"appointmentNotificationEnabled": {
@@ -1573,7 +1528,6 @@
 		"routes": {
 			"activities": {
 				"absence": "Meine Abwesenheit",
-				"availability": "Meine Verfügbarkeit",
 				"statistics": "Meine Statistik",
 				"title": "Meine Aktivitäten"
 			},
@@ -2141,20 +2095,13 @@
 			"buttonTitle": "Chat anlegen"
 		},
 		"empty": {
-			"anonymous": "Aktuell warten keine anonymen Ratsuchenden auf einen Live-Chat",
 			"archived": "Es sind noch keine Beratungen archiviert",
 			"known": "Aktuell liegen keine Erstanfragen vor",
 			"mySessions": "Sie haben zurzeit keine aktiven Beratungen",
 			"teamSessions": "Ihr Team hat keine aktiven Beratungen"
 		},
 		"preview": {
-			"anonymous": {
-				"tab": "Live-Chat Anfragen"
-			},
-			"headline": "Erstanfragen",
-			"registered": {
-				"tab": "Erstanfragen"
-			}
+			"headline": "Erstanfragen"
 		},
 		"reloadButton": {
 			"label": "Erneut laden"
@@ -2164,10 +2111,6 @@
 			"label": {
 				"postfix": "Uhr"
 			}
-		},
-		"unavailable": {
-			"buttonLabel": "Verfügbarkeit aktivieren",
-			"description": "Aktivieren Sie Ihre Verfügbarkeit und erhalten Sie hier die Live-Chat Anfragen von anonymen Ratsuchenden"
 		},
 		"user": {
 			"consultantUnknown": "Beraterinnen- oder Berater-Suche läuft",
@@ -2676,10 +2619,6 @@
 			"1": {
 				"intro": "Hier finden Sie eine Übersicht über alle offenen Anfragen, die noch keinem Berater zugeordnet sind. Ihr gesamtes Team hat Zugriff auf diese Übersicht.\n<br /><br /> Die ältesten Anfragen stehen oben, die neuesten ganz unten, damit Sie die zuerst eingegangenen leichter finden können.\n<br /><br /> In dem Moment, in dem Sie auf 'Anfrage annehmen' klicken, wird die Anfrage sofort in Ihren Bereich 'Meine Beratungen' verschoben und die anderen Berater_innen sehen sie nicht mehr.",
 				"title": "Erstanfragen"
-			},
-			"2": {
-				"intro": "Von hier aus können Sie einen Chat mit einem/einer Ratsuchenden beginnen, der/die sich gerade im Warteraum befindet. <br /><br /> Die Ratsuchenden werden mit einem anonymen Namen gekennzeichnet, wie zum Beispiel \"Ratsuchende_r 11\". <br /><br /> Wenn Sie den Chat starten möchten, klicken Sie auf \"Chat starten\" und Sie können das Gespräch unter der Rubrik \"Meine Beratungen\" fortsetzen.",
-				"title": "Live-Chat Anfragen"
 			},
 			"3": {
 				"intro": "In diesem Bereich finden Sie alle Anfragen, die Sie angenommen haben. \n<br /><br /> Der Nachrichtenverlauf, der zuletzt bearbeitet wurde, steht ganz oben.\nFalls der/die Ratsuchende gerade im Warteraum online ist, sehen Sie das Label \"Aktiv\" direkt neben dem Namen.",

@@ -34,42 +34,6 @@
 			"reassign_consultant_reset_last_message": "reassigned"
 		}
 	},
-	"anonymous": {
-		"listItem": {
-			"activeLabel": "Active"
-		},
-		"overlay": {
-			"chatWasFinished": {
-				"button": "Go to Caritas.de",
-				"copy": "You will no longer have access to your chat history.",
-				"headline": "Your consultant has ended the chat."
-			},
-			"finishChat": {
-				"asker": {
-					"copy": "When you exit this chat, you will no longer have access to your chat history."
-				},
-				"button1": "End chat",
-				"button2": "Cancel",
-				"consultant": {
-					"copy": "The advice seeker will be informed about this and will not be able to access the chat history afterwards."
-				},
-				"headline": "Do you want to end this chat?",
-				"success": {
-					"button": "Go to Caritas.de",
-					"headline": "The chat has ended successfully."
-				}
-			}
-		},
-		"session": {
-			"finishChat": "End chat",
-			"infoMessage": {
-				"chatFinished": "The messages are deleted 48h after the chat ends."
-			},
-			"systemMessage": {
-				"chatFinished": "The chat has been closed."
-			}
-		}
-	},
 	"app": {
 		"back": "back",
 		"claim": "Online. Anonymous. Secure.",
@@ -1202,7 +1166,6 @@
 		"isMyMessage": {
 			"name": "Me"
 		},
-		"liveChat": "Live chat",
 		"newEnquiry": "New enquiry",
 		"note": {
 			"title": "Note"
@@ -1248,9 +1211,6 @@
 		"tools": "My tools"
 	},
 	"notifications": {
-		"enquiry": {
-			"new": "You have a new live chat request!"
-		},
 		"error": "failed",
 		"info": "info",
 		"initialRequest": {
@@ -1537,7 +1497,6 @@
 		"routes": {
 			"activities": {
 				"absence": "My absence",
-				"availability": "My availability",
 				"statistics": "My statistics",
 				"title": "My activities"
 			},
@@ -2036,10 +1995,6 @@
 			"label": {
 				"postfix": "Clock"
 			}
-		},
-		"unavailable": {
-			"buttonLabel": "Activate availability",
-			"description": "Activate your availability to receive initial inquiries from advice seekers"
 		},
 		"user": {
 			"consultantUnknown": "Search for consultants underway",
@@ -2547,10 +2502,6 @@
 			"1": {
 				"intro": "Here you will find an overview of all open requests that are not yet assigned to a consultant. Your entire team has access to this overview.\n<br /><br /> The oldest requests are at the top, the newest at the bottom, to make it easier for you to find the ones you received first.\n<br /><br /> The moment you click on \"Accept request\", the request will be immediately moved to your \"My consultations\" section and the other consultants will not see it anymore.",
 				"title": "Initial inquiries"
-			},
-			"2": {
-				"intro": "From here you can start a chat with a person seeking advice who is currently in the waiting room. <br /><br /> Those seeking advice are identified by an anonymous name, such as \"Advice Seeker 11\". <br /><br /> If you want to start the chat, click on \"Start chat\" and you will be able to continue the conversation under the \"My consultations\" section.",
-				"title": "Live chat requests"
 			},
 			"3": {
 				"intro": "In this section you will find all the requests that you have accepted. \n<br /><br /> The message history that was last edited is at the top.\nIf the person seeking advice is currently online in the waiting room, you will see the label \"Active\" right next to the name.",

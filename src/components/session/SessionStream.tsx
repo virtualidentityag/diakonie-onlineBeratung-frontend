@@ -80,7 +80,7 @@ export const SessionStream = ({
 	const [loading, setLoading] = useState(true);
 	const [overlayItem, setOverlayItem] = useState(null);
 
-	const { activeSession, readActiveSession, reloadActiveSession } =
+	const { activeSession, readActiveSession } =
 		useContext(ActiveSessionContext);
 
 	const { addNewUsersToEncryptedRoom } = useE2EE(activeSession?.rid);
@@ -133,7 +133,7 @@ export const SessionStream = ({
 		}
 
 		readActiveSession();
-	}, [activeSession, readActiveSession, readonly, userData]);
+	}, [readActiveSession, readonly]);
 
 	/**
 	 * ToDo: roomMessageBounce is just a temporary fix because currently

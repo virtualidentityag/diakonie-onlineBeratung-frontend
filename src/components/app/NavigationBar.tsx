@@ -69,7 +69,7 @@ export const NavigationBar = ({
 
 	const handleLogout = useCallback(() => {
 		onLogout();
-	}, [onLogout, sessionId, userData]);
+	}, [onLogout]);
 
 	const location = useLocation();
 	const [animateNavIcon, setAnimateNavIcon] = useState(false);
