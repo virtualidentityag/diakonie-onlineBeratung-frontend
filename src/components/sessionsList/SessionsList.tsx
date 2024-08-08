@@ -4,7 +4,6 @@ import {
 	useCallback,
 	useContext,
 	useEffect,
-	useMemo,
 	useRef,
 	useState
 } from 'react';
@@ -19,11 +18,8 @@ import {
 	SESSION_TYPES
 } from '../session/sessionHelpers';
 import {
-	AnonymousConversationFinishedContext,
-	AnonymousConversationStartedContext,
 	AUTHORITIES,
 	buildExtendedSession,
-	ConsultingTypesContext,
 	ExtendedSessionInterface,
 	getExtendedSession,
 	hasUserAuthority,
@@ -86,10 +82,6 @@ export const SessionsList = ({
 	sessionTypes
 }: SessionsListProps) => {
 	const { t: translate } = useTranslation();
-	const { consultingTypes } = useContext(ConsultingTypesContext);
-	const { anonymousConversationFinished } = useContext(
-		AnonymousConversationFinishedContext
-	);
 
 	const { rcGroupId: groupIdFromParam, sessionId: sessionIdFromParam } =
 		useParams<{ rcGroupId: string; sessionId: string }>();
@@ -119,9 +111,6 @@ export const SessionsList = ({
 	const [totalItems, setTotalItems] = useState(0);
 	const [isReloadButtonVisible, setIsReloadButtonVisible] = useState(false);
 	const [isRequestInProgress, setIsRequestInProgress] = useState(false);
-	const { anonymousConversationStarted, setAnonymousConversationStarted } =
-		useContext(AnonymousConversationStartedContext);
-
 	const abortController = useRef<AbortController>(null);
 
 	useGroupWatcher(isLoading);
@@ -248,7 +237,7 @@ export const SessionsList = ({
 						ready: true,
 						sessions
 					});
-					// TODO can be reduced?
+					// TODO-243 can be reduced?
 					if (
 						sessions?.length === 1 &&
 						sessions[0]?.session?.status === STATUS_EMPTY
@@ -488,9 +477,6 @@ export const SessionsList = ({
 	// Subscribe to all my messages
 	useEffect(() => {
 		const userId = rcUid.current;
-		if (anonymousConversationFinished) {
-			return;
-		}
 
 		if (socketReady && !subscribed.current) {
 			subscribed.current = true;
@@ -537,7 +523,6 @@ export const SessionsList = ({
 			}
 		};
 	}, [
-		anonymousConversationFinished,
 		onDebounceRoomsChanged,
 		onDebounceSubscriptionsChanged,
 		socketReady,
@@ -594,21 +579,6 @@ export const SessionsList = ({
 		setIsReloadButtonVisible(false);
 		loadMoreSessions();
 	}, [loadMoreSessions]);
-
-	const showEnquiryTabs = useMemo(() => {
-		return (
-			hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
-			userData.hasAnonymousConversations &&
-			type === SESSION_LIST_TYPES.ENQUIRY &&
-			userData.agencies.some(
-				(agency) =>
-					(consultingTypes ?? []).find(
-						(consultingType) =>
-							consultingType.id === agency.consultingType
-					)?.isAnonymousConversationAllowed
-			)
-		);
-	}, [consultingTypes, type, userData]);
 
 	const showSessionListTabs =
 		userData.hasArchive &&
@@ -749,50 +719,8 @@ export const SessionsList = ({
 
 	return (
 		<div className="sessionsList__innerWrapper">
-			{(showEnquiryTabs || showSessionListTabs) && (
+			{showSessionListTabs && (
 				<div className="sessionsList__functionalityWrapper">
-					{showEnquiryTabs && (
-						<div role="tablist" className="sessionsList__tabs">
-							<Link
-								className={clsx({
-									'sessionsList__tabs--active':
-										!sessionListTab
-								})}
-								to={'/sessions/consultant/sessionPreview'}
-								onKeyDown={(e) => handleKeyDownTabs(e)}
-								ref={(el) => (ref_tab_first.current = el)}
-								tabIndex={0}
-								role="tab"
-							>
-								<Text
-									text={translate(
-										'sessionList.preview.registered.tab'
-									)}
-									type="standard"
-								/>
-							</Link>
-							<Link
-								className={clsx({
-									'sessionsList__tabs--active':
-										sessionListTab ===
-										SESSION_LIST_TAB_ANONYMOUS
-								})}
-								to={`/sessions/consultant/sessionPreview?sessionListTab=${SESSION_LIST_TAB_ANONYMOUS}`}
-								onKeyDown={(e) => handleKeyDownTabs(e)}
-								ref={(el) => (ref_tab_second.current = el)}
-								tabIndex={-1}
-								role="tab"
-							>
-								<Text
-									className={clsx('walkthrough_step_2')}
-									text={translate(
-										'sessionList.preview.anonymous.tab'
-									)}
-									type="standard"
-								/>
-							</Link>
-						</div>
-					)}
 					{showSessionListTabs && (
 						<div className="sessionsList__tabs" role="tablist">
 							<Link
@@ -848,7 +776,7 @@ export const SessionsList = ({
 			<div
 				className={clsx('sessionsList__scrollContainer', {
 					'sessionsList__scrollContainer--hasTabs':
-						showEnquiryTabs || showSessionListTabs
+						showSessionListTabs
 				})}
 				ref={listRef}
 				onScroll={handleListScroll}

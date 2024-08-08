@@ -11,10 +11,7 @@ interface StepsFeatureFlag {
 }
 
 // images, etc. can be included via "<div className="hasBackgroundImage"><div>My Text</div> in the intro section
-const steps = ({
-	hasTeamAgency,
-	anonymousConversationAllowed
-}: StepsFeatureFlag): StepsData[] =>
+const steps = ({ hasTeamAgency }: StepsFeatureFlag): StepsData[] =>
 	[
 		{
 			title: 'walkthrough.step.0.title',
@@ -25,12 +22,6 @@ const steps = ({
 			element: '.walkthrough-sessions-consultant-sessionpreview',
 			intro: 'walkthrough.step.1.intro',
 			path: '/sessions/consultant/sessionPreview'
-		},
-		anonymousConversationAllowed && {
-			title: 'walkthrough.step.2.title',
-			element: '.walkthrough_step_2',
-			intro: 'walkthrough.step.2.intro',
-			path: '/sessions/consultant/sessionPreview?sessionListTab=anonymous'
 		},
 		{
 			title: 'walkthrough.step.3.title',

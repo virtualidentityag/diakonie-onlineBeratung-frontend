@@ -15,7 +15,6 @@ export interface UserDataInterface {
 	firstName?: string;
 	formalLanguage: boolean;
 	grantedAuthorities: [string];
-	hasAnonymousConversations: boolean;
 	hasArchive: boolean;
 	inTeamAgency: boolean;
 	isDisplayNameEditable: boolean;

@@ -272,8 +272,6 @@ export const MessageItemComponent = ({
 		alias?.messageType === ALIAS_MESSAGE_TYPES.UPDATE_SESSION_DATA;
 	const isVideoCallMessage =
 		alias?.messageType === ALIAS_MESSAGE_TYPES.VIDEOCALL;
-	const isFinishedConversationMessage =
-		alias?.messageType === ALIAS_MESSAGE_TYPES.FINISHED_CONVERSATION;
 	const isUserMutedMessage =
 		alias?.messageType === ALIAS_MESSAGE_TYPES.USER_MUTED;
 	const isE2EEActivatedMessage =
@@ -378,14 +376,6 @@ export const MessageItemComponent = ({
 						data={alias.content}
 						messageType={alias.messageType}
 					/>
-				);
-			case isFinishedConversationMessage:
-				return (
-					<span className="messageItem__message--system">
-						{translate(
-							'anonymous.session.systemMessage.chatFinished'
-						)}
-					</span>
 				);
 			case isVideoCallMessage && !videoCallMessage?.eventType:
 				const parsedMessage = JSON.parse(
@@ -526,9 +516,7 @@ export const MessageItemComponent = ({
 					messageTime={messageTime}
 					t={t}
 					type={getUsernameType()}
-					isReadStatusDisabled={
-						isVideoCallMessage || isFinishedConversationMessage
-					}
+					isReadStatusDisabled={isVideoCallMessage}
 				/>
 			</div>
 		</div>

@@ -15,14 +15,13 @@ import {
 	AUTHORITIES,
 	getContact,
 	hasUserAuthority,
-	AnonymousConversationFinishedContext,
 	E2EEContext,
 	SessionTypeContext,
 	useTenant,
 	UserDataContext,
 	ActiveSessionContext
 } from '../../globalState';
-import { STATUS_ARCHIVED, STATUS_FINISHED } from '../../globalState/interfaces';
+import { STATUS_ARCHIVED } from '../../globalState/interfaces';
 import {
 	apiPutDearchive,
 	apiSendEnquiry,
@@ -124,8 +123,7 @@ const INFO_TYPES = {
 	ATTACHMENT_SIZE_ERROR: 'ATTACHMENT_SIZE_ERROR',
 	ATTACHMENT_FORMAT_ERROR: 'ATTACHMENT_FORMAT_ERROR',
 	ATTACHMENT_QUOTA_REACHED_ERROR: 'ATTACHMENT_QUOTA_REACHED_ERROR',
-	ATTACHMENT_OTHER_ERROR: 'ATTACHMENT_OTHER_ERROR',
-	FINISHED_CONVERSATION: 'FINISHED_CONVERSATION'
+	ATTACHMENT_OTHER_ERROR: 'ATTACHMENT_OTHER_ERROR'
 };
 
 export interface MessageSubmitInterfaceComponentProps {
@@ -788,13 +786,6 @@ export const MessageSubmitInterfaceComponent = ({
 				isInfo: false,
 				infoHeadline: translate('attachments.error.other.headline'),
 				infoMessage: translate('attachments.error.other.message')
-			};
-		} else if (activeInfo === INFO_TYPES.FINISHED_CONVERSATION) {
-			infoData = {
-				isInfo: true,
-				infoHeadline: translate(
-					'anonymous.session.infoMessage.chatFinished'
-				)
 			};
 		} else if (activeInfo === INFO_TYPES.ARCHIVED) {
 			infoData = {

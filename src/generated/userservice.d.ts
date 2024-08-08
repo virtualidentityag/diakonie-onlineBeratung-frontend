@@ -709,12 +709,6 @@ declare namespace UserService {
 			userRoles?: string[];
 			grantedAuthorities?: string[];
 			consultingTypes?: ConsultingTypeMap;
-			/**
-			 * Is true if consultant has at least one consulting type containing anonymous conversations active
-			 * example:
-			 * true
-			 */
-			hasAnonymousConversations?: boolean;
 		}
 		export interface UserSessionListResponseDTO {
 			sessions?: UserSessionResponseDTO[];

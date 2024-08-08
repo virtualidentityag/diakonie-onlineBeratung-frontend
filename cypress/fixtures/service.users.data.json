@@ -23,7 +23,6 @@
 			"AUTHORIZATION_VIEW_AGENCY_CONSULTANTS",
 			"AUTHORIZATION_ASSIGN_CONSULTANT_TO_SESSION"
 		],
-		"hasAnonymousConversations": false,
 		"consultingTypes": null,
 		"formalLanguage": true,
 		"absent": false,
@@ -60,7 +59,6 @@
 			}
 		],
 		"grantedAuthorities": ["AUTHORIZATION_CONSULTANT_DEFAULT"],
-		"hasAnonymousConversations": false,
 		"consultingTypes": null,
 		"formalLanguage": true,
 		"absent": false,
@@ -93,7 +91,6 @@
 			},
 			"17": { "sessionData": null, "isRegistered": false, "agency": null }
 		},
-		"hasAnonymousConversations": false,
 		"formalLanguage": true,
 		"absent": false,
 		"inTeamAgency": false

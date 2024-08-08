@@ -19,7 +19,6 @@
 		}
 	},
 	"isSubsequentRegistrationAllowed": true,
-	"isAnonymousConversationAllowed": true,
 	"isVideoCallAllowed": true,
 	"isSetEmailAllowed": true,
 	"slug": "suchtberatung",
