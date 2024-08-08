@@ -14,7 +14,6 @@ export const endpoints = {
 	agencyConsultants: apiUrl + '/service/users/consultants',
 	agencyServiceBase: apiUrl + '/service/agencies',
 	anonymousAskerBase: apiUrl + '/service/conversations/askers/anonymous/',
-	anonymousBase: apiUrl + '/service/conversations/anonymous/',
 	appointmentBase: apiUrl + '/service/appointments/sessions',
 	appointmentBaseNew: (sessionId: number) =>
 		apiUrl + `/service/appointments/sessions/${sessionId}/enquiry/new`,
@@ -101,8 +100,6 @@ export const endpoints = {
 			resetE2EKey: apiUrl + '/api/v1/users.resetE2EKey'
 		}
 	},
-	registerAnonymousAsker:
-		apiUrl + '/service/conversations/askers/anonymous/new',
 	registerAsker: apiUrl + '/service/users/askers/new',
 	baseUserService: apiUrl + '/service/users',
 	registerAskerNewConsultingType:
