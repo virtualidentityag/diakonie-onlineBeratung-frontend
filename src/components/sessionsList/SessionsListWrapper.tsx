@@ -32,10 +32,7 @@ export const SessionsListWrapper = ({
 	const { type } = useContext(SessionTypeContext);
 	const sessionListTab = useSearchParam<SESSION_LIST_TAB>('sessionListTab');
 
-	if (
-		hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
-		hasUserAuthority(AUTHORITIES.ANONYMOUS_DEFAULT, userData)
-	) {
+	if (hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData)) {
 		return (
 			<div className="sessionsList__wrapper">
 				<div

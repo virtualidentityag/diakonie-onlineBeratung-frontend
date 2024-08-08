@@ -23,10 +23,7 @@ import { ReactComponent as LogoutIconOutline } from '../../resources/img/icons/l
 import { ReactComponent as LogoutIconFilled } from '../../resources/img/icons/logout_filled.svg';
 import clsx from 'clsx';
 import { RocketChatUnreadContext } from '../../globalState/provider/RocketChatUnreadProvider';
-import {
-	apiFinishAnonymousConversation,
-	apiGetAskerSessionList
-} from '../../api';
+import { apiGetAskerSessionList } from '../../api';
 import { useTranslation } from 'react-i18next';
 import { LocaleSwitch } from '../localeSwitch/LocaleSwitch';
 import { userHasBudibaseTools } from '../../api/apiGetTools';
@@ -71,11 +68,6 @@ export const NavigationBar = ({
 	const ref_select = useRef<any>();
 
 	const handleLogout = useCallback(() => {
-		if (hasUserAuthority(AUTHORITIES.ANONYMOUS_DEFAULT, userData)) {
-			apiFinishAnonymousConversation(sessionId).catch((error) => {
-				console.error(error);
-			});
-		}
 		onLogout();
 	}, [onLogout, sessionId, userData]);
 

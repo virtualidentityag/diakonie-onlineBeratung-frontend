@@ -6,7 +6,6 @@ interface StepsData {
 }
 
 interface StepsFeatureFlag {
-	anonymousConversationAllowed: boolean;
 	hasTeamAgency?: boolean;
 }
 

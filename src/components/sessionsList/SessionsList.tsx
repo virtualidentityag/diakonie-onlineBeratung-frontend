@@ -204,10 +204,7 @@ export const SessionsList = ({
 		setIsLoading(true);
 		setIsReloadButtonVisible(false);
 		setCurrentOffset(0);
-		if (
-			hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
-			hasUserAuthority(AUTHORITIES.ANONYMOUS_DEFAULT, userData)
-		) {
+		if (hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData)) {
 			// Fetch asker data
 			apiGetAskerSessionList()
 				.then(({ sessions }) => {
@@ -216,7 +213,6 @@ export const SessionsList = ({
 						ready: true,
 						sessions
 					});
-					// TODO-243 can be reduced?
 					if (
 						sessions?.length === 1 &&
 						sessions[0]?.session?.status === STATUS_EMPTY

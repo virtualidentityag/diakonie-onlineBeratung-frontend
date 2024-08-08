@@ -4,8 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import {
 	RouterConfigUser,
 	RouterConfigConsultant,
-	RouterConfigTeamConsultant,
-	RouterConfigAnonymousAsker
+	RouterConfigTeamConsultant
 } from './RouterConfig';
 import { AbsenceHandler } from './AbsenceHandler';
 import {
@@ -46,9 +45,6 @@ export const Routing = (props: RoutingProps) => {
 		}
 		if (hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData)) {
 			return RouterConfigConsultant(settings);
-		}
-		if (hasUserAuthority(AUTHORITIES.ANONYMOUS_DEFAULT, userData)) {
-			return RouterConfigAnonymousAsker();
 		}
 		return RouterConfigUser(settings, hasAssignedConsultant);
 	}, [userData, settings, hasAssignedConsultant]);

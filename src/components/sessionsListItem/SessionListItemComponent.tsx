@@ -67,7 +67,7 @@ export const SessionListItemComponent = ({
 	const getSessionListTab = () =>
 		`${sessionListTab ? `?sessionListTab=${sessionListTab}` : ''}`;
 	const { userData } = useContext(UserDataContext);
-	const { type, path: listPath } = useContext(SessionTypeContext);
+	const { path: listPath } = useContext(SessionTypeContext);
 	const { isE2eeEnabled } = useContext(E2EEContext);
 	const { activeSession } = useContext(ActiveSessionContext);
 
@@ -150,10 +150,6 @@ export const SessionListItemComponent = ({
 	]);
 
 	const isAsker = hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData);
-	const isAnonymous = hasUserAuthority(
-		AUTHORITIES.ANONYMOUS_DEFAULT,
-		userData
-	);
 
 	if (!activeSession) {
 		return null;
@@ -312,7 +308,7 @@ export const SessionListItemComponent = ({
 	const hasConsultantData = !!activeSession.consultant;
 	let sessionTopic = '';
 
-	if (isAsker || isAnonymous) {
+	if (isAsker) {
 		if (hasConsultantData) {
 			sessionTopic =
 				activeSession.consultant.displayName ||

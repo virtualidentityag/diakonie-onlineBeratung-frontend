@@ -144,11 +144,7 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 							!isAskerInfoAvailable()
 					})}
 				>
-					{(hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
-						hasUserAuthority(
-							AUTHORITIES.ANONYMOUS_DEFAULT,
-							userData
-						)) && (
+					{hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) && (
 						<h3>
 							{contact?.displayName ||
 								contact?.username ||
