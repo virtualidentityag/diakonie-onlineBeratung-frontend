@@ -5,8 +5,7 @@ import { getSessionsListItemIcon, LIST_ICONS } from './sessionsListItemHelpers';
 import {
 	convertISO8601ToMSSinceEpoch,
 	getPrettyDateFromMessageDate,
-	MILLISECONDS_PER_SECOND,
-	prettyPrintTimeDifference
+	MILLISECONDS_PER_SECOND
 } from '../../utils/dateHelpers';
 import {
 	SESSION_LIST_TAB,
@@ -193,11 +192,6 @@ export const SessionListItemComponent = ({
 			return {
 				variant: LIST_ICONS.IS_GROUP_CHAT,
 				title: translate('message.groupChat')
-			};
-		} else if (activeSession.isLive) {
-			return {
-				variant: LIST_ICONS.IS_LIVE_CHAT,
-				title: translate('message.liveChat')
 			};
 		} else if (activeSession.isEmptyEnquiry) {
 			return {

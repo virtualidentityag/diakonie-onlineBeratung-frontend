@@ -11,7 +11,6 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import {
 	getSessionType,
 	SESSION_LIST_TAB,
-	SESSION_LIST_TAB_ANONYMOUS,
 	SESSION_LIST_TAB_ARCHIVE,
 	SESSION_LIST_TYPES,
 	SESSION_TYPE_ARCHIVED,
@@ -33,7 +32,6 @@ import {
 	ActiveSessionProvider
 } from '../../globalState';
 import { ListItemInterface, STATUS_EMPTY } from '../../globalState/interfaces';
-import { apiPatchUserData } from '../../api/apiPatchUserData';
 import { SessionListItemComponent } from '../sessionsListItem/SessionListItemComponent';
 import { SessionsListSkeleton } from '../sessionsListItem/SessionsListItemSkeleton';
 import {
@@ -66,8 +64,6 @@ import { useWatcher } from '../../hooks/useWatcher';
 import { useSearchParam } from '../../hooks/useSearchParams';
 import { apiGetChatRoomById } from '../../api/apiGetChatRoomById';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as LiveChatAvailableIllustration } from '../../resources/img/illustrations/live-chat-available.svg';
-import { ListInfo } from '../listInfo/ListInfo';
 import { RocketChatUserStatusContext } from '../../globalState/provider/RocketChatUserStatusProvider';
 import { RocketChatUsersOfRoomProvider } from '../../globalState/provider/RocketChatUsersOfRoomProvider';
 import { EmptyListItem } from './EmptyListItem';
@@ -103,7 +99,7 @@ export const SessionsList = ({
 
 	const sessionListTab = useSearchParam<SESSION_LIST_TAB>('sessionListTab');
 
-	const { userData, reloadUserData } = useContext(UserDataContext);
+	const { userData } = useContext(UserDataContext);
 	const { status } = useContext(RocketChatUserStatusContext);
 
 	const [isLoading, setIsLoading] = useState(true);
@@ -114,14 +110,6 @@ export const SessionsList = ({
 	const abortController = useRef<AbortController>(null);
 
 	useGroupWatcher(isLoading);
-
-	const toggleAvailability = () => {
-		apiPatchUserData({
-			available: status !== STATUS_ONLINE
-		})
-			.then(reloadUserData)
-			.catch(console.log);
-	};
 
 	// If create new group chat
 	const isCreateChatActive = groupIdFromParam === 'createGroupChat';
@@ -183,14 +171,6 @@ export const SessionsList = ({
 		[sessionListTab, type]
 	);
 
-	useLiveChatWatcher(
-		!isLoading &&
-			type === SESSION_LIST_TYPES.ENQUIRY &&
-			sessionListTab === SESSION_LIST_TAB_ANONYMOUS,
-		getConsultantSessionList,
-		currentOffset
-	);
-
 	const scrollIntoView = useCallback(() => {
 		const activeItem = document.querySelector('.sessionsListItem--active');
 		if (activeItem) {
@@ -224,7 +204,6 @@ export const SessionsList = ({
 		setIsLoading(true);
 		setIsReloadButtonVisible(false);
 		setCurrentOffset(0);
-		setAnonymousConversationStarted(false);
 		if (
 			hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
 			hasUserAuthority(AUTHORITIES.ANONYMOUS_DEFAULT, userData)
@@ -298,9 +277,7 @@ export const SessionsList = ({
 		getConsultantSessionList,
 		initialId,
 		scrollIntoView,
-		userData,
-		anonymousConversationStarted,
-		setAnonymousConversationStarted
+		userData
 	]);
 	/* eslint-enable */
 	// Refresh myself
@@ -808,8 +785,7 @@ export const SessionsList = ({
 						) && <SessionListCreateChat />}
 
 					{(!isLoading || finalSessionsList.length > 0) &&
-						(status === STATUS_ONLINE ||
-							sessionListTab !== SESSION_LIST_TAB_ANONYMOUS) &&
+						status === STATUS_ONLINE &&
 						finalSessionsList
 							.map((session) =>
 								buildExtendedSession(session, groupIdFromParam)
@@ -872,109 +848,17 @@ export const SessionsList = ({
 					!isCreateChatActive &&
 					!isReloadButtonVisible &&
 					finalSessionsList.length === 0 &&
-					(sessionListTab !== SESSION_LIST_TAB_ANONYMOUS ||
-						status === STATUS_ONLINE) && (
+					status === STATUS_ONLINE && (
 						<EmptyListItem
 							sessionListTab={sessionListTab}
 							type={type}
 						/>
-					)}
-
-				{!isLoading &&
-					status !== STATUS_ONLINE &&
-					type === SESSION_LIST_TYPES.ENQUIRY &&
-					sessionListTab === SESSION_LIST_TAB_ANONYMOUS && (
-						<ListInfo
-							headline={translate(
-								'sessionList.unavailable.description'
-							)}
-							Illustration={LiveChatAvailableIllustration}
-							buttonLabel={translate(
-								'sessionList.unavailable.buttonLabel'
-							)}
-							onButtonClick={toggleAvailability}
-						></ListInfo>
 					)}
 			</div>
 		</div>
 	);
 };
 
-/*
-Watch for inactive groups because there is no api endpoint
- */
-const useLiveChatWatcher = (
-	shouldStart: boolean,
-	loader: (
-		offset: number,
-		initialID?: string,
-		count?: number
-	) => Promise<any>,
-	offset: number
-) => {
-	const { sessions, dispatch } = useContext(SessionsDataContext);
-
-	const refreshLoader = useCallback((): Promise<any> => {
-		return loader(0, null, offset + SESSION_COUNT)
-			.then(({ sessions: newSessions }) => {
-				const addedSessions = newSessions.filter(
-					(newSession) =>
-						!sessions.find(
-							(session) =>
-								newSession.session.groupId ===
-								session.session.groupId
-						)
-				);
-				dispatch({
-					type: UPDATE_SESSIONS,
-					sessions: addedSessions
-				});
-
-				const removedSessions = sessions.filter(
-					(session) =>
-						!newSessions.find(
-							(newSession) =>
-								newSession.session.groupId ===
-								session.session.groupId
-						)
-				);
-
-				if (removedSessions.length > 0) {
-					dispatch({
-						type: REMOVE_SESSIONS,
-						ids: removedSessions.map(
-							(session) => session.session.groupId
-						)
-					});
-				}
-			})
-			.catch((e) => {
-				if (e.message === FETCH_ERRORS.EMPTY) {
-					dispatch({
-						type: SET_SESSIONS,
-						sessions: []
-					});
-				}
-			});
-	}, [dispatch, loader, offset, sessions]);
-
-	const [startWatcher, stopWatcher, isWatcherRunning] = useWatcher(
-		refreshLoader,
-		3000
-	);
-
-	useEffect(() => {
-		if (!isWatcherRunning && shouldStart) {
-			startWatcher();
-		}
-
-		return () => {
-			if (isWatcherRunning) {
-				stopWatcher();
-			}
-		};
-	}, [shouldStart, isWatcherRunning, startWatcher, stopWatcher]);
-};
 /*
 Watch for inactive groups because there is no api endpoint
  */

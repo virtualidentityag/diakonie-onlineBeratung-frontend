@@ -1,6 +1,5 @@
 import { endpoints } from '../resources/scripts/endpoints';
 import {
-	SESSION_LIST_TAB_ANONYMOUS,
 	SESSION_LIST_TAB_ARCHIVE,
 	SESSION_LIST_TYPES
 } from '../components/session/sessionHelpers';
@@ -41,11 +40,7 @@ export const apiGetConsultantSessionList = async ({
 				: `${endpoints.consultantSessions}`
 		}`;
 	} else {
-		url = `${endpoints.consultantEnquiriesBase}${
-			sessionListTab && sessionListTab === SESSION_LIST_TAB_ANONYMOUS
-				? `${SESSION_LIST_TAB_ANONYMOUS}`
-				: 'registered'
-		}?`;
+		url = `${endpoints.consultantEnquiriesBase}registered`;
 	}
 	url = url + `count=${count}&filter=all&offset=${offset}`;
 

@@ -103,12 +103,9 @@ export const getChatItemForSession = (
 	return sessionItem[chatType] as SessionItemInterface;
 };
 
-export const SESSION_LIST_TAB_ANONYMOUS = 'anonymous';
 export const SESSION_LIST_TAB_ARCHIVE = 'archive';
 
-export type SESSION_LIST_TAB =
-	| typeof SESSION_LIST_TAB_ANONYMOUS
-	| typeof SESSION_LIST_TAB_ARCHIVE;
+export type SESSION_LIST_TAB = typeof SESSION_LIST_TAB_ARCHIVE;
 
 export const getViewPathForType = (type: SESSION_LIST_TYPES) => {
 	if (type === SESSION_LIST_TYPES.ENQUIRY) {
