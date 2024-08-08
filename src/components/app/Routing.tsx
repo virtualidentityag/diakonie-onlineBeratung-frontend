@@ -18,7 +18,6 @@ import {
 } from '../../globalState';
 import { NavigationBar } from './NavigationBar';
 import { Header } from '../header/Header';
-import { FinishedAnonymousConversationHandler } from './FinishedAnonymousConversationHandler';
 import { ReleaseNote } from '../releaseNote/ReleaseNote';
 import { NonPlainRoutesWrapper } from './NonPlainRoutesWrapper';
 import { Walkthrough } from '../walkthrough/Walkthrough';
@@ -357,10 +356,6 @@ export const Routing = (props: RoutingProps) => {
 								AUTHORITIES.CONSULTANT_DEFAULT,
 								userData
 							) && <AbsenceHandler />}
-							{hasUserAuthority(
-								AUTHORITIES.ANONYMOUS_DEFAULT,
-								userData
-							) && <FinishedAnonymousConversationHandler />}
 							{hasUserAuthority(
 								AUTHORITIES.CONSULTANT_DEFAULT,
 								userData
