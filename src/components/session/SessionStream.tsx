@@ -138,17 +138,6 @@ export const SessionStream = ({
 			return;
 		}
 
-		const isLiveChatFinished =
-			activeSession.isLive &&
-			activeSession.item.status === STATUS_FINISHED;
-
-		if (
-			!hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
-			isLiveChatFinished
-		) {
-			return;
-		}
-
 		readActiveSession();
 	}, [activeSession, readActiveSession, readonly, userData]);
 

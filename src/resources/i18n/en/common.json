@@ -68,52 +68,6 @@
 			"systemMessage": {
 				"chatFinished": "The chat has been closed."
 			}
-		},
-		"waitingroom": {
-			"closed": {
-				"description": "On our <a target=\"_blank\" href=\"{{websiteUrl}}\">Website</a> you can find the opening hours of the chat in the respective subject area.",
-				"headline": "Our live chat is currently unavailable",
-				"illustrationTitle": "chat closed"
-			},
-			"dataProtection": {
-				"button": "I agree",
-				"description": "After that, our consultants may start a chat with you.",
-				"headline": "Welcome",
-				"subline": "Please confirm our privacy policy. After that, our consultants may start a chat with you."
-			},
-			"errorPage": {
-				"button": "Reload",
-				"description": "We are sorry something must have gone wrong.<br>Try again.",
-				"headline": "Oops!"
-			},
-			"headline": "Please be patient",
-			"info": {
-				"accountDeletion": "To protect your anonymity, we delete your messages no later than 48 hours after the chat has ended."
-			},
-			"overlay": {
-				"acceptance": {
-					"button": "Chat now",
-					"copy": "Your consultant is waiting for you in the chat. Are you ready?",
-					"headline": "Welcome!"
-				},
-				"rejection": {
-					"button": "To registration",
-					"copy": "Sorry, we could not respond to your request within the chat time. Please register and leave us your message. We will get back to you within 2 business days.",
-					"headline": "Chat time ended."
-				}
-			},
-			"redirect": {
-				"subline": "Register and leave us a message. We will get back to you within 2 business days. <br><br>Go to <a href=\"registration\">registration</a>",
-				"title": "You do not need an answer immediately? And do not want to wait for a free chat?"
-			},
-			"subline": "Currently, all consultants are in discussion. We will be there for you as soon as possible.",
-			"title": {
-				"start": "Waiting room"
-			},
-			"username": {
-				"loading": "Will be loaded...",
-				"text": "Your username is:"
-			}
 		}
 	},
 	"app": {
@@ -1520,11 +1474,6 @@
 		"header": {
 			"title": "Profile"
 		},
-		"liveChat": {
-			"subtitle": "Activate your availability and see the waiting anoymous advice seekers in the initial requests under \"Live Chat Requests\".",
-			"title": "My live chat availability",
-			"toggleLabel": "available"
-		},
 		"noContent": "Not specified",
 		"notifications": {
 			"appointmentNotificationEnabled": {
@@ -2068,16 +2017,12 @@
 			"buttonTitle": "Create chat"
 		},
 		"empty": {
-			"anonymous": "Currently, no anonymous advice seekers are waiting for a live chat",
 			"archived": "There are no consultations in the archive yet",
 			"known": "There are no requests at the moment",
 			"mySessions": "You currently have no active consultations",
 			"teamSessions": "Your team has no active consultations"
 		},
 		"preview": {
-			"anonymous": {
-				"tab": "Live chat requests"
-			},
 			"headline": "Initial inquiries",
 			"registered": {
 				"tab": "Initial inquiries"

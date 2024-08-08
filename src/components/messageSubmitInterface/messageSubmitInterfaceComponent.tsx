@@ -187,9 +187,6 @@ export const MessageSubmitInterfaceComponent = ({
 	const [isTypingActive, setIsTypingActive] = useState(
 		activeSession.isGroup || activeSession.isLive
 	);
-	const [isLiveChatFinished, setIsLiveChatFinished] = useState(
-		activeSession.isLive && activeSession.item.status === STATUS_FINISHED
-	);
 	const [showAppointmentButton, setShowAppointmentButton] = useState(false);
 
 	//Emoji Picker Plugin
@@ -247,10 +244,6 @@ export const MessageSubmitInterfaceComponent = ({
 		);
 		setIsSessionArchived(activeSession.item.status === STATUS_ARCHIVED);
 		setIsTypingActive(activeSession.isGroup || activeSession.isLive);
-		setIsLiveChatFinished(
-			activeSession.isLive &&
-				activeSession.item.status === STATUS_FINISHED
-		);
 	}, [activeSession, activeSession.item.status, userData]);
 
 	const { onChange: onDraftMessageChange, loaded: draftLoaded } =
@@ -267,18 +260,10 @@ export const MessageSubmitInterfaceComponent = ({
 			setActiveInfo(INFO_TYPES.ARCHIVED);
 		} else if (isConsultantAbsent) {
 			setActiveInfo(INFO_TYPES.ABSENT);
-		} else if (isLiveChatFinished) {
-			setActiveInfo(INFO_TYPES.FINISHED_CONVERSATION);
 		} else {
 			setActiveInfo(null);
 		}
-	}, [isConsultantAbsent, isLiveChatFinished, isSessionArchived, userData]);
-
-	useEffect(() => {
-		if (isLiveChatFinished) {
-			setActiveInfo(INFO_TYPES.FINISHED_CONVERSATION);
-		}
-	}, [isLiveChatFinished]);
+	}, [isConsultantAbsent, isSessionArchived, userData]);
 
 	const getTypedMarkdownMessage = useCallback(
 		(currentEditorState?: EditorState) => {
@@ -876,177 +861,166 @@ export const MessageSubmitInterfaceComponent = ({
 				/>
 			)}
 			{activeInfo && <MessageSubmitInfo {...getMessageSubmitInfo()} />}
-			{!isLiveChatFinished && (
-				<form className="textarea">
-					<div className={'textarea__wrapper'}>
-						<div className="textarea__wrapper-send-message">
-							<span className="textarea__featureWrapper">
-								<span className="textarea__richtextToggle">
-									<RichtextToggleIcon
-										width="20"
-										height="20"
-										onClick={() =>
-											setIsRichtextActive(
-												!isRichtextActive
-											)
-										}
-										title={translate(
-											'enquiry.write.input.format'
-										)}
-										aria-label={translate(
-											'enquiry.write.input.format'
-										)}
-									/>
-								</span>
-								<EmojiSelect />
+
+			<form className="textarea">
+				<div className={'textarea__wrapper'}>
+					<div className="textarea__wrapper-send-message">
+						<span className="textarea__featureWrapper">
+							<span className="textarea__richtextToggle">
+								<RichtextToggleIcon
+									width="20"
+									height="20"
+									onClick={() =>
+										setIsRichtextActive(!isRichtextActive)
+									}
+									title={translate(
+										'enquiry.write.input.format'
+									)}
+									aria-label={translate(
+										'enquiry.write.input.format'
+									)}
+								/>
 							</span>
-							<span
-								className="textarea__inputWrapper"
-								ref={inputWrapperRef}
+							<EmojiSelect />
+						</span>
+						<span
+							className="textarea__inputWrapper"
+							ref={inputWrapperRef}
+						>
+							<div
+								className="textarea__input"
+								ref={textareaInputRef}
+								onKeyUp={() => resizeTextarea()}
+								onFocus={toggleAbsentMessage}
+								onBlur={toggleAbsentMessage}
 							>
-								<div
-									className="textarea__input"
-									ref={textareaInputRef}
-									onKeyUp={() => resizeTextarea()}
-									onFocus={toggleAbsentMessage}
-									onBlur={toggleAbsentMessage}
-								>
-									<Toolbar>
-										{(externalProps) => (
-											<div className="textarea__toolbar__buttonWrapper">
-												<BoldButton
-													{...externalProps}
-												/>
-												<ItalicButton
-													{...externalProps}
-												/>
-												<UnorderedListButton
-													{...externalProps}
-												/>
-											</div>
-										)}
-									</Toolbar>
-									<PluginsEditor
-										editorState={editorState}
-										onChange={handleEditorChange}
-										readOnly={!draftLoaded}
-										handleKeyCommand={
-											handleEditorKeyCommand
-										}
-										placeholder={placeholder}
-										stripPastedStyles={true}
-										spellCheck={true}
-										handleBeforeInput={() =>
-											handleEditorBeforeInput(editorState)
-										}
-										handlePastedText={(
-											text: string,
-											html?: string
-										): DraftHandleValue => {
-											const newEditorState =
-												handleEditorPastedText(
-													editorState,
-													text,
-													html
-												);
-											if (newEditorState) {
-												setEditorState(newEditorState);
-											}
-											return 'handled';
-										}}
-										plugins={[
-											linkifyPlugin,
-											staticToolbarPlugin,
-											emojiPlugin
-										]}
-										tabIndex={0}
-									/>
-								</div>
-								{hasUploadFunctionality &&
-									(!attachmentSelected ? (
-										<span className="textarea__attachmentSelect">
-											<ClipIcon
-												aria-label={translate(
-													'enquiry.write.input.attachement'
-												)}
-												title={translate(
-													'enquiry.write.input.attachement'
-												)}
-												onClick={handleAttachmentSelect}
+								<Toolbar>
+									{(externalProps) => (
+										<div className="textarea__toolbar__buttonWrapper">
+											<BoldButton {...externalProps} />
+											<ItalicButton {...externalProps} />
+											<UnorderedListButton
+												{...externalProps}
 											/>
-										</span>
-									) : (
-										<div className="textarea__attachmentWrapper">
-											<span className="textarea__attachmentSelected">
-												<span className="textarea__attachmentSelected__progress"></span>
-												<span className="textarea__attachmentSelected__labelWrapper">
-													{getAttachmentIcon(
-														attachmentSelected.type
-													)}
-													<p className="textarea__attachmentSelected__label">
-														{
-															attachmentSelected.name
+										</div>
+									)}
+								</Toolbar>
+								<PluginsEditor
+									editorState={editorState}
+									onChange={handleEditorChange}
+									readOnly={!draftLoaded}
+									handleKeyCommand={handleEditorKeyCommand}
+									placeholder={placeholder}
+									stripPastedStyles={true}
+									spellCheck={true}
+									handleBeforeInput={() =>
+										handleEditorBeforeInput(editorState)
+									}
+									handlePastedText={(
+										text: string,
+										html?: string
+									): DraftHandleValue => {
+										const newEditorState =
+											handleEditorPastedText(
+												editorState,
+												text,
+												html
+											);
+										if (newEditorState) {
+											setEditorState(newEditorState);
+										}
+										return 'handled';
+									}}
+									plugins={[
+										linkifyPlugin,
+										staticToolbarPlugin,
+										emojiPlugin
+									]}
+									tabIndex={0}
+								/>
+							</div>
+							{hasUploadFunctionality &&
+								(!attachmentSelected ? (
+									<span className="textarea__attachmentSelect">
+										<ClipIcon
+											aria-label={translate(
+												'enquiry.write.input.attachement'
+											)}
+											title={translate(
+												'enquiry.write.input.attachement'
+											)}
+											onClick={handleAttachmentSelect}
+										/>
+									</span>
+								) : (
+									<div className="textarea__attachmentWrapper">
+										<span className="textarea__attachmentSelected">
+											<span className="textarea__attachmentSelected__progress"></span>
+											<span className="textarea__attachmentSelected__labelWrapper">
+												{getAttachmentIcon(
+													attachmentSelected.type
+												)}
+												<p className="textarea__attachmentSelected__label">
+													{attachmentSelected.name}
+												</p>
+												<span className="textarea__attachmentSelected__remove">
+													<RemoveIcon
+														onClick={
+															handleAttachmentRemoval
 														}
-													</p>
-													<span className="textarea__attachmentSelected__remove">
-														<RemoveIcon
-															onClick={
-																handleAttachmentRemoval
-															}
-															title={translate(
-																'app.remove'
-															)}
-															aria-label={translate(
-																'app.remove'
-															)}
-														/>
-													</span>
+														title={translate(
+															'app.remove'
+														)}
+														aria-label={translate(
+															'app.remove'
+														)}
+													/>
 												</span>
 											</span>
-										</div>
-									))}
-							</span>
-							<div className="textarea__buttons">
-								<SendMessageButton
-									handleSendButton={handleButtonClick}
-									clicked={isRequestInProgress}
-									deactivated={
-										uploadProgress || isRequestInProgress
-									}
-								/>
-							</div>
+										</span>
+									</div>
+								))}
+						</span>
+						<div className="textarea__buttons">
+							<SendMessageButton
+								handleSendButton={handleButtonClick}
+								clicked={isRequestInProgress}
+								deactivated={
+									uploadProgress || isRequestInProgress
+								}
+							/>
 						</div>
-						{showAppointmentButton && (
-							<div className="textarea__wrapper-booking">
-								<Headline
-									semanticLevel="5"
-									text={translate(
-										'message.submit.booking.headline'
-									)}
-									className="textarea__wrapper-booking-headline"
-								/>
-								<Button
-									item={bookingButton}
-									isLink={true}
-									buttonHandle={handleBookingButton}
-									customIcon={<CalendarMonthIcon />}
-								/>
-							</div>
-						)}
 					</div>
-					{hasUploadFunctionality && (
-						<input
-							ref={attachmentInputRef}
-							onChange={handleAttachmentChange}
-							className="textarea__attachmentInput"
-							type="file"
-							id="dataUpload"
-							name="dataUpload"
-							accept="image/jpeg, image/png, .pdf, .docx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-						/>
+					{showAppointmentButton && (
+						<div className="textarea__wrapper-booking">
+							<Headline
+								semanticLevel="5"
+								text={translate(
+									'message.submit.booking.headline'
+								)}
+								className="textarea__wrapper-booking-headline"
+							/>
+							<Button
+								item={bookingButton}
+								isLink={true}
+								buttonHandle={handleBookingButton}
+								customIcon={<CalendarMonthIcon />}
+							/>
+						</div>
 					)}
-				</form>
-			)}
+				</div>
+				{hasUploadFunctionality && (
+					<input
+						ref={attachmentInputRef}
+						onChange={handleAttachmentChange}
+						className="textarea__attachmentInput"
+						type="file"
+						id="dataUpload"
+						name="dataUpload"
+						accept="image/jpeg, image/png, .pdf, .docx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+					/>
+				)}
+			</form>
 
 			{requestOverlayVisible && (
 				<Overlay item={requestOverlay} name={OVERLAY_REQUEST} />

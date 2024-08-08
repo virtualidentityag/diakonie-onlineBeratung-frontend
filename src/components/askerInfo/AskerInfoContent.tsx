@@ -24,12 +24,11 @@ export const AskerInfoContent = () => {
 	const { type } = useContext(SessionTypeContext);
 
 	const isSessionAssignAvailable = useMemo(() => {
-		const isLiveChat = activeSession.isLive;
 		const isGroupChat = activeSession.isGroup;
 		const isEnquiryListView = type === SESSION_LIST_TYPES.ENQUIRY;
 		const isAsker = hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData);
 
-		if (isAsker || isLiveChat || isGroupChat) {
+		if (isAsker || isGroupChat) {
 			return false;
 		}
 

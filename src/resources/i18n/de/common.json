@@ -68,52 +68,6 @@
 			"systemMessage": {
 				"chatFinished": "Der Chat wurde beendet."
 			}
-		},
-		"waitingroom": {
-			"closed": {
-				"description": "Auf unserer <a target=\"_blank\" href=\"{{websiteUrl}}\">Website</a> finden Sie im jeweiligen Themenbereich die Öffnungszeiten des Chats.",
-				"headline": "Momentan ist unser Live-Chat nicht besetzt.",
-				"illustrationTitle": "Chat geschlossen"
-			},
-			"dataProtection": {
-				"button": "Ich bin einverstanden",
-				"description": "Danach dürfen unsere Beraterinnen oder Berater einen Chat mit Ihnen starten.",
-				"headline": "Herzlich Willkommen",
-				"subline": "Bitte bestätigen Sie unsere Datenschutzbestimmungen. Danach dürfen unsere Berater_innen einen Chat mit Ihnen starten."
-			},
-			"errorPage": {
-				"button": "Neu laden",
-				"description": "Es tut uns leid, da ist wohl etwas schiefgelaufen.<br>Versuchen Sie es erneut.",
-				"headline": "Ups!"
-			},
-			"headline": "Bitte haben Sie etwas Geduld",
-			"info": {
-				"accountDeletion": "Um Ihre Anonymität zu schützen, löschen wir Ihre Nachrichten spätestens 48 Stunden nachdem der Chat beendet wurde."
-			},
-			"overlay": {
-				"acceptance": {
-					"button": "Jetzt chatten",
-					"copy": "Sie werden von Ihrer Beraterin oder Ihrem Berater im Chat erwartet. Sind Sie bereit?",
-					"headline": "Herzlich Willkommen!"
-				},
-				"rejection": {
-					"button": "Zur Registrierung",
-					"copy": "Leider konnten wir innerhalb der Chat-Zeit nicht auf Ihr Anliegen eingehen. Registrieren Sie sich und hinterlassen Sie uns Ihre Nachricht. Wir melden uns innerhalb von 2 Arbeitstagen bei Ihnen.",
-					"headline": "Chat-Zeit beendet."
-				}
-			},
-			"redirect": {
-				"subline": "Registrieren Sie sich und hinterlassen Sie uns Ihre Nachricht. Wir melden uns innerhalb von 2 Arbeitstagen bei Ihnen.",
-				"title": "Sie benötigen nicht sofort eine Antwort? Und wollen nicht auf einen freien Chat warten?"
-			},
-			"subline": "Derzeit sind alle Beraterinnen oder Berater im Gespräch. Wir sind schnellstmöglich für Sie da.",
-			"title": {
-				"start": "Warteraum"
-			},
-			"username": {
-				"loading": "Wird geladen...",
-				"text": "Ihr Benutzername lautet:"
-			}
 		}
 	},
 	"app": {

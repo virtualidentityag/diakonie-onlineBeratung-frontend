@@ -222,8 +222,7 @@ export const SessionListItemComponent = ({
 
 	const prettyPrintDate = (
 		messageDate: number, // seconds since epoch
-		createDate: string, // ISO8601 string
-		isLiveChat: boolean
+		createDate: string // ISO8601 string
 	) => {
 		const newestDate = Math.max(
 			messageDate * MILLISECONDS_PER_SECOND,
@@ -234,11 +233,7 @@ export const SessionListItemComponent = ({
 			newestDate / MILLISECONDS_PER_SECOND
 		);
 
-		return isLiveChat
-			? prettyPrintTimeDifference(newestDate, Date.now())
-			: prettyDate.str
-				? translate(prettyDate.str)
-				: prettyDate.date;
+		return prettyDate.str ? translate(prettyDate.str) : prettyDate.date;
 	};
 
 	// Hide sessions if consultingType has been switched to group chat.
@@ -382,8 +377,7 @@ export const SessionListItemComponent = ({
 					<div className="sessionsListItem__date">
 						{prettyPrintDate(
 							activeSession.item.messageDate,
-							activeSession.item.createDate,
-							activeSession.isLive
+							activeSession.item.createDate
 						)}
 					</div>
 				</div>

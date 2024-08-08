@@ -15,7 +15,6 @@ import {
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
 	SESSION_TYPE_GROUP,
-	SESSION_TYPE_LIVECHAT,
 	SESSION_TYPE_SESSION,
 	SESSION_TYPE_TEAMSESSION
 } from '../../components/session/sessionHelpers';
@@ -27,14 +26,12 @@ type UnreadStatusContextProps = {
 	sessions: string[];
 	teamsessions: string[];
 	enquiry: string[];
-	livechat: string[];
 	group: string[];
 	archiv: string[];
 	unknown: string[];
 };
 
 const initialData = {
-	livechat: [],
 	enquiry: [],
 	archiv: [],
 	sessions: [],
@@ -113,9 +110,6 @@ export function RocketChatUnreadProvider({
 
 					// Add it to relevant unread group
 					switch (sessionType) {
-						case SESSION_TYPE_LIVECHAT:
-							newUnreadStatus.livechat.push(subscription.rid);
-							break;
 						case SESSION_TYPE_ENQUIRY:
 							newUnreadStatus.enquiry.push(subscription.rid);
 							break;

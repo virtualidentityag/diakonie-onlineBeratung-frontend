@@ -54,9 +54,6 @@ type statusFinished = typeof STATUS_FINISHED;
 export const STATUS_ARCHIVED = 4;
 type statusArchived = typeof STATUS_ARCHIVED;
 
-export const REGISTRATION_TYPE_ANONYMOUS = 'ANONYMOUS';
-type registrationTypeAnonymous = typeof REGISTRATION_TYPE_ANONYMOUS;
-
 export const REGISTRATION_TYPE_REGISTERED = 'REGISTERED';
 type registrationTypeRegistered = typeof REGISTRATION_TYPE_REGISTERED;
 
@@ -84,7 +81,7 @@ export interface SessionItemInterface {
 	messagesRead: boolean;
 	messageTime?: number;
 	postcode: number;
-	registrationType: registrationTypeAnonymous | registrationTypeRegistered;
+	registrationType: registrationTypeRegistered;
 	status:
 		| statusEmpty
 		| statusEnquiry

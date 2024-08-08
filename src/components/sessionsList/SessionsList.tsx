@@ -27,7 +27,6 @@ import {
 	ExtendedSessionInterface,
 	getExtendedSession,
 	hasUserAuthority,
-	isAnonymousSession,
 	REMOVE_SESSIONS,
 	RocketChatContext,
 	SessionsDataContext,
@@ -249,25 +248,12 @@ export const SessionsList = ({
 						ready: true,
 						sessions
 					});
+					// TODO can be reduced?
 					if (
 						sessions?.length === 1 &&
 						sessions[0]?.session?.status === STATUS_EMPTY
 					) {
 						history.push(`/sessions/user/view/write/`);
-					} else if (
-						sessions.length === 1 &&
-						isAnonymousSession(sessions[0]?.session) &&
-						hasUserAuthority(
-							AUTHORITIES.ANONYMOUS_DEFAULT,
-							userData
-						)
-					) {
-						const extendedSession = buildExtendedSession(
-							sessions[0]
-						);
-						history.push(
-							`/sessions/user/view/${extendedSession?.rid}/${extendedSession?.item?.id}`
-						);
 					}
 				})
 				.then(() => setIsLoading(false));

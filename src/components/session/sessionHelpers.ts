@@ -1,7 +1,6 @@
 import {
 	GroupChatItemInterface,
 	ListItemInterface,
-	REGISTRATION_TYPE_ANONYMOUS,
 	SessionItemInterface,
 	STATUS_ARCHIVED,
 	STATUS_EMPTY,
@@ -30,7 +29,6 @@ export type ChatTypes =
 	| typeof CHAT_TYPE_SINGLE_CHAT;
 
 export const SESSION_TYPE_ENQUIRY = 'enquiry';
-export const SESSION_TYPE_LIVECHAT = 'livechat';
 export const SESSION_TYPE_ARCHIVED = 'archived';
 export const SESSION_TYPE_GROUP = 'group';
 export const SESSION_TYPE_SESSION = 'session';
@@ -38,7 +36,6 @@ export const SESSION_TYPE_TEAMSESSION = 'teamsession';
 export const SESSION_TYPE_UNKNOWN = 'unknown';
 
 export type SESSION_TYPES =
-	| typeof SESSION_TYPE_LIVECHAT
 	| typeof SESSION_TYPE_ENQUIRY
 	| typeof SESSION_TYPE_ARCHIVED
 	| typeof SESSION_TYPE_GROUP
@@ -54,9 +51,6 @@ export const getSessionType = (
 	switch (!isGroupChat(chatItem) && chatItem.status) {
 		case STATUS_ENQUIRY:
 		case STATUS_EMPTY:
-			if (isLiveChat(chatItem)) {
-				return SESSION_TYPE_LIVECHAT;
-			}
 			return SESSION_TYPE_ENQUIRY;
 		case STATUS_ARCHIVED:
 			return SESSION_TYPE_ARCHIVED;
@@ -82,15 +76,6 @@ export const isSessionChat = (
 	chatItem: SessionItemInterface | GroupChatItemInterface
 ): chatItem is SessionItemInterface => {
 	return chatItem && 'askerRcId' in chatItem;
-};
-
-export const isLiveChat = (
-	chatItem: SessionItemInterface | GroupChatItemInterface
-): chatItem is SessionItemInterface => {
-	return (
-		isSessionChat(chatItem) &&
-		chatItem.registrationType === REGISTRATION_TYPE_ANONYMOUS
-	);
 };
 
 export const isGroupChat = (

@@ -2,12 +2,10 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListInfo } from '../listInfo/ListInfo';
-import { ReactComponent as ChatWaitingIllustration } from '../../resources/img/illustrations/chat-waiting.svg';
 import { ReactComponent as NoMessagesIllustration } from '../../resources/img/illustrations/no-messages.svg';
 import {
 	SESSION_LIST_TAB_ARCHIVE,
-	SESSION_LIST_TYPES,
-	SESSION_LIST_TAB_ANONYMOUS
+	SESSION_LIST_TYPES
 } from '../session/sessionHelpers';
 
 interface EmptyListItemProps {
@@ -34,13 +32,6 @@ export const EmptyListItem = ({ type, sessionListTab }: EmptyListItemProps) => {
 		}
 	}, [sessionListTab, type, t]);
 	return (
-		<ListInfo
-			headline={emptyTitle}
-			Illustration={
-				sessionListTab !== SESSION_LIST_TAB_ANONYMOUS
-					? NoMessagesIllustration
-					: ChatWaitingIllustration
-			}
-		/>
+		<ListInfo headline={emptyTitle} Illustration={NoMessagesIllustration} />
 	);
 };

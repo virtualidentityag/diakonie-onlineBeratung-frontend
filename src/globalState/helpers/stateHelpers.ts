@@ -2,7 +2,6 @@ import { UserDataInterface } from '../interfaces/UserDataInterface';
 import {
 	GroupChatItemInterface,
 	ListItemInterface,
-	REGISTRATION_TYPE_ANONYMOUS,
 	SESSION_DATA_KEY_ENQUIRIES,
 	SESSION_DATA_KEY_MY_SESSIONS,
 	SESSION_DATA_KEY_TEAM_SESSIONS,
@@ -54,10 +53,7 @@ export const buildExtendedSession = (
 		item: groupChat ?? sessionChat,
 		type: groupChat ? CHAT_TYPE_GROUP_CHAT : CHAT_TYPE_SINGLE_CHAT,
 		isGroup: !!groupChat,
-		isSession:
-			sessionChat &&
-			sessionChat?.registrationType !== REGISTRATION_TYPE_ANONYMOUS,
-		isLive: sessionChat?.registrationType === REGISTRATION_TYPE_ANONYMOUS,
+		isSession: !!sessionChat,
 		isEnquiry:
 			sessionChat &&
 			[STATUS_EMPTY, STATUS_ENQUIRY].includes(sessionChat.status),
@@ -144,10 +140,4 @@ export const AUTHORITIES = {
 	CREATE_NEW_CHAT: 'AUTHORIZATION_CREATE_NEW_CHAT',
 	ASKER_DEFAULT: 'AUTHORIZATION_USER_DEFAULT',
 	VIEW_AGENCY_CONSULTANTS: 'AUTHORIZATION_VIEW_AGENCY_CONSULTANTS'
-};
-
-export const isAnonymousSession = (
-	session: SessionItemInterface | undefined
-): boolean => {
-	return session?.registrationType === REGISTRATION_TYPE_ANONYMOUS;
 };

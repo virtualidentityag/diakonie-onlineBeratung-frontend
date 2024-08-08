@@ -6,7 +6,6 @@ import {
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
 	SESSION_TYPE_GROUP,
-	SESSION_TYPE_LIVECHAT,
 	SESSION_TYPE_SESSION,
 	SESSION_TYPE_TEAMSESSION
 } from '../session/sessionHelpers';
@@ -158,7 +157,6 @@ export const RouterConfigUser = (
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_LIVECHAT,
 					SESSION_TYPE_ENQUIRY,
 					SESSION_TYPE_TEAMSESSION
 				]
@@ -171,7 +169,6 @@ export const RouterConfigUser = (
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_LIVECHAT,
 					SESSION_TYPE_ENQUIRY,
 					SESSION_TYPE_TEAMSESSION
 				]
@@ -271,7 +268,7 @@ export const RouterConfigConsultant = (settings: AppConfigInterface): any => {
 			{
 				path: '/sessions/consultant/sessionPreview/:rcGroupId?/:sessionId?',
 				component: SessionsListWrapper,
-				sessionTypes: [SESSION_TYPE_ENQUIRY, SESSION_TYPE_LIVECHAT],
+				sessionTypes: [SESSION_TYPE_ENQUIRY],
 				type: SESSION_LIST_TYPES.ENQUIRY,
 				exact: false
 			},
@@ -440,7 +437,7 @@ export const RouterConfigTeamConsultant = (
 			{
 				path: '/sessions/consultant/sessionPreview/:rcGroupId?/:sessionId?',
 				component: SessionsListWrapper,
-				sessionTypes: [SESSION_TYPE_LIVECHAT, SESSION_TYPE_ENQUIRY],
+				sessionTypes: [SESSION_TYPE_ENQUIRY],
 				type: SESSION_LIST_TYPES.ENQUIRY,
 				exact: false
 			},
@@ -592,7 +589,6 @@ export const RouterConfigAnonymousAsker = (): any => {
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_LIVECHAT,
 					SESSION_TYPE_ENQUIRY,
 					SESSION_TYPE_TEAMSESSION
 				]
