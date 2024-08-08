@@ -7,10 +7,7 @@ import {
 	getPrettyDateFromMessageDate,
 	MILLISECONDS_PER_SECOND
 } from '../../utils/dateHelpers';
-import {
-	SESSION_LIST_TAB,
-	SESSION_LIST_TYPES
-} from '../session/sessionHelpers';
+import { SESSION_LIST_TAB } from '../session/sessionHelpers';
 import {
 	AUTHORITIES,
 	E2EEContext,
@@ -22,10 +19,7 @@ import {
 	ActiveSessionContext,
 	useTopic
 } from '../../globalState';
-import {
-	STATUS_FINISHED,
-	TopicSessionInterface
-} from '../../globalState/interfaces';
+import { TopicSessionInterface } from '../../globalState/interfaces';
 import { getGroupChatDate } from '../session/sessionDateHelpers';
 import { markdownToDraft } from 'markdown-draft-js';
 import { convertFromRaw } from 'draft-js';
@@ -351,9 +345,7 @@ export const SessionListItemComponent = ({
 			>
 				<div className="sessionsListItem__row">
 					<div className="sessionsListItem__consultingType">
-						{!isAsker &&
-						!activeSession.isLive &&
-						!autoSelectPostcode
+						{!isAsker && !autoSelectPostcode
 							? activeSession.item.postcode
 							: null}
 					</div>
@@ -399,9 +391,7 @@ export const SessionListItemComponent = ({
 							activeSession.isEnquiry &&
 							!activeSession.isEmptyEnquiry
 						}
-						showSpan={
-							activeSession.isEmptyEnquiry || activeSession.isLive
-						}
+						showSpan={activeSession.isEmptyEnquiry}
 					/>
 					{activeSession.item.attachment && (
 						<SessionListItemAttachment
@@ -420,16 +410,6 @@ export const SessionListItemComponent = ({
 							listItemAskerRcId={activeSession.item.askerRcId}
 						/>
 					)}
-					{activeSession.isLive &&
-						activeSession.item.status !== STATUS_FINISHED &&
-						type !== SESSION_LIST_TYPES.ENQUIRY && (
-							<Tag
-								text={translate(
-									'anonymous.listItem.activeLabel'
-								)}
-								color="green"
-							/>
-						)}
 				</div>
 			</div>
 		</div>

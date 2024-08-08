@@ -31,7 +31,6 @@ export type ExtendedSessionInterface = Omit<
 	type: typeof CHAT_TYPE_GROUP_CHAT | typeof CHAT_TYPE_SINGLE_CHAT;
 	isGroup?: boolean;
 	isSession?: boolean;
-	isLive?: boolean;
 	isEnquiry?: boolean;
 	isEmptyEnquiry?: boolean;
 	isNonEmptyEnquiry?: boolean;

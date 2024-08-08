@@ -61,8 +61,7 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 
 	const preparedUserSessionData =
 		hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
-		userSessionData &&
-		!activeSession.isLive
+		userSessionData
 			? convertUserDataObjectToArray(userSessionData)
 			: null;
 	const translateBase = getUserDataTranslateBase(
@@ -114,7 +113,6 @@ export const SessionHeaderComponent = (props: SessionHeaderProps) => {
 		!hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
 		consultingType?.showAskerProfile &&
 		activeSession.isSession &&
-		!activeSession.isLive &&
 		((type === SESSION_LIST_TYPES.ENQUIRY && enquiryUserProfileCondition) ||
 			SESSION_LIST_TYPES.ENQUIRY !== type);
 

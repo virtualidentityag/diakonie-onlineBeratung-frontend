@@ -409,10 +409,7 @@ export const SessionItemComponent = (props: SessionItemProps) => {
 			</div>
 
 			{type === SESSION_LIST_TYPES.ENQUIRY && (
-				<AcceptAssign
-					isAnonymous={false}
-					btnLabel={'enquiry.acceptButton.known'}
-				/>
+				<AcceptAssign btnLabel={'enquiry.acceptButton.known'} />
 			)}
 
 			{canWriteMessage && (

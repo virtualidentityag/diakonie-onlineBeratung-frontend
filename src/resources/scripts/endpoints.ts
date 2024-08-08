@@ -13,7 +13,6 @@ if (apiUrlEnv) {
 export const endpoints = {
 	agencyConsultants: apiUrl + '/service/users/consultants',
 	agencyServiceBase: apiUrl + '/service/agencies',
-	anonymousAskerBase: apiUrl + '/service/conversations/askers/anonymous/',
 	appointmentBase: apiUrl + '/service/appointments/sessions',
 	appointmentBaseNew: (sessionId: number) =>
 		apiUrl + `/service/appointments/sessions/${sessionId}/enquiry/new`,

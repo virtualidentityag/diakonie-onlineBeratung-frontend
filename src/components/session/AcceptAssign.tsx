@@ -30,15 +30,10 @@ import {
 
 interface AcceptAssignProps {
 	assigned?: boolean;
-	isAnonymous: boolean;
 	btnLabel: string;
 }
 
-export const AcceptAssign = ({
-	assigned,
-	btnLabel,
-	isAnonymous
-}: AcceptAssignProps) => {
+export const AcceptAssign = ({ assigned, btnLabel }: AcceptAssignProps) => {
 	const { t: translate } = useTranslation();
 	const { rcGroupId: groupIdFromParam } = useParams<{ rcGroupId: string }>();
 	const history = useHistory();
@@ -156,7 +151,7 @@ export const AcceptAssign = ({
 		}
 		setIsRequestInProgress(true);
 
-		apiEnquiryAcceptance(sessionId, isAnonymous)
+		apiEnquiryAcceptance(sessionId)
 			.then(() => encryptRoom(setE2EEState))
 			.then(() => setIsRequestInProgress(false))
 			.then(() => setOverlayItem(enquirySuccessfullyAcceptedOverlayItem))

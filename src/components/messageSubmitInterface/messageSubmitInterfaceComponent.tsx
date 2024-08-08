@@ -160,9 +160,6 @@ export const MessageSubmitInterfaceComponent = ({
 	const { activeSession, reloadActiveSession } =
 		useContext(ActiveSessionContext);
 	const { type, path: listPath } = useContext(SessionTypeContext);
-	const { anonymousConversationFinished } = useContext(
-		AnonymousConversationFinishedContext
-	);
 	const { isE2eeEnabled } = useContext(E2EEContext);
 
 	const [activeInfo, setActiveInfo] = useState(null);
@@ -182,9 +179,7 @@ export const MessageSubmitInterfaceComponent = ({
 	const [isSessionArchived, setIsSessionArchived] = useState(
 		activeSession.item.status === STATUS_ARCHIVED
 	);
-	const [isTypingActive, setIsTypingActive] = useState(
-		activeSession.isGroup || activeSession.isLive
-	);
+	const [isTypingActive, setIsTypingActive] = useState(activeSession.isGroup);
 	const [showAppointmentButton, setShowAppointmentButton] = useState(false);
 
 	//Emoji Picker Plugin
@@ -241,14 +236,11 @@ export const MessageSubmitInterfaceComponent = ({
 				activeSession.consultant?.absent
 		);
 		setIsSessionArchived(activeSession.item.status === STATUS_ARCHIVED);
-		setIsTypingActive(activeSession.isGroup || activeSession.isLive);
+		setIsTypingActive(activeSession.isGroup);
 	}, [activeSession, activeSession.item.status, userData]);
 
 	const { onChange: onDraftMessageChange, loaded: draftLoaded } =
-		useDraftMessage(
-			!anonymousConversationFinished && !isRequestInProgress,
-			setEditorState
-		);
+		useDraftMessage(!isRequestInProgress, setEditorState);
 
 	useEffect(() => {
 		if (
@@ -488,8 +480,7 @@ export const MessageSubmitInterfaceComponent = ({
 	const sendMessage = useCallback(
 		async (message, attachment: File, isEncrypted) => {
 			const sendToRoomWithId = activeSession.rid || activeSession.item.id;
-			const getSendMailNotificationStatus = () =>
-				!activeSession.isGroup && !activeSession.isLive;
+			const getSendMailNotificationStatus = () => !activeSession.isGroup;
 
 			if (attachment) {
 				let res: any;
@@ -586,7 +577,6 @@ export const MessageSubmitInterfaceComponent = ({
 		},
 		[
 			activeSession.isGroup,
-			activeSession.isLive,
 			activeSession.item.id,
 			activeSession.rid,
 			cleanupAttachment,

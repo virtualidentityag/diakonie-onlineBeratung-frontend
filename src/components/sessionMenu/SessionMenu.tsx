@@ -312,7 +312,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 	const hasVideoCallFeatures = () =>
 		hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
 		activeSession.isSession &&
-		!activeSession.isLive &&
 		type !== SESSION_LIST_TYPES.ENQUIRY &&
 		consultingType.isVideoCallAllowed;
 
@@ -369,7 +368,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 			{!activeSession.isEnquiry &&
 				appointmentFeatureEnabled &&
-				!activeSession.isLive &&
 				!activeSession.isGroup && (
 					<div
 						className="sessionMenu__icon sessionMenu__icon--booking"
@@ -435,8 +433,7 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 				{!hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
 					type !== SESSION_LIST_TYPES.ENQUIRY &&
-					activeSession.isSession &&
-					!activeSession.isLive && (
+					activeSession.isSession && (
 						<>
 							{sessionListTab !== SESSION_LIST_TAB_ARCHIVE ? (
 								<div
@@ -458,8 +455,7 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 				{hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
 					type !== SESSION_LIST_TYPES.ENQUIRY &&
-					activeSession.isSession &&
-					!activeSession.isLive && (
+					activeSession.isSession && (
 						<DeleteSession
 							chatId={activeSession.item.id}
 							onSuccess={onSuccessDeleteSession}

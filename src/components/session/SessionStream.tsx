@@ -40,7 +40,6 @@ import useTyping from '../../utils/useTyping';
 import './session.styles';
 import { useE2EE } from '../../hooks/useE2EE';
 import {
-	EVENT_ROOMS_CHANGED,
 	EVENT_SUBSCRIPTIONS_CHANGED,
 	SUB_STREAM_NOTIFY_USER,
 	SUB_STREAM_ROOM_MESSAGES
@@ -227,18 +226,6 @@ export const SessionStream = ({
 		)
 	);
 
-	const handleLiveChatStopped = useUpdatingRef(
-		useCallback(
-			([, room]) => {
-				if (!room.ro) {
-					return;
-				}
-				reloadActiveSession();
-			},
-			[reloadActiveSession]
-		)
-	);
-
 	const handleSubscriptionChanged = useUpdatingRef(
 		useCallback(
 			([event]) => {
@@ -283,24 +270,13 @@ export const SessionStream = ({
 							event: EVENT_SUBSCRIPTIONS_CHANGED,
 							userId: getValueFromCookie('rc_uid')
 						},
-						activeSession.isGroup || activeSession.isLive
+						activeSession.isGroup
 							? handleChatStopped
 							: handleSubscriptionChanged
 					);
 
-					if (activeSession.isGroup || activeSession.isLive) {
+					if (activeSession.isGroup) {
 						subscribeTyping();
-					}
-
-					if (activeSession.isLive) {
-						subscribe(
-							{
-								name: SUB_STREAM_NOTIFY_USER,
-								event: EVENT_ROOMS_CHANGED,
-								userId: getValueFromCookie('rc_uid')
-							},
-							handleLiveChatStopped
-						);
 					}
 
 					setLoading(false);
@@ -337,24 +313,13 @@ export const SessionStream = ({
 						event: EVENT_SUBSCRIPTIONS_CHANGED,
 						userId: getValueFromCookie('rc_uid')
 					},
-					activeSession.isGroup || activeSession.isLive
+					activeSession.isGroup
 						? handleChatStopped
 						: handleSubscriptionChanged
 				);
 
-				if (activeSession.isGroup || activeSession.isLive) {
+				if (activeSession.isGroup) {
 					unsubscribeTyping();
-				}
-
-				if (activeSession.isLive) {
-					unsubscribe(
-						{
-							name: SUB_STREAM_NOTIFY_USER,
-							event: EVENT_ROOMS_CHANGED,
-							userId: getValueFromCookie('rc_uid')
-						},
-						handleLiveChatStopped
-					);
 				}
 			}
 		};
@@ -363,7 +328,6 @@ export const SessionStream = ({
 		addNewUsersToEncryptedRoom,
 		fetchSessionMessages,
 		handleChatStopped,
-		handleLiveChatStopped,
 		handleSubscriptionChanged,
 		onDebounceMessage,
 		setSessionRead,
@@ -377,7 +341,6 @@ export const SessionStream = ({
 
 	useEffect(() => {
 		if (
-			activeSession.isLive ||
 			activeSession.isGroup ||
 			hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData)
 		) {
@@ -394,7 +357,6 @@ export const SessionStream = ({
 			});
 	}, [
 		activeSession.isGroup,
-		activeSession.isLive,
 		activeSession.item.agencyId,
 		setConsultantList,
 		userData
