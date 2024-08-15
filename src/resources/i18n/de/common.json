@@ -378,7 +378,6 @@
 		"groupChatInfo": "Chat-Info",
 		"imprint": "Impressum",
 		"leaveGroupChat": "Chat verlassen",
-		"remove": "Löschen",
 		"stopGroupChat": "Chat beenden"
 	},
 	"consultant": {
@@ -488,24 +487,6 @@
 		"successOverlay": {
 			"button": "Schließen",
 			"headline": "Sie haben Ihren Account bei der Diakonie Beratung erfolgreich gelöscht."
-		}
-	},
-	"deleteSession": {
-		"confirmOverlay": {
-			"button": {
-				"confirm": "Ja",
-				"deny": "Nein"
-			},
-			"copy": "Möchten Sie den Chat wirklich löschen?",
-			"headline": "Chat löschen"
-		},
-		"errorOverlay": {
-			"button": "Ok",
-			"headline": "Ups! Wir konnten den Chat gerade nicht löschen. Bitte versuchen Sie es noch einmal."
-		},
-		"successOverlay": {
-			"button": "Ok",
-			"headline": "Sie haben den Chat erfolgreich gelöscht."
 		}
 	},
 	"e2ee": {
@@ -1159,7 +1140,6 @@
 		"legal": {
 			"infoText": {
 				"dataprotection": "Datenschutzerklärung",
-				"termsAndConditions": "Nutzungsbedingungen",
 				"impressum": "Impressum"
 			}
 		},
@@ -1432,8 +1412,7 @@
 			"firstName": "Vorname",
 			"info": {
 				"private": "Diese Daten können die Ratsuchenden nicht einsehen.",
-				"public": "Mit dem Anzeigenamen erscheinen Sie bei den Ratsuchenden.",
-				"nameChangePropagation": "Es kann bis zu 15 Minuten dauern, bis die Änderung des Anzeigenamens wirksam wird."
+				"public": "Mit dem Anzeigenamen erscheinen Sie bei den Ratsuchenden."
 			},
 			"lastName": "Nachname",
 			"personal": {
