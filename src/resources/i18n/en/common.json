@@ -366,7 +366,6 @@
 		"groupChatInfo": "Chat info",
 		"imprint": "Imprint",
 		"leaveGroupChat": "Leave chat",
-		"remove": "Delete",
 		"stopGroupChat": "End chat"
 	},
 	"consultant": {
@@ -476,24 +475,6 @@
 		"successOverlay": {
 			"button": "close",
 			"headline": "You have successfully deleted your Caritas Consulting & Help account."
-		}
-	},
-	"deleteSession": {
-		"confirmOverlay": {
-			"button": {
-				"confirm": "yes",
-				"deny": "no"
-			},
-			"copy": "Do you really want to delete the chat?",
-			"headline": "Delete chat"
-		},
-		"errorOverlay": {
-			"button": "ok",
-			"headline": "Oops! We could not delete the chat right now. Please try again."
-		},
-		"successOverlay": {
-			"button": "ok",
-			"headline": "You have deleted the chat successfully."
 		}
 	},
 	"e2ee": {
