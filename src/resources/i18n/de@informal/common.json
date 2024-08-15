@@ -121,17 +121,6 @@
 			"headline": "Du hast Deinen Account bei der Diakonie Beratung erfolgreich gelöscht."
 		}
 	},
-	"deleteSession": {
-		"confirmOverlay": {
-			"copy": "Möchtest Du den Chat wirklich löschen?"
-		},
-		"errorOverlay": {
-			"headline": "Ups! Wir konnten den Chat gerade nicht löschen. Bitte versuche es erneut."
-		},
-		"successOverlay": {
-			"headline": "Du hast den Chat erfolgreich gelöscht."
-		}
-	},
 	"e2ee": {
 		"attachment": {
 			"error": {
