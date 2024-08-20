@@ -40,7 +40,7 @@ export const apiGetConsultantSessionList = async ({
 				: `${endpoints.consultantSessions}`
 		}`;
 	} else {
-		url = `${endpoints.consultantEnquiriesBase}registered`;
+		url = `${endpoints.consultantEnquiriesBase}registered?`;
 	}
 	url = url + `count=${count}&filter=all&offset=${offset}`;
 
