@@ -1412,7 +1412,8 @@
 			"firstName": "Vorname",
 			"info": {
 				"private": "Diese Daten können die Ratsuchenden nicht einsehen.",
-				"public": "Mit dem Anzeigenamen erscheinen Sie bei den Ratsuchenden."
+				"public": "Mit dem Anzeigenamen erscheinen Sie bei den Ratsuchenden.",
+				"nameChangePropagation": "Es kann bis zu 15 Minuten dauern, bis die Änderung des Anzeigenamens wirksam wird."
 			},
 			"lastName": "Nachname",
 			"personal": {
@@ -1488,6 +1489,7 @@
 		},
 		"footer": {
 			"dataprotection": "Datenschutz",
+			"termsAndConditions": "Nutzungsbedingungen",
 			"imprint": "Impressum"
 		},
 		"functions": {
