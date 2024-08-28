@@ -99,7 +99,6 @@ export const SessionsList = ({
 	const sessionListTab = useSearchParam<SESSION_LIST_TAB>('sessionListTab');
 
 	const { userData } = useContext(UserDataContext);
-	const { status } = useContext(RocketChatUserStatusContext);
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [currentOffset, setCurrentOffset] = useState(0);
