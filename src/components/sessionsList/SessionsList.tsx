@@ -55,7 +55,6 @@ import useDebounceCallback from '../../hooks/useDebounceCallback';
 import {
 	EVENT_ROOMS_CHANGED,
 	EVENT_SUBSCRIPTIONS_CHANGED,
-	STATUS_ONLINE,
 	SUB_STREAM_NOTIFY_USER
 } from '../app/RocketChat';
 import { getValueFromCookie } from '../sessionCookie/accessSessionCookie';
@@ -781,7 +780,6 @@ export const SessionsList = ({
 						) && <SessionListCreateChat />}
 
 					{(!isLoading || finalSessionsList.length > 0) &&
-						status === STATUS_ONLINE &&
 						finalSessionsList
 							.map((session) =>
 								buildExtendedSession(session, groupIdFromParam)
@@ -843,8 +841,7 @@ export const SessionsList = ({
 				{!isLoading &&
 					!isCreateChatActive &&
 					!isReloadButtonVisible &&
-					finalSessionsList.length === 0 &&
-					status === STATUS_ONLINE && (
+					finalSessionsList.length === 0 && (
 						<EmptyListItem
 							sessionListTab={sessionListTab}
 							type={type}
