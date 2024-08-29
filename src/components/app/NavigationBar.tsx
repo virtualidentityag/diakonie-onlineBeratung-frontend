@@ -48,7 +48,6 @@ export const NavigationBar = ({
 	const { consultingTypes } = useContext(ConsultingTypesContext);
 	const { sessions, dispatch } = useContext(SessionsDataContext);
 	const { selectableLocales } = useContext(LocaleContext);
-	const [setSessionId] = useState(null);
 	const [hasTools, setHasTools] = useState<boolean>(false);
 
 	const isConsultant = hasUserAuthority(
@@ -86,10 +85,9 @@ export const NavigationBar = ({
 					ready: true,
 					sessions: sessionsData.sessions
 				});
-				setSessionId(sessionsData?.sessions?.[0]?.session?.id);
 			});
 		}
-	}, [dispatch, isConsultant, setSessionId]);
+	}, [dispatch, isConsultant]);
 
 	useEffect(() => {
 		if (tenant?.settings?.featureToolsEnabled && !isConsultant) {
