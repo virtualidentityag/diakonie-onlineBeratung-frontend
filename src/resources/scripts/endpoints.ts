@@ -44,7 +44,6 @@ export const endpoints = {
 	consultantSessions:
 		apiUrl + '/service/users/sessions/consultants?status=2&',
 	consultantStatistics: apiUrl + '/service/statistics/consultant',
-	consultantTeamSessions: apiUrl + '/service/users/sessions/teams?',
 	consultantsLanguages: apiUrl + '/service/users/consultants/languages',
 	consultingTypeServiceBase: apiUrl + '/service/consultingtypes',
 	deleteAskerAccount: apiUrl + '/service/users/account',
@@ -112,8 +111,6 @@ export const endpoints = {
 	sessionRooms: apiUrl + '/service/users/sessions/room',
 	setAbsence: apiUrl + '/service/users/consultants/absences',
 	startVideoCall: apiUrl + '/service/videocalls/new',
-	teamSessionsBase:
-		apiUrl + '/service/conversations/consultants/teamsessions/',
 	tenantServiceBase: apiUrl + '/service/tenant',
 	topicGroups: apiUrl + '/service/topic-groups/',
 	topicsData: apiUrl + '/service/topic/public/',

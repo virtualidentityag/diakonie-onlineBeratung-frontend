@@ -47,13 +47,6 @@
 			"peer": ["consultant"]
 		}
 	},
-	"notifications": {
-		"teamSessions": {
-			"newMessage": {
-				"allTeamConsultants": false
-			}
-		}
-	},
 	"showAskerProfile": false,
 	"welcomeScreen": {
 		"anonymous": {

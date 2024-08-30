@@ -64,9 +64,6 @@ export const SessionsListWrapper = ({
 					{type === SESSION_LIST_TYPES.MY_SESSION
 						? translate('sessionList.view.headline')
 						: null}
-					{type === SESSION_LIST_TYPES.TEAMSESSION
-						? translate('navigation.consultant.teamsessions.large')
-						: null}
 					{type === SESSION_LIST_TYPES.ENQUIRY
 						? translate('sessionList.preview.headline')
 						: null}

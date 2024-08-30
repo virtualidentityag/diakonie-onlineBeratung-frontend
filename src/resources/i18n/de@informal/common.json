@@ -36,11 +36,6 @@
 				"success": {
 					"copy": "Du hast den Ratsuchenden erfolgreich archiviert."
 				}
-			},
-			"teamsession": {
-				"success": {
-					"copy": "Du hast den Ratsuchenden für Dich und Dein Team erfolgreich archiviert."
-				}
 			}
 		},
 		"submitInfo": {
@@ -573,7 +568,6 @@
 	"registration": {
 		"agency": {
 			"preselected": {
-				"isTeam": "Du wirst von einem Team beraten.",
 				"prefix": "Deine vorausgewählte Beratungsstelle: "
 			},
 			"consultantheadline": "Deine Beratungsstelle",
@@ -715,11 +709,7 @@
 					"2": "Du hast die Beratung erfolgreich zugewiesen."
 				},
 				"subtitle": {
-					"noTeam": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Du hast keinen Zugiff mehr auf die Nachrichten.",
-					"team": {
-						"other": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf unter Teamberatung und nicht mehr in Deinen Nachrichten.",
-						"self": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich. Stimmt {{toAskerName}} der Zuweisung zu, findest Du den Chatverlauf in Deinen Nachrichten und nicht mehr unter Teamberatung."
-					}
+					"noTeam": "{{newConsultant}} ist somit für die Ratsuchende oder den Ratsuchenden verantwortlich und kann den kompletten Nachrichtenverlauf lesen. Du hast keinen Zugiff mehr auf die Nachrichten."
 				}
 			}
 		},
@@ -773,18 +763,9 @@
 							}
 						},
 						"description": {
-							"noTeam": "{{newConsultant}} kann somit den kompletten Nachrichtenverlauf lesen und ist für Dich verantwortlich. {{oldConsultant}} hat keinen Zugriff mehr auf die Nachrichten.",
-							"team": "{{newConsultant}} kann somit den kompletten Nachrichtenverlauf lesen und ist für Dich verantwortlich."
+							"noTeam": "{{newConsultant}} kann somit den kompletten Nachrichtenverlauf lesen und ist für Dich verantwortlich. {{oldConsultant}} hat keinen Zugriff mehr auf die Nachrichten."
 						},
 						"question": "Stimmst Du der Übergabe zu?.",
-						"sent": {
-							"description": {
-								"team": {
-									"other": "Sobald {{client1}} der Zuweisung zustimmt, ist {{newConsultant}} für {{client2}} verantwortlich. Du findest den Chatverlauf dann in Deinen Nachrichten und nicht mehr hier unter Teamberatung.",
-									"self": "Sobald {{client1}} der Zuweisung zustimmt, ist {{newConsultant}} für {{client2}} verantwortlich. Du findest den Chatverlauf dann unter Teamberatung und nicht mehr hier in Deinen Nachrichten."
-								}
-							}
-						},
 						"title": "{{oldConsultant}} möchte Dich an {{newConsultant}} übergeben."
 					}
 				}
@@ -793,8 +774,7 @@
 	},
 	"sessionList": {
 		"empty": {
-			"mySessions": "Du hast zurzeit keine aktiven Beratungen",
-			"teamSessions": "Dein Team hat keine aktiven Beratungen"
+			"mySessions": "Du hast zurzeit keine aktiven Beratungen"
 		}
 	},
 	"statusOverlay": {

@@ -5,12 +5,8 @@ interface StepsData {
 	path?: string;
 }
 
-interface StepsFeatureFlag {
-	hasTeamAgency?: boolean;
-}
-
 // images, etc. can be included via "<div className="hasBackgroundImage"><div>My Text</div> in the intro section
-const steps = ({ hasTeamAgency }: StepsFeatureFlag): StepsData[] =>
+const steps = (): StepsData[] =>
 	[
 		{
 			title: 'walkthrough.step.0.title',
@@ -33,12 +29,6 @@ const steps = ({ hasTeamAgency }: StepsFeatureFlag): StepsData[] =>
 			element: '.walkthrough_step_4',
 			intro: 'walkthrough.step.4.intro',
 			path: '/sessions/consultant/sessionView?sessionListTab=archive'
-		},
-		hasTeamAgency && {
-			title: 'walkthrough.step.5.title',
-			element: '.walkthrough-sessions-consultant-teamsessionview',
-			intro: 'walkthrough.step.5.intro',
-			path: '/sessions/consultant/teamSessionView'
 		},
 		{
 			title: 'walkthrough.step.6.title',

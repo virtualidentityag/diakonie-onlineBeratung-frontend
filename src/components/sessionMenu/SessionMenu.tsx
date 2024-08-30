@@ -154,12 +154,6 @@ export const SessionMenu = (props: SessionMenuProps) => {
 	};
 
 	const handleArchiveSession = () => {
-		// location type
-		if (type === SESSION_LIST_TYPES.TEAMSESSION) {
-			archiveSessionSuccessOverlayItem.copy = translate(
-				'archive.overlay.teamsession.success.copy'
-			);
-		}
 		setOverlayItem(archiveSessionSuccessOverlayItem);
 		setOverlayActive(true);
 	};
@@ -258,7 +252,7 @@ export const SessionMenu = (props: SessionMenuProps) => {
 
 	//TODO:
 	//enquiries: only RS profil
-	//sessions/peer/team: rs, docu
+	//sessions: rs, docu
 	//imprint/dataschutz all users all devices
 
 	//dynamicly menut items in flyout:

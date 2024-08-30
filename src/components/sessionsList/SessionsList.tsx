@@ -551,9 +551,7 @@ export const SessionsList = ({
 	}, [loadMoreSessions]);
 
 	const showSessionListTabs =
-		userData.hasArchive &&
-		(type === SESSION_LIST_TYPES.MY_SESSION ||
-			type === SESSION_LIST_TYPES.TEAMSESSION);
+		userData.hasArchive && type === SESSION_LIST_TYPES.MY_SESSION;
 
 	const sortSessions = useCallback(
 		(
@@ -573,13 +571,6 @@ export const SessionsList = ({
 						? -1
 						: 1;
 				case SESSION_LIST_TYPES.MY_SESSION:
-				case SESSION_LIST_TYPES.TEAMSESSION:
-					const latestMessageA = new Date(sessionA.latestMessage);
-					const latestMessageB = new Date(sessionB.latestMessage);
-					if (latestMessageA === latestMessageB) {
-						return 0;
-					}
-					return latestMessageA > latestMessageB ? -1 : 1;
 			}
 			return 0;
 		},
@@ -600,9 +591,6 @@ export const SessionsList = ({
 				// filter my sessions only with my user id as consultant
 				case SESSION_LIST_TYPES.MY_SESSION:
 					return session?.consultant?.id === userData.userId;
-				// filter teamsessions only without my user id as consultant
-				case SESSION_LIST_TYPES.TEAMSESSION:
-					return session?.consultant?.id !== userData.userId;
 				// only show sessions without an assigned consultant in sessionPreview
 				case SESSION_LIST_TYPES.ENQUIRY:
 					return !session?.consultant;
@@ -698,11 +686,7 @@ export const SessionsList = ({
 									'sessionsList__tabs--active':
 										!sessionListTab
 								})}
-								to={`/sessions/consultant/${
-									type === SESSION_LIST_TYPES.TEAMSESSION
-										? 'teamSessionView'
-										: 'sessionView'
-								}`}
+								to={`/sessions/consultant/sessionView`}
 								onKeyDown={(e) => handleKeyDownTabs(e)}
 								ref={(el) => (ref_tab_first.current = el)}
 								tabIndex={0}
@@ -721,11 +705,7 @@ export const SessionsList = ({
 										sessionListTab ===
 										SESSION_LIST_TAB_ARCHIVE
 								})}
-								to={`/sessions/consultant/${
-									type === SESSION_LIST_TYPES.TEAMSESSION
-										? 'teamSessionView'
-										: 'sessionView'
-								}?sessionListTab=${SESSION_LIST_TAB_ARCHIVE}`}
+								to={`/sessions/consultant/sessionView?sessionListTab=${SESSION_LIST_TAB_ARCHIVE}`}
 								onKeyDown={(e) => handleKeyDownTabs(e)}
 								ref={(el) => (ref_tab_second.current = el)}
 								tabIndex={-1}

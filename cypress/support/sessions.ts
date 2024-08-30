@@ -2,7 +2,6 @@ import { v4 as uuid } from 'uuid';
 import { SESSION_LIST_TYPES } from '../../src/components/session/sessionHelpers';
 import {
 	ListItemInterface,
-	SessionItemInterface,
 	SessionUserDataInterface
 } from '../../src/globalState/interfaces';
 
@@ -47,7 +46,6 @@ export const generateConsultantSession = ({
 			lastMessage: 'lastMessage',
 			messageDate: 1606900238,
 			messagesRead: messagesRead === undefined ? true : messagesRead,
-			isTeamSession: true,
 			attachment: null,
 			registrationType: 'REGISTERED',
 			e2eLastMessage: {
@@ -86,11 +84,9 @@ export const generateMultipleConsultantSessions = (amount: number): void => {
 };
 
 export const generateAskerSession = ({
-	messagesRead,
-	isTeamSession
+	messagesRead
 }: {
 	messagesRead?: boolean;
-	isTeamSession?: boolean;
 } = {}): ListItemInterface => {
 	const sessionId = Math.random();
 	const rcGroupId = uuid();
@@ -112,7 +108,6 @@ export const generateAskerSession = ({
 			lastMessage: null,
 			messageDate: null,
 			messagesRead: messagesRead === undefined ? true : messagesRead,
-			isTeamSession: isTeamSession === undefined ? true : isTeamSession,
 			attachment: null,
 			registrationType: 'REGISTERED',
 			e2eLastMessage: {
@@ -133,7 +128,6 @@ export const generateAskerSession = ({
 			postcode: '12345',
 			city: 'city',
 			description: null,
-			teamAgency: true,
 			offline: false,
 			consultingType: 1
 		},

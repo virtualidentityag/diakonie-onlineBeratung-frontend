@@ -3,16 +3,13 @@ import { AgencyDataInterface } from './UserDataInterface';
 
 export const SESSION_DATA_KEY_ENQUIRIES = 'enquiries';
 export const SESSION_DATA_KEY_MY_SESSIONS = 'mySessions';
-export const SESSION_DATA_KEY_TEAM_SESSIONS = 'teamSessions';
 
 export type SessionDataKeyEnquiries = typeof SESSION_DATA_KEY_ENQUIRIES;
 export type SessionDataKeyMySessions = typeof SESSION_DATA_KEY_MY_SESSIONS;
-export type SessionDataKeyTeamSessions = typeof SESSION_DATA_KEY_TEAM_SESSIONS;
 
 export type SessionDataKeys =
 	| SessionDataKeyEnquiries
-	| SessionDataKeyMySessions
-	| SessionDataKeyTeamSessions;
+	| SessionDataKeyMySessions;
 
 export type SessionsDataInterface = {
 	[key in SessionDataKeys]?: ListItemInterface[];
@@ -88,7 +85,6 @@ export interface SessionItemInterface {
 		| statusActive
 		| statusFinished
 		| statusArchived;
-	isTeamSession: boolean;
 	videoCallMessageDTO: VideoCallMessageDTO;
 	language?: string;
 	topic: TopicSessionInterface;
