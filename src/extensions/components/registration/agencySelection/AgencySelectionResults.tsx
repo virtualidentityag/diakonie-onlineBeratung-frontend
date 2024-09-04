@@ -144,7 +144,7 @@ export const AgencySelectionResults = ({
 							href={
 								fallbackUrl
 									? `${fallbackUrl}${zipcode}/`
-									: 'https://www.diakonie.de'
+									: 'https://www.caritas.de'
 							}
 						>
 							{t('registration.agency.noresult.label')}
