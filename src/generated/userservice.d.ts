@@ -42,11 +42,6 @@ declare namespace UserService {
 			 * example:
 			 * false
 			 */
-			teamAgency?: boolean;
-			/**
-			 * example:
-			 * false
-			 */
 			offline?: boolean;
 			/**
 			 * example:
@@ -191,11 +186,6 @@ declare namespace UserService {
 			 * asker123
 			 */
 			askerUserName?: string;
-			/**
-			 * example:
-			 * false
-			 */
-			isTeamSession?: boolean;
 			/**
 			 * example:
 			 * true
@@ -434,11 +424,6 @@ declare namespace UserService {
 			 * false
 			 */
 			messagesRead?: boolean;
-			/**
-			 * example:
-			 * false
-			 */
-			isTeamSession?: boolean;
 			/**
 			 * example:
 			 * true
@@ -700,11 +685,6 @@ declare namespace UserService {
 			 * Bin mal weg...
 			 */
 			absenceMessage?: string;
-			/**
-			 * example:
-			 * true
-			 */
-			isInTeamAgency?: boolean;
 			agencies?: AgencyDTO[];
 			userRoles?: string[];
 			grantedAuthorities?: string[];

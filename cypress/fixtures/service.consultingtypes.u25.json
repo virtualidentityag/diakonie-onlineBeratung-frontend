@@ -54,13 +54,6 @@
 			"peer": ["consultant", "u25-consultant"]
 		}
 	},
-	"notifications": {
-		"teamSessions": {
-			"newMessage": {
-				"allTeamConsultants": false
-			}
-		}
-	},
 	"showAskerProfile": true,
 	"requiredComponents": {
 		"age": {

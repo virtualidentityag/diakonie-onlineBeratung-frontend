@@ -6,10 +6,8 @@ import {
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
 	SESSION_TYPE_GROUP,
-	SESSION_TYPE_SESSION,
-	SESSION_TYPE_TEAMSESSION
+	SESSION_TYPE_SESSION
 } from '../session/sessionHelpers';
-
 import { AskerInfo } from '../askerInfo/AskerInfo';
 import { Profile } from '../profile/Profile';
 import { SessionViewEmpty } from '../session/SessionViewEmpty';
@@ -19,15 +17,12 @@ import { Appointments } from '../appointment/Appointments';
 import VideoConference from '../videoConference/VideoConference';
 import { AUTHORITIES, hasUserAuthority } from '../../globalState';
 import { AppConfigInterface } from '../../globalState/interfaces';
-
 import { ReactComponent as OverviewIconOutline } from '../../resources/img/icons/overview_outline.svg';
 import { ReactComponent as OverviewIconFilled } from '../../resources/img/icons/overview_filled.svg';
 import { ReactComponent as InboxIconOutline } from '../../resources/img/icons/inbox_outline.svg';
 import { ReactComponent as InboxIconFilled } from '../../resources/img/icons/inbox_filled.svg';
 import { ReactComponent as MessagesIconOutline } from '../../resources/img/icons/messages_outline.svg';
 import { ReactComponent as MessagesIconFilled } from '../../resources/img/icons/messages_filled.svg';
-import { ReactComponent as TeamsIconOutline } from '../../resources/img/icons/teams_outline.svg';
-import { ReactComponent as TeamsIconFilled } from '../../resources/img/icons/teams_filled.svg';
 import { ReactComponent as ProfilIconOutline } from '../../resources/img/icons/profil_outline.svg';
 import { ReactComponent as ProfilIconFilled } from '../../resources/img/icons/profil_filled.svg';
 import { ReactComponent as ToolsIconOutline } from '../../resources/img/icons/tools_outline.svg';
@@ -157,8 +152,7 @@ export const RouterConfigUser = (
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_ENQUIRY,
-					SESSION_TYPE_TEAMSESSION
+					SESSION_TYPE_ENQUIRY
 				]
 			},
 			{
@@ -169,8 +163,7 @@ export const RouterConfigUser = (
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
 					SESSION_TYPE_GROUP,
-					SESSION_TYPE_ENQUIRY,
-					SESSION_TYPE_TEAMSESSION
+					SESSION_TYPE_ENQUIRY
 				]
 			}
 		],
@@ -278,8 +271,7 @@ export const RouterConfigConsultant = (settings: AppConfigInterface): any => {
 				sessionTypes: [
 					SESSION_TYPE_SESSION,
 					SESSION_TYPE_ARCHIVED,
-					SESSION_TYPE_GROUP,
-					SESSION_TYPE_TEAMSESSION
+					SESSION_TYPE_GROUP
 				],
 				type: SESSION_LIST_TYPES.MY_SESSION,
 				exact: false
@@ -331,212 +323,6 @@ export const RouterConfigConsultant = (settings: AppConfigInterface): any => {
 			{
 				path: '/sessions/consultant/sessionView/:rcGroupId/:sessionId/groupChatInfo',
 				component: GroupChatInfo,
-				type: SESSION_LIST_TYPES.MY_SESSION
-			}
-		],
-		profileRoutes: [
-			{
-				path: '/overview',
-				component: OverviewPage
-			},
-			{
-				path: '/profile',
-				exact: false,
-				component: Profile
-			},
-			{
-				condition: (userData, consultingTypes) =>
-					isVideoAppointmentsEnabled(
-						userData,
-						consultingTypes,
-						settings.disableVideoAppointments
-					),
-				path: '/termine',
-				exact: false,
-				component: Appointments
-			}
-		],
-		appointmentRoutes,
-		toolsRoutes
-	};
-};
-
-export const RouterConfigTeamConsultant = (
-	settings: AppConfigInterface
-): any => {
-	return {
-		plainRoutes: [
-			{
-				condition: hasVideoCallFeature,
-				path: settings.urls.consultantVideoConference,
-				exact: true,
-				component: VideoConference
-			}
-		],
-		navigation: [
-			overviewRoute(settings),
-			{
-				to: '/sessions/consultant/sessionPreview',
-				icon: InboxIconOutline,
-				iconFilled: InboxIconFilled,
-				titleKeys: {
-					large: 'navigation.consultant.enquiries'
-				}
-			},
-			{
-				to: '/sessions/consultant/sessionView',
-				icon: MessagesIconOutline,
-				iconFilled: MessagesIconFilled,
-				titleKeys: {
-					large: 'navigation.consultant.sessions.large',
-					small: 'navigation.consultant.sessions.small'
-				}
-			},
-			{
-				to: '/sessions/consultant/teamSessionView',
-				icon: TeamsIconOutline,
-				iconFilled: TeamsIconFilled,
-				titleKeys: {
-					large: 'navigation.consultant.teamsessions.large',
-					small: 'navigation.consultant.teamsessions.small'
-				}
-			},
-			{
-				condition: (userData, consultingTypes) =>
-					isVideoAppointmentsEnabled(
-						userData,
-						consultingTypes,
-						settings.disableVideoAppointments
-					),
-				to: '/termine',
-				icon: CalendarIconOutline,
-				iconFilled: CalendarIconFilled,
-				titleKeys: {
-					large: 'navigation.appointments'
-				}
-			},
-			{
-				condition: showAppointmentsMenuItem,
-				to: '/booking/events',
-				icon: CalendarIconOutline,
-				iconFilled: CalendarIconFilled,
-				titleKeys: {
-					large: 'navigation.booking.events'
-				}
-			},
-			{
-				to: '/profile',
-				icon: ProfilIconOutline,
-				iconFilled: ProfilIconFilled,
-				titleKeys: {
-					large: 'navigation.profile'
-				}
-			}
-		],
-		listRoutes: [
-			{
-				path: '/sessions/consultant/sessionPreview/:rcGroupId?/:sessionId?',
-				component: SessionsListWrapper,
-				sessionTypes: [SESSION_TYPE_ENQUIRY],
-				type: SESSION_LIST_TYPES.ENQUIRY,
-				exact: false
-			},
-			{
-				path: '/sessions/consultant/sessionView/:rcGroupId?/:sessionId?',
-				component: SessionsListWrapper,
-				sessionTypes: [
-					SESSION_TYPE_SESSION,
-					SESSION_TYPE_ARCHIVED,
-					SESSION_TYPE_GROUP,
-					SESSION_TYPE_TEAMSESSION
-				],
-				type: SESSION_LIST_TYPES.MY_SESSION,
-				exact: false
-			},
-			{
-				path: '/sessions/consultant/teamSessionView/:rcGroupId?/:sessionId?',
-				component: SessionsListWrapper,
-				sessionTypes: [
-					SESSION_TYPE_SESSION,
-					SESSION_TYPE_ARCHIVED,
-					SESSION_TYPE_GROUP,
-					SESSION_TYPE_TEAMSESSION
-				],
-				type: SESSION_LIST_TYPES.TEAMSESSION,
-				exact: false
-			}
-		],
-		detailRoutes: [
-			{
-				path: '/sessions/consultant/sessionPreview/',
-				component: SessionViewEmpty,
-				type: SESSION_LIST_TYPES.ENQUIRY
-			},
-			{
-				path: '/sessions/consultant/sessionPreview/:rcGroupId/:sessionId',
-				component: SessionView,
-				type: SESSION_LIST_TYPES.ENQUIRY
-			},
-			{
-				path: '/sessions/consultant/sessionView/',
-				component: SessionViewEmpty,
-				type: SESSION_LIST_TYPES.MY_SESSION
-			},
-			{
-				path: '/sessions/consultant/sessionView/:rcGroupId/:sessionId/',
-				component: SessionView,
-				type: SESSION_LIST_TYPES.MY_SESSION
-			},
-			{
-				path: '/sessions/consultant/sessionView/:rcGroupId/:sessionId/editGroupChat',
-				component: CreateGroupChatView,
-				type: SESSION_LIST_TYPES.MY_SESSION
-			},
-			{
-				path: '/sessions/consultant/teamSessionView/',
-				component: SessionViewEmpty,
-				type: SESSION_LIST_TYPES.TEAMSESSION
-			},
-			{
-				path: '/sessions/consultant/teamSessionView/:rcGroupId/:sessionId/',
-				component: SessionView,
-				type: SESSION_LIST_TYPES.TEAMSESSION
-			},
-			{
-				path: '/sessions/consultant/teamSessionView/:rcGroupId/:sessionId/editGroupChat',
-				component: CreateGroupChatView,
-				type: SESSION_LIST_TYPES.TEAMSESSION
-			}
-		],
-		userProfileRoutes: [
-			{
-				path: '/sessions/consultant/sessionPreview/:rcGroupId/:sessionId/userProfile',
-				component: AskerInfo,
-				type: SESSION_LIST_TYPES.ENQUIRY
-			},
-			{
-				path: '/sessions/consultant/sessionView/:rcGroupId/:sessionId/userProfile',
-				component: AskerInfo,
-				type: SESSION_LIST_TYPES.MY_SESSION
-			},
-			{
-				path: '/sessions/consultant/sessionView/:rcGroupId/:sessionId/groupChatInfo',
-				component: GroupChatInfo,
-				type: SESSION_LIST_TYPES.MY_SESSION
-			},
-			{
-				path: '/sessions/consultant/teamSessionView/:rcGroupId/:sessionId/userProfile',
-				component: AskerInfo,
-				type: SESSION_LIST_TYPES.TEAMSESSION
-			},
-			{
-				path: '/sessions/consultant/teamSessionView/:rcGroupId/:sessionId/groupChatInfo',
-				component: GroupChatInfo,
-				type: SESSION_LIST_TYPES.TEAMSESSION
-			},
-			{
-				path: '/sessions/consultant/sessionView/createGroupChat/',
-				component: CreateGroupChatView,
 				type: SESSION_LIST_TYPES.MY_SESSION
 			}
 		],

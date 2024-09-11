@@ -31,12 +31,7 @@ export const Walkthrough = () => {
 		});
 	}, [ref]);
 
-	const hasTeamAgency = userData.agencies?.some(
-		(agency) => agency.teamAgency
-	);
-	const stepsData = steps({
-		hasTeamAgency
-	});
+	const stepsData = steps();
 	// Sometimes when not even showing the modal the steps are triggering the on exist callback so it was causing
 	// to enable the WalkThrough and this way prevents from render
 	if (!userData.isWalkThroughEnabled || !settings.enableWalkthrough) {

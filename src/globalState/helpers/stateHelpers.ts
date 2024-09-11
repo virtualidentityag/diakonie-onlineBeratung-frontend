@@ -4,7 +4,6 @@ import {
 	ListItemInterface,
 	SESSION_DATA_KEY_ENQUIRIES,
 	SESSION_DATA_KEY_MY_SESSIONS,
-	SESSION_DATA_KEY_TEAM_SESSIONS,
 	SessionItemInterface,
 	STATUS_ARCHIVED,
 	STATUS_EMPTY,
@@ -105,8 +104,6 @@ export const getSessionsDataKeyForSessionType = (sessionType) => {
 			return SESSION_DATA_KEY_ENQUIRIES;
 		case SESSION_LIST_TYPES.MY_SESSION:
 			return SESSION_DATA_KEY_MY_SESSIONS;
-		case SESSION_LIST_TYPES.TEAMSESSION:
-			return SESSION_DATA_KEY_TEAM_SESSIONS;
 		default:
 			return SESSION_DATA_KEY_MY_SESSIONS;
 	}

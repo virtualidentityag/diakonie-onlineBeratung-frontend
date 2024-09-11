@@ -17,8 +17,7 @@ import { decodeUsername } from '../../utils/encryptionHelpers';
 
 export enum SESSION_LIST_TYPES {
 	ENQUIRY = 'ENQUIRY',
-	MY_SESSION = 'MY_SESSION',
-	TEAMSESSION = 'TEAMSESSION'
+	MY_SESSION = 'MY_SESSION'
 }
 
 export const CHAT_TYPE_GROUP_CHAT = 'chat';
@@ -32,7 +31,6 @@ export const SESSION_TYPE_ENQUIRY = 'enquiry';
 export const SESSION_TYPE_ARCHIVED = 'archived';
 export const SESSION_TYPE_GROUP = 'group';
 export const SESSION_TYPE_SESSION = 'session';
-export const SESSION_TYPE_TEAMSESSION = 'teamsession';
 export const SESSION_TYPE_UNKNOWN = 'unknown';
 
 export type SESSION_TYPES =
@@ -40,7 +38,6 @@ export type SESSION_TYPES =
 	| typeof SESSION_TYPE_ARCHIVED
 	| typeof SESSION_TYPE_GROUP
 	| typeof SESSION_TYPE_SESSION
-	| typeof SESSION_TYPE_TEAMSESSION
 	| typeof SESSION_TYPE_UNKNOWN;
 
 export const getSessionType = (
@@ -58,10 +55,6 @@ export const getSessionType = (
 
 	if (isGroupChat(chatItem)) {
 		return SESSION_TYPE_GROUP;
-	}
-
-	if (isTeamSession(chatItem) && session?.consultant?.id !== uid) {
-		return SESSION_TYPE_TEAMSESSION;
 	}
 
 	return SESSION_TYPE_SESSION;
@@ -82,12 +75,6 @@ export const isGroupChat = (
 	chatItem: SessionItemInterface | GroupChatItemInterface
 ): chatItem is GroupChatItemInterface => {
 	return (chatItem as GroupChatItemInterface) && 'moderators' in chatItem;
-};
-
-export const isTeamSession = (
-	sessionItem: SessionItemInterface
-): sessionItem is SessionItemInterface => {
-	return sessionItem && sessionItem.isTeamSession;
 };
 
 export const getChatItemForSession = (
@@ -112,8 +99,6 @@ export const getViewPathForType = (type: SESSION_LIST_TYPES) => {
 		return 'sessionPreview';
 	} else if (type === SESSION_LIST_TYPES.MY_SESSION) {
 		return 'sessionView';
-	} else if (type === SESSION_LIST_TYPES.TEAMSESSION) {
-		return 'teamSessionView';
 	}
 };
 

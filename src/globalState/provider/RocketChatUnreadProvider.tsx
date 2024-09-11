@@ -15,15 +15,13 @@ import {
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
 	SESSION_TYPE_GROUP,
-	SESSION_TYPE_SESSION,
-	SESSION_TYPE_TEAMSESSION
+	SESSION_TYPE_SESSION
 } from '../../components/session/sessionHelpers';
 import { UserDataContext } from '../context/UserDataContext';
 import { useBrowserNotification } from '../../hooks/useBrowserNotification';
 
 type UnreadStatusContextProps = {
 	sessions: string[];
-	teamsessions: string[];
 	enquiry: string[];
 	group: string[];
 	archiv: string[];
@@ -34,7 +32,6 @@ const initialData = {
 	enquiry: [],
 	archiv: [],
 	sessions: [],
-	teamsessions: [],
 	group: [],
 	unknown: []
 };
@@ -117,9 +114,6 @@ export function RocketChatUnreadProvider({
 							break;
 						case SESSION_TYPE_SESSION:
 							newUnreadStatus.sessions.push(subscription.rid);
-							break;
-						case SESSION_TYPE_TEAMSESSION:
-							newUnreadStatus.teamsessions.push(subscription.rid);
 							break;
 						default:
 							newUnreadStatus.unknown.push(subscription.rid);

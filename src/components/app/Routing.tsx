@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { useContext, useMemo, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import {
-	RouterConfigUser,
-	RouterConfigConsultant,
-	RouterConfigTeamConsultant
-} from './RouterConfig';
+import { RouterConfigUser, RouterConfigConsultant } from './RouterConfig';
 import { AbsenceHandler } from './AbsenceHandler';
 import {
 	UserDataContext,
@@ -37,12 +33,6 @@ export const Routing = (props: RoutingProps) => {
 	const hasAssignedConsultant = useAskerHasAssignedConsultant();
 
 	const routerConfig = useMemo(() => {
-		if (
-			hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData) &&
-			userData.inTeamAgency
-		) {
-			return RouterConfigTeamConsultant(settings);
-		}
 		if (hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData)) {
 			return RouterConfigConsultant(settings);
 		}

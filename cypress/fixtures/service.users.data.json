@@ -13,7 +13,6 @@
 				"postcode": "12345",
 				"city": "city",
 				"description": "description",
-				"teamAgency": true,
 				"offline": false,
 				"consultingType": 0
 			}
@@ -26,7 +25,6 @@
 		"consultingTypes": null,
 		"formalLanguage": true,
 		"absent": false,
-		"inTeamAgency": true,
 		"languages": [],
 		"emailToggles": [
 			{
@@ -53,7 +51,6 @@
 				"postcode": "12345",
 				"city": "city",
 				"description": "description",
-				"teamAgency": true,
 				"offline": false,
 				"consultingType": 2
 			}
@@ -61,8 +58,7 @@
 		"grantedAuthorities": ["AUTHORIZATION_CONSULTANT_DEFAULT"],
 		"consultingTypes": null,
 		"formalLanguage": true,
-		"absent": false,
-		"inTeamAgency": true
+		"absent": false
 	},
 	{
 		"userId": "asker",
@@ -84,7 +80,6 @@
 					"postcode": "12345",
 					"city": "city",
 					"description": null,
-					"teamAgency": true,
 					"offline": false,
 					"consultingType": 1
 				}
@@ -92,7 +87,6 @@
 			"17": { "sessionData": null, "isRegistered": false, "agency": null }
 		},
 		"formalLanguage": true,
-		"absent": false,
-		"inTeamAgency": false
+		"absent": false
 	}
 ]

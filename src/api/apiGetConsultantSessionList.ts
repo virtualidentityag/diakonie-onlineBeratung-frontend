@@ -25,15 +25,8 @@ export const apiGetConsultantSessionList = async ({
 	count = SESSION_COUNT,
 	signal
 }: ApiGetConsultantSessionListInterface): Promise<ListItemsResponseInterface> => {
-	const isTeamSession: boolean = type === SESSION_LIST_TYPES.TEAMSESSION;
 	let url: string;
-	if (isTeamSession) {
-		url = `${
-			sessionListTab === SESSION_LIST_TAB_ARCHIVE
-				? `${endpoints.teamSessionsBase}${SESSION_LIST_TAB_ARCHIVE}?`
-				: `${endpoints.consultantTeamSessions}`
-		}`;
-	} else if (type === SESSION_LIST_TYPES.MY_SESSION) {
+	if (type === SESSION_LIST_TYPES.MY_SESSION) {
 		url = `${
 			sessionListTab === SESSION_LIST_TAB_ARCHIVE
 				? `${endpoints.myMessagesBase}${SESSION_LIST_TAB_ARCHIVE}?`

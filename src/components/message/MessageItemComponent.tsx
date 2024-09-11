@@ -294,7 +294,6 @@ export const MessageItemComponent = ({
 		return null;
 	}
 
-	const isTeamSession = activeSession?.item?.isTeamSession;
 	const isMySession = activeSession?.consultant?.id === userData?.userId;
 	const isAppointmentSet =
 		alias?.messageType === ALIAS_MESSAGE_TYPES.APPOINTMENT_SET ||
@@ -332,7 +331,6 @@ export const MessageItemComponent = ({
 							return isAsker ? (
 								<ReassignRequestMessage
 									{...reassignmentParams}
-									isTeamSession={isTeamSession}
 									onClick={(accepted) =>
 										clickReassignRequestMessage(
 											accepted,
@@ -343,7 +341,6 @@ export const MessageItemComponent = ({
 							) : (
 								<ReassignRequestSentMessage
 									{...reassignmentParams}
-									isTeamSession={isTeamSession}
 									isMySession={isMySession}
 								/>
 							);
