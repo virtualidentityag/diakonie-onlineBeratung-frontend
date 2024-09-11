@@ -14,7 +14,6 @@ export interface ConsultingSessionDataInterface {
 	groupId: string;
 	id: number;
 	isMonitoring: boolean;
-	isTeamSession: boolean;
 	mainTopic: TopicsDataInterface;
 	postcode: string;
 	topics: TopicsDataInterface[];

@@ -21,7 +21,6 @@
 		}
 	},
 	"isSubsequentRegistrationAllowed": true,
-	"isAnonymousConversationAllowed": true,
 	"isSetEmailAllowed": true,
 	"slug": "rw-auswanderung",
 	"languageFormal": true,
@@ -46,13 +45,6 @@
 		"consultant": {
 			"main": ["consultant"],
 			"peer": ["consultant"]
-		}
-	},
-	"notifications": {
-		"teamSessions": {
-			"newMessage": {
-				"allTeamConsultants": false
-			}
 		}
 	},
 	"showAskerProfile": false,

@@ -13,8 +13,6 @@ if (apiUrlEnv) {
 export const endpoints = {
 	agencyConsultants: apiUrl + '/service/users/consultants',
 	agencyServiceBase: apiUrl + '/service/agencies',
-	anonymousAskerBase: apiUrl + '/service/conversations/askers/anonymous/',
-	anonymousBase: apiUrl + '/service/conversations/anonymous/',
 	appointmentBase: apiUrl + '/service/appointments/sessions',
 	appointmentBaseNew: (sessionId: number) =>
 		apiUrl + `/service/appointments/sessions/${sessionId}/enquiry/new`,
@@ -46,7 +44,6 @@ export const endpoints = {
 	consultantSessions:
 		apiUrl + '/service/users/sessions/consultants?status=2&',
 	consultantStatistics: apiUrl + '/service/statistics/consultant',
-	consultantTeamSessions: apiUrl + '/service/users/sessions/teams?',
 	consultantsLanguages: apiUrl + '/service/users/consultants/languages',
 	consultingTypeServiceBase: apiUrl + '/service/consultingtypes',
 	deleteAskerAccount: apiUrl + '/service/users/account',
@@ -101,8 +98,6 @@ export const endpoints = {
 			resetE2EKey: apiUrl + '/api/v1/users.resetE2EKey'
 		}
 	},
-	registerAnonymousAsker:
-		apiUrl + '/service/conversations/askers/anonymous/new',
 	registerAsker: apiUrl + '/service/users/askers/new',
 	baseUserService: apiUrl + '/service/users',
 	registerAskerNewConsultingType:
@@ -116,8 +111,6 @@ export const endpoints = {
 	sessionRooms: apiUrl + '/service/users/sessions/room',
 	setAbsence: apiUrl + '/service/users/consultants/absences',
 	startVideoCall: apiUrl + '/service/videocalls/new',
-	teamSessionsBase:
-		apiUrl + '/service/conversations/consultants/teamsessions/',
 	tenantServiceBase: apiUrl + '/service/tenant',
 	topicGroups: apiUrl + '/service/topic-groups/',
 	topicsData: apiUrl + '/service/topic/public/',

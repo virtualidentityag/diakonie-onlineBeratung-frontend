@@ -100,7 +100,6 @@ declare namespace MessageService {
 			cleaned: null;
 		}
 		export type MessageType =
-			| 'FINISHED_CONVERSATION'
 			| 'FURTHER_STEPS'
 			| 'UPDATE_SESSION_DATA'
 			| 'VIDEOCALL';

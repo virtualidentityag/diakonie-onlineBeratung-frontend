@@ -15,30 +15,23 @@ import {
 	SESSION_TYPE_ARCHIVED,
 	SESSION_TYPE_ENQUIRY,
 	SESSION_TYPE_GROUP,
-	SESSION_TYPE_LIVECHAT,
-	SESSION_TYPE_SESSION,
-	SESSION_TYPE_TEAMSESSION
+	SESSION_TYPE_SESSION
 } from '../../components/session/sessionHelpers';
 import { UserDataContext } from '../context/UserDataContext';
-import { AnonymousConversationFinishedContext } from './AnonymousConversationFinishedProvider';
 import { useBrowserNotification } from '../../hooks/useBrowserNotification';
 
 type UnreadStatusContextProps = {
 	sessions: string[];
-	teamsessions: string[];
 	enquiry: string[];
-	livechat: string[];
 	group: string[];
 	archiv: string[];
 	unknown: string[];
 };
 
 const initialData = {
-	livechat: [],
 	enquiry: [],
 	archiv: [],
 	sessions: [],
-	teamsessions: [],
 	group: [],
 	unknown: []
 };
@@ -57,9 +50,6 @@ export function RocketChatUnreadProvider({
 }: RocketChatUnreadProviderProps) {
 	const { maybeSendNewEnquiryNotification } = useBrowserNotification();
 	const { subscriptions } = useContext(RocketChatSubscriptionsContext);
-	const { anonymousConversationFinished } = useContext(
-		AnonymousConversationFinishedContext
-	);
 	const { userData } = useContext(UserDataContext);
 	const [unreadStatus, setUnreadStatus] =
 		useState<UnreadStatusContextProps>(initialData);
@@ -113,9 +103,6 @@ export function RocketChatUnreadProvider({
 
 					// Add it to relevant unread group
 					switch (sessionType) {
-						case SESSION_TYPE_LIVECHAT:
-							newUnreadStatus.livechat.push(subscription.rid);
-							break;
 						case SESSION_TYPE_ENQUIRY:
 							newUnreadStatus.enquiry.push(subscription.rid);
 							break;
@@ -127,9 +114,6 @@ export function RocketChatUnreadProvider({
 							break;
 						case SESSION_TYPE_SESSION:
 							newUnreadStatus.sessions.push(subscription.rid);
-							break;
-						case SESSION_TYPE_TEAMSESSION:
-							newUnreadStatus.teamsessions.push(subscription.rid);
 							break;
 						default:
 							newUnreadStatus.unknown.push(subscription.rid);
@@ -149,7 +133,7 @@ export function RocketChatUnreadProvider({
 
 	// Initialize all subscriptions with unread status
 	useEffect(() => {
-		if (!subscriptions?.length || anonymousConversationFinished) {
+		if (!subscriptions?.length) {
 			return;
 		}
 
@@ -191,7 +175,6 @@ export function RocketChatUnreadProvider({
 		subscriptions,
 		handleSessions,
 		unreadStatus,
-		anonymousConversationFinished,
 		maybeSendNewEnquiryNotification
 	]);
 

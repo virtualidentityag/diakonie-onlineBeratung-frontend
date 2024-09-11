@@ -272,8 +272,6 @@ export const MessageItemComponent = ({
 		alias?.messageType === ALIAS_MESSAGE_TYPES.UPDATE_SESSION_DATA;
 	const isVideoCallMessage =
 		alias?.messageType === ALIAS_MESSAGE_TYPES.VIDEOCALL;
-	const isFinishedConversationMessage =
-		alias?.messageType === ALIAS_MESSAGE_TYPES.FINISHED_CONVERSATION;
 	const isUserMutedMessage =
 		alias?.messageType === ALIAS_MESSAGE_TYPES.USER_MUTED;
 	const isE2EEActivatedMessage =
@@ -296,7 +294,6 @@ export const MessageItemComponent = ({
 		return null;
 	}
 
-	const isTeamSession = activeSession?.item?.isTeamSession;
 	const isMySession = activeSession?.consultant?.id === userData?.userId;
 	const isAppointmentSet =
 		alias?.messageType === ALIAS_MESSAGE_TYPES.APPOINTMENT_SET ||
@@ -334,7 +331,6 @@ export const MessageItemComponent = ({
 							return isAsker ? (
 								<ReassignRequestMessage
 									{...reassignmentParams}
-									isTeamSession={isTeamSession}
 									onClick={(accepted) =>
 										clickReassignRequestMessage(
 											accepted,
@@ -345,7 +341,6 @@ export const MessageItemComponent = ({
 							) : (
 								<ReassignRequestSentMessage
 									{...reassignmentParams}
-									isTeamSession={isTeamSession}
 									isMySession={isMySession}
 								/>
 							);
@@ -378,14 +373,6 @@ export const MessageItemComponent = ({
 						data={alias.content}
 						messageType={alias.messageType}
 					/>
-				);
-			case isFinishedConversationMessage:
-				return (
-					<span className="messageItem__message--system">
-						{translate(
-							'anonymous.session.systemMessage.chatFinished'
-						)}
-					</span>
 				);
 			case isVideoCallMessage && !videoCallMessage?.eventType:
 				const parsedMessage = JSON.parse(
@@ -526,9 +513,7 @@ export const MessageItemComponent = ({
 					messageTime={messageTime}
 					t={t}
 					type={getUsernameType()}
-					isReadStatusDisabled={
-						isVideoCallMessage || isFinishedConversationMessage
-					}
+					isReadStatusDisabled={isVideoCallMessage}
 				/>
 			</div>
 		</div>

@@ -27,7 +27,6 @@ export const MessageMetaData = (props: MessageMetaDataProps) => {
 	const isReadStatus = () => {
 		if (
 			hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) ||
-			hasUserAuthority(AUTHORITIES.ANONYMOUS_DEFAULT, userData) ||
 			props.isReadStatusDisabled
 		) {
 			return null;

@@ -2,10 +2,8 @@ import { UserDataInterface } from '../interfaces/UserDataInterface';
 import {
 	GroupChatItemInterface,
 	ListItemInterface,
-	REGISTRATION_TYPE_ANONYMOUS,
 	SESSION_DATA_KEY_ENQUIRIES,
 	SESSION_DATA_KEY_MY_SESSIONS,
-	SESSION_DATA_KEY_TEAM_SESSIONS,
 	SessionItemInterface,
 	STATUS_ARCHIVED,
 	STATUS_EMPTY,
@@ -32,7 +30,6 @@ export type ExtendedSessionInterface = Omit<
 	type: typeof CHAT_TYPE_GROUP_CHAT | typeof CHAT_TYPE_SINGLE_CHAT;
 	isGroup?: boolean;
 	isSession?: boolean;
-	isLive?: boolean;
 	isEnquiry?: boolean;
 	isEmptyEnquiry?: boolean;
 	isNonEmptyEnquiry?: boolean;
@@ -54,10 +51,7 @@ export const buildExtendedSession = (
 		item: groupChat ?? sessionChat,
 		type: groupChat ? CHAT_TYPE_GROUP_CHAT : CHAT_TYPE_SINGLE_CHAT,
 		isGroup: !!groupChat,
-		isSession:
-			sessionChat &&
-			sessionChat?.registrationType !== REGISTRATION_TYPE_ANONYMOUS,
-		isLive: sessionChat?.registrationType === REGISTRATION_TYPE_ANONYMOUS,
+		isSession: !!sessionChat,
 		isEnquiry:
 			sessionChat &&
 			[STATUS_EMPTY, STATUS_ENQUIRY].includes(sessionChat.status),
@@ -110,8 +104,6 @@ export const getSessionsDataKeyForSessionType = (sessionType) => {
 			return SESSION_DATA_KEY_ENQUIRIES;
 		case SESSION_LIST_TYPES.MY_SESSION:
 			return SESSION_DATA_KEY_MY_SESSIONS;
-		case SESSION_LIST_TYPES.TEAMSESSION:
-			return SESSION_DATA_KEY_TEAM_SESSIONS;
 		default:
 			return SESSION_DATA_KEY_MY_SESSIONS;
 	}
@@ -137,17 +129,10 @@ export const hasUserAuthority = (
 ): boolean => userData?.grantedAuthorities?.includes(authority);
 
 export const AUTHORITIES = {
-	ANONYMOUS_DEFAULT: 'AUTHORIZATION_ANONYMOUS_DEFAULT',
 	ASSIGN_CONSULTANT_TO_ENQUIRY: 'AUTHORIZATION_ASSIGN_CONSULTANT_TO_ENQUIRY',
 	ASSIGN_CONSULTANT_TO_SESSION: 'AUTHORIZATION_ASSIGN_CONSULTANT_TO_SESSION',
 	CONSULTANT_DEFAULT: 'AUTHORIZATION_CONSULTANT_DEFAULT',
 	CREATE_NEW_CHAT: 'AUTHORIZATION_CREATE_NEW_CHAT',
 	ASKER_DEFAULT: 'AUTHORIZATION_USER_DEFAULT',
 	VIEW_AGENCY_CONSULTANTS: 'AUTHORIZATION_VIEW_AGENCY_CONSULTANTS'
-};
-
-export const isAnonymousSession = (
-	session: SessionItemInterface | undefined
-): boolean => {
-	return session?.registrationType === REGISTRATION_TYPE_ANONYMOUS;
 };

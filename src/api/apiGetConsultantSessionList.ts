@@ -1,6 +1,5 @@
 import { endpoints } from '../resources/scripts/endpoints';
 import {
-	SESSION_LIST_TAB_ANONYMOUS,
 	SESSION_LIST_TAB_ARCHIVE,
 	SESSION_LIST_TYPES
 } from '../components/session/sessionHelpers';
@@ -26,26 +25,15 @@ export const apiGetConsultantSessionList = async ({
 	count = SESSION_COUNT,
 	signal
 }: ApiGetConsultantSessionListInterface): Promise<ListItemsResponseInterface> => {
-	const isTeamSession: boolean = type === SESSION_LIST_TYPES.TEAMSESSION;
 	let url: string;
-	if (isTeamSession) {
-		url = `${
-			sessionListTab === SESSION_LIST_TAB_ARCHIVE
-				? `${endpoints.teamSessionsBase}${SESSION_LIST_TAB_ARCHIVE}?`
-				: `${endpoints.consultantTeamSessions}`
-		}`;
-	} else if (type === SESSION_LIST_TYPES.MY_SESSION) {
+	if (type === SESSION_LIST_TYPES.MY_SESSION) {
 		url = `${
 			sessionListTab === SESSION_LIST_TAB_ARCHIVE
 				? `${endpoints.myMessagesBase}${SESSION_LIST_TAB_ARCHIVE}?`
 				: `${endpoints.consultantSessions}`
 		}`;
 	} else {
-		url = `${endpoints.consultantEnquiriesBase}${
-			sessionListTab && sessionListTab === SESSION_LIST_TAB_ANONYMOUS
-				? `${SESSION_LIST_TAB_ANONYMOUS}`
-				: 'registered'
-		}?`;
+		url = `${endpoints.consultantEnquiriesBase}registered?`;
 	}
 	url = url + `count=${count}&filter=all&offset=${offset}`;
 

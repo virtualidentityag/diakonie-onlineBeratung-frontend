@@ -38,8 +38,6 @@ export const config: AppConfigInterface = {
 		error401: uiUrl + '/error.401.html',
 		error404: uiUrl + '/error.404.html',
 		error500: uiUrl + '/error.500.html',
-		finishedAnonymousChatRedirect:
-			'https://www.caritas.de/hilfeundberatung/hilfeundberatung',
 		home: 'https://www.caritas.de',
 		landingpage: '/login',
 		releases: uiUrl + '/releases',
