@@ -155,28 +155,30 @@ export const PreselectionDrawer = () => {
 							/>
 						) : (
 							<>
-								<Typography
-									sx={{
-										color: 'white',
-										fontWeight: '600',
-										mt: '24px'
-									}}
-								>
-									{t('registration.topic.summary')}
-								</Typography>
+								{preselectedTopic || hasTopicError ? (
+									<Typography
+										sx={{
+											color: 'white',
+											fontWeight: '600',
+											mt: '24px'
+										}}
+									>
+										{t('registration.topic.summary')}
+									</Typography>
+								) : null}
 								{hasTopicError ? (
 									<PreselectionError
 										errorMessage={t(
 											'registration.errors.tid'
 										)}
 									/>
-								) : (
+								) : preselectedAgency ? (
 									<Typography
 										sx={{ color: 'white', mt: '8px' }}
 									>
-										{preselectedTopic.name}
+										{preselectedTopic?.name}
 									</Typography>
-								)}
+								) : null}
 								<Typography
 									sx={{
 										color: 'white',
