@@ -10,8 +10,8 @@ import {
 	SetStateAction
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input } from '../../../../components/input/input';
-import { RegistrationContext, RegistrationData } from '../../../../globalState';
+import { Input } from '../../../components/input/input';
+import { RegistrationContext, RegistrationData } from '../../../globalState';
 import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
 
 export const ZipcodeInput: VFC<{

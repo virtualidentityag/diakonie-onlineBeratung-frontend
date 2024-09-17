@@ -25,18 +25,18 @@ import {
 	LocaleContext,
 	RegistrationContext,
 	RegistrationData
-} from '../../../../globalState';
-import { apiGetTopicGroups } from '../../../../api/apiGetTopicGroups';
-import { apiGetTopicsData } from '../../../../api/apiGetTopicsData';
+} from '../../../globalState';
+import { apiGetTopicGroups } from '../../../api/apiGetTopicGroups';
+import { apiGetTopicsData } from '../../../api/apiGetTopicsData';
 import {
 	TopicsDataInterface,
 	TopicGroup
-} from '../../../../globalState/interfaces';
+} from '../../../globalState/interfaces';
 import { MetaInfo } from '../metaInfo/MetaInfo';
-import { Loading } from '../../../../components/app/Loading';
+import { Loading } from '../../../components/app/Loading';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
-import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
+import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 
 export const TopicSelection: VFC<{
 	onChange: Dispatch<SetStateAction<Partial<RegistrationData>>>;

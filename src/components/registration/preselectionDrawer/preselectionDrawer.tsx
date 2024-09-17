@@ -5,8 +5,8 @@ import { ReactComponent as Loader } from './loader.svg';
 import { ReactComponent as Logo } from './logo.svg';
 import { useTranslation } from 'react-i18next';
 import { PreselectionError } from '../preselectionError/PreselectionError';
-import { RegistrationContext } from '../../../../globalState';
-import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
+import { RegistrationContext } from '../../../globalState';
+import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 
 const ConsultantPreslection = ({ hasError }) => {
 	const { t } = useTranslation();

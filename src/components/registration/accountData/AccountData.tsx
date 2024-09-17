@@ -18,18 +18,18 @@ import {
 import { useTranslation } from 'react-i18next';
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
-import { Input } from '../../../../components/input/input';
+import { Input } from '../../../components/input/input';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {
 	hasMixedLetters,
 	hasNumber,
 	hasSpecialChar
-} from '../../../../utils/validateInputValue';
-import { LegalLinksContext } from '../../../../globalState/provider/LegalLinksProvider';
-import { RegistrationContext, RegistrationData } from '../../../../globalState';
-import { apiGetIsUsernameAvailable } from '../../../../api/apiGetIsUsernameAvailable';
+} from '../../../utils/validateInputValue';
+import { LegalLinksContext } from '../../../globalState/provider/LegalLinksProvider';
+import { RegistrationContext, RegistrationData } from '../../../globalState';
+import { apiGetIsUsernameAvailable } from '../../../api/apiGetIsUsernameAvailable';
 import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
-import LegalLinks from '../../../../components/legalLinks/LegalLinks';
+import LegalLinks from '../../../components/legalLinks/LegalLinks';
 
 export const passwordCriteria = [
 	{

@@ -8,6 +8,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { Link as RouterLink } from 'react-router-dom';
 import { useMemo } from 'react';
 import { PreselectionBox } from '../preselectionBox/PreselectionBox';
+import './welcomeScreen.styles';
 
 interface WelcomeScreenProps {
 	nextStepUrl: string;

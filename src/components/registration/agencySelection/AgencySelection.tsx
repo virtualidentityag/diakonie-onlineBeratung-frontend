@@ -8,12 +8,12 @@ import {
 	SetStateAction
 } from 'react';
 import { AgencySelectionResults } from './AgencySelectionResults';
-import { RegistrationContext, RegistrationData } from '../../../../globalState';
+import { RegistrationContext, RegistrationData } from '../../../globalState';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
-import { useAgenciesForRegistration } from '../../../../containers/registration/hooks/useAgenciesForRegistration';
-import { Loading } from '../../../../components/app/Loading';
+import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
+import { useAgenciesForRegistration } from '../../../containers/registration/hooks/useAgenciesForRegistration';
+import { Loading } from '../../../components/app/Loading';
 
 export const AgencySelection: VFC<{
 	onChange: Dispatch<SetStateAction<Partial<RegistrationData>>>;

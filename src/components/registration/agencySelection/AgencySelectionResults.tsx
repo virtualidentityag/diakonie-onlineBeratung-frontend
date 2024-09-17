@@ -17,16 +17,16 @@ import {
 	useState
 } from 'react';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import NoResultsIllustration from '../../../../resources/img/illustrations/no-results.svg';
-import ConsultantIllustration from '../../../../resources/img/illustrations/consultant-found.svg';
+import NoResultsIllustration from '../../../resources/img/illustrations/no-results.svg';
+import ConsultantIllustration from '../../../resources/img/illustrations/consultant-found.svg';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useTranslation } from 'react-i18next';
-import { RegistrationContext, RegistrationData } from '../../../../globalState';
-import { AgencyDataInterface } from '../../../../globalState/interfaces';
+import { RegistrationContext, RegistrationData } from '../../../globalState';
+import { AgencyDataInterface } from '../../../globalState/interfaces';
 import { AgencyLanguages } from './AgencyLanguages';
 import { MetaInfo } from '../metaInfo/MetaInfo';
 import { REGISTRATION_DATA_VALIDATION } from '../registrationDataValidation';
-import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
+import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 
 interface AgencySelectionResultsProps {
 	onChange: Dispatch<SetStateAction<Partial<RegistrationData>>>;

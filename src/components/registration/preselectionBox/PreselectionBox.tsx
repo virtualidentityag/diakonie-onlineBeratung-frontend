@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { Box } from '@mui/material';
-import { RegistrationContext } from '../../../../globalState';
+import { RegistrationContext } from '../../../globalState';
 import { PreselectionDrawer } from '../preselectionDrawer/preselectionDrawer';
-import { useResponsive } from '../../../../hooks/useResponsive';
-import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
+import { useResponsive } from '../../../hooks/useResponsive';
+import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 import PreselectedConsultant from './PreselectedConsultant';
 import PreselectedTopic from './PreselectedTopic';
 import PreselectedAgency from './PreselectedAgency';

@@ -1,34 +1,31 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { SxProps, Theme, Typography } from '@mui/material';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import { AgencyDataInterface } from '../../../../globalState/interfaces';
+import { TopicsDataInterface } from '../../../globalState/interfaces';
 
-const PreselectedAgency = ({
+const PreselectedTopic = ({
 	hasError,
-	agency
+	topic,
+	sx
 }: {
 	hasError: boolean;
-	agency: AgencyDataInterface;
+	topic: TopicsDataInterface;
+	sx: SxProps<Theme>;
 }) => {
 	const { t } = useTranslation();
 
-	if (!hasError && !agency) {
+	if (!hasError && !topic) {
 		return null;
 	}
 
 	return (
 		<>
-			<Typography
-				sx={{
-					fontWeight: '600',
-					mb: '8px'
-				}}
-			>
-				{t('registration.agency.summary')}
+			<Typography sx={{ fontWeight: '600', mb: '8px' }}>
+				{t('registration.topic.summary')}
 			</Typography>
 			{hasError ? (
-				<Typography>
+				<Typography sx={sx}>
 					<>
 						<ReportProblemIcon
 							aria-hidden="true"
@@ -40,14 +37,16 @@ const PreselectedAgency = ({
 								color: '#FF9F00'
 							}}
 						/>
-						{t('registration.errors.aid')}
+						{t('registration.errors.tid')}
 					</>
 				</Typography>
 			) : (
-				<Typography>{agency.name}</Typography>
+				<Typography sx={sx}>
+					{topic.titles?.long || topic.name}
+				</Typography>
 			)}
 		</>
 	);
 };
 
-export default PreselectedAgency;
+export default PreselectedTopic;

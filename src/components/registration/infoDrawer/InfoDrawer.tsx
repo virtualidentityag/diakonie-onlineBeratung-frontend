@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, SwipeableDrawer, Typography } from '@mui/material';
-import { RegistrationContext } from '../../../../globalState';
+import { RegistrationContext } from '../../../globalState';
 import { PreselectionError } from '../preselectionError/PreselectionError';
-import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
+import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
 
 interface InfoDrawerProps {
 	trigger?: boolean;

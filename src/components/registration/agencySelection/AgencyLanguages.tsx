@@ -2,8 +2,8 @@ import { Typography } from '@mui/material';
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { apiAgencyLanguages } from '../../../../api/apiAgencyLanguages';
-import { LanguagesContext } from '../../../../globalState/provider/LanguagesProvider';
+import { apiAgencyLanguages } from '../../../api/apiAgencyLanguages';
+import { LanguagesContext } from '../../../globalState/provider/LanguagesProvider';
 
 interface AgencyLanguagesProps {
 	agencyId?: number;
