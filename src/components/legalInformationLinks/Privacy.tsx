@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTenant } from '../../../..';
+import { useTenant } from '../../../';
+import useDocumentTitle from '../../utils/useDocumentTitle';
 import { LegalPageWrapper } from '../legalPageWrapper/LegalPageWrapper';
-import useDocumentTitle from '../../resources/utils/useDocumentTitle';
 
 export const Privacy = () => {
 	const [t] = useTranslation();
