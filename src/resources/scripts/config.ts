@@ -51,10 +51,8 @@ export const config: AppConfigInterface = {
 		error401: uiUrl + '/error.401.html',
 		error404: uiUrl + '/error.404.html',
 		error500: uiUrl + '/error.500.html',
-		finishedAnonymousChatRedirect:
-			'https://www.caritas.de/hilfeundberatung/hilfeundberatung',
-		home: uiUrl + '/registration',
-		landingpage: '/registration',
+		home: 'https://www.caritas.de',
+		landingpage: '/login',
 		releases: uiUrl + '/releases',
 		redirectToApp: uiUrl + '/' + APP_PATH,
 		registration: uiUrl + '/registration',
@@ -117,10 +115,7 @@ export const config: AppConfigInterface = {
 		notifications: [
 			{
 				label: 'profile.notifications.follow.up.email.label',
-				types: [
-					'NEW_CHAT_MESSAGE_FROM_ADVICE_SEEKER',
-					'NEW_FEEDBACK_MESSAGE_FROM_ADVICE_SEEKER'
-				]
+				types: ['NEW_CHAT_MESSAGE_FROM_ADVICE_SEEKER']
 			}
 		]
 	},
