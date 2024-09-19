@@ -37,7 +37,6 @@ $gridSpacing: $grid-base-four;
 	transition: width $animation-duration-width $animation-easing-width;
 	transition-delay: $animation-duration - $animation-duration-width;
 	text-align: center;
-
 	background-color: var(--skin-color-primary, $primary);
 	color: var(--text-color-contrast-switch, $text-invert);
 	flex-direction: column;
@@ -52,8 +51,8 @@ $gridSpacing: $grid-base-four;
 	&--no-animation {
 		transition: none;
 
-		.stage__title {
-			transition: none;
+		.stage__headline {
+			margin-bottom: $grid-base-five;
 		}
 	}
 
@@ -63,10 +62,6 @@ $gridSpacing: $grid-base-four;
 		@include breakpoint($fromXLarge) {
 			left: 0;
 			width: 40vw;
-		}
-
-		.stage__title {
-			transform: none;
 		}
 	}
 
@@ -94,6 +89,7 @@ $gridSpacing: $grid-base-four;
 		flex-wrap: wrap;
 		justify-content: flex-end;
 		word-break: normal;
+		font-weight: $font-weight-medium;
 
 		@include breakpoint($fromLarge) {
 			padding: $grid-base-six $grid-base-six 120px;
@@ -101,15 +97,7 @@ $gridSpacing: $grid-base-four;
 	}
 
 	&__title {
-		margin-bottom: $grid-base-four;
-
-		@include breakpoint($fromLarge) {
-			transform: scale(1.75);
-			transform-origin: bottom left;
-			transition: transform $animation-duration-title
-				$animation-easing-title;
-			transition-delay: #{$animation-duration - $animation-duration-title};
-		}
+		margin-bottom: $grid-base;
 	}
 
 	&__claim {
@@ -122,13 +110,14 @@ $gridSpacing: $grid-base-four;
 		flex: 1 1 0;
 		align-items: flex-end;
 		align-content: flex-end;
+		justify-content: center;
 		width: 335px;
-		margin-bottom: $grid-base-five;
+		margin: 0 auto $grid-base-five;
 		transform: scale(0.9);
 
 		@media (width >=calc(#{$xsmall} + #{$grid-base-three})) {
 			transform: scale(1);
-			margin-bottom: $grid-base-ten;
+			margin: 0 auto $grid-base-ten;
 		}
 
 		svg {
@@ -167,7 +156,7 @@ $gridSpacing: $grid-base-four;
 	&__spinner {
 		animation-delay: 2s;
 		animation: hideSpinner 4s ease forwards;
-		margin: 80px auto 0;
+		margin: 0 auto;
 
 		@include breakpoint($fromXLarge) {
 			animation-duration: 2s;

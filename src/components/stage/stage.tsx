@@ -106,10 +106,8 @@ export const Stage = ({
 						semanticLevel="4"
 						text={translate('app.claim')}
 					/>
-					{hasAnimation ? (
-						<Spinner className="stage__spinner" />
-					) : null}
 				</div>
+				{hasAnimation ? <Spinner className="stage__spinner" /> : null}
 				<div className="stage__logos">
 					<SkfLogo />
 					<CaritasLogo />
