@@ -4,30 +4,11 @@ import { Box, Drawer, Typography, Button } from '@mui/material';
 import { ReactComponent as Loader } from './loader.svg';
 import { ReactComponent as Logo } from './logo.svg';
 import { useTranslation } from 'react-i18next';
-import { PreselectionError } from '../preselectionError/PreselectionError';
 import { RegistrationContext } from '../../../../globalState';
 import { UrlParamsContext } from '../../../../globalState/provider/UrlParamsProvider';
-
-const ConsultantPreslection = ({ hasError }) => {
-	const { t } = useTranslation();
-
-	if (hasError) {
-		return (
-			<PreselectionError errorMessage={t('registration.errors.cid')} />
-		);
-	}
-
-	return (
-		<Typography
-			sx={{
-				color: 'white',
-				mt: '24px'
-			}}
-		>
-			{t('registration.consultantlink')}
-		</Typography>
-	);
-};
+import PreselectedTopic from '../preselectionBox/PreselectedTopic';
+import PreselectedAgency from '../preselectionBox/PreselectedAgency';
+import PreselectedConsultant from '../preselectionBox/PreselectedConsultant';
 
 export const PreselectionDrawer = () => {
 	const { t } = useTranslation();
@@ -150,57 +131,28 @@ export const PreselectionDrawer = () => {
 						}}
 					>
 						{preselectedConsultant ? (
-							<ConsultantPreslection
+							<PreselectedConsultant
+								sx={{ color: 'white', mt: '16px' }}
 								hasError={hasConsultantError}
 							/>
 						) : (
 							<>
-								{preselectedTopic || hasTopicError ? (
-									<Typography
-										sx={{
-											color: 'white',
-											fontWeight: '600',
-											mt: '24px'
-										}}
-									>
-										{t('registration.topic.summary')}
-									</Typography>
-								) : null}
-								{hasTopicError ? (
-									<PreselectionError
-										errorMessage={t(
-											'registration.errors.tid'
-										)}
-									/>
-								) : preselectedAgency ? (
-									<Typography
-										sx={{ color: 'white', mt: '8px' }}
-									>
-										{preselectedTopic?.name}
-									</Typography>
-								) : null}
-								<Typography
+								<PreselectedTopic
+									hasError={hasTopicError}
+									topic={preselectedTopic}
 									sx={{
-										color: 'white',
-										fontWeight: '600',
-										mt: '16px'
+										mb:
+											preselectedAgency || hasAgencyError
+												? '16px'
+												: '0px',
+										color: 'white'
 									}}
-								>
-									{t('registration.agency.summary')}
-								</Typography>
-								{hasAgencyError ? (
-									<PreselectionError
-										errorMessage={t(
-											'registration.errors.aid'
-										)}
-									/>
-								) : (
-									<Typography
-										sx={{ color: 'white', mt: '8px' }}
-									>
-										{preselectedAgency.name}
-									</Typography>
-								)}
+								/>
+								<PreselectedAgency
+									hasError={hasAgencyError}
+									agency={preselectedAgency}
+									sx={{ color: 'white' }}
+								/>
 							</>
 						)}
 						<Button
