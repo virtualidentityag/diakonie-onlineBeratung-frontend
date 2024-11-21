@@ -1,9 +1,15 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { SxProps, Theme, Typography } from '@mui/material';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
-const PreselectedConsultant = ({ hasError }: { hasError: boolean }) => {
+const PreselectedConsultant = ({
+	hasError,
+	sx
+}: {
+	hasError: boolean;
+	sx?: SxProps<Theme>;
+}) => {
 	const { t } = useTranslation();
 	if (hasError) {
 		return (
@@ -23,7 +29,7 @@ const PreselectedConsultant = ({ hasError }: { hasError: boolean }) => {
 		);
 	}
 
-	return <Typography> {t('registration.consultantlink')}</Typography>;
+	return <Typography sx={sx}> {t('registration.consultantlink')}</Typography>;
 };
 
 export default PreselectedConsultant;

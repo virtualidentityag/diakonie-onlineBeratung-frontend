@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { SxProps, Theme, Typography } from '@mui/material';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { AgencyDataInterface } from '../../../../globalState/interfaces';
 
 const PreselectedAgency = ({
 	hasError,
-	agency
+	agency,
+	sx
 }: {
 	hasError: boolean;
 	agency: AgencyDataInterface;
+	sx?: SxProps<Theme>;
 }) => {
 	const { t } = useTranslation();
 
@@ -21,8 +23,10 @@ const PreselectedAgency = ({
 		<>
 			<Typography
 				sx={{
+					...sx,
 					fontWeight: '600',
-					mb: '8px'
+					mb: '8px',
+					mt: '16px'
 				}}
 			>
 				{t('registration.agency.summary')}
@@ -37,14 +41,15 @@ const PreselectedAgency = ({
 								width: '20px',
 								height: '20px',
 								mr: '8px',
-								color: '#FF9F00'
+								color: '#FF9F00',
+								...sx
 							}}
 						/>
 						{t('registration.errors.aid')}
 					</>
 				</Typography>
 			) : (
-				<Typography>{agency.name}</Typography>
+				<Typography sx={{ ...sx, mt: '8px' }}>{agency.name}</Typography>
 			)}
 		</>
 	);
