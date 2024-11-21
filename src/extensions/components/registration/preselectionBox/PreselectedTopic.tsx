@@ -11,7 +11,7 @@ const PreselectedTopic = ({
 }: {
 	hasError: boolean;
 	topic: TopicsDataInterface;
-	sx: SxProps<Theme>;
+	sx?: SxProps<Theme>;
 }) => {
 	const { t } = useTranslation();
 
@@ -21,7 +21,14 @@ const PreselectedTopic = ({
 
 	return (
 		<>
-			<Typography sx={{ fontWeight: '600', mb: '8px' }}>
+			<Typography
+				sx={{
+					...sx,
+					fontWeight: '600',
+					mb: '8px',
+					mt: '16px'
+				}}
+			>
 				{t('registration.topic.summary')}
 			</Typography>
 			{hasError ? (
@@ -41,7 +48,7 @@ const PreselectedTopic = ({
 					</>
 				</Typography>
 			) : (
-				<Typography sx={sx}>
+				<Typography sx={{ ...sx, mt: '8px' }}>
 					{topic.titles?.long || topic.name}
 				</Typography>
 			)}
