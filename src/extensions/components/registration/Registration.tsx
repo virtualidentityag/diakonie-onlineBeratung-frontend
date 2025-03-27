@@ -190,6 +190,7 @@ export const Registration = () => {
 		const data = {
 			...registrationData,
 			...stepData,
+			password: encodeURIComponent(registrationData.password),
 			mainTopicId: registrationData.mainTopic.id.toString(),
 			topicId: registrationData.topic?.id?.toString(),
 			agencyId: registrationData.agency.id.toString(),
