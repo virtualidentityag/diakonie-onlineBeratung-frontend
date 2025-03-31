@@ -31,10 +31,17 @@ export default defineConfig({
 		// baseURL: 'http://127.0.0.1:3000',
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-		// trace: 'on-first-retry'
 		trace: 'on',
 		screenshot: 'only-on-failure',
-		video: 'on'
+		headless: true
+		// launchOptions: {
+		//     args: [
+		//         '--use-fake-ui-for-media-stream',
+		//         '--enable-experimental-web-platform-features',
+		// 		'--enable-features=ClipboardAPI'
+		//     ],
+		// },
+		// video: 'on',
 		// navigationTimeout: 30000 // Increase navigation timeout
 		// headless: true // Force headless mode in CI
 	},
