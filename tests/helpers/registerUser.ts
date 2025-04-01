@@ -1,9 +1,10 @@
 import { expect, Page } from '@playwright/test';
 import { goToPage } from '../helpers/goToPage';
-import { generateRandomAlphanumeric } from '../utils';
+import { ensureLanguage, generateRandomAlphanumeric } from '../utils';
 
 export async function registerUser(page: Page) {
 	const password = process.env.TEST_PASSWORD;
+	ensureLanguage(page);
 
 	// go to the registration page
 	await goToPage(page, 'registration');
@@ -20,7 +21,7 @@ export async function registerUser(page: Page) {
 
 	// select agency
 	try {
-		await page.getByText('TestAgencyA').click();
+		await page.getByText('TestAgencyA').click(); // TestAgencyA (and B) are created only for testing purposes
 	} catch (error) {
 		await page
 			.locator('input[name="agency-selection-radio-group"]')
@@ -29,7 +30,7 @@ export async function registerUser(page: Page) {
 	}
 	await page.click('button[data-cy="button-next"]');
 
-	const randomUsername = `testuser_${generateRandomAlphanumeric(4)}`;
+	const randomUsername = `testuser-${generateRandomAlphanumeric(4)}`;
 
 	// fill in the username & password (to-do: replace getByLabel with locator by id when delete func. is done)
 	await page.getByLabel(/(user\s?name|benutzername)/i).fill(randomUsername);

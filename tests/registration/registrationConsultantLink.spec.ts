@@ -1,5 +1,6 @@
 import { test } from '@playwright/test';
+import { registerByLink } from '../helpers/registerByLink';
 
-test.fixme('Registration via consultant link', async ({ page }) => {
-	// to implement
+test('Registration via consultant link', async ({ browser }) => {
+	await registerByLink(browser, '.profile__data__copy_registration_link');
 });
