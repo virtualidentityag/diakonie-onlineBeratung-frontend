@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { loginUser } from '../helpers/loginUser';
 import { goToSessions } from '../utils';
 
-test('attach a file to msg and send it', async ({ page }) => {
+test('attach a file to a msg and send it', async ({ page }) => {
 	const username = process.env.TEST_USERNAME;
 	const password = process.env.TEST_PASSWORD;
 
@@ -12,7 +12,7 @@ test('attach a file to msg and send it', async ({ page }) => {
 
 	const [fileChooser] = await Promise.all([
 		page.waitForEvent('filechooser'),
-		page.locator('span.textarea__attachmentSelect').click() // Click to open file dialog
+		page.locator('span.textarea__attachmentSelect').click()
 	]);
 
 	const fileName = 'img1mb.png';

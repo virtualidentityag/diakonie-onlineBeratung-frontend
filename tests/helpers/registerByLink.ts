@@ -3,7 +3,6 @@ import { loginUser } from './loginUser';
 import { generateRandomAlphanumeric } from '../utils';
 
 export async function registerByLink(browser: Browser, linkSelector: string) {
-	// create a new browser context with clipboard permissions
 	const context: BrowserContext = await browser.newContext({
 		permissions: ['clipboard-read', 'clipboard-write']
 	});
@@ -33,7 +32,7 @@ export async function registerByLink(browser: Browser, linkSelector: string) {
 
 	expect(copiedLink).not.toBe('');
 
-	// open the copied link in a new page
+	// open the copied link in a new page and register
 	const nextPage = await browser.newPage();
 	await nextPage.goto(copiedLink);
 
@@ -65,4 +64,9 @@ export async function registerByLink(browser: Browser, linkSelector: string) {
 	await nextPage.locator('input.PrivateSwitchBase-input').click();
 	await nextPage.click('button[data-cy="button-register"]');
 	await nextPage.locator('button.button__autoClose').click();
+
+	// close context and browser
+	await nextPage.close();
+	await context.close();
+	await browser.close();
 }

@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test';
 import { loginUser } from '../helpers/loginUser';
 import { logout } from '../utils';
 
-// specific login tests are not test cases but good-to-have tests (in progress)
 test('Log in as a consultant', async ({ page }) => {
 	const username = process.env.TEST_CONSULTANT;
 	const password = process.env.TEST_PASSWORD;

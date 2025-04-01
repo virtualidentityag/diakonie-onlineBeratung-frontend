@@ -30,6 +30,7 @@ test('Send message using the rich text editor', async ({ page }) => {
 
 	await page.locator('rect').click();
 
+	// check the rich text features are present in last msg
 	const lastChatMessage = page
 		.locator('.messageItem__message.messageItem__message--myMessage')
 		.last();
@@ -37,8 +38,6 @@ test('Send message using the rich text editor', async ({ page }) => {
 
 	await expect(ulElement.locator('em')).toBeVisible();
 	await expect(ulElement.locator('strong')).toBeVisible();
-
-	// await logout(page);
 });
 
 test('Send emojis', async ({ page }) => {
@@ -49,6 +48,7 @@ test('Send emojis', async ({ page }) => {
 
 	goToSessions(page);
 
+	// select random emoji
 	await page.locator('.emoji__select').click();
 	await expect(
 		page.locator('button.emoji__selectButton--pressed')
@@ -59,7 +59,6 @@ test('Send emojis', async ({ page }) => {
 		'li.emoji__selectPopover__groupItem'
 	);
 	const count = await emojiItems.count();
-	console.log({ count });
 
 	count > 0
 		? await emojiItems.nth(Math.floor(Math.random() * count)).click()
@@ -71,6 +70,7 @@ test('Send emojis', async ({ page }) => {
 
 	const emojiRegex = /[\p{Emoji}]/u;
 
+	// check emoji was sent
 	const lastChatMessage = page
 		.locator('.messageItem__message.messageItem__message--myMessage')
 		.last();

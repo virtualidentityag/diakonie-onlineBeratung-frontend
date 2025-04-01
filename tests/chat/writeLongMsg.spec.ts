@@ -9,6 +9,7 @@ test('write long message and scroll to bottom', async ({ page }) => {
 	await loginUser(page, username!, password!);
 	goToSessions(page);
 
+	// generate long text and send
 	const longMessage = await generateRandomAlphanumeric(7500);
 	await page.getByRole('combobox').fill(longMessage);
 	await page.locator('rect').click();
@@ -18,6 +19,7 @@ test('write long message and scroll to bottom', async ({ page }) => {
 		.last();
 	await expect(lastChatMessage).toContainText(longMessage);
 
+	// use scroll to bottom feature and check long message is sent
 	const scrollButton = await page.locator('.session__scrollToBottom '); // leave classname w/ space
 
 	if (await scrollButton.isVisible()) {
