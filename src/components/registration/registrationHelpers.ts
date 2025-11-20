@@ -16,20 +16,6 @@ export const isStringValidEmail = (email: string) =>
 export const isStringValidUsername = (username: string) =>
 	/^(?!.*\s).{5,}$/.test(username);
 
-export const getOptionOfSelectedValue = (inputOptions, selectedValue) => {
-	return inputOptions.filter((item) => item.value === selectedValue)[0];
-};
-
-export const getValidationClassNames = (invalid, valid) => {
-	if (invalid) {
-		return 'inputField__input--invalid';
-	}
-	if (valid) {
-		return 'inputField__input--valid';
-	}
-	return '';
-};
-
 export type RegistrationDropdownSelectData = {
 	label: string;
 	options: Array<{ value: string; label: string }>;
