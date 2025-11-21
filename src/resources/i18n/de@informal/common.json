@@ -277,7 +277,7 @@
 		"videoCall": {
 			"asker": {
 				"headline": "Video-Call",
-				"intro": "Damit Du an Video-Calls teilnehmen kannst, musst Du Dich über einen der unterstützten Browser anmelden.",
+				"intro": "Damit Du an Video-Calls teilnehmen kannst, musst Du Dich über einen der unterstützten Browser anmelden. Die Chat-Beratung funktioniert weiterhin mit Firefox.",
 				"steps": {
 					"1": {
 						"1": "Folge dem Link zu ",
@@ -293,7 +293,7 @@
 					"5": "Melde Dich bei der Online-Beratung an.",
 					"6": "Bitte Deine_n Berater_in Dich nochmals anzurufen.",
 					"headline": {
-						"2": "Du hast bereits Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?"
+						"2": "Du hast bereits Google Chrome, Microsoft Edge oder Safari?"
 					}
 				}
 			},
@@ -303,7 +303,7 @@
 			},
 			"consultant": {
 				"headline": "Video-Call",
-				"intro": "Um einen Video-Call durchführen zu können, musst Du Dich über einen der unterstützten Browser anmelden.",
+				"intro": "Um einen Video-Call durchführen zu können, musst Du Dich über einen der unterstützten Browser anmelden. Die Chat-Beratung funktioniert weiterhin mit Firefox.",
 				"steps": {
 					"1": {
 						"1": "Folge dem Link zu ",
@@ -319,7 +319,7 @@
 					"5": "Melde Dich bei der Online-Beratung an.",
 					"6": "Starte den Video-Call.",
 					"headline": {
-						"2": "Du hast bereits Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?"
+						"2": "Du hast bereits Google Chrome, Microsoft Edge oder Safari?"
 					}
 				}
 			},
@@ -327,10 +327,10 @@
 				"headline": "Es liegt nicht an Dir, sondern an Deinem Browser.",
 				"infoBox": {
 					"headline": "Dein Browser unterstützt keine Video-Calls.",
-					"text": "Damit Du an Video-Calls teilnehmen kannst, verwende bitte Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox."
+					"text": "Damit Du an Video-Calls teilnehmen kannst, verwende bitte Google Chrome, Microsoft Edge oder Safari."
 				},
-				"subline1": "Hast Du noch keinen Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?",
-				"subline2": "Du hast bereits Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?",
+				"subline1": "Hast Du noch keinen Google Chrome, Microsoft Edge oder Safari?",
+				"subline2": "Du hast bereits Google Chrome, Microsoft Edge oder Safari?",
 				"text1": "Lade einen der Browser herunter.",
 				"text2": "Öffne nun Deinen Link zur Online-Beratung mit einem der unterstützten Browser."
 			}

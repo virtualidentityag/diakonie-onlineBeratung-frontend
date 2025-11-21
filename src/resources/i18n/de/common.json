@@ -859,11 +859,10 @@
 		"msEdge": "Microsoft Edge",
 		"openInNewTab": "In neuem Tab öffnen",
 		"safari": "Safari",
-		"mozillaFirefox": "Mozilla Firefox",
 		"videoCall": {
 			"asker": {
 				"headline": "Video-Call",
-				"intro": "Damit Sie an Video-Calls teilnehmen können, müssen Sie sich über einen der unterstützten Browser anmelden.",
+				"intro": "Damit Sie an Video-Calls teilnehmen können, müssen Sie sich über einen der unterstützten Browser anmelden. Die Chat-Beratung funktioniert weiterhin mit Firefox.",
 				"steps": {
 					"1.1": "Folgen Sie dem Link zu ",
 					"1.2": " oder ",
@@ -878,7 +877,7 @@
 					"6": "Bitten Sie Ihre_n Berater_in Sie nochmals anzurufen.",
 					"headline": {
 						"1": "Schritt-für-Schritt-Anleitung",
-						"2": "Sie haben bereits Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?"
+						"2": "Sie haben bereits Google Chrome, Microsoft Edge oder Safari?"
 					}
 				}
 			},
@@ -888,7 +887,7 @@
 			},
 			"consultant": {
 				"headline": "Video-Call",
-				"intro": "Um einen Video-Call durchführen zu können, müssen Sie sich über einen der unterstützten Browser anmelden.",
+				"intro": "Um einen Video-Call durchführen zu können, müssen Sie sich über einen der unterstützten Browser anmelden. Die Chat-Beratung funktioniert weiterhin mit Firefox.",
 				"steps": {
 					"1.1": "Folgen Sie dem Link zu ",
 					"1.2": " oder ",
@@ -903,7 +902,7 @@
 					"6": "Starten Sie den Video-Call.",
 					"headline": {
 						"1": "Schritt-für-Schritt-Anleitung",
-						"2": "Sie haben bereits Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?"
+						"2": "Sie haben bereits Google Chrome, Microsoft Edge oder Safari?"
 					}
 				}
 			},
@@ -921,10 +920,10 @@
 				"headline": "Es liegt nicht an Ihnen, sondern an Ihrem Browser.",
 				"infoBox": {
 					"headline": "Ihr Browser unterstützt keine Video-Calls.",
-					"text": "Damit Sie an Video-Calls teilnehmen können, verwenden Sie bitte Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox."
+					"text": "Damit Sie an Video-Calls teilnehmen können, verwenden Sie bitte Google Chrome, Microsoft Edge oder Safari."
 				},
-				"subline1": "Haben Sie noch keinen Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?",
-				"subline2": "Sie haben bereits Google Chrome, Microsoft Edge, Safari oder Mozilla Firefox?",
+				"subline1": "Haben Sie noch keinen Google Chrome, Microsoft Edge oder Safari?",
+				"subline2": "Sie haben bereits Google Chrome, Microsoft Edge oder Safari?",
 				"text1": "Laden Sie sich einen der Browser herunter.",
 				"text2": "Öffnen Sie nun Ihren Link zur Online-Beratung mit einem der unterstützten Browser."
 			}
