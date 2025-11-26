@@ -8,7 +8,6 @@ import {
 import { ReactComponent as PersonIcon } from '../../resources/img/icons/person.svg';
 import {
 	AccordionItemValidity,
-	MIN_USERNAME_LENGTH,
 	VALIDITY_INITIAL,
 	VALIDITY_INVALID,
 	VALIDITY_VALID
@@ -23,6 +22,9 @@ interface RegistrationUsernameProps {
 	onKeyDown?: Function;
 }
 
+/**
+ * @deprecated AccountData is used instead.
+ */
 export const RegistrationUsername = ({
 	isUsernameAlreadyInUse,
 	onUsernameChange,
@@ -71,7 +73,7 @@ export const RegistrationUsername = ({
 	};
 
 	const validateUsername = (username) => {
-		if (username.length >= MIN_USERNAME_LENGTH) {
+		if (username.length >= 5) {
 			setIsValid(VALIDITY_VALID);
 			setLabelState(VALIDITY_VALID);
 			setLabelContent(translate('registration.user.suitable'));
