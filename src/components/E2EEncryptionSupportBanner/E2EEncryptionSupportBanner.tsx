@@ -1,12 +1,11 @@
-import { useState, useContext, useEffect } from 'react';
-import * as React from 'react';
-import { Banner } from '../banner/Banner';
 import './E2EEncryptionSupportBanner.styles.scss';
-import {
-	hasVideoCallAbility,
-	supportsE2EEncryptionVideoCall
-} from '../../utils/videoCallHelpers';
+
+import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
 import {
 	AUTHORITIES,
 	ConsultingTypesContext,
@@ -15,7 +14,8 @@ import {
 	UserDataContext
 } from '../../globalState';
 import { STATUS_EMPTY } from '../../globalState/interfaces';
-import { Link } from 'react-router-dom';
+import { hasVideoCallAbility } from '../../utils/videoCallHelpers';
+import { Banner } from '../banner/Banner';
 
 export const E2EEncryptionSupportBanner = () => {
 	const [showBanner, setShowBanner] = useState<boolean>(false);
@@ -35,10 +35,7 @@ export const E2EEncryptionSupportBanner = () => {
 						sessions[0]?.session?.status === STATUS_EMPTY))
 			)
 		) {
-			setShowBanner(
-				!supportsE2EEncryptionVideoCall() &&
-					!sessionStorage.getItem('hideEncryptionBanner')
-			);
+			setShowBanner(!sessionStorage.getItem('hideEncryptionBanner'));
 		}
 	}, [userData, consultingTypes, sessions]);
 
