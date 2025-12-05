@@ -841,10 +841,11 @@
 		"msEdge": "Microsoft Edge",
 		"openInNewTab": "Open in new tab",
 		"safari": "Safari",
+		"mozillaFirefox": "Mozilla Firefox",
 		"videoCall": {
 			"asker": {
 				"headline": "Video Call",
-				"intro": "To participate in video calls, you must log in using one of the supported browsers. The chat consultation still works with Firefox.",
+				"intro": "To participate in video calls, you must log in using one of the supported browsers.",
 				"steps": {
 					"1": {
 						"1.1": "Follow the link to ",
@@ -861,7 +862,7 @@
 					"6": "Ask your advisor to call you again.",
 					"headline": {
 						"1": "Step by step guide",
-						"2": "Already have Google Chrome, Microsoft Edge or Safari?"
+						"2": "Already have Google Chrome, Microsoft Edge, Safari or Mozilla Firefox?"
 					}
 				}
 			},
@@ -871,7 +872,7 @@
 			},
 			"consultant": {
 				"headline": "Video Call",
-				"intro": "To perform a video call, you must log in using one of the supported browsers. The chat consultation still works with Firefox.",
+				"intro": "To perform a video call, you must log in using one of the supported browsers.",
 				"steps": {
 					"1": {
 						"1": "Follow the link to ",
@@ -888,7 +889,7 @@
 					"6": "Start the video call.",
 					"headline": {
 						"1": "Step by step guide",
-						"2": "Already have Google Chrome, Microsoft Edge or Safari?"
+						"2": "Already have Google Chrome, Microsoft Edge, Safari or Mozilla Firefox?"
 					}
 				}
 			},
@@ -906,10 +907,10 @@
 				"headline": "It's not you, it's your browser.",
 				"infoBox": {
 					"headline": "Your browser does not support video calls.",
-					"text": "To participate in video calls, please use Google Chrome, Microsoft Edge or Safari."
+					"text": "To participate in video calls, please use Google Chrome, Microsoft Edge, Safari or Mozilla Firefox."
 				},
-				"subline1": "Don't have Google Chrome, Microsoft Edge, or Safari yet?",
-				"subline2": "Already have Google Chrome, Microsoft Edge, or Safari?",
+				"subline1": "Don't have Google Chrome, Microsoft Edge, Safari or Mozilla Firefox yet?",
+				"subline2": "Already have Google Chrome, Microsoft Edge, Safari or Mozilla Firefox?",
 				"text1": "Download one of the browsers.",
 				"text2": "Now open your link to the online consultation with one of the supported browsers."
 			}
