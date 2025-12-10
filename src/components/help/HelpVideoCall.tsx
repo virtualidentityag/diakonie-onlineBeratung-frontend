@@ -6,6 +6,7 @@ import { ReactComponent as CopyIcon } from '../../resources/img/icons/documents.
 import ChromeLogo from '../../resources/img/images/google_chrome.png';
 import EdgeLogo from '../../resources/img/images/microsoft_edge.png';
 import SafariLogo from '../../resources/img/images/safari.png';
+import FirefoxLogo from '../../resources/img/images/mozillaFirefox.png';
 import { useTranslation } from 'react-i18next';
 
 interface HelpVideoCallProps {
@@ -74,6 +75,25 @@ export const BrowserList: React.FC = () => {
 					{translate('help.safari')}
 				</a>
 			</div>
+			<div>
+				<img
+					src={FirefoxLogo}
+					alt={translate('help.mozillaFirefox')}
+					title={translate('help.mozillaFirefox')}
+				/>
+				<a
+					href="https://www.firefox.com/de/"
+					target="_blank"
+					rel="noreferrer"
+					className="button-as-link"
+				>
+					<NewWindow
+						title={translate('help.openInNewTab')}
+						aria-label={translate('help.openInNewTab')}
+					/>{' '}
+					{translate('help.mozillaFirefox')}
+				</a>
+			</div>
 		</div>
 	);
 };
@@ -140,6 +160,15 @@ export const HelpVideoCall: React.FC<HelpVideoCallProps> = ({
 							className="button-as-link"
 						>
 							{translate('help.msEdge')}
+						</a>
+						{translate(`${translationPrefix}.steps.1.2`)}
+						<a
+							href="https://www.firefox.com/de/"
+							target="_blank"
+							rel="noreferrer"
+							className="button-as-link"
+						>
+							{translate('help.mozillaFirefox')}
 						</a>
 						{translate(`${translationPrefix}.steps.1.2`)}
 						<a
