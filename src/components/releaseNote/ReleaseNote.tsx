@@ -107,7 +107,7 @@ export const ReleaseNote: React.FC<ReleaseNoteProps> = () => {
 					sanitizeHtmlExtendedOptions
 				);
 
-				setLatestReleaseNote(markdowns[markdowns.length - 1].key);
+				setLatestReleaseNote(markdowns[0].key);
 				setReleaseNoteText(sanitizedText);
 				setShowRelaseNote(
 					getDevToolbarOption(STORAGE_KEY_RELEASE_NOTES) === '1'
