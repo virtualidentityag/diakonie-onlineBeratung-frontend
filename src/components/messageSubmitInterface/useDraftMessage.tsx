@@ -1,21 +1,23 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+
+import { convertFromRaw, EditorState } from 'draft-js';
+import { markdownToDraft } from 'markdown-draft-js';
+
 import {
 	apiGetDraftMessage,
 	apiPostDraftMessage,
 	FETCH_ERRORS,
 	IDraftMessage
 } from '../../api';
-import { decryptText, encryptText } from '../../utils/encryptionHelpers';
 import { apiPostError, ERROR_LEVEL_WARN } from '../../api/apiPostError';
+import { ActiveSessionContext, E2EEContext } from '../../globalState';
 import { useE2EE } from '../../hooks/useE2EE';
-import { E2EEContext, ActiveSessionContext } from '../../globalState';
-import { convertFromRaw, EditorState } from 'draft-js';
-import { markdownToDraft } from 'markdown-draft-js';
-import { EVENT_PRE_LOGOUT } from '../logout/logout';
+import { decryptText, encryptText } from '../../utils/encryptionHelpers';
 import {
 	addEventListener,
 	removeEventListener
 } from '../../utils/eventHandler';
+import { EVENT_PRE_LOGOUT } from '../logout/logout';
 
 const SAVE_DRAFT_TIMEOUT = 10000;
 
@@ -128,10 +130,15 @@ export const useDraftMessage = (
 						stack: e.stack,
 						level: ERROR_LEVEL_WARN
 					});
+					return;
 				}
+				await apiPostDraftMessage(
+					groupId,
+					message,
+					encryptType
+				).catch();
 			}
-
-			await apiPostDraftMessage(groupId, message, encryptType).catch();
+			return;
 		},
 		[
 			activeSession.rid,
