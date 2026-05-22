@@ -2863,5 +2863,8 @@
 			"noFirstAnswer": "Klient:in hat auf Erstmail nicht reagiert",
 			"helpfulness": "Wie hilfreich war der Kontakt für Klient:in?"
 		}
+	},
+	"infoBanner": {
+		"content": "Wichtige Änderungen beim Beratungsportal: Bitte informieren Sie sich regelmäßig auf unserer <1>Info-Seite</1>."
 	}
 }
