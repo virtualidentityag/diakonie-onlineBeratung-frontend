@@ -28,6 +28,7 @@ import { handleTokenRefresh } from '../auth/auth';
 import { logout } from '../logout/logout';
 import { Loading } from './Loading';
 import { Routing } from './Routing';
+import { InfoBanner } from '../infoBanner/InfoBanner';
 
 interface AuthenticatedAppProps {
 	onAppReady: Function;
@@ -48,6 +49,10 @@ export const AuthenticatedApp = ({
 	const [appReady, setAppReady] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [userDataRequested, setUserDataRequested] = useState<boolean>(false);
+
+	useEffect(() => {
+		sessionStorage.removeItem('hideInfoBanner');
+	}, []);
 
 	useEffect(() => {
 		// When the user has a group chat id that means that we need to join the user in the group chat
@@ -121,6 +126,7 @@ export const AuthenticatedApp = ({
 							<RocketChatSubscriptionsProvider>
 								<RocketChatUnreadProvider>
 									<RocketChatUserStatusProvider>
+										<InfoBanner />
 										<Routing logout={handleLogout} />
 									</RocketChatUserStatusProvider>
 								</RocketChatUnreadProvider>
