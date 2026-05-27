@@ -1,11 +1,7 @@
 import './infoBanner.styles.scss';
 
 import * as React from 'react';
-import {
-	useContext,
-	useEffect,
-	useState
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Trans } from 'react-i18next';
 
