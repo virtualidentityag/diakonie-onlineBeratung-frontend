@@ -1,39 +1,30 @@
 import './infoBanner.styles.scss';
 
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import {
+	useContext,
+	useEffect,
+	useState
+} from 'react';
 
 import { Trans } from 'react-i18next';
 
 import {
 	AUTHORITIES,
-	ConsultingTypesContext,
 	hasUserAuthority,
-	SessionsDataContext,
 	UserDataContext
 } from '../../globalState';
-import { STATUS_EMPTY } from '../../globalState/interfaces';
 import { Banner } from '../banner/Banner';
 
 export const InfoBanner = () => {
 	const [showBanner, setShowBanner] = useState<boolean>(false);
-	const { consultingTypes } = useContext(ConsultingTypesContext);
 	const { userData } = useContext(UserDataContext);
-	const { sessions } = useContext(SessionsDataContext);
 
 	useEffect(() => {
-		if (
-			// don't show banner when user enters first message
-			!(
-				hasUserAuthority(AUTHORITIES.ASKER_DEFAULT, userData) &&
-				(sessions.length === 0 ||
-					(sessions.length === 1 &&
-						sessions[0]?.session?.status === STATUS_EMPTY))
-			)
-		) {
+		if (hasUserAuthority(AUTHORITIES.CONSULTANT_DEFAULT, userData)) {
 			setShowBanner(!sessionStorage.getItem('hideInfoBanner'));
 		}
-	}, [userData, consultingTypes, sessions]);
+	}, [userData]);
 
 	useEffect(() => {
 		const fn = showBanner ? 'add' : 'remove';
