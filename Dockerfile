@@ -45,4 +45,6 @@ ENV PORT=$PORT
 
 RUN npm ci --ignore-scripts
 
-CMD ["npm", "run", "start"]
+# Start node directly instead of via npm: the npm wrapper process alone
+# costs ~16 MB in the 100M frontend pod
+CMD ["node", "server.js"]
