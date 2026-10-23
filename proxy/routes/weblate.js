@@ -8,6 +8,10 @@ const { proxyPath } = require('../config');
 
 const LOCALIZATION_CACHE_TIME = process.env.LOCALIZATION_CACHE_TIME || 120;
 const updateInProgress = {};
+// Parsed translation files by cache file name. Do not use require() for this:
+// deleting from require.cache keeps the old object referenced in module.children,
+// so every renewal leaked the previous translation file.
+const memoryCache = {};
 
 const weblateHost = process.env.LOCALIZATION_WEBLATE_HOST || null;
 const weblatePath = process.env.LOCALIZATION_WEBLATE_PATH || '';
@@ -48,8 +52,12 @@ module.exports = (storagePath) => {
 			throw new Error('Weblate storage not configured!');
 		const translationLifeTime = LOCALIZATION_CACHE_TIME * 60 * 1000;
 		const localeFilePath = path.join(weblateStoragePath, cacheFile);
-		// Use require because on multiple includes nodejs will use the memory cache on next read
-		const localeFile = require(localeFilePath);
+		if (!memoryCache[cacheFile]) {
+			memoryCache[cacheFile] = JSON.parse(
+				fs.readFileSync(localeFilePath, 'utf8')
+			);
+		}
+		const localeFile = memoryCache[cacheFile];
 
 		// If translation gets invalid and there is no other user updating fallback to ui
 		if (
@@ -70,14 +78,12 @@ module.exports = (storagePath) => {
 		if (!weblateStoragePath)
 			throw new Error('Weblate storage not configured!');
 		const localeFilePath = path.join(weblateStoragePath, cacheFile);
+		const localeFile = { ...data, ts: new Date().getTime() };
 		fs.promises
-			.writeFile(
-				localeFilePath,
-				JSON.stringify({ ...data, ts: new Date().getTime() })
-			)
+			.writeFile(localeFilePath, JSON.stringify(localeFile))
 			.then(() => {
 				console.log(`Translation ${cacheFile} renewed`);
-				delete require.cache[require.resolve(localeFilePath)];
+				memoryCache[cacheFile] = localeFile;
 				updateInProgress[cacheFile] = false;
 			});
 	};
