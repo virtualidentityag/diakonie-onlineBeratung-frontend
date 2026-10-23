@@ -1,4 +1,4 @@
-ARG NODE_VERSION=18.16.1
+ARG NODE_VERSION=24
 ARG PORT=80
 
 FROM node:$NODE_VERSION AS proxyBuild
@@ -43,6 +43,16 @@ COPY build /app/build
 ENV NODE_ENV=production
 ENV PORT=$PORT
 
+# Keep the process inside the 100M pod limit:
+# - MALLOC_ARENA_MAX=2: glibc otherwise grows up to 8 malloc arenas per core and
+#   never returns fragmented memory; measured as steady RSS growth outside the JS heap.
+# - --max-old-space-size=64: V8 picks a ~256 MB heap limit on its own and would let
+#   garbage pile up past the container limit before collecting. The live heap is ~11 MB.
+ENV MALLOC_ARENA_MAX=2
+ENV NODE_OPTIONS=--max-old-space-size=64
+
 RUN npm ci --ignore-scripts
 
-CMD ["npm", "run", "start"]
+# Start node directly instead of via npm: the npm wrapper process alone
+# costs ~16 MB in the 100M frontend pod
+CMD ["node", "server.js"]
