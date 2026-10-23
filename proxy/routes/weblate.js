@@ -8,7 +8,7 @@ const { proxyPath } = require('../config');
 
 const LOCALIZATION_CACHE_TIME = process.env.LOCALIZATION_CACHE_TIME || 120;
 const updateInProgress = {};
-// Parsed translation files by cache file name. Do not use require() for this:
+// Parsed translation files by normalized file path. Do not use require() for this:
 // deleting from require.cache keeps the old object referenced in module.children,
 // so every renewal leaked the previous translation file.
 const memoryCache = {};
@@ -47,24 +47,33 @@ module.exports = (storagePath) => {
 			...config
 		});
 
+	// Route params are URL-decoded, so names like `.%2Fcommon` or `x%2F..%2Fcommon`
+	// must map to the same entry, and nothing may resolve outside the storage dir.
+	const resolveCacheFile = (cacheFile) => {
+		const localeFilePath = path.join(weblateStoragePath, cacheFile);
+		if (path.dirname(localeFilePath) !== weblateStoragePath)
+			throw new Error(`Invalid translation cache file ${cacheFile}`);
+		return localeFilePath;
+	};
+
 	const loadFilesystem = (cacheFile) => {
 		if (!weblateStoragePath)
 			throw new Error('Weblate storage not configured!');
 		const translationLifeTime = LOCALIZATION_CACHE_TIME * 60 * 1000;
-		const localeFilePath = path.join(weblateStoragePath, cacheFile);
-		if (!memoryCache[cacheFile]) {
-			memoryCache[cacheFile] = JSON.parse(
+		const localeFilePath = resolveCacheFile(cacheFile);
+		if (!memoryCache[localeFilePath]) {
+			memoryCache[localeFilePath] = JSON.parse(
 				fs.readFileSync(localeFilePath, 'utf8')
 			);
 		}
-		const localeFile = memoryCache[cacheFile];
+		const localeFile = memoryCache[localeFilePath];
 
 		// If translation gets invalid and there is no other user updating fallback to ui
 		if (
 			localeFile.ts + translationLifeTime < new Date().getTime() &&
-			!updateInProgress?.[cacheFile]
+			!updateInProgress?.[localeFilePath]
 		) {
-			updateInProgress[cacheFile] = true;
+			updateInProgress[localeFilePath] = true;
 			console.log(`Translation ${cacheFile} expired. Will be renewed!`);
 			throw new Error(
 				`Translation ${cacheFile} expired. Will be renewed ...`
@@ -77,14 +86,14 @@ module.exports = (storagePath) => {
 	const saveFilesystem = (cacheFile, data) => {
 		if (!weblateStoragePath)
 			throw new Error('Weblate storage not configured!');
-		const localeFilePath = path.join(weblateStoragePath, cacheFile);
+		const localeFilePath = resolveCacheFile(cacheFile);
 		const localeFile = { ...data, ts: new Date().getTime() };
 		fs.promises
 			.writeFile(localeFilePath, JSON.stringify(localeFile))
 			.then(() => {
 				console.log(`Translation ${cacheFile} renewed`);
-				memoryCache[cacheFile] = localeFile;
-				updateInProgress[cacheFile] = false;
+				memoryCache[localeFilePath] = localeFile;
+				updateInProgress[localeFilePath] = false;
 			});
 	};
 
