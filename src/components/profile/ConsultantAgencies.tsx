@@ -11,12 +11,17 @@ import { copyTextToClipboard } from '../../utils/clipboardHelpers';
 import { GenerateQrCode } from '../generateQrCode/GenerateQrCode';
 import { useAppConfig } from '../../hooks/useAppConfig';
 import { useTranslation } from 'react-i18next';
+import { RegistrationUrlInput } from './RegistrationUrlInput';
+import {
+	apiSetAgencyRegistrationUrl,
+	apiDeleteAgencyRegistrationUrl
+} from '../../api/apiRegistrationUrl';
 
 export const ConsultantAgencies = () => {
 	const settings = useAppConfig();
 	const { t: translate } = useTranslation(['common', 'agencies']);
 
-	const { userData } = useContext(UserDataContext);
+	const { userData, reloadUserData } = useContext(UserDataContext);
 
 	return (
 		<div>
@@ -36,9 +41,32 @@ export const ConsultantAgencies = () => {
 							className="profile__data__content profile__data__content--agencies flex flex--fd-column flex-l--fd-row flex-l--jc-sb mb--2"
 							key={`agencies-${i}`}
 						>
-							{translate([`agency.${item.id}.name`, item.name], {
-								ns: 'agencies'
-							})}
+							<div className="flex flex--fd-column">
+								<span>
+									{translate(
+										[`agency.${item.id}.name`, item.name],
+										{ ns: 'agencies' }
+									)}
+								</span>
+								<RegistrationUrlInput
+									initialValue={item.registrationUrl}
+									onSave={(url) =>
+										apiSetAgencyRegistrationUrl(
+											item.id,
+											url
+										).then(() =>
+											reloadUserData().catch(console.log)
+										)
+									}
+									onDelete={() =>
+										apiDeleteAgencyRegistrationUrl(
+											item.id
+										).then(() =>
+											reloadUserData().catch(console.log)
+										)
+									}
+								/>
+							</div>
 							<div className="flex flex--fd-row mt--1 flex-l--fd-column mt-l--0 ml-l--2 flex--ai-c flex-l--ai-fs">
 								<div>
 									<GenerateQrCode

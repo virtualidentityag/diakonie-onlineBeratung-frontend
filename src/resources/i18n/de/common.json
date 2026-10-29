@@ -1428,6 +1428,15 @@
 					"tooltip": "Teilen Sie Ihren persönlichen Kontakt-Link mit jemanden, damit diese Person eine Onlineberatung direkt mit Ihnen starten kann."
 				}
 			},
+			"registrationLink": {
+				"override": {
+					"label": "Direktlink aus der OBP 2.1 (sobald verfügbar)",
+					"placeholder": "https://www.diakonie.de/...",
+					"invalid": "Bitte geben Sie einen gültigen https-Link auf der Domain diakonie.de ein.",
+					"save": "Speichern",
+					"delete": "Entfernen"
+				}
+			},
 			"profileIcon": "Profilbild",
 			"register": {
 				"button": {
