@@ -32,6 +32,8 @@ export interface UserDataInterface {
 	dataPrivacyConfirmation: string;
 	emailNotifications?: EmailNotificationsInterface;
 	sessions: SessionItemInterface[];
+	// personal registration redirect override
+	registrationUrl?: string;
 }
 
 export interface ConsultantDataInterface
@@ -56,6 +58,8 @@ export interface AgencyDataInterface {
 	consultingTypeRel?: ConsultingTypeInterface;
 	topicIds?: number[];
 	agencyLogo?: string | null;
+	// shared agency registration redirect override
+	registrationUrl?: string;
 }
 
 export interface ConsultingTypeDataInterface {

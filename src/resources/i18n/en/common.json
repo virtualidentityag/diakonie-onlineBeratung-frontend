@@ -1406,6 +1406,15 @@
 					"tooltip": "Share your personal contact link with someone so they can start an online consultation directly with you."
 				}
 			},
+			"registrationLink": {
+				"override": {
+					"label": "Direct link from OBP 2.1 (when available)",
+					"placeholder": "https://www.diakonie.de/...",
+					"invalid": "Please enter a valid https link on the domain diakonie.de.",
+					"save": "Save",
+					"delete": "Remove"
+				}
+			},
 			"profileIcon": "Profile icon",
 			"register": {
 				"button": {

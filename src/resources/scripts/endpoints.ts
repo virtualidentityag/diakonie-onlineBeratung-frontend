@@ -129,6 +129,10 @@ export const endpoints = {
 	twoFactorAuthEmail: apiUrl + '/service/users/2fa/email',
 	updateMessage: apiUrl + '/service/messages/',
 	userData: apiUrl + '/service/users/data',
+	// shared agency registration redirect override (set/removed by consultants)
+	consultantAgencyRegistrationUrl: (agencyId: number) =>
+		apiUrl +
+		`/service/users/consultants/agencies/${agencyId}/registration-url`,
 	userDataBySessionId: (sessionId: number) =>
 		apiUrl + `/service/users/consultants/sessions/${sessionId}`,
 	userSessionsListView: '/sessions/user/view',
