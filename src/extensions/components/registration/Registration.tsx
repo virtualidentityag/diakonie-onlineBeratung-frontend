@@ -49,6 +49,7 @@ import { apiPostRegistration } from '../../../api';
 import { useAppConfig } from '../../../hooks/useAppConfig';
 import { REGISTRATION_DATA_VALIDATION } from './registrationDataValidation';
 import { UrlParamsContext } from '../../../globalState/provider/UrlParamsProvider';
+import { getUrlParameter } from '../../../utils/getUrlParameter';
 
 /**
  * This type of registration is currently not supporting:
@@ -82,7 +83,11 @@ export const Registration = () => {
 		registrationData,
 		availableSteps
 	} = useContext(RegistrationContext);
-	const { consultant: preselectedConsultant } = useContext(UrlParamsContext);
+	const {
+		consultant: preselectedConsultant,
+		agency: preselectedAgency,
+		loaded: urlParamsLoaded
+	} = useContext(UrlParamsContext);
 	const { tenant } = useContext(TenantContext);
 	const { locale } = useContext(LocaleContext);
 
@@ -108,6 +113,23 @@ export const Registration = () => {
 			}
 		]
 	};
+
+	// if a redirect override is configured for the consultant (cid) or the
+	// agency (aid) whose deep link was opened, send the visitor there instead of showing
+	// the registration (the deep link "returns" the override).
+	useEffect(() => {
+		if (!urlParamsLoaded) {
+			return;
+		}
+		const redirectTarget = getUrlParameter('cid')
+			? preselectedConsultant?.registrationUrl
+			: getUrlParameter('aid')
+				? preselectedAgency?.registrationUrl
+				: null;
+		if (redirectTarget) {
+			window.location.replace(redirectTarget);
+		}
+	}, [urlParamsLoaded, preselectedConsultant, preselectedAgency]);
 
 	const checkForStepsWithMissingMandatoryFields =
 		useCallback((): number[] => {

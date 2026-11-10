@@ -519,3 +519,37 @@ $profile-footer-justify-content: center !default;
 		}
 	}
 }
+
+// registration redirect override input
+.profile__registrationUrlOverride {
+	display: flex;
+	flex-direction: column;
+	max-width: 480px;
+
+	label {
+		margin-bottom: 4px;
+	}
+
+	&__input {
+		width: 100%;
+		padding: 8px 12px;
+		border: 1px solid $line-grey;
+		border-radius: 4px;
+		font-size: 14px;
+	}
+
+	&__error {
+		margin-top: 4px;
+		color: $form-error;
+	}
+
+	// keep the Speichern/Entfernen buttons left aligned like the rest
+	// of the agency section (overrides the default flex-end of editableData__buttonSet).
+	.editableData__buttonSet {
+		justify-content: flex-start;
+
+		.button__wrapper:first-of-type {
+			margin-left: 0;
+		}
+	}
+}
