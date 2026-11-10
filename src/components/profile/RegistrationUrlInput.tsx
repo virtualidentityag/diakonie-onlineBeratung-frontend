@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+	NotificationsContext,
+	NOTIFICATION_TYPE_ERROR
+} from '../../globalState';
 import { Button, ButtonItem, BUTTON_TYPES } from '../button/Button';
 import { Text } from '../text/Text';
 
@@ -31,17 +35,22 @@ export const isValidRegistrationUrl = (value: string): boolean => {
 };
 
 type RegistrationUrlInputProps = {
+	// must be unique on the page: one input is rendered per agency next to the
+	// personal registration url input of ConsultantInformation.
+	inputId: string;
 	initialValue?: string;
 	onSave: (url: string) => Promise<any>;
 	onDelete: () => Promise<any>;
 };
 
 export const RegistrationUrlInput = ({
+	inputId,
 	initialValue,
 	onSave,
 	onDelete
 }: RegistrationUrlInputProps) => {
 	const { t: translate } = useTranslation();
+	const { addNotification } = useContext(NotificationsContext);
 	const [value, setValue] = useState(initialValue ?? '');
 	// track the last persisted value locally so the buttons update
 	// immediately after a successful save/delete, independent of the reload round-trip.
@@ -60,6 +69,19 @@ export const RegistrationUrlInput = ({
 	const isSaveDisabled =
 		isSubmitting || !isDirty || trimmed.length === 0 || showInvalid;
 
+	// on failure the typed draft and the stored value are left untouched so the
+	// consultant can retry; only an error notification is shown.
+	const notifyError = (error: unknown) => {
+		addNotification({
+			notificationType: NOTIFICATION_TYPE_ERROR,
+			title: translate('profile.notifications.error.title'),
+			text: translate('profile.notifications.error.description'),
+			closeable: true,
+			timeout: 60000
+		});
+		console.error('Error while changing the registration url', error);
+	};
+
 	const handleSave = () => {
 		if (isSaveDisabled) {
 			return;
@@ -67,6 +89,7 @@ export const RegistrationUrlInput = ({
 		setIsSubmitting(true);
 		onSave(trimmed)
 			.then(() => setSavedValue(trimmed))
+			.catch(notifyError)
 			.finally(() => setIsSubmitting(false));
 	};
 
@@ -77,6 +100,7 @@ export const RegistrationUrlInput = ({
 				setSavedValue('');
 				setValue('');
 			})
+			.catch(notifyError)
 			.finally(() => setIsSubmitting(false));
 	};
 
@@ -94,14 +118,11 @@ export const RegistrationUrlInput = ({
 
 	return (
 		<div className="profile__registrationUrlOverride mt--1">
-			<label
-				className="text--small tertiary"
-				htmlFor="registrationUrlOverride"
-			>
+			<label className="text--small tertiary" htmlFor={inputId}>
 				{translate('profile.data.registrationLink.override.label')}
 			</label>
 			<input
-				id="registrationUrlOverride"
+				id={inputId}
 				type="url"
 				className="profile__registrationUrlOverride__input"
 				value={value}

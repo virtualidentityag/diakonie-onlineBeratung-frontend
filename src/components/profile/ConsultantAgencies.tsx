@@ -49,6 +49,7 @@ export const ConsultantAgencies = () => {
 									)}
 								</span>
 								<RegistrationUrlInput
+									inputId={`registrationUrlOverride-agency-${item.id}`}
 									initialValue={item.registrationUrl}
 									onSave={(url) =>
 										apiSetAgencyRegistrationUrl(
